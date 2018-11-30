@@ -13,6 +13,7 @@ import { getProfile } from 'app/shared/reducers/application-profile';
 import { setLocale } from 'app/shared/reducers/locale';
 import Header from 'app/shared/layout/header/header';
 import Footer from 'app/shared/layout/footer/footer';
+import Login from 'app/modules/login/main';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import ErrorBoundary from 'app/shared/error/error-boundary';
@@ -28,6 +29,15 @@ export class App extends React.Component<IAppProps> {
   }
 
   render() {
+    const dom =
+      this.props.isAuthenticated !== true ? (
+        <Login />
+      ) : (
+        <div>
+          <Sidebar isAuthenticated={this.props.isAuthenticated} />
+          <AppRoutes />
+        </div>
+      );
     return (
       <Router>
         <div id="wrapper">
@@ -36,8 +46,7 @@ export class App extends React.Component<IAppProps> {
             className="toastify-container"
             toastClassName="toastify-toast"
           />
-          <Sidebar isAuthenticated={this.props.isAuthenticated} />
-          <AppRoutes />
+          {dom}
         </div>
       </Router>
     );

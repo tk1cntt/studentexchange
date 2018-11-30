@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "vn.studentexchange",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "5.7.0",
+    "applicationType": "monolith",
+    "baseName": "studentexchange",
+    "packageName": "vn.studentexchange",
+    "packageFolder": "vn/studentexchange",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "YzljODhhZGUxOTMwMTdkMGUwMDI4OTYyMzAxMDg4ODQ2NGY3NTQxMWQ0NjViNjlhNGM1NmVlMTVjMWFkNGYxZjdkMjBkMGE2YjQxMjMxNjRmZTVhMzQ3YjM5YjdjYmJmNTI3YmY5MmM2NTQ2OGI5NGIyNTVmODgzNzhmNDgzMjk=",
+    "clientFramework": "react",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": [
+      "en",
+      "vi"
+    ]
+  }
+}

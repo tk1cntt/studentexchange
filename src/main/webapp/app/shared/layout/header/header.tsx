@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink as Link } from 'react-router-dom';
 
 export default class Header extends React.Component {
   render() {
@@ -28,7 +29,7 @@ export default class Header extends React.Component {
                   <li>
                     <div className="dropdown-messages-box">
                       <a href="profile.html" className="pull-left">
-                        <img alt="image" className="img-circle" src="img/a7.jpg" />
+                        <img alt="image" className="img-circle" src="content/img/a7.jpg" />
                       </a>
                       <div className="media-body">
                         <small className="pull-right">46h ago</small>
@@ -41,7 +42,7 @@ export default class Header extends React.Component {
                   <li>
                     <div className="dropdown-messages-box">
                       <a href="profile.html" className="pull-left">
-                        <img alt="image" className="img-circle" src="img/a4.jpg" />
+                        <img alt="image" className="img-circle" src="content/img/a4.jpg" />
                       </a>
                       <div className="media-body ">
                         <small className="pull-right text-navy">5h ago</small>
@@ -54,7 +55,7 @@ export default class Header extends React.Component {
                   <li>
                     <div className="dropdown-messages-box">
                       <a href="profile.html" className="pull-left">
-                        <img alt="image" className="img-circle" src="img/profile.jpg" />
+                        <img alt="image" className="img-circle" src="content/img/profile.jpg" />
                       </a>
                       <div className="media-body ">
                         <small className="pull-right">23h ago</small>
@@ -116,9 +117,9 @@ export default class Header extends React.Component {
                 </ul>
               </li>
               <li>
-                <a href="login.html">
+                <Link to={'/logout'}>
                   <i className="fa fa-sign-out" /> Log out
-                </a>
+                </Link>
               </li>
               <li>
                 <a className="right-sidebar-toggle">

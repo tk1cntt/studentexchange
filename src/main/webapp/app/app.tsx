@@ -14,7 +14,6 @@ import { setLocale } from 'app/shared/reducers/locale';
 import Header from 'app/shared/layout/header/header';
 import Footer from 'app/shared/layout/footer/footer';
 import Login from 'app/modules/login/main';
-import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import ErrorBoundary from 'app/shared/error/error-boundary';
 import { AUTHORITIES } from 'app/config/constants';
@@ -34,7 +33,6 @@ export class App extends React.Component<IAppProps> {
         <Login />
       ) : (
         <div>
-          <Sidebar isAuthenticated={this.props.isAuthenticated} />
           <AppRoutes />
         </div>
       );

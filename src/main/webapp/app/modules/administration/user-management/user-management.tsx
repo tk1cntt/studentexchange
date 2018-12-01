@@ -66,7 +66,7 @@ export class UserManagement extends React.Component<IUserManagementProps, IPagin
     const { users, account, match, totalItems } = this.props;
     return (
       <div>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="user-management" activeSubMenu="setting" />
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="administration" activeSubMenu="user-management" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <h2 id="user-management-page-heading">
@@ -91,10 +91,6 @@ export class UserManagement extends React.Component<IUserManagementProps, IPagin
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
-                <th className="hand" onClick={this.sort('langKey')}>
-                  <Translate contentKey="userManagement.langKey">Lang Key</Translate>
-                  <FontAwesomeIcon icon="sort" />
-                </th>
                 <th>
                   <Translate contentKey="userManagement.profiles">Profiles</Translate>
                 </th>
@@ -134,7 +130,6 @@ export class UserManagement extends React.Component<IUserManagementProps, IPagin
                       </Button>
                     )}
                   </td>
-                  <td>{user.langKey}</td>
                   <td>
                     {user.authorities
                       ? user.authorities.map((authority, j) => (
@@ -163,18 +158,6 @@ export class UserManagement extends React.Component<IUserManagementProps, IPagin
                         <FontAwesomeIcon icon="pencil-alt" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`${match.url}/${user.login}/delete`}
-                        color="danger"
-                        size="sm"
-                        disabled={account.login === user.login}
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
                         </span>
                       </Button>
                     </div>

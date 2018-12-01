@@ -94,21 +94,6 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
                   }}
                   value={account.email}
                 />
-                {/* Language key */}
-                <AvField
-                  type="select"
-                  id="langKey"
-                  name="langKey"
-                  className="form-control"
-                  label={translate('settings.form.language')}
-                  value={account.langKey}
-                >
-                  {locales.map(locale => (
-                    <option value={locale} key={locale}>
-                      {languages[locale].name}
-                    </option>
-                  ))}
-                </AvField>
                 <Button color="primary" type="submit">
                   <Translate contentKey="settings.form.button">Save</Translate>
                 </Button>

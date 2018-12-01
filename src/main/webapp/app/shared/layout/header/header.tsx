@@ -19,7 +19,7 @@ export default class Header extends React.Component {
             </div>
             <ul className="nav navbar-top-links navbar-right">
               <li>
-                <span className="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+                <span className="m-r-sm text-muted welcome-message">Welcome to Student Exchange.</span>
               </li>
               <li className="dropdown">
                 <a className="dropdown-toggle count-info" data-toggle="dropdown" href="#">

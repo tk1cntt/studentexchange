@@ -1,16 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
+
+export interface IHeaderProps extends StateProps, DispatchProps {}
 
 export interface IHeaderState {
   showModal: boolean;
 }
 
-export default class Header extends React.Component<IHeaderState> {
+export class Header extends React.Component<IHeaderProps, IHeaderState> {
   state: IHeaderState = {
     showModal: true
   };
 
-  openMiniNavbar = () => {
+  openMiniNavbar = () => () => {
     if (this.state.showModal) {
       document.body.classList.add('mini-navbar');
     } else {
@@ -25,7 +28,7 @@ export default class Header extends React.Component<IHeaderState> {
         <div className="row border-bottom">
           <nav className="navbar navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
             <div className="navbar-header">
-              <div className="navbar-minimalize minimalize-styl-2 btn btn-primary" onClick={this.openMiniNavbar.bind(this)}>
+              <div className="navbar-minimalize minimalize-styl-2 btn btn-primary" onClick={this.openMiniNavbar()}>
                 <i className="fa fa-bars" />{' '}
               </div>
               <form role="search" className="navbar-form-custom" action="search_results.html">
@@ -151,3 +154,15 @@ export default class Header extends React.Component<IHeaderState> {
     );
   }
 }
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = {};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

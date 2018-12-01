@@ -14,17 +14,11 @@ export default class Sidebar extends React.Component<ISidebarProps> {
     const { activeMenu, activeSubMenu } = this.props;
 
     return (
-      <li
-        className={`${activeMenu === 'user-management' ? 'active' : ''}`}
-        aria-expanded={`${activeMenu === 'user-management' ? true : false}`}
-      >
+      <li className={`${activeMenu === 'user-management' ? 'active' : ''}`}>
         <Link to={'/account/settings'}>
           <i className="fa fa-user" /> <span className="nav-label">User management</span> <span className="fa arrow" />
         </Link>
-        <ul
-          className={`${activeMenu === 'user-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}
-          aria-expanded={`${activeMenu === 'user-management' ? true : false}`}
-        >
+        <ul className={`${activeMenu === 'user-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
           <li className={`${activeSubMenu === 'setting' ? 'active' : ''}`}>
             <Link to={'/account/settings'}>
               <FontAwesomeIcon icon="wrench" fixedWidth /> Profile

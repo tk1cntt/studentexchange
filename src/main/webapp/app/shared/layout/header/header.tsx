@@ -1,16 +1,33 @@
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 
-export default class Header extends React.Component {
+export interface IHeaderState {
+  showModal: boolean;
+}
+
+export default class Header extends React.Component<IHeaderState> {
+  state: IHeaderState = {
+    showModal: true
+  };
+
+  openMiniNavbar = () => {
+    if (this.state.showModal) {
+      document.body.classList.add('mini-navbar');
+    } else {
+      document.body.classList.remove('mini-navbar');
+    }
+    this.setState({ showModal: !this.state.showModal });
+  };
+
   render() {
     return (
       <>
         <div className="row border-bottom">
           <nav className="navbar navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
             <div className="navbar-header">
-              <a className="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+              <div className="navbar-minimalize minimalize-styl-2 btn btn-primary" onClick={this.openMiniNavbar.bind(this)}>
                 <i className="fa fa-bars" />{' '}
-              </a>
+              </div>
               <form role="search" className="navbar-form-custom" action="search_results.html">
                 <div className="form-group">
                   <input type="text" placeholder="Search for something..." className="form-control" name="top-search" id="top-search" />

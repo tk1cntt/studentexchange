@@ -14,19 +14,25 @@ export default class Sidebar extends React.Component<ISidebarProps> {
     const { activeMenu, activeSubMenu } = this.props;
 
     return (
-      <li className={`${activeMenu === 'user-management' ? 'active' : ''}`}>
+      <li
+        className={`${activeMenu === 'user-management' ? 'active' : ''}`}
+        aria-expanded={`${activeMenu === 'user-management' ? true : false}`}
+      >
         <Link to={'/account/settings'}>
-          <i className="fa fa-cog" /> <span className="nav-label">User management</span> <span className="fa arrow" />
+          <i className="fa fa-user" /> <span className="nav-label">User management</span> <span className="fa arrow" />
         </Link>
-        <ul className="nav nav-second-level">
+        <ul
+          className={`${activeMenu === 'user-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}
+          aria-expanded={`${activeMenu === 'user-management' ? true : false}`}
+        >
           <li className={`${activeSubMenu === 'setting' ? 'active' : ''}`}>
             <Link to={'/account/settings'}>
-              <FontAwesomeIcon icon="wrench" fixedWidth /> <Translate contentKey="global.menu.account.settings">Profile</Translate>
+              <FontAwesomeIcon icon="wrench" fixedWidth /> Profile
             </Link>
           </li>
           <li className={`${activeSubMenu === 'change-password' ? 'active' : ''}`}>
             <Link to={'/account/password'}>
-              <FontAwesomeIcon icon="clock" fixedWidth /> <Translate contentKey="global.menu.account.password">Change Password</Translate>
+              <FontAwesomeIcon icon="clock" fixedWidth /> Password
             </Link>
           </li>
         </ul>
@@ -42,36 +48,36 @@ export default class Sidebar extends React.Component<ISidebarProps> {
         <Link to={'/admin/user-management'}>
           <i className="fa fa-cog" /> <span className="nav-label">Administration</span> <span className="fa arrow" />
         </Link>
-        <ul className="nav nav-second-level">
+        <ul className={`${activeMenu === 'administration' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
           <li className={`${activeSubMenu === 'user-management' ? 'active' : ''}`}>
             <Link to={'/admin/user-management'}>
-              <FontAwesomeIcon icon="user" fixedWidth />{' '}
-              <Translate contentKey="global.menu.admin.userManagement">User management</Translate>
+              <FontAwesomeIcon icon="user" fixedWidth />
+              Users
             </Link>
           </li>
           <li className={`${activeSubMenu === 'metrics' ? 'active' : ''}`}>
             <Link to={'/admin/metrics'}>
-              <FontAwesomeIcon icon="tachometer-alt" fixedWidth /> <Translate contentKey="global.menu.admin.metrics">Metrics</Translate>
+              <FontAwesomeIcon icon="tachometer-alt" fixedWidth /> Metrics
             </Link>
           </li>
           <li className={`${activeSubMenu === 'health' ? 'active' : ''}`}>
             <Link to={'/admin/health'}>
-              <FontAwesomeIcon icon="heart" fixedWidth /> <Translate contentKey="global.menu.admin.health">Health</Translate>
+              <FontAwesomeIcon icon="heart" fixedWidth /> Health
             </Link>
           </li>
           <li className={`${activeSubMenu === 'configuration' ? 'active' : ''}`}>
             <Link to={'/admin/configuration'}>
-              <FontAwesomeIcon icon="list" fixedWidth /> <Translate contentKey="global.menu.admin.configuration">Configuration</Translate>
+              <FontAwesomeIcon icon="list" fixedWidth /> Configuration
             </Link>
           </li>
           <li className={`${activeSubMenu === 'audits' ? 'active' : ''}`}>
             <Link to={'/admin/audits'}>
-              <FontAwesomeIcon icon="bell" fixedWidth /> <Translate contentKey="global.menu.admin.audits">Audits</Translate>
+              <FontAwesomeIcon icon="bell" fixedWidth /> Audits
             </Link>
           </li>
           <li className={`${activeSubMenu === 'logs' ? 'active' : ''}`}>
             <Link to={'/admin/logs'}>
-              <FontAwesomeIcon icon="tasks" fixedWidth /> <Translate contentKey="global.menu.admin.logs">Logs</Translate>
+              <FontAwesomeIcon icon="tasks" fixedWidth /> Logs
             </Link>
           </li>
         </ul>
@@ -129,11 +135,6 @@ export default class Sidebar extends React.Component<ISidebarProps> {
             </li>
             {this.userMenu()}
             {this.adminMenu()}
-            <li>
-              <a href="layouts.html">
-                <i className="fa fa-th-large" /> <span className="nav-label">Layouts</span>
-              </a>
-            </li>
           </ul>
         </div>
       </nav>

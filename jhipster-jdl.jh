@@ -1,0 +1,197 @@
+entity Country {
+   name String,
+   enabled Boolean,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+entity Region {
+   name String,
+   enabled Boolean,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+entity City {
+   name String,
+   index Integer,
+   enabled Boolean,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+entity District {
+   name String,
+   enabled Boolean,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+entity Ward {
+   name String,
+   enabled Boolean,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToMany {
+   Region{user(login)} to User
+}
+
+relationship OneToMany {
+   Country{cities} to City,
+   City{districts} to District,
+   Region{countries} to Country,
+   District{wards} to Ward
+}
+
+enum SchoolStatus {
+   FRESHMAN, SOPHOMORE, JUNIOR, SENIOR, COLLEGE_GRADUATE, GRADUATE_SCHOOL, OTHER
+}
+
+enum Gender {
+   MALE, FEMALE, OTHER
+}
+
+entity Profile {
+   fullName String,
+   gender Gender,
+   school SchoolStatus,
+   email String,
+   mobile String,
+   skype String,
+   currentAddress String,
+   citizenship String,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   Profile{createBy(login)} to User,
+   Profile{updateBy(login)} to User
+}
+
+enum StatusType {
+   OPEN, PENDING, PAID, CANCELED, EXPIRED, SOLD
+}
+
+entity Article {
+   avatar ImageBlob,
+   title String,
+   summary String,
+   content String,
+   statusType StatusType,
+   hits Integer,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   Article{category(name)} to Category,
+   Article{createBy(login)} to User,
+   Article{updateBy(login)} to User
+}
+
+entity Category {
+   name String,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   Category{parent} to Category
+}
+
+enum CustomerLevel {
+   NORMAL, SILVER, GOLD, PLATINUM
+}
+
+enum PaymentMethod {
+   CASH, BANK_TRANSFER, CARD, PAYPAL
+}
+
+enum PaymentStatusType {
+   PENDING, PAID, CANCELED
+}
+
+entity Product {
+   name String,
+   price Float,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   Product{createBy(login)} to User,
+   Product{updateBy(login)} to User
+}
+
+relationship OneToOne {
+   Product{article} to Article,
+}
+
+enum OrderStatus {
+   PENDING, PAID, CANCELED
+}
+
+entity ShoppingCart {
+   orderStatus OrderStatus,
+   orderDate LocalDate,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   ShoppingCart{createBy(login)} to User,
+   ShoppingCart{updateBy(login)} to User
+}
+
+entity OrderItem {
+   quantity Integer,
+   amount Float,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship OneToMany {
+   ShoppingCart{items} to OrderItem
+}
+
+relationship ManyToOne {
+   OrderItem{product} to Product,
+   OrderItem{createBy(login)} to User,
+   OrderItem{updateBy(login)} to User
+}
+
+entity Payment {
+   discountCode String,
+   discountAmount Float,
+   paymentCode String,
+   paymentAmount Float,
+   paymentDate LocalDate,
+   paymentStatus PaymentStatusType,
+   paymentMethod PaymentMethod,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   Payment{order} to ShoppingCart,
+   Payment{customer(login)} to User,
+   Payment{createBy(login)} to User,
+   Payment{updateBy(login)} to User
+}
+
+// Set pagination options
+paginate Region, City, District, Ward, Country with pagination
+
+paginate Profile, Article, Category with pagination
+
+paginate Payment with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceClass
+
+filter Region, City, District, Ward, Country, Profile, Article, Category, Payment

@@ -72,7 +72,7 @@ enum StatusType {
    OPEN, PENDING, PAID, CANCELED, EXPIRED, SOLD
 }
 
-entity Order {
+entity MyOrder {
    code String,
    avatar String,
    amountDiscount Float,
@@ -82,8 +82,8 @@ entity Order {
 }
 
 relationship ManyToOne {
-   Order{createBy(login)} to User,
-   Order{updateBy(login)} to User
+   MyOrder{createBy(login)} to User,
+   MyOrder{updateBy(login)} to User
 }
 
 enum OrderStatus {
@@ -98,7 +98,7 @@ entity OrderHistory {
 }
 
 relationship ManyToOne {
-   OrderHistory{order(code)} to Order
+   OrderHistory{order(code)} to MyOrder
    OrderHistory{createBy(login)} to User,
    OrderHistory{updateBy(login)} to User
 }
@@ -137,8 +137,12 @@ entity OrderItem {
    updateAt LocalDate
 }
 
+entity OrderPackage {
+
+}
+
 relationship ManyToOne {
-   OrderItem{order(code)} to Order,
+   OrderItem{order(code)} to MyOrder,
    OrderItem{createBy(login)} to User,
    OrderItem{updateBy(login)} to User
 }
@@ -157,7 +161,7 @@ entity OrderTransaction {
 }
 
 relationship ManyToOne {
-   OrderTransaction{order(code)} to Order,
+   OrderTransaction{order(code)} to MyOrder,
    OrderTransaction{createBy(login)} to User,
    OrderTransaction{updateBy(login)} to User
 }
@@ -167,12 +171,36 @@ enum CommentType {
 }
 
 entity OrderComment {
-   message String
+   message String,
+   sender String,
+   type CommentType,
+   createAt LocalDate
+}
+
+relationship ManyToOne {
+   OrderTransaction{order(code)} to MyOrder,
+   OrderTransaction{createBy(login)} to User,
+   OrderTransaction{updateBy(login)} to User
 }
 
 entity ShoppingCart {
-   orderStatus OrderStatus,
-   orderDate LocalDate,
+   aliwangwang String,
+   depositAmount Float,
+   depositRatio Float,
+   serviceFee Float,
+   serviceFeeDiscount Float,
+   itemChecking Bool,
+   itemWoodCrating Bool,
+   shopId String,
+   shopLink String,
+   shopName String,
+   shopNote String,
+   sourceData String,
+   totalAmount Float,
+   totalLink Integer,
+   totalQuantity Integer,
+   finalAmount Float,
+   website String,
    createAt LocalDate,
    updateAt LocalDate
 }
@@ -182,63 +210,40 @@ relationship ManyToOne {
    ShoppingCart{updateBy(login)} to User
 }
 
-entity ShoppingCartByShop {
-   serviceFee Float,
-   serviceFeeDiscount Float,
-   aliwangwang String,
-   shopId String,
-   shopLink String,
-   shopName String,
-   sourceData String,
-   totalAmount Float,
-   totalLink Float,
-   totalQuantity Float,
-   website String,
-   createAt LocalDate,
-   updateAt LocalDate
-}
-
-relationship OneToOne {
-   ShoppingCartByShop{createBy(login)} to User,
-   ShoppingCartByShop{updateBy(login)} to User
-}
-
 entity ShoppingCartItem {
-   avatar String,
-   originLink String,
-   name String,
-   note String,
-   price Float,
-   priceNDT Float,
+   itemId String,
+   itemImage String,
+   itemLink String,
+   itemPrice Float,
+   itemPriceNDT Float,
+   itemNote String,
    propertiesId String,
    propertiesImage String,
    propertiesMD5 String,
    propertiesName String,
    propertiesType String,
-   quantityOrder Integer,
-   quantityPending Integer,
-   quantityReceived Integer,
-   totalPrice Float,
-   totalPriceNDT Float,
-   website String,
+   quantity Integer,
+   requireMin Integer,
+   totalAmount Float,
+   totalAmountNDT Float,
    createAt LocalDate,
    updateAt LocalDate
 }
 
-relationship OneToMany {
-   ShoppingCartByShop to ShoppingCartItem
+relationship ManyToOne {
+   ShoppingCartItem to ShoppingCart
+   ShoppingCartItem{createBy(login)} to User,
+   ShoppingCartItem{updateBy(login)} to User
 }
 
 // Set pagination options
 paginate Region, City, District, Ward, Country with pagination
 
-paginate Profile, Article, Category with pagination
-
-paginate Payment with pagination
+paginate Profile with pagination
 
 dto * with mapstruct
 
 // Set service options to all except few
 service all with serviceClass
 
-filter Region, City, District, Ward, Country, Profile, Article, Category, Payment
+filter Region, City, District, Ward, Country, Profile

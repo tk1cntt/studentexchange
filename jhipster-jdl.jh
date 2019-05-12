@@ -45,10 +45,6 @@ relationship OneToMany {
    District{wards} to Ward
 }
 
-enum SchoolStatus {
-   FRESHMAN, SOPHOMORE, JUNIOR, SENIOR, COLLEGE_GRADUATE, GRADUATE_SCHOOL, OTHER
-}
-
 enum Gender {
    MALE, FEMALE, OTHER
 }
@@ -56,50 +52,55 @@ enum Gender {
 entity Profile {
    fullName String,
    gender Gender,
-   school SchoolStatus,
    email String,
    mobile String,
-   skype String,
+   address String,
    currentAddress String,
    citizenship String,
    createAt LocalDate,
    updateAt LocalDate
 }
 
-relationship ManyToOne {
+relationship OneToOne {
    Profile{createBy(login)} to User,
-   Profile{updateBy(login)} to User
+   Profile{updateBy(login)} to User,
+   Profile{city(name)} to City,
+   Profile{district(name)} to District
 }
 
 enum StatusType {
    OPEN, PENDING, PAID, CANCELED, EXPIRED, SOLD
 }
 
-entity Article {
-   avatar ImageBlob,
-   title String,
-   summary String,
-   content String,
-   statusType StatusType,
-   hits Integer,
+entity Order {
+   code String,
+   avatar String,
+   amountDiscount Float,
+   amountPaid Float,
    createAt LocalDate,
    updateAt LocalDate
 }
 
 relationship ManyToOne {
-   Article{category(name)} to Category,
-   Article{createBy(login)} to User,
-   Article{updateBy(login)} to User
+   Order{createBy(login)} to User,
+   Order{updateBy(login)} to User
 }
 
-entity Category {
-   name String,
+enum OrderStatus {
+  DEPOSITED, ARE_BUYING, PURCHASED, SELLER_DELIVERY, WAREHOUSE_CHINA, DELIVERING_CHINA_VIETNAM, WAREHOUSE_VIETNAM, DELIVERY_REQUIREMENTS, DELIVERING_VIETNAM, DELIVERED, CANCELLED, LOST, RETURN
+}
+
+entity OrderHistory {
+   status OrderStatus,
+   statusName String,
    createAt LocalDate,
    updateAt LocalDate
 }
 
 relationship ManyToOne {
-   Category{parent} to Category
+   OrderHistory{order(code)} to Order
+   OrderHistory{createBy(login)} to User,
+   OrderHistory{updateBy(login)} to User
 }
 
 enum CustomerLevel {
@@ -114,24 +115,59 @@ enum PaymentStatusType {
    PENDING, PAID, CANCELED
 }
 
-entity Product {
+entity OrderItem {
+   avatar String,
+   originLink String,
    name String,
+   note String,
    price Float,
+   priceNDT Float,
+   propertiesId String,
+   propertiesImage String,
+   propertiesMD5 String,
+   propertiesName String,
+   propertiesType String,
+   quantityOrder Integer,
+   quantityPending Integer,
+   quantityReceived Integer,
+   totalPrice Float,
+   totalPriceNDT Float,
+   website String,
    createAt LocalDate,
    updateAt LocalDate
 }
 
 relationship ManyToOne {
-   Product{createBy(login)} to User,
-   Product{updateBy(login)} to User
+   OrderItem{order(code)} to Order,
+   OrderItem{createBy(login)} to User,
+   OrderItem{updateBy(login)} to User
 }
 
-relationship OneToOne {
-   Product{article} to Article,
+enum TransactionType {
+   DEPOSIT, ORDER_PAYMENT
 }
 
-enum OrderStatus {
-   PENDING, PAID, CANCELED
+entity OrderTransaction {
+   amount OrderStatus,
+   note String,
+   status TransactionType,
+   orderDate LocalDate,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   OrderTransaction{order(code)} to Order,
+   OrderTransaction{createBy(login)} to User,
+   OrderTransaction{updateBy(login)} to User
+}
+
+enum CommentType {
+   CUSTOMER_LOG, CUSTOMER_CHAT, STAFF_LOG, STAFF_CHAT, SYSTEM_LOG
+}
+
+entity OrderComment {
+   message String
 }
 
 entity ShoppingCart {
@@ -146,40 +182,51 @@ relationship ManyToOne {
    ShoppingCart{updateBy(login)} to User
 }
 
-entity OrderItem {
-   quantity Integer,
-   amount Float,
+entity ShoppingCartByShop {
+   serviceFee Float,
+   serviceFeeDiscount Float,
+   aliwangwang String,
+   shopId String,
+   shopLink String,
+   shopName String,
+   sourceData String,
+   totalAmount Float,
+   totalLink Float,
+   totalQuantity Float,
+   website String,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship OneToOne {
+   ShoppingCartByShop{createBy(login)} to User,
+   ShoppingCartByShop{updateBy(login)} to User
+}
+
+entity ShoppingCartItem {
+   avatar String,
+   originLink String,
+   name String,
+   note String,
+   price Float,
+   priceNDT Float,
+   propertiesId String,
+   propertiesImage String,
+   propertiesMD5 String,
+   propertiesName String,
+   propertiesType String,
+   quantityOrder Integer,
+   quantityPending Integer,
+   quantityReceived Integer,
+   totalPrice Float,
+   totalPriceNDT Float,
+   website String,
    createAt LocalDate,
    updateAt LocalDate
 }
 
 relationship OneToMany {
-   ShoppingCart{items} to OrderItem
-}
-
-relationship ManyToOne {
-   OrderItem{product} to Product,
-   OrderItem{createBy(login)} to User,
-   OrderItem{updateBy(login)} to User
-}
-
-entity Payment {
-   discountCode String,
-   discountAmount Float,
-   paymentCode String,
-   paymentAmount Float,
-   paymentDate LocalDate,
-   paymentStatus PaymentStatusType,
-   paymentMethod PaymentMethod,
-   createAt LocalDate,
-   updateAt LocalDate
-}
-
-relationship ManyToOne {
-   Payment{order} to ShoppingCart,
-   Payment{customer(login)} to User,
-   Payment{createBy(login)} to User,
-   Payment{updateBy(login)} to User
+   ShoppingCartByShop to ShoppingCartItem
 }
 
 // Set pagination options

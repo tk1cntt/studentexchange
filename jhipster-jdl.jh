@@ -55,8 +55,6 @@ entity Profile {
    email String,
    mobile String,
    address String,
-   currentAddress String,
-   citizenship String,
    createAt LocalDate,
    updateAt LocalDate
 }
@@ -68,6 +66,22 @@ relationship OneToOne {
    Profile{district(name)} to District
 }
 
+entity UserShippingAddress {
+   name String,
+   address String,
+   mobile String,
+   note String,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   UserShippingAddress{createBy(login)} to User,
+   UserShippingAddress{updateBy(login)} to User,
+   UserShippingAddress{city} to City,
+   UserShippingAddress{district} to District
+}
+
 enum StatusType {
    OPEN, PENDING, PAID, CANCELED, EXPIRED, SOLD
 }
@@ -77,11 +91,53 @@ entity MyOrder {
    avatar String,
    amountDiscount Float,
    amountPaid Float,
+   depositAmount Float,
+   depositRatio Float,
+   depositTime LocalDate,
+   domesticShippingChinaFeeNDT Float,
+   domesticShippingChinaFee Float,
+   domesticShippingVietNamFee Float,
+   quantityOrder Integer,
+   quantityPending Integer,
+   quantityRecived Integer,
+   rate Integer,
+   receiverName String,
+   receiverAddress String,
+   receiverMobile String,
+   receiverNote String,
+   refundAmountByAlipay Float,
+   refundAmountByComplaint Float,
+   refundAmountByOrder Float,
+   refundAmountPending Float,
+   shippingChinaVietNamFee Float,
+   shippingChinaVietNamFeeDiscount Float,
+   shopAliwang String,
+   shopId String,
+   shopLink String,
+   shopName String,
+   website String,
+   websiteCode String,
+   websiteLadingCode String,
+   status OrderStatus,
+   statusName String,
+   statusStyle String,
+   tallyFee Integer,
+   totalAmount Float,
+   totalAmountNDT Float,
+   totalPaidByCustomer Float,
+   serviceFee Float,
+   serviceFeeDiscount Float,
+   totalServiceFee Float,
+   finalAmount Float,
    createAt LocalDate,
    updateAt LocalDate
 }
 
 relationship ManyToOne {
+   MyOrder{buyer(login)} to User,
+   MyOrder{chinaStocker(login)} to User,
+   MyOrder{vietnamStocker(login)} to User,
+   MyOrder{exporter(login)} to User,
    MyOrder{createBy(login)} to User,
    MyOrder{updateBy(login)} to User
 }
@@ -92,9 +148,8 @@ enum OrderStatus {
 
 entity OrderHistory {
    status OrderStatus,
-   statusName String,
-   createAt LocalDate,
-   updateAt LocalDate
+   description String,
+   createAt LocalDate
 }
 
 relationship ManyToOne {
@@ -137,22 +192,50 @@ entity OrderItem {
    updateAt LocalDate
 }
 
-entity OrderPackage {
-
-}
-
 relationship ManyToOne {
    OrderItem{order(code)} to MyOrder,
    OrderItem{createBy(login)} to User,
    OrderItem{updateBy(login)} to User
 }
 
+entity OrderPackage {
+   ladingCode String,
+   heightPackage Float,
+   widthPackage Float,
+   lengthPackage Float,
+   netWeight Float,
+   status String,
+   statusName String,
+   statusStyle String,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+entity OrderPackageHistory {
+   status String,
+   statusName String,
+   statusStyle String,
+   warehouse String,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   OrderPackage{order(code)} to MyOrder,
+   OrderPackage{warehouse} to Warehouse,
+   OrderPackage{createBy(login)} to User,
+   OrderPackage{updateBy(login)} to User,
+   OrderPackageHistory{order(code)} to MyOrder,
+   OrderPackageHistory{createBy(login)} to User,
+   OrderPackageHistory{updateBy(login)} to User
+}
+
 enum TransactionType {
-   DEPOSIT, ORDER_PAYMENT
+   DEPOSIT, ORDER_PAYMENT, REFUND
 }
 
 entity OrderTransaction {
-   amount OrderStatus,
+   amount Float,
    note String,
    status TransactionType,
    orderDate LocalDate,
@@ -162,6 +245,7 @@ entity OrderTransaction {
 
 relationship ManyToOne {
    OrderTransaction{order(code)} to MyOrder,
+   OrderTransaction{approver(login)} to User,
    OrderTransaction{createBy(login)} to User,
    OrderTransaction{updateBy(login)} to User
 }
@@ -189,8 +273,8 @@ entity ShoppingCart {
    depositRatio Float,
    serviceFee Float,
    serviceFeeDiscount Float,
-   itemChecking Bool,
-   itemWoodCrating Bool,
+   itemChecking Boolean,
+   itemWoodCrating Boolean,
    shopId String,
    shopLink String,
    shopName String,
@@ -234,6 +318,41 @@ relationship ManyToOne {
    ShoppingCartItem to ShoppingCart
    ShoppingCartItem{createBy(login)} to User,
    ShoppingCartItem{updateBy(login)} to User
+}
+
+entity Warehouse {
+   name String,
+   address String,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+entity Delivery {
+   deliveryMethod String,
+   deliveryMethodName String,
+   exportTime LocalDate,
+   packedTime LocalDate,
+   status String,
+   statusName String,
+   statusStyle String,
+   totalWeight Float,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+entity DeliveryPackage {
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   DeliveryPackage{package} to OrderPackage,
+   DeliveryPackage{delivery} to Delivery,
+   DeliveryPackage{createBy(login)} to User,
+   DeliveryPackage{updateBy(login)} to User
+   Delivery{warehouse} to Warehouse,
+   Delivery{createBy(login)} to User,
+   Delivery{updateBy(login)} to User
 }
 
 // Set pagination options

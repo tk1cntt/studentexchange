@@ -10,7 +10,9 @@ export const SERVER_API_URL = 'http://api.tinvang.com.vn';
 
 export const AUTHORITIES = {
   ADMIN: 'ROLE_ADMIN',
-  USER: 'ROLE_USER'
+  USER: 'ROLE_USER',
+  MANAGER: 'ROLE_MANAGER',
+  STAFF: 'ROLE_STAFF'
 };
 
 export const messages = {

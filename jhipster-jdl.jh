@@ -49,7 +49,7 @@ enum Gender {
    MALE, FEMALE, OTHER
 }
 
-entity Profile {
+entity UserProfile {
    fullName String,
    gender Gender,
    email String,
@@ -60,10 +60,10 @@ entity Profile {
 }
 
 relationship OneToOne {
-   Profile{createBy(login)} to User,
-   Profile{updateBy(login)} to User,
-   Profile{city(name)} to City,
-   Profile{district(name)} to District
+   UserProfile{createBy(login)} to User,
+   UserProfile{updateBy(login)} to User,
+   UserProfile{city(name)} to City,
+   UserProfile{district(name)} to District
 }
 
 entity UserShippingAddress {
@@ -86,7 +86,7 @@ enum StatusType {
    OPEN, PENDING, PAID, CANCELED, EXPIRED, SOLD
 }
 
-entity MyOrder {
+entity UserOrder {
    code String,
    avatar String,
    amountDiscount Float,
@@ -96,10 +96,10 @@ entity MyOrder {
    depositTime LocalDate,
    domesticShippingChinaFeeNDT Float,
    domesticShippingChinaFee Float,
-   domesticShippingVietNamFee Float,
+   domesticShippingVietnamFee Float,
    quantityOrder Integer,
    quantityPending Integer,
-   quantityRecived Integer,
+   quantityReceived Integer,
    rate Integer,
    receiverName String,
    receiverAddress String,
@@ -109,8 +109,8 @@ entity MyOrder {
    refundAmountByComplaint Float,
    refundAmountByOrder Float,
    refundAmountPending Float,
-   shippingChinaVietNamFee Float,
-   shippingChinaVietNamFeeDiscount Float,
+   shippingChinaVietnamFee Float,
+   shippingChinaVietnamFeeDiscount Float,
    shopAliwang String,
    shopId String,
    shopLink String,
@@ -134,12 +134,12 @@ entity MyOrder {
 }
 
 relationship ManyToOne {
-   MyOrder{buyer(login)} to User,
-   MyOrder{chinaStocker(login)} to User,
-   MyOrder{vietnamStocker(login)} to User,
-   MyOrder{exporter(login)} to User,
-   MyOrder{createBy(login)} to User,
-   MyOrder{updateBy(login)} to User
+   UserOrder{buyer(login)} to User,
+   UserOrder{chinaStocker(login)} to User,
+   UserOrder{vietnamStocker(login)} to User,
+   UserOrder{exporter(login)} to User,
+   UserOrder{createBy(login)} to User,
+   UserOrder{updateBy(login)} to User
 }
 
 enum OrderStatus {
@@ -153,7 +153,7 @@ entity OrderHistory {
 }
 
 relationship ManyToOne {
-   OrderHistory{order(code)} to MyOrder
+   OrderHistory{order(code)} to UserOrder
    OrderHistory{createBy(login)} to User,
    OrderHistory{updateBy(login)} to User
 }
@@ -193,7 +193,7 @@ entity OrderItem {
 }
 
 relationship ManyToOne {
-   OrderItem{order(code)} to MyOrder,
+   OrderItem{order(code)} to UserOrder,
    OrderItem{createBy(login)} to User,
    OrderItem{updateBy(login)} to User
 }
@@ -221,11 +221,11 @@ entity OrderPackageHistory {
 }
 
 relationship ManyToOne {
-   OrderPackage{order(code)} to MyOrder,
+   OrderPackage{order(code)} to UserOrder,
    OrderPackage{warehouse} to Warehouse,
    OrderPackage{createBy(login)} to User,
    OrderPackage{updateBy(login)} to User,
-   OrderPackageHistory{order(code)} to MyOrder,
+   OrderPackageHistory{order(code)} to UserOrder,
    OrderPackageHistory{createBy(login)} to User,
    OrderPackageHistory{updateBy(login)} to User
 }
@@ -244,7 +244,7 @@ entity OrderTransaction {
 }
 
 relationship ManyToOne {
-   OrderTransaction{order(code)} to MyOrder,
+   OrderTransaction{order(code)} to UserOrder,
    OrderTransaction{approver(login)} to User,
    OrderTransaction{createBy(login)} to User,
    OrderTransaction{updateBy(login)} to User
@@ -262,7 +262,7 @@ entity OrderComment {
 }
 
 relationship ManyToOne {
-   OrderTransaction{order(code)} to MyOrder,
+   OrderTransaction{order(code)} to UserOrder,
    OrderTransaction{createBy(login)} to User,
    OrderTransaction{updateBy(login)} to User
 }
@@ -358,11 +358,11 @@ relationship ManyToOne {
 // Set pagination options
 paginate Region, City, District, Ward, Country with pagination
 
-paginate Profile with pagination
+paginate UserProfile with pagination
 
 dto * with mapstruct
 
 // Set service options to all except few
 service all with serviceClass
 
-filter Region, City, District, Ward, Country, Profile
+filter Region, City, District, Ward, Country, UserProfile

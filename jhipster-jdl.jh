@@ -54,7 +54,6 @@ entity UserProfile {
    gender Gender,
    email String,
    mobile String,
-   address String,
    createAt LocalDate,
    updateAt LocalDate
 }
@@ -71,6 +70,7 @@ entity UserShippingAddress {
    address String,
    mobile String,
    note String,
+   isShippingAddress Boolean,
    createAt LocalDate,
    updateAt LocalDate
 }
@@ -80,6 +80,10 @@ relationship ManyToOne {
    UserShippingAddress{updateBy(login)} to User,
    UserShippingAddress{city} to City,
    UserShippingAddress{district} to District
+}
+
+relationship OneToMany {
+   UserProfile{address} to UserShippingAddress
 }
 
 enum StatusType {
@@ -218,6 +222,10 @@ entity OrderPackageHistory {
    warehouse String,
    createAt LocalDate,
    updateAt LocalDate
+}
+
+relationship OneToMany {
+   OrderPackage{packages} to OrderPackageHistory
 }
 
 relationship ManyToOne {

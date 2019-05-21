@@ -267,6 +267,14 @@ relationship ManyToOne {
    OrderTransaction{updateBy(login)} to User
 }
 
+relationship OneToMany {
+   UserOrder{items} to OrderItem,
+   UserOrder{comments} to OrderComment,
+   UserOrder{histories} to OrderHistory,
+   UserOrder{packages} to OrderPackage,
+   UserOrder{transactions} to OrderTransaction
+}
+
 entity ShoppingCart {
    aliwangwang String,
    depositAmount Float,
@@ -315,7 +323,6 @@ entity ShoppingCartItem {
 }
 
 relationship ManyToOne {
-   ShoppingCartItem to ShoppingCart
    ShoppingCartItem{createBy(login)} to User,
    ShoppingCartItem{updateBy(login)} to User
 }
@@ -346,13 +353,17 @@ entity DeliveryPackage {
 }
 
 relationship ManyToOne {
-   DeliveryPackage to OrderPackage,
-   DeliveryPackage to Delivery,
    DeliveryPackage{createBy(login)} to User,
    DeliveryPackage{updateBy(login)} to User
    Delivery{warehouse} to Warehouse,
    Delivery{createBy(login)} to User,
    Delivery{updateBy(login)} to User
+}
+
+relationship OneToMany {
+   ShoppingCart{items} to ShoppingCartItem,
+   Delivery{packages} to DeliveryPackage,
+   Delivery{orders} to OrderPackage
 }
 
 // Set pagination options

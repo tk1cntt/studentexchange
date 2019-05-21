@@ -346,8 +346,8 @@ entity DeliveryPackage {
 }
 
 relationship ManyToOne {
-   DeliveryPackage{package} to OrderPackage,
-   DeliveryPackage{delivery} to Delivery,
+   DeliveryPackage to OrderPackage,
+   DeliveryPackage to Delivery,
    DeliveryPackage{createBy(login)} to User,
    DeliveryPackage{updateBy(login)} to User
    Delivery{warehouse} to Warehouse,

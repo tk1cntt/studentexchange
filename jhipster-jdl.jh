@@ -90,7 +90,7 @@ enum StatusType {
    OPEN, PENDING, PAID, CANCELED, EXPIRED, SOLD
 }
 
-entity UserOrder {
+entity OrderCart {
    code String,
    avatar String,
    amountDiscount Float,
@@ -138,12 +138,12 @@ entity UserOrder {
 }
 
 relationship ManyToOne {
-   UserOrder{buyer(login)} to User,
-   UserOrder{chinaStocker(login)} to User,
-   UserOrder{vietnamStocker(login)} to User,
-   UserOrder{exporter(login)} to User,
-   UserOrder{createBy(login)} to User,
-   UserOrder{updateBy(login)} to User
+   OrderCart{buyer(login)} to User,
+   OrderCart{chinaStocker(login)} to User,
+   OrderCart{vietnamStocker(login)} to User,
+   OrderCart{exporter(login)} to User,
+   OrderCart{createBy(login)} to User,
+   OrderCart{updateBy(login)} to User
 }
 
 enum OrderStatus {
@@ -265,11 +265,11 @@ entity OrderComment {
 }
 
 relationship OneToMany {
-   UserOrder{items} to OrderItem,
-   UserOrder{comments} to OrderComment,
-   UserOrder{histories} to OrderHistory,
-   UserOrder{packages} to OrderPackage,
-   UserOrder{transactions} to OrderTransaction
+   OrderCart{items} to OrderItem,
+   OrderCart{comments} to OrderComment,
+   OrderCart{histories} to OrderHistory,
+   OrderCart{packages} to OrderPackage,
+   OrderCart{transactions} to OrderTransaction
 }
 
 entity ShoppingCart {

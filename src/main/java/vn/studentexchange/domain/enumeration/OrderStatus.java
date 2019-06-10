@@ -1,0 +1,8 @@
+package vn.studentexchange.domain.enumeration;
+
+/**
+ * The OrderStatus enumeration.
+ */
+public enum OrderStatus {
+    DEPOSITED, ARE_BUYING, PURCHASED, SELLER_DELIVERY, WAREHOUSE_CHINA, DELIVERING_CHINA_VIETNAM, WAREHOUSE_VIETNAM, DELIVERY_REQUIREMENTS, DELIVERING_VIETNAM, DELIVERED, CANCELLED, LOST, RETURN
+}

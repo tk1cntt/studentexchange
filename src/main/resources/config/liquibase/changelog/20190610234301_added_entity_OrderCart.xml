@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity OrderCart.
+    -->
+    <changeSet id="20190610234301-1" author="jhipster">
+        <createTable tableName="order_cart">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="avatar" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="amount_discount" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="amount_paid" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="deposit_amount" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="deposit_ratio" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="deposit_time" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="domestic_shipping_china_fee_ndt" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="domestic_shipping_china_fee" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="domestic_shipping_vietnam_fee" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="quantity_order" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="quantity_pending" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="quantity_received" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="rate" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="receiver_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="receiver_address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="receiver_mobile" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="receiver_note" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="refund_amount_by_alipay" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="refund_amount_by_complaint" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="refund_amount_by_order" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="refund_amount_pending" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="shipping_china_vietnam_fee" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="shipping_china_vietnam_fee_discount" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="shop_aliwang" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="shop_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="shop_link" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="shop_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="website" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="website_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="website_lading_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="status_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="status_style" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="tally_fee" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="total_amount" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="total_amount_ndt" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="total_paid_by_customer" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="service_fee" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="service_fee_discount" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="total_service_fee" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="final_amount" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="create_at" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="update_at" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="buyer_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="china_stocker_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="vietnam_stocker_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="exporter_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="create_by_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="update_by_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

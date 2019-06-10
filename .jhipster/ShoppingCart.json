@@ -1,0 +1,110 @@
+{
+    "name": "ShoppingCart",
+    "fields": [
+        {
+            "fieldName": "aliwangwang",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "depositAmount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "depositRatio",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "serviceFee",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "serviceFeeDiscount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "itemChecking",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "itemWoodCrating",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "shopId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "shopLink",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "shopName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "shopNote",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "sourceData",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "totalAmount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "totalLink",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "totalQuantity",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "finalAmount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "website",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createAt",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "updateAt",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "items",
+            "otherEntityName": "shoppingCartItem",
+            "otherEntityRelationshipName": "shoppingCart"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "createBy",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "updateBy",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        }
+    ],
+    "changelogDate": "20190610234308",
+    "entityTableName": "shopping_cart",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

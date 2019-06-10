@@ -1,0 +1,86 @@
+{
+    "name": "Delivery",
+    "fields": [
+        {
+            "fieldName": "deliveryMethod",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deliveryMethodName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "exportTime",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "packedTime",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "statusName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "statusStyle",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "totalWeight",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "createAt",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "updateAt",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "packages",
+            "otherEntityName": "deliveryPackage",
+            "otherEntityRelationshipName": "delivery"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "orders",
+            "otherEntityName": "orderPackage",
+            "otherEntityRelationshipName": "delivery"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "warehouse",
+            "otherEntityName": "warehouse",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "createBy",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "updateBy",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        }
+    ],
+    "changelogDate": "20190610234311",
+    "entityTableName": "delivery",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

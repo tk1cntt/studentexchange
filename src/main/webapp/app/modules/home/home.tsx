@@ -23,28 +23,28 @@ export class Home extends React.Component<IHomeProp> {
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
             <div className="col-md-3">
-              <h2>Welcome Amelia</h2>
-              <small>You have 42 messages and 6 notifications.</small>
+              <h2>Xin chào Công Công</h2>
+              <small>Lịch sử thanh toán.</small>
               <ul className="list-group clear-list m-t">
                 <li className="list-group-item fist-item">
                   <span className="pull-right">09:00 pm</span>
-                  <span className="label label-success">1</span> Please contact me
+                  <span className="label label-success">1</span> Tôi muốn huỷ đơn hàng ABC31233
                 </li>
                 <li className="list-group-item">
                   <span className="pull-right">10:16 am</span>
-                  <span className="label label-info">2</span> Sign a contract
+                  <span className="label label-info">2</span> Đơn hàng của anh chị vừa chuyển về kho Trung Quốc
                 </li>
                 <li className="list-group-item">
                   <span className="pull-right">08:22 pm</span>
-                  <span className="label label-primary">3</span> Open new shop
+                  <span className="label label-primary">3</span> Bạn đã chuyển tiền thanh toán cho đơn hàng DH12345
                 </li>
                 <li className="list-group-item">
                   <span className="pull-right">11:06 pm</span>
-                  <span className="label label-default">4</span> Call back to Sylvia
+                  <span className="label label-default">4</span> Bạn đã nạp 500.000 VNĐ vào tài khoản
                 </li>
                 <li className="list-group-item">
                   <span className="pull-right">12:00 am</span>
-                  <span className="label label-primary">5</span> Write a letter to Sandra
+                  <span className="label label-primary">5</span> Đơn hàng DH12345 đã được mua
                 </li>
               </ul>
             </div>
@@ -96,47 +96,7 @@ export class Home extends React.Component<IHomeProp> {
                   <div className="col-lg-4">
                     <div className="ibox float-e-margins">
                       <div className="ibox-title">
-                        <h5>New data for the report</h5> <span className="label label-primary">IN+</span>
-                        <div className="ibox-tools">
-                          <a className="collapse-link">
-                            <i className="fa fa-chevron-up" />
-                          </a>
-                          <a className="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i className="fa fa-wrench" />
-                          </a>
-                          <ul className="dropdown-menu dropdown-user">
-                            <li>
-                              <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                              <a href="#">Config option 2</a>
-                            </li>
-                          </ul>
-                          <a className="close-link">
-                            <i className="fa fa-times" />
-                          </a>
-                        </div>
-                      </div>
-                      <div className="ibox-content">
-                        <div>
-                          <div className="pull-right text-right">
-                            <span className="bar_dashboard">5,3,9,6,5,9,7,3,5,2,4,7,3,2,7,9,6,4,5,7,3,2,1,0,9,5,6,8,3,2,1</span>
-                            <br />
-                            <small className="font-bold">$ 20 054.43</small>
-                          </div>
-                          <h4>
-                            NYS report new data!
-                            <br />
-                            <small className="m-r">
-                              <a href="graph_flot.html"> Check the stock price! </a>{' '}
-                            </small>
-                          </h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="ibox float-e-margins">
-                      <div className="ibox-title">
-                        <h5>Read below comments</h5>
+                        <h5>Trao đổi thông tin</h5>
                         <div className="ibox-tools">
                           <a className="collapse-link">
                             <i className="fa fa-chevron-up" />
@@ -235,9 +195,9 @@ export class Home extends React.Component<IHomeProp> {
                   <div className="col-lg-4">
                     <div className="ibox float-e-margins">
                       <div className="ibox-title">
-                        <h5>Your daily feed</h5>
+                        <h5>Giỏ hàng</h5>
                         <div className="ibox-tools">
-                          <span className="label label-warning-light pull-right">10 Messages</span>
+                          <span className="label label-warning-light pull-right">10 mặt hàng trong giỏ</span>
                         </div>
                       </div>
                       <div className="ibox-content">
@@ -245,90 +205,128 @@ export class Home extends React.Component<IHomeProp> {
                           <div className="feed-activity-list">
                             <div className="feed-element">
                               <a href="profile.html" className="pull-left">
-                                <img alt="image" className="img-circle" src="content/img/profile.jpg" />
+                                <img
+                                  alt="image"
+                                  className="img-circle"
+                                  src="https://img.alicdn.com/imgextra/i1/4181336498/O1CN011xs86LyzhHw1lPj_!!4181336498.jpg_100x100q90.jpg"
+                                />
                               </a>
                               <div className="media-body ">
                                 <small className="pull-right">5m ago</small>
-                                <strong>Monica Smith</strong> posted a new blog. <br />
-                                <small className="text-muted">Today 5:60 pm - 12.06.2014</small>
+                                <strong>女童皮衣2018新款皮夹克儿童皮外套中大童加绒加厚小女孩洋气潮衣</strong>
+                                <br />
+                                <small className="text-muted">
+                                  Thuộc tính: 红色;110cm(110码数建议身高100cm)
+                                  <br />
+                                  Số lượng: 1/1/1
+                                  <br />
+                                  Đơn giá: 278,080đ / ¥79.00
+                                </small>
                               </div>
                             </div>
                             <div className="feed-element">
                               <a href="profile.html" className="pull-left">
-                                <img alt="image" className="img-circle" src="content/img/a2.jpg" />
+                                <img
+                                  alt="image"
+                                  className="img-circle"
+                                  src="https://img.alicdn.com/imgextra/i4/2264269334/O1CN012Ip1Ljau2mULiEe_!!2264269334.jpg_100x100q90.jpg"
+                                />
                               </a>
                               <div className="media-body ">
                                 <small className="pull-right">2h ago</small>
-                                <strong>Mark Johnson</strong> posted message on <strong>Monica Smith</strong> site. <br />
-                                <small className="text-muted">Today 2:10 pm - 12.06.2014</small>
+                                <strong>秋冬装0-1-2-3-4岁男宝宝衣服婴儿童棉衣女童套装加厚卫衣三件套</strong>
+                                <br />
+                                <small className="text-muted">
+                                  Thuộc tính: Voi ba mảnh (màu hồng);90cm
+                                  <br />
+                                  Số lượng: 1/1/1
+                                  <br />
+                                  Đơn giá: 280,896đ / ¥79.80
+                                </small>
                               </div>
                             </div>
                             <div className="feed-element">
                               <a href="profile.html" className="pull-left">
-                                <img alt="image" className="img-circle" src="content/img/a3.jpg" />
+                                <img
+                                  alt="image"
+                                  className="img-circle"
+                                  src="https://img.alicdn.com/imgextra/i4/1579139371/O1CN01cUKxmj2J5y164mIaQ_!!1579139371.jpg_100x100q90.jpg"
+                                />
                               </a>
                               <div className="media-body ">
                                 <small className="pull-right">2h ago</small>
-                                <strong>Janet Rosowski</strong> add 1 photo on <strong>Monica Smith</strong>. <br />
-                                <small className="text-muted">2 days ago at 8:30am</small>
+                                <strong>哈伦裤显瘦2018新款秋冬季呢子韩版宽松九分烟管毛呢萝卜长裤女裤</strong>
+                                <br />
+                                <small className="text-muted">
+                                  Thuộc tính: S;款一（雪花灰）
+                                  <br />
+                                  Số lượng: 1/1/1
+                                  <br />
+                                  Đơn giá: 280,896đ / ¥79.80
+                                </small>
                               </div>
                             </div>
                             <div className="feed-element">
                               <a href="profile.html" className="pull-left">
-                                <img alt="image" className="img-circle" src="content/img/a4.jpg" />
+                                <img
+                                  alt="image"
+                                  className="img-circle"
+                                  src="https://img.alicdn.com/imgextra/i1/4181336498/O1CN011xs86LyzhHw1lPj_!!4181336498.jpg_100x100q90.jpg"
+                                />
                               </a>
                               <div className="media-body ">
-                                <small className="pull-right text-navy">5h ago</small>
-                                <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br />
-                                <small className="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                                <div className="actions">
-                                  <a className="btn btn-xs btn-white">
-                                    <i className="fa fa-thumbs-up" /> Like{' '}
-                                  </a>
-                                  <a className="btn btn-xs btn-white">
-                                    <i className="fa fa-heart" /> Love
-                                  </a>
-                                </div>
+                                <small className="pull-right">5m ago</small>
+                                <strong>女童皮衣2018新款皮夹克儿童皮外套中大童加绒加厚小女孩洋气潮衣</strong>
+                                <br />
+                                <small className="text-muted">
+                                  Thuộc tính: 红色;110cm(110码数建议身高100cm)
+                                  <br />
+                                  Số lượng: 1/1/1
+                                  <br />
+                                  Đơn giá: 278,080đ / ¥79.00
+                                </small>
                               </div>
                             </div>
                             <div className="feed-element">
                               <a href="profile.html" className="pull-left">
-                                <img alt="image" className="img-circle" src="content/img/a5.jpg" />
+                                <img
+                                  alt="image"
+                                  className="img-circle"
+                                  src="https://img.alicdn.com/imgextra/i4/2264269334/O1CN012Ip1Ljau2mULiEe_!!2264269334.jpg_100x100q90.jpg"
+                                />
                               </a>
                               <div className="media-body ">
                                 <small className="pull-right">2h ago</small>
-                                <strong>Kim Smith</strong> posted message on <strong>Monica Smith</strong> site. <br />
-                                <small className="text-muted">Yesterday 5:20 pm - 12.06.2014</small>
-                                <div className="well">
-                                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                                  industry's standard dummy text ever since the 1500s. Over the years, sometimes by accident, sometimes on
-                                  purpose (injected humour and the like).
-                                </div>
-                                <div className="pull-right">
-                                  <a className="btn btn-xs btn-white">
-                                    <i className="fa fa-thumbs-up" /> Like{' '}
-                                  </a>
-                                </div>
+                                <strong>秋冬装0-1-2-3-4岁男宝宝衣服婴儿童棉衣女童套装加厚卫衣三件套</strong>
+                                <br />
+                                <small className="text-muted">
+                                  Thuộc tính: Voi ba mảnh (màu hồng);90cm
+                                  <br />
+                                  Số lượng: 1/1/1
+                                  <br />
+                                  Đơn giá: 280,896đ / ¥79.80
+                                </small>
                               </div>
                             </div>
                             <div className="feed-element">
                               <a href="profile.html" className="pull-left">
-                                <img alt="image" className="img-circle" src="content/img/profile.jpg" />
+                                <img
+                                  alt="image"
+                                  className="img-circle"
+                                  src="https://img.alicdn.com/imgextra/i4/1579139371/O1CN01cUKxmj2J5y164mIaQ_!!1579139371.jpg_100x100q90.jpg"
+                                />
                               </a>
                               <div className="media-body ">
-                                <small className="pull-right">23h ago</small>
-                                <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br />
-                                <small className="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                              </div>
-                            </div>
-                            <div className="feed-element">
-                              <a href="profile.html" className="pull-left">
-                                <img alt="image" className="img-circle" src="content/img/a7.jpg" />
-                              </a>
-                              <div className="media-body ">
-                                <small className="pull-right">46h ago</small>
-                                <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br />
-                                <small className="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                <small className="pull-right">2h ago</small>
+                                <strong>哈伦裤显瘦2018新款秋冬季呢子韩版宽松九分烟管毛呢萝卜长裤女裤</strong>
+                                <br />
+                                <small className="text-muted">
+                                  Thuộc tính: S;款一（雪花灰）
+                                  <br />
+                                  Số lượng: 1/1/1
+                                  <br />
+                                  Đơn giá: 280,896đ / ¥79.80
+                                </small>
                               </div>
                             </div>
                           </div>
@@ -364,7 +362,7 @@ export class Home extends React.Component<IHomeProp> {
                         </div>
                       </div>
                       <div className="ibox-content ibox-heading">
-                        <h3>You have meeting today!</h3>
+                        <h3>Thông tin vận chuyển đơn hàng của bạn</h3>
                         <small>
                           <i className="fa fa-map-marker" /> Meeting is on 6:00am. Check your schedule to see detail.
                         </small>
@@ -380,7 +378,7 @@ export class Home extends React.Component<IHomeProp> {
                             </div>
                             <div className="col-xs-7 content no-top-border">
                               <p className="m-b-xs">
-                                <strong>Meeting</strong>
+                                <strong>Đang giao hàng</strong>
                               </p>
                               <p>
                                 Conference on the sales results for the previous year. Monica please examine sales trends in marketing and
@@ -404,7 +402,7 @@ export class Home extends React.Component<IHomeProp> {
                             </div>
                             <div className="col-xs-7 content">
                               <p className="m-b-xs">
-                                <strong>Send documents to Mike</strong>
+                                <strong>Yêu cầu giao</strong>
                               </p>
                               <p>
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
@@ -422,7 +420,7 @@ export class Home extends React.Component<IHomeProp> {
                             </div>
                             <div className="col-xs-7 content">
                               <p className="m-b-xs">
-                                <strong>Coffee Break</strong>
+                                <strong>Kho Việt Nam</strong>
                               </p>
                               <p>
                                 Go to shop and find some products. Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -441,7 +439,7 @@ export class Home extends React.Component<IHomeProp> {
                             </div>
                             <div className="col-xs-7 content">
                               <p className="m-b-xs">
-                                <strong>Phone with Jeronimo</strong>
+                                <strong>Đang vận chuyển TQ-VN</strong>
                               </p>
                               <p>Lorem Ipsum has been the industry's standard dummy text ever since.</p>
                             </div>
@@ -457,7 +455,7 @@ export class Home extends React.Component<IHomeProp> {
                             </div>
                             <div className="col-xs-7 content">
                               <p className="m-b-xs">
-                                <strong>Go to the doctor dr Smith</strong>
+                                <strong>Kho Trung Quốc</strong>
                               </p>
                               <p>Find some issue and go to doctor.</p>
                             </div>
@@ -473,7 +471,7 @@ export class Home extends React.Component<IHomeProp> {
                             </div>
                             <div className="col-xs-7 content">
                               <p className="m-b-xs">
-                                <strong>Chat with Monica and Sandra</strong>
+                                <strong>Người bán giao hàng</strong>
                               </p>
                               <p>
                                 Web sites still in their infancy. Various versions have evolved over the years, sometimes by accident,

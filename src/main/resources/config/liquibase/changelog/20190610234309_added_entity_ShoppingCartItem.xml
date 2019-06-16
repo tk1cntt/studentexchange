@@ -26,11 +26,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="item_image" type="varchar(255)">
+            <column name="item_image" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="item_link" type="varchar(255)">
+            <column name="item_link" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
 
@@ -42,7 +42,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="item_note" type="varchar(255)">
+            <column name="item_note" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
 
@@ -58,11 +58,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="properties_name" type="varchar(255)">
+            <column name="properties_name" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="properties_type" type="varchar(255)">
+            <column name="properties_type" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
 

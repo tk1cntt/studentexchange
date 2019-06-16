@@ -83,6 +83,7 @@ public class ShoppingCart implements Serializable {
 
     @OneToMany(mappedBy = "shoppingCart")
     private Set<ShoppingCartItem> items = new HashSet<>();
+    
     @ManyToOne
     @JsonIgnoreProperties("")
     private User createBy;

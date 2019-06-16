@@ -54,7 +54,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="shop_link" type="varchar(255)">
+            <column name="shop_link" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
 

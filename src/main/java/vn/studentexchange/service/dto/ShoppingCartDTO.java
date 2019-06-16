@@ -2,6 +2,8 @@ package vn.studentexchange.service.dto;
 
 import java.time.LocalDate;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -56,6 +58,8 @@ public class ShoppingCartDTO implements Serializable {
     private Long updateById;
 
     private String updateByLogin;
+
+    private List<ShoppingCartItemDTO> items = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -298,5 +302,19 @@ public class ShoppingCartDTO implements Serializable {
             ", updateBy=" + getUpdateById() +
             ", updateBy='" + getUpdateByLogin() + "'" +
             "}";
+    }
+
+    /**
+     * @return the items
+     */
+    public List<ShoppingCartItemDTO> getItems() {
+        return items;
+    }
+
+    /**
+     * @param items the items to set
+     */
+    public void setItems(List<ShoppingCartItemDTO> items) {
+        this.items = items;
     }
 }

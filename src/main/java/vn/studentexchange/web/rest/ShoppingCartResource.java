@@ -1,13 +1,20 @@
 package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
+import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.ShoppingCartService;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
+import vn.studentexchange.web.rest.util.PaginationUtil;
 import vn.studentexchange.service.dto.ShoppingCartDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +55,8 @@ public class ShoppingCartResource {
         if (shoppingCartDTO.getId() != null) {
             throw new BadRequestAlertException("A new shoppingCart cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ShoppingCartDTO result = shoppingCartService.save(shoppingCartDTO);
+        String username = SecurityUtils.getCurrentUserLogin().get();
+        ShoppingCartDTO result = shoppingCartService.save(username, shoppingCartDTO);
         return ResponseEntity.created(new URI("/api/shopping-carts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -86,6 +94,16 @@ public class ShoppingCartResource {
     public List<ShoppingCartDTO> getAllShoppingCarts() {
         log.debug("REST request to get all ShoppingCarts");
         return shoppingCartService.findAll();
+    }
+
+    @GetMapping("/shopping-carts/owner")
+    @Timed
+    public ResponseEntity<List<ShoppingCartDTO>> getOwberShoppingCarts(Pageable pageable) {
+        log.debug("REST request to get all ShoppingCarts");
+        String username = SecurityUtils.getCurrentUserLogin().get();
+        Page<ShoppingCartDTO> page = shoppingCartService.findByOwner(username, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/shopping-carts/owner");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**

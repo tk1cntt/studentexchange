@@ -2,14 +2,17 @@ package vn.studentexchange.service;
 
 import vn.studentexchange.domain.ShoppingCart;
 import vn.studentexchange.domain.ShoppingCartItem;
+import vn.studentexchange.domain.User;
 import vn.studentexchange.repository.ShoppingCartItemRepository;
 import vn.studentexchange.repository.ShoppingCartRepository;
+import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.service.dto.ShoppingCartDTO;
 import vn.studentexchange.service.mapper.ShoppingCartItemMapper;
 import vn.studentexchange.service.mapper.ShoppingCartMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -37,11 +40,14 @@ public class ShoppingCartService {
 
     private final ShoppingCartItemMapper shoppingCartItemMapper;
 
-    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, ShoppingCartMapper shoppingCartMapper, ShoppingCartItemRepository shoppingCartItemRepository, ShoppingCartItemMapper shoppingCartItemMapper) {
+    private final UserRepository userRepository;
+
+    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, ShoppingCartMapper shoppingCartMapper, ShoppingCartItemRepository shoppingCartItemRepository, ShoppingCartItemMapper shoppingCartItemMapper, UserRepository userRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.shoppingCartMapper = shoppingCartMapper;
         this.shoppingCartItemRepository = shoppingCartItemRepository;
         this.shoppingCartItemMapper = shoppingCartItemMapper;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -50,14 +56,19 @@ public class ShoppingCartService {
      * @param shoppingCartDTO the entity to save.
      * @return the persisted entity.
      */
-    public ShoppingCartDTO save(ShoppingCartDTO shoppingCartDTO) {
+    public ShoppingCartDTO save(String username, ShoppingCartDTO shoppingCartDTO) {
         log.debug("Request to save ShoppingCart : {}", shoppingCartDTO);
         ShoppingCart currentShop = shoppingCartRepository.findFirstByShopId(shoppingCartDTO.getShopId());
+        Optional<User> existingUser = userRepository.findOneByLogin(username);
         if (ObjectUtils.isEmpty(currentShop)) {
             ShoppingCart shoppingCart = shoppingCartMapper.toEntity(shoppingCartDTO);
+            shoppingCart.setCreateBy(existingUser.get());
+            shoppingCart.setUpdateBy(existingUser.get());
             shoppingCart = shoppingCartRepository.save(shoppingCart);
             List<ShoppingCartItem> items = shoppingCartItemMapper.toEntity(shoppingCartDTO.getItems());
             for (ShoppingCartItem shoppingCartItem: items) {
+                shoppingCartItem.setCreateBy(existingUser.get());
+                shoppingCartItem.setUpdateBy(existingUser.get());
                 shoppingCartItem.setShoppingCart(shoppingCart);
                 shoppingCartItemRepository.save(shoppingCartItem);
             }
@@ -78,11 +89,15 @@ public class ShoppingCartService {
                     }
                 }
                 if (!itemExist) {
+                    shoppingCartItem.setCreateBy(existingUser.get());
+                    shoppingCartItem.setUpdateBy(existingUser.get());
                     shoppingCartItem.setShoppingCart(currentShop);
                     // currentShop.addItems(shoppingCartItem);
                     shoppingCartItemRepository.save(shoppingCartItem);
                 }
             }
+            currentShop.setCreateBy(existingUser.get());
+            currentShop.setUpdateBy(existingUser.get());
             currentShop = shoppingCartRepository.save(currentShop);
         }
         return shoppingCartMapper.toDto(currentShop);
@@ -101,6 +116,12 @@ public class ShoppingCartService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Transactional(readOnly = true)
+    public Page<ShoppingCartDTO> findByOwner(String username, Pageable pageable) {
+        log.debug("Request to get all House of owner [{}]", username);
+        return shoppingCartRepository.findByCreateByLoginOrderByCreateAtDesc(username, pageable)
+            .map(shoppingCartMapper::toDto);
+    }
 
     /**
      * Get one shoppingCart by id.

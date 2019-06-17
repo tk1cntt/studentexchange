@@ -53,7 +53,7 @@ export class Cart extends React.Component<IHomeProp> {
                               {shoppingCart.items.map((item, iy) => (
                                 <div className="feed-element" key={`entity-${iy}`}>
                                   <a href="profile.html" className="pull-left">
-                                    <img alt="image" className="img-circle" src={`${item.itemImage}`} />
+                                    <img alt="image" className="img-circle" src={`${item.propertiesImage}`} />
                                   </a>
                                   <div className="media-body ">
                                     <small className="pull-right">
@@ -63,7 +63,7 @@ export class Cart extends React.Component<IHomeProp> {
                                             -
                                           </button>
                                         </span>
-                                        <input type="tel" className="form-control quantity" min="0" value="99" />
+                                        <input type="tel" className="form-control quantity" min="0" value={`${item.quantity}`} />
                                         <span className="input-group-btn">
                                           <button className="btn btn-default bootstrap-touchspin-up" type="button">
                                             +
@@ -71,14 +71,13 @@ export class Cart extends React.Component<IHomeProp> {
                                         </span>
                                       </div>
                                     </small>
-                                    <strong>女童皮衣2018新款皮夹克儿童皮外套中大童加绒加厚小女孩洋气潮衣</strong>
+                                    <strong>{`${item.itemName}`}</strong>
                                     <br />
                                     <small className="text-muted">
-                                      Thuộc tính: 红色;110cm(110码数建议身高100cm)
+                                      Thuộc tính: {`${item.propertiesName}`}({`${item.propertiesType}`})<br />
+                                      Số lượng: {`${item.quantity}`}
                                       <br />
-                                      Số lượng: 1/1/1
-                                      <br />
-                                      Đơn giá: 278,080đ / ¥79.00
+                                      Đơn giá: ¥{`${item.totalAmountNDT}`}
                                     </small>
                                   </div>
                                 </div>

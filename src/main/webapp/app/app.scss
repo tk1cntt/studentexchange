@@ -19,3 +19,29 @@
   border-radius: 0;
   width: 25px !important;
 }
+
+.checkout-cart-detail {
+  background-color: #ffffff;
+}
+
+.checkout-cart-detail button {
+  margin-bottom: 10px;
+}
+
+.checkout-cart-detail .item {
+  padding: 0 0 10px 10px;
+}
+
+.checkout-cart-total {
+  background-color: #ffffff;
+  border-color: #e7eaec;
+  border-image: none;
+  border-style: solid solid none;
+  border-width: 1px 0;
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
+
+.checkout-cart-total b {
+  color: red;
+}

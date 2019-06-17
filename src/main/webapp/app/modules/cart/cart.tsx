@@ -17,12 +17,12 @@ export class Cart extends React.Component<IHomeProp> {
   }
 
   decreaseQuantity = (item: any) => {
-    console.log(item);
+    // console.log(item);
   };
 
   render() {
     const { shoppingCartList, account } = this.props;
-    console.log('shoppingCartList', shoppingCartList);
+    // console.log('shoppingCartList', shoppingCartList);
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />
@@ -42,7 +42,7 @@ export class Cart extends React.Component<IHomeProp> {
                     <div className="col-xs-8">
                       <div className="ibox float-e-margins">
                         <div className="ibox-title">
-                          <h5>Giỏ hàng</h5>
+                          <h5>{`${shoppingCart.aliwangwang}`}</h5>
                           <div className="ibox-tools">
                             <span className="label label-warning-light pull-right">10 mặt hàng trong giỏ</span>
                           </div>
@@ -88,17 +88,51 @@ export class Cart extends React.Component<IHomeProp> {
                       </div>
                     </div>
                     <div className="col-xs-4">
-                      <button className="btn btn-primary btn-block">
-                        <span className="checkout-cart">
-                          <Link to={'/shopping-cart'}>
-                            <i className="fa fa-shopping-cart" /> Đặt hàng
-                          </Link>
-                        </span>
-                      </button>
-                      Tien hang
-                      <br />
-                      Phi mua hang
-                      <br /> Phi kiem dem
+                      <div className="row checkout-cart-detail">
+                        <button className="btn btn-primary btn-block">
+                          <span className="checkout-cart">
+                            <Link to={'/shopping-cart'}>
+                              <i className="fa fa-shopping-cart" /> Đặt hàng
+                            </Link>
+                          </span>
+                        </button>
+                        <div className="col-xs-8 item">Tiền hàng:</div>
+                        <div className="col-xs-4 item">
+                          <b>200,000,000đ</b>
+                        </div>
+                        <div className="col-xs-8 item">Phí mua hàng:</div>
+                        <div className="col-xs-4 item">
+                          <b>2,000,000đ</b>
+                        </div>
+                        <div className="col-xs-8 item">Phí kiểm đếm:</div>
+                        <div className="col-xs-4 item">
+                          <b>200,000,000đ</b>
+                        </div>
+                        <div className="col-xs-8 item">Phí vận chuyển nội địa TQ:</div>
+                        <div className="col-xs-4 item">
+                          <b>200,000,000đ</b>
+                        </div>
+                        <div className="col-xs-8 item">Phí đóng kiện gỗ:</div>
+                        <div className="col-xs-4 item">
+                          <b>200,000,000đ</b>
+                        </div>
+                        <div className="col-xs-8 item">Phí vận chuyển TQ - VN:</div>
+                        <div className="col-xs-4 item">
+                          <b>200,000,000đ</b>
+                        </div>
+                        <div className="col-xs-8 item">Phí vận chuyển nộ địa VN:</div>
+                        <div className="col-xs-4 item">
+                          <b>200,000,000đ</b>
+                        </div>
+                      </div>
+                      <div className="row checkout-cart-detail checkout-cart-total">
+                        <div className="col-xs-8 item">
+                          <h4>Tổng tiền:</h4>
+                        </div>
+                        <div className="col-xs-4 item">
+                          <b>200,000,000đ</b>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}

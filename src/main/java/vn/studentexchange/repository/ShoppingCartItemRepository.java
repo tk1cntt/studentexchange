@@ -1,6 +1,9 @@
 package vn.studentexchange.repository;
 
 import vn.studentexchange.domain.ShoppingCartItem;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +22,5 @@ public interface ShoppingCartItemRepository extends JpaRepository<ShoppingCartIt
     @Query("select shopping_cart_item from ShoppingCartItem shopping_cart_item where shopping_cart_item.updateBy.login = ?#{principal.username}")
     List<ShoppingCartItem> findByUpdateByIsCurrentUser();
 
+    Page<ShoppingCartItem> findByCreateByLoginOrderByCreateAtDesc(String username, Pageable pageable);
 }

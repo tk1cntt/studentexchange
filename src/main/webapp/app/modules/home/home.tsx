@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities } from 'app/entities/shopping-cart/shopping-cart.reducer';
+import { getOwnerEntities } from 'app/entities/shopping-cart-item/shopping-cart-item.reducer';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';

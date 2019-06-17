@@ -6,7 +6,8 @@ import vn.studentexchange.service.dto.ShoppingCartItemDTO;
 import vn.studentexchange.service.mapper.ShoppingCartItemMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +61,12 @@ public class ShoppingCartItemService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Transactional(readOnly = true)
+    public Page<ShoppingCartItemDTO> findByOwner(String username, Pageable pageable) {
+        log.debug("Request to get all House of owner [{}]", username);
+        return shoppingCartItemRepository.findByCreateByLoginOrderByCreateAtDesc(username, pageable)
+            .map(shoppingCartItemMapper::toDto);
+    }
 
     /**
      * Get one shoppingCartItem by id.

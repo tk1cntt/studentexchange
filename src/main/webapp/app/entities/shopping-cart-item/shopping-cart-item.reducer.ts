@@ -112,6 +112,14 @@ export const getEntity: ICrudGetAction<IShoppingCartItem> = id => {
   };
 };
 
+export const getOwnerEntities: ICrudGetAllAction<IShoppingCartItem> = (page, size, sort) => {
+  const requestUrl = `${apiUrl}/owner${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_SHOPPINGCARTITEM_LIST,
+    payload: axios.get<IShoppingCartItem>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
 export const createEntity: ICrudPutAction<IShoppingCartItem> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_SHOPPINGCARTITEM,

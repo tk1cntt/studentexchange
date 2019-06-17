@@ -21,8 +21,8 @@ export class Cart extends React.Component<IHomeProp> {
   };
 
   render() {
-    console.log('shoppingCartList', this.props.shoppingCartList);
-    const { account } = this.props;
+    const { shoppingCartList, account } = this.props;
+    console.log('shoppingCartList.items', shoppingCartList.items);
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />
@@ -37,6 +37,72 @@ export class Cart extends React.Component<IHomeProp> {
           <div className="row">
             <div className="col-xs-12">
               <div className="wrapper wrapper-content">
+                {shoppingCartList.map((shoppingCart, ii) => (
+                  <div className="row" key={`entity-${ii}`}>
+                    <div className="col-xs-8">
+                      <div className="ibox float-e-margins">
+                        <div className="ibox-title">
+                          <h5>Giỏ hàng</h5>
+                          <div className="ibox-tools">
+                            <span className="label label-warning-light pull-right">10 mặt hàng trong giỏ</span>
+                          </div>
+                        </div>
+                        <div className="ibox-content">
+                          <div>
+                            <div className="feed-activity-list">
+                              {shoppingCart.items.map((item, iy) => (
+                                <div className="feed-element" key={`entity-${iy}`}>
+                                  <a href="profile.html" className="pull-left">
+                                    <img alt="image" className="img-circle" src={`${item.itemImage}`} />
+                                  </a>
+                                  <div className="media-body ">
+                                    <small className="pull-right">
+                                      <div className="input-group bootstrap-touchspin">
+                                        <span className="input-group-btn">
+                                          <button className="btn btn-default bootstrap-touchspin-down" type="button">
+                                            -
+                                          </button>
+                                        </span>
+                                        <input type="tel" className="form-control quantity" min="0" value="99" />
+                                        <span className="input-group-btn">
+                                          <button className="btn btn-default bootstrap-touchspin-up" type="button">
+                                            +
+                                          </button>
+                                        </span>
+                                      </div>
+                                    </small>
+                                    <strong>女童皮衣2018新款皮夹克儿童皮外套中大童加绒加厚小女孩洋气潮衣</strong>
+                                    <br />
+                                    <small className="text-muted">
+                                      Thuộc tính: 红色;110cm(110码数建议身高100cm)
+                                      <br />
+                                      Số lượng: 1/1/1
+                                      <br />
+                                      Đơn giá: 278,080đ / ¥79.00
+                                    </small>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-xs-4">
+                      <button className="btn btn-primary btn-block">
+                        <span className="checkout-cart">
+                          <Link to={'/shopping-cart'}>
+                            <i className="fa fa-shopping-cart" /> Đặt hàng
+                          </Link>
+                        </span>
+                      </button>
+                      Tien hang
+                      <br />
+                      Phi mua hang
+                      <br /> Phi kiem dem
+                    </div>
+                  </div>
+                ))}
                 <div className="row">
                   <div className="col-xs-8">
                     <div className="ibox float-e-margins">

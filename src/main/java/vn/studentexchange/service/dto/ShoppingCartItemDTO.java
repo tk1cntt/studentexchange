@@ -15,6 +15,8 @@ public class ShoppingCartItemDTO implements Serializable {
 
     private String itemImage;
 
+    private String itemName;
+
     private String itemLink;
 
     private Float itemPrice;
@@ -77,6 +79,14 @@ public class ShoppingCartItemDTO implements Serializable {
 
     public void setItemImage(String itemImage) {
         this.itemImage = itemImage;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getItemLink() {
@@ -266,6 +276,7 @@ public class ShoppingCartItemDTO implements Serializable {
             "id=" + getId() +
             ", itemId='" + getItemId() + "'" +
             ", itemImage='" + getItemImage() + "'" +
+            ", itemName='" + getItemName() + "'" +
             ", itemLink='" + getItemLink() + "'" +
             ", itemPrice=" + getItemPrice() +
             ", itemPriceNDT=" + getItemPriceNDT() +

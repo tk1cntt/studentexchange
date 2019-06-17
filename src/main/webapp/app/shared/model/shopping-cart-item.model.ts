@@ -4,6 +4,7 @@ export interface IShoppingCartItem {
   id?: number;
   itemId?: string;
   itemImage?: string;
+  itemName?: string;
   itemLink?: string;
   itemPrice?: number;
   itemPriceNDT?: number;

@@ -10,6 +10,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "itemName",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "itemLink",
             "fieldType": "String"
         },

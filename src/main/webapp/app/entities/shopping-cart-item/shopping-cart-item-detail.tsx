@@ -42,6 +42,12 @@ export class ShoppingCartItemDetail extends React.Component<IShoppingCartItemDet
             </dt>
             <dd>{shoppingCartItemEntity.itemImage}</dd>
             <dt>
+              <span id="itemName">
+                <Translate contentKey="studentexchangeApp.shoppingCartItem.itemName">Item Name</Translate>
+              </span>
+            </dt>
+            <dd>{shoppingCartItemEntity.itemName}</dd>
+            <dt>
               <span id="itemLink">
                 <Translate contentKey="studentexchangeApp.shoppingCartItem.itemLink">Item Link</Translate>
               </span>

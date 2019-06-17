@@ -27,6 +27,9 @@ public class ShoppingCartItem implements Serializable {
     @Column(name = "item_image")
     private String itemImage;
 
+    @Column(name = "item_name")
+    private String itemName;
+
     @Column(name = "item_link")
     private String itemLink;
 
@@ -117,6 +120,19 @@ public class ShoppingCartItem implements Serializable {
 
     public void setItemImage(String itemImage) {
         this.itemImage = itemImage;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public ShoppingCartItem itemName(String itemName) {
+        this.itemName = itemName;
+        return this;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getItemLink() {
@@ -380,6 +396,7 @@ public class ShoppingCartItem implements Serializable {
             "id=" + getId() +
             ", itemId='" + getItemId() + "'" +
             ", itemImage='" + getItemImage() + "'" +
+            ", itemName='" + getItemName() + "'" +
             ", itemLink='" + getItemLink() + "'" +
             ", itemPrice=" + getItemPrice() +
             ", itemPriceNDT=" + getItemPriceNDT() +

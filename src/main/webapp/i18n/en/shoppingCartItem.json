@@ -17,6 +17,7 @@
       },
       "itemId": "Item Id",
       "itemImage": "Item Image",
+      "itemName": "Item Name",
       "itemLink": "Item Link",
       "itemPrice": "Item Price",
       "itemPriceNDT": "Item Price NDT",

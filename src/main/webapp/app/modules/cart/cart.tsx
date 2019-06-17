@@ -22,7 +22,7 @@ export class Cart extends React.Component<IHomeProp> {
 
   render() {
     const { shoppingCartList, account } = this.props;
-    console.log('shoppingCartList.items', shoppingCartList.items);
+    console.log('shoppingCartList', shoppingCartList);
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />

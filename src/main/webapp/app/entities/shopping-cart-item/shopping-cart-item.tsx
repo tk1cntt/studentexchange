@@ -45,6 +45,9 @@ export class ShoppingCartItem extends React.Component<IShoppingCartItemProps> {
                   <Translate contentKey="studentexchangeApp.shoppingCartItem.itemImage">Item Image</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="studentexchangeApp.shoppingCartItem.itemName">Item Name</Translate>
+                </th>
+                <th>
                   <Translate contentKey="studentexchangeApp.shoppingCartItem.itemLink">Item Link</Translate>
                 </th>
                 <th>
@@ -111,6 +114,7 @@ export class ShoppingCartItem extends React.Component<IShoppingCartItemProps> {
                   </td>
                   <td>{shoppingCartItem.itemId}</td>
                   <td>{shoppingCartItem.itemImage}</td>
+                  <td>{shoppingCartItem.itemName}</td>
                   <td>{shoppingCartItem.itemLink}</td>
                   <td>{shoppingCartItem.itemPrice}</td>
                   <td>{shoppingCartItem.itemPriceNDT}</td>

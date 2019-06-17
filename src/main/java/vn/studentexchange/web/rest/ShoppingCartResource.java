@@ -78,7 +78,8 @@ public class ShoppingCartResource {
         if (shoppingCartDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        ShoppingCartDTO result = shoppingCartService.save(shoppingCartDTO);
+        String username = SecurityUtils.getCurrentUserLogin().get();
+        ShoppingCartDTO result = shoppingCartService.save(username, shoppingCartDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, shoppingCartDTO.getId().toString()))
             .body(result);

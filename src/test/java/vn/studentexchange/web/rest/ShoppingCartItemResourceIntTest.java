@@ -50,6 +50,9 @@ public class ShoppingCartItemResourceIntTest {
     private static final String DEFAULT_ITEM_IMAGE = "AAAAAAAAAA";
     private static final String UPDATED_ITEM_IMAGE = "BBBBBBBBBB";
 
+    private static final String DEFAULT_ITEM_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_ITEM_NAME = "BBBBBBBBBB";
+
     private static final String DEFAULT_ITEM_LINK = "AAAAAAAAAA";
     private static final String UPDATED_ITEM_LINK = "BBBBBBBBBB";
 
@@ -141,6 +144,7 @@ public class ShoppingCartItemResourceIntTest {
         ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
             .itemId(DEFAULT_ITEM_ID)
             .itemImage(DEFAULT_ITEM_IMAGE)
+            .itemName(DEFAULT_ITEM_NAME)
             .itemLink(DEFAULT_ITEM_LINK)
             .itemPrice(DEFAULT_ITEM_PRICE)
             .itemPriceNDT(DEFAULT_ITEM_PRICE_NDT)
@@ -182,6 +186,7 @@ public class ShoppingCartItemResourceIntTest {
         ShoppingCartItem testShoppingCartItem = shoppingCartItemList.get(shoppingCartItemList.size() - 1);
         assertThat(testShoppingCartItem.getItemId()).isEqualTo(DEFAULT_ITEM_ID);
         assertThat(testShoppingCartItem.getItemImage()).isEqualTo(DEFAULT_ITEM_IMAGE);
+        assertThat(testShoppingCartItem.getItemName()).isEqualTo(DEFAULT_ITEM_NAME);
         assertThat(testShoppingCartItem.getItemLink()).isEqualTo(DEFAULT_ITEM_LINK);
         assertThat(testShoppingCartItem.getItemPrice()).isEqualTo(DEFAULT_ITEM_PRICE);
         assertThat(testShoppingCartItem.getItemPriceNDT()).isEqualTo(DEFAULT_ITEM_PRICE_NDT);
@@ -232,6 +237,7 @@ public class ShoppingCartItemResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(shoppingCartItem.getId().intValue())))
             .andExpect(jsonPath("$.[*].itemId").value(hasItem(DEFAULT_ITEM_ID.toString())))
             .andExpect(jsonPath("$.[*].itemImage").value(hasItem(DEFAULT_ITEM_IMAGE.toString())))
+            .andExpect(jsonPath("$.[*].itemName").value(hasItem(DEFAULT_ITEM_NAME.toString())))
             .andExpect(jsonPath("$.[*].itemLink").value(hasItem(DEFAULT_ITEM_LINK.toString())))
             .andExpect(jsonPath("$.[*].itemPrice").value(hasItem(DEFAULT_ITEM_PRICE.doubleValue())))
             .andExpect(jsonPath("$.[*].itemPriceNDT").value(hasItem(DEFAULT_ITEM_PRICE_NDT.doubleValue())))
@@ -262,6 +268,7 @@ public class ShoppingCartItemResourceIntTest {
             .andExpect(jsonPath("$.id").value(shoppingCartItem.getId().intValue()))
             .andExpect(jsonPath("$.itemId").value(DEFAULT_ITEM_ID.toString()))
             .andExpect(jsonPath("$.itemImage").value(DEFAULT_ITEM_IMAGE.toString()))
+            .andExpect(jsonPath("$.itemName").value(DEFAULT_ITEM_NAME.toString()))
             .andExpect(jsonPath("$.itemLink").value(DEFAULT_ITEM_LINK.toString()))
             .andExpect(jsonPath("$.itemPrice").value(DEFAULT_ITEM_PRICE.doubleValue()))
             .andExpect(jsonPath("$.itemPriceNDT").value(DEFAULT_ITEM_PRICE_NDT.doubleValue()))
@@ -302,6 +309,7 @@ public class ShoppingCartItemResourceIntTest {
         updatedShoppingCartItem
             .itemId(UPDATED_ITEM_ID)
             .itemImage(UPDATED_ITEM_IMAGE)
+            .itemName(UPDATED_ITEM_NAME)
             .itemLink(UPDATED_ITEM_LINK)
             .itemPrice(UPDATED_ITEM_PRICE)
             .itemPriceNDT(UPDATED_ITEM_PRICE_NDT)
@@ -330,6 +338,7 @@ public class ShoppingCartItemResourceIntTest {
         ShoppingCartItem testShoppingCartItem = shoppingCartItemList.get(shoppingCartItemList.size() - 1);
         assertThat(testShoppingCartItem.getItemId()).isEqualTo(UPDATED_ITEM_ID);
         assertThat(testShoppingCartItem.getItemImage()).isEqualTo(UPDATED_ITEM_IMAGE);
+        assertThat(testShoppingCartItem.getItemName()).isEqualTo(UPDATED_ITEM_NAME);
         assertThat(testShoppingCartItem.getItemLink()).isEqualTo(UPDATED_ITEM_LINK);
         assertThat(testShoppingCartItem.getItemPrice()).isEqualTo(UPDATED_ITEM_PRICE);
         assertThat(testShoppingCartItem.getItemPriceNDT()).isEqualTo(UPDATED_ITEM_PRICE_NDT);

@@ -117,6 +117,12 @@ export class ShoppingCartItemUpdate extends React.Component<IShoppingCartItemUpd
                   <AvField id="shopping-cart-item-itemImage" type="text" name="itemImage" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="itemNameLabel" for="itemName">
+                    <Translate contentKey="studentexchangeApp.shoppingCartItem.itemName">Item Name</Translate>
+                  </Label>
+                  <AvField id="shopping-cart-item-itemName" type="text" name="itemName" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="itemLinkLabel" for="itemLink">
                     <Translate contentKey="studentexchangeApp.shoppingCartItem.itemLink">Item Link</Translate>
                   </Label>

@@ -124,7 +124,12 @@ export default class Sidebar extends React.Component<ISidebarProps> {
             </li>
             <li className={`${activeMenu === 'dashboard' ? 'active' : ''}`}>
               <Link to={'/'}>
-                <i className="fa fa-th-large" /> <span className="nav-label">Dashboard</span>
+                <i className="fa fa-th-large" /> <span className="nav-label">Thông tin chung</span>
+              </Link>
+            </li>
+            <li className={`${activeMenu === 'shopping-cart' ? 'active' : ''}`}>
+              <Link to={'/shopping-cart'}>
+                <i className="fa fa fa-shopping-cart" /> <span className="nav-label">Giỏ hàng</span>
               </Link>
             </li>
             {this.userMenu()}

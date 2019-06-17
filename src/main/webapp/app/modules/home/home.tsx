@@ -1,7 +1,8 @@
-import './home.scss';
+// import './home.scss';
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { NavLink as Link } from 'react-router-dom';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getOwnerEntities } from 'app/entities/shopping-cart/shopping-cart.reducer';
@@ -334,7 +335,11 @@ export class Home extends React.Component<IHomeProp> {
                             </div>
                           </div>
                           <button className="btn btn-primary btn-block m-t">
-                            <i className="fa fa-arrow-down" /> Show More
+                            <span className="checkout-cart">
+                              <Link to={'/shopping-cart'}>
+                                <i className="fa fa-shopping-cart" /> Đặt hàng
+                              </Link>
+                            </span>
                           </button>
                         </div>
                       </div>

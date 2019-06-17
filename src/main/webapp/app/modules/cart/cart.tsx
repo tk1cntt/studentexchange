@@ -16,7 +16,12 @@ export class Cart extends React.Component<IHomeProp> {
     this.props.getOwnerEntities();
   }
 
+  decreaseQuantity = (item: any) => {
+    console.log(item);
+  };
+
   render() {
+    console.log('shoppingCartList', this.props.shoppingCartList);
     const { account } = this.props;
     return (
       <>
@@ -88,7 +93,21 @@ export class Cart extends React.Component<IHomeProp> {
                                 />
                               </a>
                               <div className="media-body ">
-                                <small className="pull-right">2h ago</small>
+                                <small className="pull-right">
+                                  <div className="input-group bootstrap-touchspin">
+                                    <span className="input-group-btn">
+                                      <button className="btn btn-default bootstrap-touchspin-down" type="button">
+                                        -
+                                      </button>
+                                    </span>
+                                    <input type="tel" className="form-control quantity" min="0" value="99" />
+                                    <span className="input-group-btn">
+                                      <button className="btn btn-default bootstrap-touchspin-up" type="button">
+                                        +
+                                      </button>
+                                    </span>
+                                  </div>
+                                </small>
                                 <strong>秋冬装0-1-2-3-4岁男宝宝衣服婴儿童棉衣女童套装加厚卫衣三件套</strong>
                                 <br />
                                 <small className="text-muted">
@@ -109,7 +128,21 @@ export class Cart extends React.Component<IHomeProp> {
                                 />
                               </a>
                               <div className="media-body ">
-                                <small className="pull-right">2h ago</small>
+                                <small className="pull-right">
+                                  <div className="input-group bootstrap-touchspin">
+                                    <span className="input-group-btn">
+                                      <button className="btn btn-default bootstrap-touchspin-down" type="button">
+                                        -
+                                      </button>
+                                    </span>
+                                    <input type="tel" className="form-control quantity" min="0" value="99" />
+                                    <span className="input-group-btn">
+                                      <button className="btn btn-default bootstrap-touchspin-up" type="button">
+                                        +
+                                      </button>
+                                    </span>
+                                  </div>
+                                </small>
                                 <strong>哈伦裤显瘦2018新款秋冬季呢子韩版宽松九分烟管毛呢萝卜长裤女裤</strong>
                                 <br />
                                 <small className="text-muted">
@@ -130,7 +163,21 @@ export class Cart extends React.Component<IHomeProp> {
                                 />
                               </a>
                               <div className="media-body ">
-                                <small className="pull-right">5m ago</small>
+                                <small className="pull-right">
+                                  <div className="input-group bootstrap-touchspin">
+                                    <span className="input-group-btn">
+                                      <button className="btn btn-default bootstrap-touchspin-down" type="button">
+                                        -
+                                      </button>
+                                    </span>
+                                    <input type="tel" className="form-control quantity" min="0" value="99" />
+                                    <span className="input-group-btn">
+                                      <button className="btn btn-default bootstrap-touchspin-up" type="button">
+                                        +
+                                      </button>
+                                    </span>
+                                  </div>
+                                </small>
                                 <strong>女童皮衣2018新款皮夹克儿童皮外套中大童加绒加厚小女孩洋气潮衣</strong>
                                 <br />
                                 <small className="text-muted">
@@ -151,7 +198,21 @@ export class Cart extends React.Component<IHomeProp> {
                                 />
                               </a>
                               <div className="media-body ">
-                                <small className="pull-right">2h ago</small>
+                                <small className="pull-right">
+                                  <div className="input-group bootstrap-touchspin">
+                                    <span className="input-group-btn">
+                                      <button className="btn btn-default bootstrap-touchspin-down" type="button">
+                                        -
+                                      </button>
+                                    </span>
+                                    <input type="tel" className="form-control quantity" min="0" value="99" />
+                                    <span className="input-group-btn">
+                                      <button className="btn btn-default bootstrap-touchspin-up" type="button">
+                                        +
+                                      </button>
+                                    </span>
+                                  </div>
+                                </small>
                                 <strong>秋冬装0-1-2-3-4岁男宝宝衣服婴儿童棉衣女童套装加厚卫衣三件套</strong>
                                 <br />
                                 <small className="text-muted">
@@ -172,7 +233,25 @@ export class Cart extends React.Component<IHomeProp> {
                                 />
                               </a>
                               <div className="media-body ">
-                                <small className="pull-right">2h ago</small>
+                                <small className="pull-right">
+                                  <div className="input-group bootstrap-touchspin">
+                                    <span className="input-group-btn">
+                                      <button
+                                        className="btn btn-default bootstrap-touchspin-down"
+                                        type="button"
+                                        onClick={() => this.decreaseQuantity('12345')}
+                                      >
+                                        -
+                                      </button>
+                                    </span>
+                                    <input type="tel" className="form-control quantity" min="0" value="99" />
+                                    <span className="input-group-btn">
+                                      <button className="btn btn-default bootstrap-touchspin-up" type="button">
+                                        +
+                                      </button>
+                                    </span>
+                                  </div>
+                                </small>
                                 <strong>哈伦裤显瘦2018新款秋冬季呢子韩版宽松九分烟管毛呢萝卜长裤女裤</strong>
                                 <br />
                                 <small className="text-muted">
@@ -379,6 +458,7 @@ export class Cart extends React.Component<IHomeProp> {
 
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
+  shoppingCartList: storeState.shoppingCart.entities,
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 

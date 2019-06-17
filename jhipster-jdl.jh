@@ -302,6 +302,7 @@ relationship ManyToOne {
 entity ShoppingCartItem {
    itemId String,
    itemImage String,
+   itemName String,
    itemLink String,
    itemPrice Float,
    itemPriceNDT Float,

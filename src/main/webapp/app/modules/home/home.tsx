@@ -337,7 +337,7 @@ export class Home extends React.Component<IHomeProp> {
                           <button className="btn btn-primary btn-block m-t">
                             <span className="checkout-cart">
                               <Link to={'/shopping-cart'}>
-                                <i className="fa fa-shopping-cart" /> Đặt hàng
+                                <i className="fa fa-shopping-cart" /> Xem giỏ hàng
                               </Link>
                             </span>
                           </button>

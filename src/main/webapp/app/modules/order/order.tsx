@@ -10,7 +10,7 @@ import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
-export class Cart extends React.Component<IHomeProp> {
+export class Order extends React.Component<IHomeProp> {
   componentDidMount() {
     this.props.getSession();
     this.props.getOwnerEntities();
@@ -25,7 +25,7 @@ export class Cart extends React.Component<IHomeProp> {
     // console.log('shoppingCartList', shoppingCartList);
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-cart" activeSubMenu="" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
@@ -169,4 +169,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Cart);
+)(Order);

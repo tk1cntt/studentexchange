@@ -16,17 +16,17 @@ export default class Sidebar extends React.Component<ISidebarProps> {
     return (
       <li className={`${activeMenu === 'user-management' ? 'active' : ''}`}>
         <Link to={'/account/settings'}>
-          <i className="fa fa-user" /> <span className="nav-label">User management</span> <span className="fa arrow" />
+          <i className="fa fa-user" /> <span className="nav-label">Cá nhân</span> <span className="fa arrow" />
         </Link>
         <ul className={`${activeMenu === 'user-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
           <li className={`${activeSubMenu === 'setting' ? 'active' : ''}`}>
             <Link to={'/account/settings'}>
-              <FontAwesomeIcon icon="wrench" fixedWidth /> Profile
+              <FontAwesomeIcon icon="wrench" fixedWidth /> Thông tin cá nhân
             </Link>
           </li>
           <li className={`${activeSubMenu === 'change-password' ? 'active' : ''}`}>
             <Link to={'/account/password'}>
-              <FontAwesomeIcon icon="clock" fixedWidth /> Password
+              <FontAwesomeIcon icon="clock" fixedWidth /> Thay đổi mật khẩu
             </Link>
           </li>
         </ul>
@@ -129,7 +129,12 @@ export default class Sidebar extends React.Component<ISidebarProps> {
             </li>
             <li className={`${activeMenu === 'shopping-cart' ? 'active' : ''}`}>
               <Link to={'/shopping-cart'}>
-                <i className="fa fa fa-shopping-cart" /> <span className="nav-label">Giỏ hàng</span>
+                <i className="fa fa-shopping-cart" /> <span className="nav-label">Giỏ hàng</span>
+              </Link>
+            </li>
+            <li className={`${activeMenu === 'order-cart' ? 'active' : ''}`}>
+              <Link to={'/order-cart'}>
+                <i className="fa fa-files-o" /> <span className="nav-label">Danh sách đơn hàng</span>
               </Link>
             </li>
             {this.userMenu()}

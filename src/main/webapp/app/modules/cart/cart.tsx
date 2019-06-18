@@ -36,15 +36,17 @@ export class Cart extends React.Component<IHomeProp> {
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <div className="wrapper wrapper-content">
+              <div className="row wrapper wrapper-content">
                 {shoppingCartList.map((shoppingCart, ii) => (
-                  <div className="row" key={`entity-${ii}`}>
-                    <div className="col-xs-8">
+                  <div key={`entity-${ii}`}>
+                    <div className=".col-xs-12 col-md-8">
                       <div className="ibox float-e-margins">
                         <div className="ibox-title">
                           <h5>{`${shoppingCart.aliwangwang}`}</h5>
                           <div className="ibox-tools">
-                            <span className="label label-warning-light pull-right">10 mặt hàng trong giỏ</span>
+                            <span className="label label-warning-light pull-right">
+                              {`${shoppingCart.items.length}`} mặt hàng trong giỏ
+                            </span>
                           </div>
                         </div>
                         <div className="ibox-content">
@@ -77,7 +79,7 @@ export class Cart extends React.Component<IHomeProp> {
                                       Thuộc tính: {`${item.propertiesName}`}({`${item.propertiesType}`})<br />
                                       Số lượng: {`${item.quantity}`}
                                       <br />
-                                      Đơn giá: ¥{`${item.totalAmountNDT}`}
+                                      Đơn giá: ¥{`${item.itemPriceNDT}`}
                                     </small>
                                   </div>
                                 </div>
@@ -87,7 +89,7 @@ export class Cart extends React.Component<IHomeProp> {
                         </div>
                       </div>
                     </div>
-                    <div className="col-xs-4">
+                    <div className=".col-xs-12 col-md-4">
                       <div className="row checkout-cart-detail">
                         <button className="btn btn-primary btn-block">
                           <span className="checkout-cart">

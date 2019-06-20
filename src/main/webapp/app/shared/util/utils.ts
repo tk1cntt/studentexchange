@@ -1,5 +1,5 @@
 /* tslint:disable */
-const Hashids = require('hashids');
+const Hashids = require('hashids').default;
 const hashids = new Hashids('id.dropshipping.com.vn');
 
 export const humanize = x => {

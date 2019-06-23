@@ -31,9 +31,11 @@ export class Order extends React.Component<IHomeProp> {
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
             Noi dung phia tren
-            <button className="btn btn-primary btn-block m-t">
-              <i className="fa fa-shopping-cart" /> Đặt tất cả hàng
-            </button>
+            <Link to={'/checkout'}>
+              <button className="btn btn-primary btn-block m-t">
+                <i className="fa fa-shopping-cart" /> Đặt tất cả hàng
+              </button>
+            </Link>
           </div>
           <div className="wrapper wrapper-content animated fadeInRight ecommerce">
             <div className="ibox-content m-b-sm border-bottom">
@@ -43,7 +45,7 @@ export class Order extends React.Component<IHomeProp> {
                     <label className="control-label" htmlFor="order_id">
                       Order ID
                     </label>
-                    <input type="text" id="order_id" name="order_id" defaultValue placeholder="Order ID" className="form-control" />
+                    <input type="text" id="order_id" name="order_id" placeholder="Order ID" className="form-control" />
                   </div>
                 </div>
                 <div className="col-sm-4">
@@ -51,7 +53,7 @@ export class Order extends React.Component<IHomeProp> {
                     <label className="control-label" htmlFor="status">
                       Order status
                     </label>
-                    <input type="text" id="status" name="status" defaultValue placeholder="Status" className="form-control" />
+                    <input type="text" id="status" name="status" placeholder="Status" className="form-control" />
                   </div>
                 </div>
                 <div className="col-sm-4">
@@ -59,7 +61,7 @@ export class Order extends React.Component<IHomeProp> {
                     <label className="control-label" htmlFor="customer">
                       Customer
                     </label>
-                    <input type="text" id="customer" name="customer" defaultValue placeholder="Customer" className="form-control" />
+                    <input type="text" id="customer" name="customer" placeholder="Customer" className="form-control" />
                   </div>
                 </div>
               </div>
@@ -95,7 +97,7 @@ export class Order extends React.Component<IHomeProp> {
                     <label className="control-label" htmlFor="amount">
                       Amount
                     </label>
-                    <input type="text" id="amount" name="amount" defaultValue placeholder="Amount" className="form-control" />
+                    <input type="text" id="amount" name="amount" placeholder="Amount" className="form-control" />
                   </div>
                 </div>
               </div>
@@ -135,7 +137,8 @@ export class Order extends React.Component<IHomeProp> {
                       <tbody>
                         <tr className="footable-even" style={{}}>
                           <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />${encodeId(3214)}
+                            <span className="footable-toggle" />
+                            {encodeId(3214)}
                           </td>
                           <td className="footable-visible">Customer example</td>
                           <td className="footable-visible">$500.00</td>
@@ -146,7 +149,8 @@ export class Order extends React.Component<IHomeProp> {
                         </tr>
                         <tr className="footable-odd" style={{}}>
                           <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />${encodeId(12345)}
+                            <span className="footable-toggle" />
+                            {encodeId(12345)}
                           </td>
                           <td className="footable-visible">Customer example</td>
                           <td className="footable-visible">$320.00</td>
@@ -157,7 +161,8 @@ export class Order extends React.Component<IHomeProp> {
                         </tr>
                         <tr className="footable-even" style={{}}>
                           <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />${encodeId(13214)}
+                            <span className="footable-toggle" />
+                            {encodeId(13214)}
                           </td>
                           <td className="footable-visible">Customer example</td>
                           <td className="footable-visible">$2770.00</td>
@@ -168,7 +173,8 @@ export class Order extends React.Component<IHomeProp> {
                         </tr>
                         <tr className="footable-odd" style={{}}>
                           <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />${encodeId(12346)}
+                            <span className="footable-toggle" />
+                            {encodeId(12346)}
                           </td>
                           <td className="footable-visible">Customer example</td>
                           <td className="footable-visible">$8560.00</td>
@@ -191,7 +197,8 @@ export class Order extends React.Component<IHomeProp> {
                         </tr>
                         <tr className="footable-odd" style={{}}>
                           <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />${encodeId(123467)}
+                            <span className="footable-toggle" />
+                            {encodeId(123467)}
                           </td>
                           <td className="footable-visible">Customer example</td>
                           <td className="footable-visible">$750.00</td>
@@ -202,7 +209,8 @@ export class Order extends React.Component<IHomeProp> {
                         </tr>
                         <tr className="footable-even" style={{}}>
                           <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />${encodeId(23214)}
+                            <span className="footable-toggle" />
+                            {encodeId(23214)}
                           </td>
                           <td className="footable-visible">Customer example</td>
                           <td className="footable-visible">$500.00</td>
@@ -225,7 +233,8 @@ export class Order extends React.Component<IHomeProp> {
                         </tr>
                         <tr className="footable-even" style={{}}>
                           <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />${encodeId(33214)}
+                            <span className="footable-toggle" />
+                            {encodeId(33214)}
                           </td>
                           <td className="footable-visible">Customer example</td>
                           <td className="footable-visible">$2770.00</td>
@@ -236,7 +245,8 @@ export class Order extends React.Component<IHomeProp> {
                         </tr>
                         <tr className="footable-odd" style={{}}>
                           <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />${encodeId(34214)}
+                            <span className="footable-toggle" />
+                            {encodeId(34214)}
                           </td>
                           <td className="footable-visible">Customer example</td>
                           <td className="footable-visible">$8560.00</td>
@@ -352,13 +362,13 @@ export class Order extends React.Component<IHomeProp> {
                     </div>
                     <div className=".col-xs-12 col-md-4">
                       <div className="row checkout-cart-detail">
-                        <button className="btn btn-primary btn-block">
-                          <span className="checkout-cart">
-                            <Link to={'/shopping-cart'}>
+                        <span className="checkout-cart">
+                          <Link to={'/shopping-cart'}>
+                            <button className="btn btn-primary btn-block">
                               <i className="fa fa-shopping-cart" /> Đặt hàng
-                            </Link>
-                          </span>
-                        </button>
+                            </button>
+                          </Link>
+                        </span>
                         <div className="col-xs-8 item">Tiền hàng:</div>
                         <div className="col-xs-4 item">
                           <b>200,000,000đ</b>

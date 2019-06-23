@@ -9,7 +9,11 @@ interface IOwnProps extends RouteProps {
   hasAnyAuthorities?: string[];
 }
 
-export interface IPrivateRouteProps extends IOwnProps, StateProps {}
+export interface IPrivateRouteProps extends IOwnProps, StateProps {
+  path?: string;
+  component?: any;
+  hasAnyAuthorities?: string[];
+}
 
 export const PrivateRouteComponent = ({
   component: Component,

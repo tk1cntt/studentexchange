@@ -1,3 +1,4 @@
+/* tslint:disable */
 import React from 'react';
 import { Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
@@ -5,6 +6,7 @@ import Loadable from 'react-loadable';
 import Login from 'app/modules/login/main';
 import Cart from 'app/modules/cart/cart';
 import Order from 'app/modules/order/order';
+import Checkout from 'app/modules/checkout/checkout';
 import Register from 'app/modules/account/register/register';
 import Activate from 'app/modules/account/activate/activate';
 import PasswordResetInit from 'app/modules/account/password-reset/init/password-reset-init';
@@ -38,6 +40,7 @@ const Routes = () => (
       <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/shopping-cart" component={Cart} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/order-cart" component={Order} hasAnyAuthorities={[AUTHORITIES.USER]} />
+      <PrivateRoute path="/checkout" component={Checkout} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <ErrorBoundaryRoute path="/" component={Home} />
       <ErrorBoundaryRoute path="/register" component={Register} />
       <ErrorBoundaryRoute path="/activate/:key?" component={Activate} />

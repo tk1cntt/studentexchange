@@ -8,6 +8,7 @@ import { Cascader } from 'antd';
 import { getSession } from 'app/shared/reducers/authentication';
 import { getOwnerEntities } from 'app/entities/shopping-cart/shopping-cart.reducer';
 import { getAllEntities as getCities } from 'app/entities/city/city.reducer';
+import { createEntity as createShippingAddress } from 'app/entities/user-shipping-address/user-shipping-address.reducer';
 import { queryString, stringToSlug } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
@@ -26,10 +27,10 @@ export interface ICheckoutState {
   parameters: any;
   locations: any;
   addresses: any;
-  address: String;
-  mobile: String;
-  name: String;
-  note: String;
+  address: string;
+  mobile: string;
+  name: string;
+  note: string;
 }
 
 export class Checkout extends React.Component<ICheckoutProp> {
@@ -157,6 +158,18 @@ export class Checkout extends React.Component<ICheckoutProp> {
     });
   };
 
+  createAddressClick = () => {
+    const address = {
+      cityId: this.state.parameters.cityId,
+      districtId: this.state.parameters.districtId,
+      name: this.state.name,
+      address: this.state.address,
+      mobile: this.state.mobile,
+      note: this.state.note
+    };
+    this.props.createShippingAddress(address);
+  };
+
   addressBox() {
     return (
       <form role="form" id="form">
@@ -188,7 +201,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
           <input type="text" placeholder="Enter email" className="form-control" name="note" onChange={this.onChangeNote} />
         </div>
         <div>
-          <button className="btn btn-sm btn-primary m-t-n-xs" type="submit">
+          <button className="btn btn-sm btn-primary m-t-n-xs" type="button" onClick={this.createAddressClick}>
             <strong>Thêm địa chỉ</strong>
           </button>
         </div>
@@ -369,7 +382,7 @@ const mapStateToProps = storeState => ({
   cities: storeState.city.entities
 });
 
-const mapDispatchToProps = { getSession, getOwnerEntities, getCities };
+const mapDispatchToProps = { getSession, getOwnerEntities, getCities, createShippingAddress };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

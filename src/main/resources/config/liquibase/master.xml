@@ -5,8 +5,6 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190610234253_added_entity_Country.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190610234254_added_entity_Region.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190610234256_added_entity_City.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190610234257_added_entity_District.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190610234258_added_entity_Ward.xml" relativeToChangelogFile="false"/>
@@ -25,8 +23,6 @@
     <include file="config/liquibase/changelog/20190610234311_added_entity_Delivery.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190610234312_added_entity_DeliveryPackage.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20190610234253_added_entity_constraints_Country.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190610234254_added_entity_constraints_Region.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190610234256_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190610234257_added_entity_constraints_District.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190610234258_added_entity_constraints_Ward.xml" relativeToChangelogFile="false"/>

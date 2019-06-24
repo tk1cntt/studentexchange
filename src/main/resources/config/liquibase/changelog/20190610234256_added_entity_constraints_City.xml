@@ -7,12 +7,6 @@
         Added the constraints for entity City.
     -->
     <changeSet id="20190610234256-2" author="jhipster">
-        
-        <addForeignKeyConstraint baseColumnNames="country_id"
-                                 baseTableName="city"
-                                 constraintName="fk_city_country_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="country"/>
 
     </changeSet>
 </databaseChangeLog>

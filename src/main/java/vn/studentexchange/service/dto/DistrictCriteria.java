@@ -29,6 +29,10 @@ public class DistrictCriteria implements Serializable {
 
     private StringFilter type;
 
+    private FloatFilter latitude;
+
+    private FloatFilter longitude;
+
     private BooleanFilter enabled;
 
     private LocalDateFilter createAt;
@@ -64,6 +68,22 @@ public class DistrictCriteria implements Serializable {
 
     public void setType(StringFilter type) {
         this.type = type;
+    }
+
+    public FloatFilter getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(FloatFilter latitude) {
+        this.latitude = latitude;
+    }
+
+    public FloatFilter getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(FloatFilter longitude) {
+        this.longitude = longitude;
     }
 
     public BooleanFilter getEnabled() {
@@ -120,6 +140,8 @@ public class DistrictCriteria implements Serializable {
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(type, that.type) &&
+            Objects.equals(latitude, that.latitude) &&
+            Objects.equals(longitude, that.longitude) &&
             Objects.equals(enabled, that.enabled) &&
             Objects.equals(createAt, that.createAt) &&
             Objects.equals(updateAt, that.updateAt) &&
@@ -133,6 +155,8 @@ public class DistrictCriteria implements Serializable {
         id,
         name,
         type,
+        latitude,
+        longitude,
         enabled,
         createAt,
         updateAt,
@@ -147,6 +171,8 @@ public class DistrictCriteria implements Serializable {
                 (id != null ? "id=" + id + ", " : "") +
                 (name != null ? "name=" + name + ", " : "") +
                 (type != null ? "type=" + type + ", " : "") +
+                (latitude != null ? "latitude=" + latitude + ", " : "") +
+                (longitude != null ? "longitude=" + longitude + ", " : "") +
                 (enabled != null ? "enabled=" + enabled + ", " : "") +
                 (createAt != null ? "createAt=" + createAt + ", " : "") +
                 (updateAt != null ? "updateAt=" + updateAt + ", " : "") +

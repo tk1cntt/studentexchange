@@ -23,6 +23,8 @@ entity City {
 entity District {
    name String,
    type String,
+   latitude Float,
+   longitude Float,
    enabled Boolean,
    createAt LocalDate,
    updateAt LocalDate
@@ -31,6 +33,8 @@ entity District {
 entity Ward {
    name String,
    type String,
+   latitude Float,
+   longitude Float,
    enabled Boolean,
    createAt LocalDate,
    updateAt LocalDate

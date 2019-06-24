@@ -53,6 +53,12 @@ public class WardResourceIntTest {
     private static final String DEFAULT_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_TYPE = "BBBBBBBBBB";
 
+    private static final Float DEFAULT_LATITUDE = 1F;
+    private static final Float UPDATED_LATITUDE = 2F;
+
+    private static final Float DEFAULT_LONGITUDE = 1F;
+    private static final Float UPDATED_LONGITUDE = 2F;
+
     private static final Boolean DEFAULT_ENABLED = false;
     private static final Boolean UPDATED_ENABLED = true;
 
@@ -111,6 +117,8 @@ public class WardResourceIntTest {
         Ward ward = new Ward()
             .name(DEFAULT_NAME)
             .type(DEFAULT_TYPE)
+            .latitude(DEFAULT_LATITUDE)
+            .longitude(DEFAULT_LONGITUDE)
             .enabled(DEFAULT_ENABLED)
             .createAt(DEFAULT_CREATE_AT)
             .updateAt(DEFAULT_UPDATE_AT);
@@ -140,6 +148,8 @@ public class WardResourceIntTest {
         Ward testWard = wardList.get(wardList.size() - 1);
         assertThat(testWard.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testWard.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testWard.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
+        assertThat(testWard.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
         assertThat(testWard.isEnabled()).isEqualTo(DEFAULT_ENABLED);
         assertThat(testWard.getCreateAt()).isEqualTo(DEFAULT_CREATE_AT);
         assertThat(testWard.getUpdateAt()).isEqualTo(DEFAULT_UPDATE_AT);
@@ -178,6 +188,8 @@ public class WardResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(ward.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
             .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
@@ -196,6 +208,8 @@ public class WardResourceIntTest {
             .andExpect(jsonPath("$.id").value(ward.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
+            .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.doubleValue()))
+            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()))
             .andExpect(jsonPath("$.enabled").value(DEFAULT_ENABLED.booleanValue()))
             .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
             .andExpect(jsonPath("$.updateAt").value(DEFAULT_UPDATE_AT.toString()));
@@ -277,6 +291,84 @@ public class WardResourceIntTest {
 
         // Get all the wardList where type is null
         defaultWardShouldNotBeFound("type.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllWardsByLatitudeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where latitude equals to DEFAULT_LATITUDE
+        defaultWardShouldBeFound("latitude.equals=" + DEFAULT_LATITUDE);
+
+        // Get all the wardList where latitude equals to UPDATED_LATITUDE
+        defaultWardShouldNotBeFound("latitude.equals=" + UPDATED_LATITUDE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWardsByLatitudeIsInShouldWork() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where latitude in DEFAULT_LATITUDE or UPDATED_LATITUDE
+        defaultWardShouldBeFound("latitude.in=" + DEFAULT_LATITUDE + "," + UPDATED_LATITUDE);
+
+        // Get all the wardList where latitude equals to UPDATED_LATITUDE
+        defaultWardShouldNotBeFound("latitude.in=" + UPDATED_LATITUDE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWardsByLatitudeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where latitude is not null
+        defaultWardShouldBeFound("latitude.specified=true");
+
+        // Get all the wardList where latitude is null
+        defaultWardShouldNotBeFound("latitude.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllWardsByLongitudeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where longitude equals to DEFAULT_LONGITUDE
+        defaultWardShouldBeFound("longitude.equals=" + DEFAULT_LONGITUDE);
+
+        // Get all the wardList where longitude equals to UPDATED_LONGITUDE
+        defaultWardShouldNotBeFound("longitude.equals=" + UPDATED_LONGITUDE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWardsByLongitudeIsInShouldWork() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where longitude in DEFAULT_LONGITUDE or UPDATED_LONGITUDE
+        defaultWardShouldBeFound("longitude.in=" + DEFAULT_LONGITUDE + "," + UPDATED_LONGITUDE);
+
+        // Get all the wardList where longitude equals to UPDATED_LONGITUDE
+        defaultWardShouldNotBeFound("longitude.in=" + UPDATED_LONGITUDE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWardsByLongitudeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where longitude is not null
+        defaultWardShouldBeFound("longitude.specified=true");
+
+        // Get all the wardList where longitude is null
+        defaultWardShouldNotBeFound("longitude.specified=false");
     }
 
     @Test
@@ -478,6 +570,8 @@ public class WardResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(ward.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
             .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
@@ -530,6 +624,8 @@ public class WardResourceIntTest {
         updatedWard
             .name(UPDATED_NAME)
             .type(UPDATED_TYPE)
+            .latitude(UPDATED_LATITUDE)
+            .longitude(UPDATED_LONGITUDE)
             .enabled(UPDATED_ENABLED)
             .createAt(UPDATED_CREATE_AT)
             .updateAt(UPDATED_UPDATE_AT);
@@ -546,6 +642,8 @@ public class WardResourceIntTest {
         Ward testWard = wardList.get(wardList.size() - 1);
         assertThat(testWard.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testWard.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testWard.getLatitude()).isEqualTo(UPDATED_LATITUDE);
+        assertThat(testWard.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
         assertThat(testWard.isEnabled()).isEqualTo(UPDATED_ENABLED);
         assertThat(testWard.getCreateAt()).isEqualTo(UPDATED_CREATE_AT);
         assertThat(testWard.getUpdateAt()).isEqualTo(UPDATED_UPDATE_AT);

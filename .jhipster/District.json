@@ -10,6 +10,14 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "latitude",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "longitude",
+            "fieldType": "Float"
+        },
+        {
             "fieldName": "enabled",
             "fieldType": "Boolean"
         },

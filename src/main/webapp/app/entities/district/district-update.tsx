@@ -108,6 +108,18 @@ export class DistrictUpdate extends React.Component<IDistrictUpdateProps, IDistr
                   <AvField id="district-type" type="text" name="type" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="latitudeLabel" for="latitude">
+                    <Translate contentKey="studentexchangeApp.district.latitude">Latitude</Translate>
+                  </Label>
+                  <AvField id="district-latitude" type="string" className="form-control" name="latitude" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="longitudeLabel" for="longitude">
+                    <Translate contentKey="studentexchangeApp.district.longitude">Longitude</Translate>
+                  </Label>
+                  <AvField id="district-longitude" type="string" className="form-control" name="longitude" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="enabledLabel" check>
                     <AvInput id="district-enabled" type="checkbox" className="form-control" name="enabled" />
                     <Translate contentKey="studentexchangeApp.district.enabled">Enabled</Translate>

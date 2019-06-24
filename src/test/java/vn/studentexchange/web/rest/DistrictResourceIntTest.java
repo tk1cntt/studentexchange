@@ -54,6 +54,12 @@ public class DistrictResourceIntTest {
     private static final String DEFAULT_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_TYPE = "BBBBBBBBBB";
 
+    private static final Float DEFAULT_LATITUDE = 1F;
+    private static final Float UPDATED_LATITUDE = 2F;
+
+    private static final Float DEFAULT_LONGITUDE = 1F;
+    private static final Float UPDATED_LONGITUDE = 2F;
+
     private static final Boolean DEFAULT_ENABLED = false;
     private static final Boolean UPDATED_ENABLED = true;
 
@@ -112,6 +118,8 @@ public class DistrictResourceIntTest {
         District district = new District()
             .name(DEFAULT_NAME)
             .type(DEFAULT_TYPE)
+            .latitude(DEFAULT_LATITUDE)
+            .longitude(DEFAULT_LONGITUDE)
             .enabled(DEFAULT_ENABLED)
             .createAt(DEFAULT_CREATE_AT)
             .updateAt(DEFAULT_UPDATE_AT);
@@ -141,6 +149,8 @@ public class DistrictResourceIntTest {
         District testDistrict = districtList.get(districtList.size() - 1);
         assertThat(testDistrict.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testDistrict.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testDistrict.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
+        assertThat(testDistrict.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
         assertThat(testDistrict.isEnabled()).isEqualTo(DEFAULT_ENABLED);
         assertThat(testDistrict.getCreateAt()).isEqualTo(DEFAULT_CREATE_AT);
         assertThat(testDistrict.getUpdateAt()).isEqualTo(DEFAULT_UPDATE_AT);
@@ -179,6 +189,8 @@ public class DistrictResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(district.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
             .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
@@ -197,6 +209,8 @@ public class DistrictResourceIntTest {
             .andExpect(jsonPath("$.id").value(district.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
+            .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.doubleValue()))
+            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()))
             .andExpect(jsonPath("$.enabled").value(DEFAULT_ENABLED.booleanValue()))
             .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
             .andExpect(jsonPath("$.updateAt").value(DEFAULT_UPDATE_AT.toString()));
@@ -278,6 +292,84 @@ public class DistrictResourceIntTest {
 
         // Get all the districtList where type is null
         defaultDistrictShouldNotBeFound("type.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllDistrictsByLatitudeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where latitude equals to DEFAULT_LATITUDE
+        defaultDistrictShouldBeFound("latitude.equals=" + DEFAULT_LATITUDE);
+
+        // Get all the districtList where latitude equals to UPDATED_LATITUDE
+        defaultDistrictShouldNotBeFound("latitude.equals=" + UPDATED_LATITUDE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDistrictsByLatitudeIsInShouldWork() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where latitude in DEFAULT_LATITUDE or UPDATED_LATITUDE
+        defaultDistrictShouldBeFound("latitude.in=" + DEFAULT_LATITUDE + "," + UPDATED_LATITUDE);
+
+        // Get all the districtList where latitude equals to UPDATED_LATITUDE
+        defaultDistrictShouldNotBeFound("latitude.in=" + UPDATED_LATITUDE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDistrictsByLatitudeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where latitude is not null
+        defaultDistrictShouldBeFound("latitude.specified=true");
+
+        // Get all the districtList where latitude is null
+        defaultDistrictShouldNotBeFound("latitude.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllDistrictsByLongitudeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where longitude equals to DEFAULT_LONGITUDE
+        defaultDistrictShouldBeFound("longitude.equals=" + DEFAULT_LONGITUDE);
+
+        // Get all the districtList where longitude equals to UPDATED_LONGITUDE
+        defaultDistrictShouldNotBeFound("longitude.equals=" + UPDATED_LONGITUDE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDistrictsByLongitudeIsInShouldWork() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where longitude in DEFAULT_LONGITUDE or UPDATED_LONGITUDE
+        defaultDistrictShouldBeFound("longitude.in=" + DEFAULT_LONGITUDE + "," + UPDATED_LONGITUDE);
+
+        // Get all the districtList where longitude equals to UPDATED_LONGITUDE
+        defaultDistrictShouldNotBeFound("longitude.in=" + UPDATED_LONGITUDE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDistrictsByLongitudeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where longitude is not null
+        defaultDistrictShouldBeFound("longitude.specified=true");
+
+        // Get all the districtList where longitude is null
+        defaultDistrictShouldNotBeFound("longitude.specified=false");
     }
 
     @Test
@@ -498,6 +590,8 @@ public class DistrictResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(district.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
             .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
@@ -550,6 +644,8 @@ public class DistrictResourceIntTest {
         updatedDistrict
             .name(UPDATED_NAME)
             .type(UPDATED_TYPE)
+            .latitude(UPDATED_LATITUDE)
+            .longitude(UPDATED_LONGITUDE)
             .enabled(UPDATED_ENABLED)
             .createAt(UPDATED_CREATE_AT)
             .updateAt(UPDATED_UPDATE_AT);
@@ -566,6 +662,8 @@ public class DistrictResourceIntTest {
         District testDistrict = districtList.get(districtList.size() - 1);
         assertThat(testDistrict.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testDistrict.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testDistrict.getLatitude()).isEqualTo(UPDATED_LATITUDE);
+        assertThat(testDistrict.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
         assertThat(testDistrict.isEnabled()).isEqualTo(UPDATED_ENABLED);
         assertThat(testDistrict.getCreateAt()).isEqualTo(UPDATED_CREATE_AT);
         assertThat(testDistrict.getUpdateAt()).isEqualTo(UPDATED_UPDATE_AT);

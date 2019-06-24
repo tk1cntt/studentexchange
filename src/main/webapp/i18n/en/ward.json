@@ -17,6 +17,8 @@
       },
       "name": "Name",
       "type": "Type",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
       "enabled": "Enabled",
       "createAt": "Create At",
       "updateAt": "Update At",

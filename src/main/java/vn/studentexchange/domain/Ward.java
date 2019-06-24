@@ -27,6 +27,12 @@ public class Ward implements Serializable {
     @Column(name = "jhi_type")
     private String type;
 
+    @Column(name = "latitude")
+    private Float latitude;
+
+    @Column(name = "longitude")
+    private Float longitude;
+
     @Column(name = "enabled")
     private Boolean enabled;
 
@@ -73,6 +79,32 @@ public class Ward implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Float getLatitude() {
+        return latitude;
+    }
+
+    public Ward latitude(Float latitude) {
+        this.latitude = latitude;
+        return this;
+    }
+
+    public void setLatitude(Float latitude) {
+        this.latitude = latitude;
+    }
+
+    public Float getLongitude() {
+        return longitude;
+    }
+
+    public Ward longitude(Float longitude) {
+        this.longitude = longitude;
+        return this;
+    }
+
+    public void setLongitude(Float longitude) {
+        this.longitude = longitude;
     }
 
     public Boolean isEnabled() {
@@ -154,6 +186,8 @@ public class Ward implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
+            ", latitude=" + getLatitude() +
+            ", longitude=" + getLongitude() +
             ", enabled='" + isEnabled() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +

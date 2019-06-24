@@ -41,6 +41,18 @@ export class WardDetail extends React.Component<IWardDetailProps> {
             </dt>
             <dd>{wardEntity.type}</dd>
             <dt>
+              <span id="latitude">
+                <Translate contentKey="studentexchangeApp.ward.latitude">Latitude</Translate>
+              </span>
+            </dt>
+            <dd>{wardEntity.latitude}</dd>
+            <dt>
+              <span id="longitude">
+                <Translate contentKey="studentexchangeApp.ward.longitude">Longitude</Translate>
+              </span>
+            </dt>
+            <dd>{wardEntity.longitude}</dd>
+            <dt>
               <span id="enabled">
                 <Translate contentKey="studentexchangeApp.ward.enabled">Enabled</Translate>
               </span>

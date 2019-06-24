@@ -108,6 +108,18 @@ export class WardUpdate extends React.Component<IWardUpdateProps, IWardUpdateSta
                   <AvField id="ward-type" type="text" name="type" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="latitudeLabel" for="latitude">
+                    <Translate contentKey="studentexchangeApp.ward.latitude">Latitude</Translate>
+                  </Label>
+                  <AvField id="ward-latitude" type="string" className="form-control" name="latitude" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="longitudeLabel" for="longitude">
+                    <Translate contentKey="studentexchangeApp.ward.longitude">Longitude</Translate>
+                  </Label>
+                  <AvField id="ward-longitude" type="string" className="form-control" name="longitude" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="enabledLabel" check>
                     <AvInput id="ward-enabled" type="checkbox" className="form-control" name="enabled" />
                     <Translate contentKey="studentexchangeApp.ward.enabled">Enabled</Translate>

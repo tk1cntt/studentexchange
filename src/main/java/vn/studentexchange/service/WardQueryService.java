@@ -95,6 +95,12 @@ public class WardQueryService extends QueryService<Ward> {
             if (criteria.getType() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getType(), Ward_.type));
             }
+            if (criteria.getLatitude() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getLatitude(), Ward_.latitude));
+            }
+            if (criteria.getLongitude() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getLongitude(), Ward_.longitude));
+            }
             if (criteria.getEnabled() != null) {
                 specification = specification.and(buildSpecification(criteria.getEnabled(), Ward_.enabled));
             }

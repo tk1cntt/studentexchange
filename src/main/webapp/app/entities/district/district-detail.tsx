@@ -41,6 +41,18 @@ export class DistrictDetail extends React.Component<IDistrictDetailProps> {
             </dt>
             <dd>{districtEntity.type}</dd>
             <dt>
+              <span id="latitude">
+                <Translate contentKey="studentexchangeApp.district.latitude">Latitude</Translate>
+              </span>
+            </dt>
+            <dd>{districtEntity.latitude}</dd>
+            <dt>
+              <span id="longitude">
+                <Translate contentKey="studentexchangeApp.district.longitude">Longitude</Translate>
+              </span>
+            </dt>
+            <dd>{districtEntity.longitude}</dd>
+            <dt>
               <span id="enabled">
                 <Translate contentKey="studentexchangeApp.district.enabled">Enabled</Translate>
               </span>

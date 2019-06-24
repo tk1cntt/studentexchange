@@ -52,6 +52,10 @@
 
         <addPrimaryKey columnNames="regions_id, users_id" tableName="region_user"/>
         
+        <loadData encoding="UTF-8"
+            file="config/liquibase/region.csv"
+            separator=";"
+            tableName="region"/>
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

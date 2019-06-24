@@ -109,6 +109,11 @@ export const getEntities: ICrudGetAllAction<ICity> = (page, size, sort) => {
   };
 };
 
+export const getAllEntities: ICrudGetAllAction<ICity> = () => ({
+  type: ACTION_TYPES.FETCH_CITY_LIST,
+  payload: axios.get<ICity>(`${apiUrl}/all?cacheBuster=${new Date().getTime()}`)
+});
+
 export const getEntity: ICrudGetAction<ICity> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {

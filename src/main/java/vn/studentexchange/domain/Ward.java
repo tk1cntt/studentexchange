@@ -24,7 +24,7 @@ public class Ward implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "jhi_type")
+    @Column(name = "type")
     private String type;
 
     @Column(name = "latitude")

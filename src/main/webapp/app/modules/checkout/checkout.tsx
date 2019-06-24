@@ -26,11 +26,19 @@ export interface ICheckoutState {
   parameters: any;
   locations: any;
   addresses: any;
+  address: String;
+  mobile: String;
+  name: String;
+  note: String;
 }
 
 export class Checkout extends React.Component<ICheckoutProp> {
   state: ICheckoutState = {
     addressChoose: 0,
+    address: null,
+    name: null,
+    mobile: null,
+    note: null,
     city: null,
     parameters: {},
     locations: [],
@@ -88,21 +96,6 @@ export class Checkout extends React.Component<ICheckoutProp> {
           id: district.id
         };
         addresses.push(address);
-        /*
-        district.wards.map(ward => {
-          const wardData = {
-            value: ward.id,
-            label: ward.type + ' ' + ward.name
-          };
-          const address = {
-            value: stringToSlug(ward.type + ward.name + district.type + district.name + city.name),
-            label: ward.type + ' ' + ward.name + ' - ' + district.type + ' ' + district.name + ' - ' + city.name,
-            id: ward.id
-          };
-          addresses.push(address);
-          districtData.children.push(wardData);
-        });
-        */
         cityData.children.push(districtData);
       });
       locations.push(cityData);
@@ -124,11 +117,38 @@ export class Checkout extends React.Component<ICheckoutProp> {
     });
   };
 
+  onChangeAddress = e => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      address: e.target.value
+    });
+  };
+
+  onChangeMobile = e => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      mobile: e.target.value
+    });
+  };
+
+  onChangeNote = e => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      note: e.target.value
+    });
+  };
+
+  onChangeName = e => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      name: e.target.value
+    });
+  };
+
   onChangeCascader = value => {
     const parameters = {
       cityId: value[0],
-      districtId: value[1],
-      wardId: value[2]
+      districtId: value[1]
     };
     const nextParameter = { ...this.state.parameters, ...parameters };
     this.setState({
@@ -141,24 +161,31 @@ export class Checkout extends React.Component<ICheckoutProp> {
     return (
       <form role="form" id="form">
         <div className="form-group">
-          <label>Tên người nhận</label>{' '}
-          <input type="text" placeholder="Tên người nhận" className="form-control" required aria-required="true" />
+          <label>Người nhận</label>{' '}
+          <input
+            type="text"
+            placeholder="Tên người nhận"
+            className="form-control"
+            required
+            aria-required="true"
+            onChange={this.onChangeName}
+          />
         </div>
         <div className="form-group">
           <label>Thành phố</label>
           <Cascader value={this.state.city} options={this.state.locations} onChange={this.onChangeCascader} placeholder="Chọn thành phố" />
         </div>
         <div className="form-group">
-          <label>Địa chỉ người nhận</label> <input type="text" placeholder="Địa chỉ" className="form-control" name="url" />
+          <label>Địa chỉ người nhận</label>
+          <input type="text" placeholder="Địa chỉ" className="form-control" name="address" onChange={this.onChangeAddress} />
         </div>
         <div className="form-group">
-          <label>Số điên thoại</label> <input type="text" placeholder="Số điện thoại" className="form-control" name="number" />
+          <label>Số điên thoại</label>
+          <input type="text" placeholder="Số điện thoại" className="form-control" name="mobile" onChange={this.onChangeMobile} />
         </div>
         <div className="form-group">
-          <label>MinLength</label> <input type="text" placeholder="Enter email" className="form-control" name="min" />
-        </div>
-        <div className="form-group">
-          <label>MaxLength</label> <input type="text" placeholder="Enter email" className="form-control" name="max" />
+          <label>Ghi chú</label>
+          <input type="text" placeholder="Enter email" className="form-control" name="note" onChange={this.onChangeNote} />
         </div>
         <div>
           <button className="btn btn-sm btn-primary m-t-n-xs" type="submit">
@@ -170,13 +197,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
   }
 
   render() {
-    const radioStyle = {
-      display: 'block',
-      height: '30px',
-      lineHeight: '30px'
-    };
     const { shoppingCartList, account } = this.props;
-    console.log('this.state.value', this.state.addressChoose, this.state.addressChoose === 789);
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />

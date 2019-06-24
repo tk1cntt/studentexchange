@@ -1,6 +1,9 @@
 package vn.studentexchange.repository;
 
 import vn.studentexchange.domain.City;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +14,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface CityRepository extends JpaRepository<City, Long>, JpaSpecificationExecutor<City> {
-
+    List<City> findByEnabledTrueOrderByIndexAscNameAsc();
 }

@@ -7,6 +7,7 @@ import vn.studentexchange.web.rest.util.HeaderUtil;
 import vn.studentexchange.web.rest.util.PaginationUtil;
 import vn.studentexchange.service.dto.CityDTO;
 import vn.studentexchange.service.dto.CityCriteria;
+import vn.studentexchange.security.AuthoritiesConstants;
 import vn.studentexchange.service.CityQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -53,6 +55,7 @@ public class CityResource {
      */
     @PostMapping("/cities")
     @Timed
+    @Secured(AuthoritiesConstants.MANAGER)
     public ResponseEntity<CityDTO> createCity(@RequestBody CityDTO cityDTO) throws URISyntaxException {
         log.debug("REST request to save City : {}", cityDTO);
         if (cityDTO.getId() != null) {
@@ -75,6 +78,7 @@ public class CityResource {
      */
     @PutMapping("/cities")
     @Timed
+    @Secured(AuthoritiesConstants.MANAGER)
     public ResponseEntity<CityDTO> updateCity(@RequestBody CityDTO cityDTO) throws URISyntaxException {
         log.debug("REST request to update City : {}", cityDTO);
         if (cityDTO.getId() == null) {
@@ -100,6 +104,13 @@ public class CityResource {
         Page<CityDTO> page = cityQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/cities");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/cities/all")
+    @Timed
+    public ResponseEntity<List<CityDTO>> getAllCities() {
+        log.debug("REST request to get all Cities");
+        return ResponseEntity.ok().body(cityService.findAll());
     }
 
     /**
@@ -137,6 +148,7 @@ public class CityResource {
      */
     @DeleteMapping("/cities/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.MANAGER)
     public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
         log.debug("REST request to delete City : {}", id);
         cityService.delete(id);

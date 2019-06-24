@@ -2,6 +2,7 @@ package vn.studentexchange.service.dto;
 
 import java.time.LocalDate;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,6 +23,8 @@ public class CityDTO implements Serializable {
     private LocalDate updateAt;
 
     private Long countryId;
+
+    private List<DistrictDTO> districts;
 
     public Long getId() {
         return id;
@@ -111,5 +114,13 @@ public class CityDTO implements Serializable {
             ", updateAt='" + getUpdateAt() + "'" +
             ", country=" + getCountryId() +
             "}";
+    }
+
+    public List<DistrictDTO> getDistricts() {
+        return districts;
+    }
+
+    public void setDistricts(List<DistrictDTO> districts) {
+        this.districts = districts;
     }
 }

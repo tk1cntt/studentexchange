@@ -12,7 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing District.
@@ -57,6 +60,19 @@ public class DistrictService {
         log.debug("Request to get all Districts");
         return districtRepository.findAll(pageable)
             .map(districtMapper::toDto);
+    }
+
+    /**
+     * Get all the districts.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<DistrictDTO> findAll() {
+        log.debug("Request to get all Districts");
+        return districtRepository.findAll().stream()
+            .map(districtMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
 

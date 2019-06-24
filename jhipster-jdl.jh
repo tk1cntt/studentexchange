@@ -22,6 +22,7 @@ entity City {
 
 entity District {
    name String,
+   type String,
    enabled Boolean,
    createAt LocalDate,
    updateAt LocalDate

@@ -3,6 +3,9 @@ package vn.studentexchange.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 
 import java.io.Serializable;
@@ -33,9 +36,11 @@ public class City implements Serializable {
     @Column(name = "enabled")
     private Boolean enabled;
 
+    @CreationTimestamp
     @Column(name = "create_at")
     private LocalDate createAt;
 
+    @UpdateTimestamp
     @Column(name = "update_at")
     private LocalDate updateAt;
 
@@ -44,6 +49,7 @@ public class City implements Serializable {
     private Country country;
 
     @OneToMany(mappedBy = "city")
+    @OrderBy("type DESC, name ASC")
     private Set<District> districts = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {

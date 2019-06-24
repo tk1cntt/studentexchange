@@ -12,7 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Region.
@@ -57,6 +60,19 @@ public class RegionService {
         log.debug("Request to get all Regions");
         return regionRepository.findAll(pageable)
             .map(regionMapper::toDto);
+    }
+
+    /**
+     * Get all the cities.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<RegionDTO> findAll() {
+        log.debug("Request to get all Regions");
+        return regionRepository.findAll().stream()
+            .map(regionMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

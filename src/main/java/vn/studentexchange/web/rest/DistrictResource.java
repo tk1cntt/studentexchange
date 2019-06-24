@@ -101,6 +101,13 @@ public class DistrictResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/districts");
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+	
+	@GetMapping("/districts/all")
+    @Timed
+    public List<DistrictDTO> getAllCities() {
+        log.debug("REST request to get all Cities");
+        return districtService.findAll();
+    }
 
     /**
     * GET  /districts/count : count all the districts.

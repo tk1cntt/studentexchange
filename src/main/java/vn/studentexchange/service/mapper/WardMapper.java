@@ -12,6 +12,7 @@ import org.mapstruct.*;
 public interface WardMapper extends EntityMapper<WardDTO, Ward> {
 
     @Mapping(source = "district.id", target = "districtId")
+    @Mapping(source = "district.name", target = "districtName")
     WardDTO toDto(Ward ward);
 
     @Mapping(source = "districtId", target = "district")

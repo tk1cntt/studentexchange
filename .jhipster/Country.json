@@ -20,12 +20,6 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "cities",
-            "otherEntityName": "city",
-            "otherEntityRelationshipName": "country"
-        },
-        {
             "relationshipName": "region",
             "otherEntityName": "region",
             "relationshipType": "many-to-one",

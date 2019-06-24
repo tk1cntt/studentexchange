@@ -62,10 +62,6 @@ export class CityDetail extends React.Component<ICityDetailProps> {
             <dd>
               <TextFormat value={cityEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
-            <dt>
-              <Translate contentKey="studentexchangeApp.city.country">Country</Translate>
-            </dt>
-            <dd>{cityEntity.countryId ? cityEntity.countryId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/city" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -35,8 +35,6 @@ public class CityCriteria implements Serializable {
 
     private LocalDateFilter updateAt;
 
-    private LongFilter countryId;
-
     private LongFilter districtsId;
 
     public CityCriteria() {
@@ -90,14 +88,6 @@ public class CityCriteria implements Serializable {
         this.updateAt = updateAt;
     }
 
-    public LongFilter getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(LongFilter countryId) {
-        this.countryId = countryId;
-    }
-
     public LongFilter getDistrictsId() {
         return districtsId;
     }
@@ -123,7 +113,6 @@ public class CityCriteria implements Serializable {
             Objects.equals(enabled, that.enabled) &&
             Objects.equals(createAt, that.createAt) &&
             Objects.equals(updateAt, that.updateAt) &&
-            Objects.equals(countryId, that.countryId) &&
             Objects.equals(districtsId, that.districtsId);
     }
 
@@ -136,7 +125,6 @@ public class CityCriteria implements Serializable {
         enabled,
         createAt,
         updateAt,
-        countryId,
         districtsId
         );
     }
@@ -150,7 +138,6 @@ public class CityCriteria implements Serializable {
                 (enabled != null ? "enabled=" + enabled + ", " : "") +
                 (createAt != null ? "createAt=" + createAt + ", " : "") +
                 (updateAt != null ? "updateAt=" + updateAt + ", " : "") +
-                (countryId != null ? "countryId=" + countryId + ", " : "") +
                 (districtsId != null ? "districtsId=" + districtsId + ", " : "") +
             "}";
     }

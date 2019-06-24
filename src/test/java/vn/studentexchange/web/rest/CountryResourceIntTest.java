@@ -3,7 +3,6 @@ package vn.studentexchange.web.rest;
 import vn.studentexchange.StudentexchangeApp;
 
 import vn.studentexchange.domain.Country;
-import vn.studentexchange.domain.City;
 import vn.studentexchange.domain.Region;
 import vn.studentexchange.repository.CountryRepository;
 import vn.studentexchange.service.CountryService;
@@ -402,25 +401,6 @@ public class CountryResourceIntTest {
 
         // Get all the countryList where updateAt less than or equals to UPDATED_UPDATE_AT
         defaultCountryShouldBeFound("updateAt.lessThan=" + UPDATED_UPDATE_AT);
-    }
-
-
-    @Test
-    @Transactional
-    public void getAllCountriesByCitiesIsEqualToSomething() throws Exception {
-        // Initialize the database
-        City cities = CityResourceIntTest.createEntity(em);
-        em.persist(cities);
-        em.flush();
-        country.addCities(cities);
-        countryRepository.saveAndFlush(country);
-        Long citiesId = cities.getId();
-
-        // Get all the countryList where cities equals to citiesId
-        defaultCountryShouldBeFound("citiesId.equals=" + citiesId);
-
-        // Get all the countryList where cities equals to citiesId + 1
-        defaultCountryShouldNotBeFound("citiesId.equals=" + (citiesId + 1));
     }
 
 

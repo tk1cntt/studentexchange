@@ -1,7 +1,6 @@
 package vn.studentexchange.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -43,10 +42,6 @@ public class City implements Serializable {
     @UpdateTimestamp
     @Column(name = "update_at")
     private LocalDate updateAt;
-
-    @ManyToOne
-    @JsonIgnoreProperties("cities")
-    private Country country;
 
     @OneToMany(mappedBy = "city")
     @OrderBy("type DESC, name ASC")
@@ -123,19 +118,6 @@ public class City implements Serializable {
 
     public void setUpdateAt(LocalDate updateAt) {
         this.updateAt = updateAt;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public City country(Country country) {
-        this.country = country;
-        return this;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
     }
 
     public Set<District> getDistricts() {

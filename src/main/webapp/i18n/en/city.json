@@ -20,7 +20,6 @@
       "enabled": "Enabled",
       "createAt": "Create At",
       "updateAt": "Update At",
-      "country": "Country",
       "districts": "Districts"
     }
   }

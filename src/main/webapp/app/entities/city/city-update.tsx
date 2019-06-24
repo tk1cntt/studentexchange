@@ -8,8 +8,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { ICountry } from 'app/shared/model/country.model';
-import { getEntities as getCountries } from 'app/entities/country/country.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './city.reducer';
 import { ICity } from 'app/shared/model/city.model';
 // tslint:disable-next-line:no-unused-variable
@@ -20,14 +18,12 @@ export interface ICityUpdateProps extends StateProps, DispatchProps, RouteCompon
 
 export interface ICityUpdateState {
   isNew: boolean;
-  countryId: string;
 }
 
 export class CityUpdate extends React.Component<ICityUpdateProps, ICityUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      countryId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -44,8 +40,6 @@ export class CityUpdate extends React.Component<ICityUpdateProps, ICityUpdateSta
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
-
-    this.props.getCountries();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +63,7 @@ export class CityUpdate extends React.Component<ICityUpdateProps, ICityUpdateSta
   };
 
   render() {
-    const { cityEntity, countries, loading, updating } = this.props;
+    const { cityEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -125,21 +119,6 @@ export class CityUpdate extends React.Component<ICityUpdateProps, ICityUpdateSta
                   </Label>
                   <AvField id="city-updateAt" type="date" className="form-control" name="updateAt" />
                 </AvGroup>
-                <AvGroup>
-                  <Label for="country.id">
-                    <Translate contentKey="studentexchangeApp.city.country">Country</Translate>
-                  </Label>
-                  <AvInput id="city-country" type="select" className="form-control" name="countryId">
-                    <option value="" key="0" />
-                    {countries
-                      ? countries.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/city" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
@@ -163,7 +142,6 @@ export class CityUpdate extends React.Component<ICityUpdateProps, ICityUpdateSta
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  countries: storeState.country.entities,
   cityEntity: storeState.city.entity,
   loading: storeState.city.loading,
   updating: storeState.city.updating,
@@ -171,7 +149,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getCountries,
   getEntity,
   updateEntity,
   createEntity,

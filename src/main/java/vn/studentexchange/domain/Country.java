@@ -1,14 +1,11 @@
 package vn.studentexchange.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -36,8 +33,6 @@ public class Country implements Serializable {
     @Column(name = "update_at")
     private LocalDate updateAt;
 
-    @OneToMany(mappedBy = "country")
-    private Set<City> cities = new HashSet<>();
     @ManyToOne
     @JsonIgnoreProperties("countries")
     private Region region;
@@ -101,31 +96,6 @@ public class Country implements Serializable {
 
     public void setUpdateAt(LocalDate updateAt) {
         this.updateAt = updateAt;
-    }
-
-    public Set<City> getCities() {
-        return cities;
-    }
-
-    public Country cities(Set<City> cities) {
-        this.cities = cities;
-        return this;
-    }
-
-    public Country addCities(City city) {
-        this.cities.add(city);
-        city.setCountry(this);
-        return this;
-    }
-
-    public Country removeCities(City city) {
-        this.cities.remove(city);
-        city.setCountry(null);
-        return this;
-    }
-
-    public void setCities(Set<City> cities) {
-        this.cities = cities;
     }
 
     public Region getRegion() {

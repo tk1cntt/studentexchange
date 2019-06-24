@@ -19,7 +19,6 @@
       "enabled": "Enabled",
       "createAt": "Create At",
       "updateAt": "Update At",
-      "cities": "Cities",
       "region": "Region"
     }
   }

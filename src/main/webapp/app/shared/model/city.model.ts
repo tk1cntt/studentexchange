@@ -8,7 +8,6 @@ export interface ICity {
   enabled?: boolean;
   createAt?: Moment;
   updateAt?: Moment;
-  countryId?: number;
   districts?: IDistrict[];
 }
 

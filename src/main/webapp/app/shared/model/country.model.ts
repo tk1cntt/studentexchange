@@ -1,5 +1,4 @@
 import { Moment } from 'moment';
-import { ICity } from 'app/shared/model//city.model';
 
 export interface ICountry {
   id?: number;
@@ -7,7 +6,6 @@ export interface ICountry {
   enabled?: boolean;
   createAt?: Moment;
   updateAt?: Moment;
-  cities?: ICity[];
   regionId?: number;
 }
 

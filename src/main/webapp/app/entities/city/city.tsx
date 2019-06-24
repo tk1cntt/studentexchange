@@ -90,9 +90,6 @@ export class City extends React.Component<ICityProps, ICityState> {
                 <th className="hand" onClick={this.sort('updateAt')}>
                   <Translate contentKey="studentexchangeApp.city.updateAt">Update At</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.city.country">Country</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th />
               </tr>
             </thead>
@@ -113,7 +110,6 @@ export class City extends React.Component<ICityProps, ICityState> {
                   <td>
                     <TextFormat type="date" value={city.updateAt} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
-                  <td>{city.countryId ? <Link to={`country/${city.countryId}`}>{city.countryId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${city.id}`} color="info" size="sm">

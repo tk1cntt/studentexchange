@@ -101,10 +101,6 @@ public class CountryQueryService extends QueryService<Country> {
             if (criteria.getUpdateAt() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getUpdateAt(), Country_.updateAt));
             }
-            if (criteria.getCitiesId() != null) {
-                specification = specification.and(buildSpecification(criteria.getCitiesId(),
-                    root -> root.join(Country_.cities, JoinType.LEFT).get(City_.id)));
-            }
             if (criteria.getRegionId() != null) {
                 specification = specification.and(buildSpecification(criteria.getRegionId(),
                     root -> root.join(Country_.region, JoinType.LEFT).get(Region_.id)));

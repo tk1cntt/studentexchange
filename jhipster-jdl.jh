@@ -45,7 +45,6 @@ relationship ManyToMany {
 }
 
 relationship OneToMany {
-   Country{cities} to City,
    City{districts} to District,
    Region{countries} to Country,
    District{wards} to Ward

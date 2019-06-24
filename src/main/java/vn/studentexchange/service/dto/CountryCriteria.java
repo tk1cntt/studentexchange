@@ -33,8 +33,6 @@ public class CountryCriteria implements Serializable {
 
     private LocalDateFilter updateAt;
 
-    private LongFilter citiesId;
-
     private LongFilter regionId;
 
     public CountryCriteria() {
@@ -80,14 +78,6 @@ public class CountryCriteria implements Serializable {
         this.updateAt = updateAt;
     }
 
-    public LongFilter getCitiesId() {
-        return citiesId;
-    }
-
-    public void setCitiesId(LongFilter citiesId) {
-        this.citiesId = citiesId;
-    }
-
     public LongFilter getRegionId() {
         return regionId;
     }
@@ -112,7 +102,6 @@ public class CountryCriteria implements Serializable {
             Objects.equals(enabled, that.enabled) &&
             Objects.equals(createAt, that.createAt) &&
             Objects.equals(updateAt, that.updateAt) &&
-            Objects.equals(citiesId, that.citiesId) &&
             Objects.equals(regionId, that.regionId);
     }
 
@@ -124,7 +113,6 @@ public class CountryCriteria implements Serializable {
         enabled,
         createAt,
         updateAt,
-        citiesId,
         regionId
         );
     }
@@ -137,7 +125,6 @@ public class CountryCriteria implements Serializable {
                 (enabled != null ? "enabled=" + enabled + ", " : "") +
                 (createAt != null ? "createAt=" + createAt + ", " : "") +
                 (updateAt != null ? "updateAt=" + updateAt + ", " : "") +
-                (citiesId != null ? "citiesId=" + citiesId + ", " : "") +
                 (regionId != null ? "regionId=" + regionId + ", " : "") +
             "}";
     }

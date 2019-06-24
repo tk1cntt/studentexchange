@@ -102,6 +102,12 @@ export class DistrictUpdate extends React.Component<IDistrictUpdateProps, IDistr
                   <AvField id="district-name" type="text" name="name" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="typeLabel" for="type">
+                    <Translate contentKey="studentexchangeApp.district.type">Type</Translate>
+                  </Label>
+                  <AvField id="district-type" type="text" name="type" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="enabledLabel" check>
                     <AvInput id="district-enabled" type="checkbox" className="form-control" name="enabled" />
                     <Translate contentKey="studentexchangeApp.district.enabled">Enabled</Translate>

@@ -51,6 +51,9 @@ public class DistrictResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
+    private static final String UPDATED_TYPE = "BBBBBBBBBB";
+
     private static final Boolean DEFAULT_ENABLED = false;
     private static final Boolean UPDATED_ENABLED = true;
 
@@ -108,6 +111,7 @@ public class DistrictResourceIntTest {
     public static District createEntity(EntityManager em) {
         District district = new District()
             .name(DEFAULT_NAME)
+            .type(DEFAULT_TYPE)
             .enabled(DEFAULT_ENABLED)
             .createAt(DEFAULT_CREATE_AT)
             .updateAt(DEFAULT_UPDATE_AT);
@@ -136,6 +140,7 @@ public class DistrictResourceIntTest {
         assertThat(districtList).hasSize(databaseSizeBeforeCreate + 1);
         District testDistrict = districtList.get(districtList.size() - 1);
         assertThat(testDistrict.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testDistrict.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testDistrict.isEnabled()).isEqualTo(DEFAULT_ENABLED);
         assertThat(testDistrict.getCreateAt()).isEqualTo(DEFAULT_CREATE_AT);
         assertThat(testDistrict.getUpdateAt()).isEqualTo(DEFAULT_UPDATE_AT);
@@ -173,6 +178,7 @@ public class DistrictResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(district.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
@@ -190,6 +196,7 @@ public class DistrictResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(district.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.enabled").value(DEFAULT_ENABLED.booleanValue()))
             .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
             .andExpect(jsonPath("$.updateAt").value(DEFAULT_UPDATE_AT.toString()));
@@ -232,6 +239,45 @@ public class DistrictResourceIntTest {
 
         // Get all the districtList where name is null
         defaultDistrictShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllDistrictsByTypeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where type equals to DEFAULT_TYPE
+        defaultDistrictShouldBeFound("type.equals=" + DEFAULT_TYPE);
+
+        // Get all the districtList where type equals to UPDATED_TYPE
+        defaultDistrictShouldNotBeFound("type.equals=" + UPDATED_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDistrictsByTypeIsInShouldWork() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where type in DEFAULT_TYPE or UPDATED_TYPE
+        defaultDistrictShouldBeFound("type.in=" + DEFAULT_TYPE + "," + UPDATED_TYPE);
+
+        // Get all the districtList where type equals to UPDATED_TYPE
+        defaultDistrictShouldNotBeFound("type.in=" + UPDATED_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllDistrictsByTypeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        districtRepository.saveAndFlush(district);
+
+        // Get all the districtList where type is not null
+        defaultDistrictShouldBeFound("type.specified=true");
+
+        // Get all the districtList where type is null
+        defaultDistrictShouldNotBeFound("type.specified=false");
     }
 
     @Test
@@ -451,6 +497,7 @@ public class DistrictResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(district.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
@@ -502,6 +549,7 @@ public class DistrictResourceIntTest {
         em.detach(updatedDistrict);
         updatedDistrict
             .name(UPDATED_NAME)
+            .type(UPDATED_TYPE)
             .enabled(UPDATED_ENABLED)
             .createAt(UPDATED_CREATE_AT)
             .updateAt(UPDATED_UPDATE_AT);
@@ -517,6 +565,7 @@ public class DistrictResourceIntTest {
         assertThat(districtList).hasSize(databaseSizeBeforeUpdate);
         District testDistrict = districtList.get(districtList.size() - 1);
         assertThat(testDistrict.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testDistrict.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testDistrict.isEnabled()).isEqualTo(UPDATED_ENABLED);
         assertThat(testDistrict.getCreateAt()).isEqualTo(UPDATED_CREATE_AT);
         assertThat(testDistrict.getUpdateAt()).isEqualTo(UPDATED_UPDATE_AT);

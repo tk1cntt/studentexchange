@@ -102,6 +102,12 @@ export class WardUpdate extends React.Component<IWardUpdateProps, IWardUpdateSta
                   <AvField id="ward-name" type="text" name="name" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="typeLabel" for="type">
+                    <Translate contentKey="studentexchangeApp.ward.type">Type</Translate>
+                  </Label>
+                  <AvField id="ward-type" type="text" name="type" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="enabledLabel" check>
                     <AvInput id="ward-enabled" type="checkbox" className="form-control" name="enabled" />
                     <Translate contentKey="studentexchangeApp.ward.enabled">Enabled</Translate>

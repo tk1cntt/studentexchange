@@ -35,6 +35,12 @@ export class DistrictDetail extends React.Component<IDistrictDetailProps> {
             </dt>
             <dd>{districtEntity.name}</dd>
             <dt>
+              <span id="type">
+                <Translate contentKey="studentexchangeApp.district.type">Type</Translate>
+              </span>
+            </dt>
+            <dd>{districtEntity.type}</dd>
+            <dt>
               <span id="enabled">
                 <Translate contentKey="studentexchangeApp.district.enabled">Enabled</Translate>
               </span>

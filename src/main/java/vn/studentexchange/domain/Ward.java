@@ -24,6 +24,9 @@ public class Ward implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "jhi_type")
+    private String type;
+
     @Column(name = "enabled")
     private Boolean enabled;
 
@@ -57,6 +60,19 @@ public class Ward implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Ward type(String type) {
+        this.type = type;
+        return this;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Boolean isEnabled() {
@@ -137,6 +153,7 @@ public class Ward implements Serializable {
         return "Ward{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", type='" + getType() + "'" +
             ", enabled='" + isEnabled() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +

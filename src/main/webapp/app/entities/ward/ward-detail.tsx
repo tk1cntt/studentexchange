@@ -35,6 +35,12 @@ export class WardDetail extends React.Component<IWardDetailProps> {
             </dt>
             <dd>{wardEntity.name}</dd>
             <dt>
+              <span id="type">
+                <Translate contentKey="studentexchangeApp.ward.type">Type</Translate>
+              </span>
+            </dt>
+            <dd>{wardEntity.type}</dd>
+            <dt>
               <span id="enabled">
                 <Translate contentKey="studentexchangeApp.ward.enabled">Enabled</Translate>
               </span>

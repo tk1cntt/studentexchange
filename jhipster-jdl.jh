@@ -30,6 +30,7 @@ entity District {
 
 entity Ward {
    name String,
+   type String,
    enabled Boolean,
    createAt LocalDate,
    updateAt LocalDate

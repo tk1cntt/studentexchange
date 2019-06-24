@@ -13,6 +13,8 @@ public class DistrictDTO implements Serializable {
 
     private String name;
 
+    private String type;
+
     private Boolean enabled;
 
     private LocalDate createAt;
@@ -35,6 +37,14 @@ public class DistrictDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Boolean isEnabled() {
@@ -95,6 +105,7 @@ public class DistrictDTO implements Serializable {
         return "DistrictDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", type='" + getType() + "'" +
             ", enabled='" + isEnabled() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +

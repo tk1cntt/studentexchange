@@ -27,6 +27,8 @@ public class WardCriteria implements Serializable {
 
     private StringFilter name;
 
+    private StringFilter type;
+
     private BooleanFilter enabled;
 
     private LocalDateFilter createAt;
@@ -52,6 +54,14 @@ public class WardCriteria implements Serializable {
 
     public void setName(StringFilter name) {
         this.name = name;
+    }
+
+    public StringFilter getType() {
+        return type;
+    }
+
+    public void setType(StringFilter type) {
+        this.type = type;
     }
 
     public BooleanFilter getEnabled() {
@@ -99,6 +109,7 @@ public class WardCriteria implements Serializable {
         return
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
+            Objects.equals(type, that.type) &&
             Objects.equals(enabled, that.enabled) &&
             Objects.equals(createAt, that.createAt) &&
             Objects.equals(updateAt, that.updateAt) &&
@@ -110,6 +121,7 @@ public class WardCriteria implements Serializable {
         return Objects.hash(
         id,
         name,
+        type,
         enabled,
         createAt,
         updateAt,
@@ -122,6 +134,7 @@ public class WardCriteria implements Serializable {
         return "WardCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (name != null ? "name=" + name + ", " : "") +
+                (type != null ? "type=" + type + ", " : "") +
                 (enabled != null ? "enabled=" + enabled + ", " : "") +
                 (createAt != null ? "createAt=" + createAt + ", " : "") +
                 (updateAt != null ? "updateAt=" + updateAt + ", " : "") +

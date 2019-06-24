@@ -4,6 +4,7 @@ import { IWard } from 'app/shared/model//ward.model';
 export interface IDistrict {
   id?: number;
   name?: string;
+  type?: string;
   enabled?: boolean;
   createAt?: Moment;
   updateAt?: Moment;

@@ -78,6 +78,9 @@ export class District extends React.Component<IDistrictProps, IDistrictState> {
                 <th className="hand" onClick={this.sort('name')}>
                   <Translate contentKey="studentexchangeApp.district.name">Name</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={this.sort('type')}>
+                  <Translate contentKey="studentexchangeApp.district.type">Type</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={this.sort('enabled')}>
                   <Translate contentKey="studentexchangeApp.district.enabled">Enabled</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -102,6 +105,7 @@ export class District extends React.Component<IDistrictProps, IDistrictState> {
                     </Button>
                   </td>
                   <td>{district.name}</td>
+                  <td>{district.type}</td>
                   <td>{district.enabled ? 'true' : 'false'}</td>
                   <td>
                     <TextFormat type="date" value={district.createAt} format={APP_LOCAL_DATE_FORMAT} />

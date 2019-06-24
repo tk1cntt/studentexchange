@@ -6,6 +6,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "type",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "enabled",
             "fieldType": "Boolean"
         },

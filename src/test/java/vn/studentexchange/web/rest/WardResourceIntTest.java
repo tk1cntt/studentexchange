@@ -50,6 +50,9 @@ public class WardResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
+    private static final String UPDATED_TYPE = "BBBBBBBBBB";
+
     private static final Boolean DEFAULT_ENABLED = false;
     private static final Boolean UPDATED_ENABLED = true;
 
@@ -107,6 +110,7 @@ public class WardResourceIntTest {
     public static Ward createEntity(EntityManager em) {
         Ward ward = new Ward()
             .name(DEFAULT_NAME)
+            .type(DEFAULT_TYPE)
             .enabled(DEFAULT_ENABLED)
             .createAt(DEFAULT_CREATE_AT)
             .updateAt(DEFAULT_UPDATE_AT);
@@ -135,6 +139,7 @@ public class WardResourceIntTest {
         assertThat(wardList).hasSize(databaseSizeBeforeCreate + 1);
         Ward testWard = wardList.get(wardList.size() - 1);
         assertThat(testWard.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testWard.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testWard.isEnabled()).isEqualTo(DEFAULT_ENABLED);
         assertThat(testWard.getCreateAt()).isEqualTo(DEFAULT_CREATE_AT);
         assertThat(testWard.getUpdateAt()).isEqualTo(DEFAULT_UPDATE_AT);
@@ -172,6 +177,7 @@ public class WardResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ward.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
@@ -189,6 +195,7 @@ public class WardResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(ward.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.enabled").value(DEFAULT_ENABLED.booleanValue()))
             .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
             .andExpect(jsonPath("$.updateAt").value(DEFAULT_UPDATE_AT.toString()));
@@ -231,6 +238,45 @@ public class WardResourceIntTest {
 
         // Get all the wardList where name is null
         defaultWardShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllWardsByTypeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where type equals to DEFAULT_TYPE
+        defaultWardShouldBeFound("type.equals=" + DEFAULT_TYPE);
+
+        // Get all the wardList where type equals to UPDATED_TYPE
+        defaultWardShouldNotBeFound("type.equals=" + UPDATED_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWardsByTypeIsInShouldWork() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where type in DEFAULT_TYPE or UPDATED_TYPE
+        defaultWardShouldBeFound("type.in=" + DEFAULT_TYPE + "," + UPDATED_TYPE);
+
+        // Get all the wardList where type equals to UPDATED_TYPE
+        defaultWardShouldNotBeFound("type.in=" + UPDATED_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllWardsByTypeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        wardRepository.saveAndFlush(ward);
+
+        // Get all the wardList where type is not null
+        defaultWardShouldBeFound("type.specified=true");
+
+        // Get all the wardList where type is null
+        defaultWardShouldNotBeFound("type.specified=false");
     }
 
     @Test
@@ -431,6 +477,7 @@ public class WardResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ward.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
@@ -482,6 +529,7 @@ public class WardResourceIntTest {
         em.detach(updatedWard);
         updatedWard
             .name(UPDATED_NAME)
+            .type(UPDATED_TYPE)
             .enabled(UPDATED_ENABLED)
             .createAt(UPDATED_CREATE_AT)
             .updateAt(UPDATED_UPDATE_AT);
@@ -497,6 +545,7 @@ public class WardResourceIntTest {
         assertThat(wardList).hasSize(databaseSizeBeforeUpdate);
         Ward testWard = wardList.get(wardList.size() - 1);
         assertThat(testWard.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testWard.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testWard.isEnabled()).isEqualTo(UPDATED_ENABLED);
         assertThat(testWard.getCreateAt()).isEqualTo(UPDATED_CREATE_AT);
         assertThat(testWard.getUpdateAt()).isEqualTo(UPDATED_UPDATE_AT);

@@ -27,6 +27,8 @@ public class DistrictCriteria implements Serializable {
 
     private StringFilter name;
 
+    private StringFilter type;
+
     private BooleanFilter enabled;
 
     private LocalDateFilter createAt;
@@ -54,6 +56,14 @@ public class DistrictCriteria implements Serializable {
 
     public void setName(StringFilter name) {
         this.name = name;
+    }
+
+    public StringFilter getType() {
+        return type;
+    }
+
+    public void setType(StringFilter type) {
+        this.type = type;
     }
 
     public BooleanFilter getEnabled() {
@@ -109,6 +119,7 @@ public class DistrictCriteria implements Serializable {
         return
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
+            Objects.equals(type, that.type) &&
             Objects.equals(enabled, that.enabled) &&
             Objects.equals(createAt, that.createAt) &&
             Objects.equals(updateAt, that.updateAt) &&
@@ -121,6 +132,7 @@ public class DistrictCriteria implements Serializable {
         return Objects.hash(
         id,
         name,
+        type,
         enabled,
         createAt,
         updateAt,
@@ -134,6 +146,7 @@ public class DistrictCriteria implements Serializable {
         return "DistrictCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (name != null ? "name=" + name + ", " : "") +
+                (type != null ? "type=" + type + ", " : "") +
                 (enabled != null ? "enabled=" + enabled + ", " : "") +
                 (createAt != null ? "createAt=" + createAt + ", " : "") +
                 (updateAt != null ? "updateAt=" + updateAt + ", " : "") +

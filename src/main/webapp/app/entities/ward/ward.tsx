@@ -78,6 +78,9 @@ export class Ward extends React.Component<IWardProps, IWardState> {
                 <th className="hand" onClick={this.sort('name')}>
                   <Translate contentKey="studentexchangeApp.ward.name">Name</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={this.sort('type')}>
+                  <Translate contentKey="studentexchangeApp.ward.type">Type</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={this.sort('enabled')}>
                   <Translate contentKey="studentexchangeApp.ward.enabled">Enabled</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -102,6 +105,7 @@ export class Ward extends React.Component<IWardProps, IWardState> {
                     </Button>
                   </td>
                   <td>{ward.name}</td>
+                  <td>{ward.type}</td>
                   <td>{ward.enabled ? 'true' : 'false'}</td>
                   <td>
                     <TextFormat type="date" value={ward.createAt} format={APP_LOCAL_DATE_FORMAT} />

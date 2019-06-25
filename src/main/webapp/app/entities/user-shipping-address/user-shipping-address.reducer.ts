@@ -125,7 +125,7 @@ export const createEntity: ICrudPutAction<IUserShippingAddress> = entity => asyn
     type: ACTION_TYPES.CREATE_USERSHIPPINGADDRESS,
     payload: axios.post(apiUrl, cleanEntity(entity))
   });
-  dispatch(getEntities());
+  dispatch(getOwnerEntities());
   return result;
 };
 
@@ -134,7 +134,7 @@ export const updateEntity: ICrudPutAction<IUserShippingAddress> = entity => asyn
     type: ACTION_TYPES.UPDATE_USERSHIPPINGADDRESS,
     payload: axios.put(apiUrl, cleanEntity(entity))
   });
-  dispatch(getEntities());
+  dispatch(getOwnerEntities());
   return result;
 };
 
@@ -144,7 +144,7 @@ export const deleteEntity: ICrudDeleteAction<IUserShippingAddress> = id => async
     type: ACTION_TYPES.DELETE_USERSHIPPINGADDRESS,
     payload: axios.delete(requestUrl)
   });
-  dispatch(getEntities());
+  dispatch(getOwnerEntities());
   return result;
 };
 

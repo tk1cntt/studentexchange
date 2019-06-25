@@ -51,9 +51,6 @@ export class UserShippingAddress extends React.Component<IUserShippingAddressPro
                   <Translate contentKey="studentexchangeApp.userShippingAddress.note">Note</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.userShippingAddress.isShippingAddress">Is Shipping Address</Translate>
-                </th>
-                <th>
                   <Translate contentKey="studentexchangeApp.userShippingAddress.createAt">Create At</Translate>
                 </th>
                 <th>
@@ -89,7 +86,6 @@ export class UserShippingAddress extends React.Component<IUserShippingAddressPro
                   <td>{userShippingAddress.address}</td>
                   <td>{userShippingAddress.mobile}</td>
                   <td>{userShippingAddress.note}</td>
-                  <td>{userShippingAddress.isShippingAddress ? 'true' : 'false'}</td>
                   <td>
                     <TextFormat type="date" value={userShippingAddress.createAt} format={APP_LOCAL_DATE_FORMAT} />
                   </td>

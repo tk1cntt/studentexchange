@@ -6,7 +6,6 @@ export interface IUserShippingAddress {
   address?: string;
   mobile?: string;
   note?: string;
-  isShippingAddress?: boolean;
   createAt?: Moment;
   updateAt?: Moment;
   userProfileId?: number;
@@ -18,6 +17,4 @@ export interface IUserShippingAddress {
   districtId?: number;
 }
 
-export const defaultValue: Readonly<IUserShippingAddress> = {
-  isShippingAddress: false
-};
+export const defaultValue: Readonly<IUserShippingAddress> = {};

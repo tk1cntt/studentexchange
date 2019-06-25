@@ -19,7 +19,6 @@
       "address": "Address",
       "mobile": "Mobile",
       "note": "Note",
-      "isShippingAddress": "Is Shipping Address",
       "createAt": "Create At",
       "updateAt": "Update At",
       "userProfile": "User Profile",

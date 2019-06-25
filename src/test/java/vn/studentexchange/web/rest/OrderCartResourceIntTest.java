@@ -171,6 +171,18 @@ public class OrderCartResourceIntTest {
     private static final Float DEFAULT_FINAL_AMOUNT = 1F;
     private static final Float UPDATED_FINAL_AMOUNT = 2F;
 
+    private static final String DEFAULT_ORDER_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_ORDER_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ORDER_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_ORDER_ADDRESS = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ORDER_MOBILE = "AAAAAAAAAA";
+    private static final String UPDATED_ORDER_MOBILE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ORDER_NOTE = "AAAAAAAAAA";
+    private static final String UPDATED_ORDER_NOTE = "BBBBBBBBBB";
+
     private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
 
@@ -263,6 +275,10 @@ public class OrderCartResourceIntTest {
             .serviceFeeDiscount(DEFAULT_SERVICE_FEE_DISCOUNT)
             .totalServiceFee(DEFAULT_TOTAL_SERVICE_FEE)
             .finalAmount(DEFAULT_FINAL_AMOUNT)
+            .orderName(DEFAULT_ORDER_NAME)
+            .orderAddress(DEFAULT_ORDER_ADDRESS)
+            .orderMobile(DEFAULT_ORDER_MOBILE)
+            .orderNote(DEFAULT_ORDER_NOTE)
             .createAt(DEFAULT_CREATE_AT)
             .updateAt(DEFAULT_UPDATE_AT);
         return orderCart;
@@ -331,6 +347,10 @@ public class OrderCartResourceIntTest {
         assertThat(testOrderCart.getServiceFeeDiscount()).isEqualTo(DEFAULT_SERVICE_FEE_DISCOUNT);
         assertThat(testOrderCart.getTotalServiceFee()).isEqualTo(DEFAULT_TOTAL_SERVICE_FEE);
         assertThat(testOrderCart.getFinalAmount()).isEqualTo(DEFAULT_FINAL_AMOUNT);
+        assertThat(testOrderCart.getOrderName()).isEqualTo(DEFAULT_ORDER_NAME);
+        assertThat(testOrderCart.getOrderAddress()).isEqualTo(DEFAULT_ORDER_ADDRESS);
+        assertThat(testOrderCart.getOrderMobile()).isEqualTo(DEFAULT_ORDER_MOBILE);
+        assertThat(testOrderCart.getOrderNote()).isEqualTo(DEFAULT_ORDER_NOTE);
         assertThat(testOrderCart.getCreateAt()).isEqualTo(DEFAULT_CREATE_AT);
         assertThat(testOrderCart.getUpdateAt()).isEqualTo(DEFAULT_UPDATE_AT);
     }
@@ -408,6 +428,10 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.[*].serviceFeeDiscount").value(hasItem(DEFAULT_SERVICE_FEE_DISCOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].totalServiceFee").value(hasItem(DEFAULT_TOTAL_SERVICE_FEE.doubleValue())))
             .andExpect(jsonPath("$.[*].finalAmount").value(hasItem(DEFAULT_FINAL_AMOUNT.doubleValue())))
+            .andExpect(jsonPath("$.[*].orderName").value(hasItem(DEFAULT_ORDER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].orderAddress").value(hasItem(DEFAULT_ORDER_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].orderMobile").value(hasItem(DEFAULT_ORDER_MOBILE.toString())))
+            .andExpect(jsonPath("$.[*].orderNote").value(hasItem(DEFAULT_ORDER_NOTE.toString())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
     }
@@ -465,6 +489,10 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.serviceFeeDiscount").value(DEFAULT_SERVICE_FEE_DISCOUNT.doubleValue()))
             .andExpect(jsonPath("$.totalServiceFee").value(DEFAULT_TOTAL_SERVICE_FEE.doubleValue()))
             .andExpect(jsonPath("$.finalAmount").value(DEFAULT_FINAL_AMOUNT.doubleValue()))
+            .andExpect(jsonPath("$.orderName").value(DEFAULT_ORDER_NAME.toString()))
+            .andExpect(jsonPath("$.orderAddress").value(DEFAULT_ORDER_ADDRESS.toString()))
+            .andExpect(jsonPath("$.orderMobile").value(DEFAULT_ORDER_MOBILE.toString()))
+            .andExpect(jsonPath("$.orderNote").value(DEFAULT_ORDER_NOTE.toString()))
             .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
             .andExpect(jsonPath("$.updateAt").value(DEFAULT_UPDATE_AT.toString()));
     }
@@ -532,6 +560,10 @@ public class OrderCartResourceIntTest {
             .serviceFeeDiscount(UPDATED_SERVICE_FEE_DISCOUNT)
             .totalServiceFee(UPDATED_TOTAL_SERVICE_FEE)
             .finalAmount(UPDATED_FINAL_AMOUNT)
+            .orderName(UPDATED_ORDER_NAME)
+            .orderAddress(UPDATED_ORDER_ADDRESS)
+            .orderMobile(UPDATED_ORDER_MOBILE)
+            .orderNote(UPDATED_ORDER_NOTE)
             .createAt(UPDATED_CREATE_AT)
             .updateAt(UPDATED_UPDATE_AT);
         OrderCartDTO orderCartDTO = orderCartMapper.toDto(updatedOrderCart);
@@ -587,6 +619,10 @@ public class OrderCartResourceIntTest {
         assertThat(testOrderCart.getServiceFeeDiscount()).isEqualTo(UPDATED_SERVICE_FEE_DISCOUNT);
         assertThat(testOrderCart.getTotalServiceFee()).isEqualTo(UPDATED_TOTAL_SERVICE_FEE);
         assertThat(testOrderCart.getFinalAmount()).isEqualTo(UPDATED_FINAL_AMOUNT);
+        assertThat(testOrderCart.getOrderName()).isEqualTo(UPDATED_ORDER_NAME);
+        assertThat(testOrderCart.getOrderAddress()).isEqualTo(UPDATED_ORDER_ADDRESS);
+        assertThat(testOrderCart.getOrderMobile()).isEqualTo(UPDATED_ORDER_MOBILE);
+        assertThat(testOrderCart.getOrderNote()).isEqualTo(UPDATED_ORDER_NOTE);
         assertThat(testOrderCart.getCreateAt()).isEqualTo(UPDATED_CREATE_AT);
         assertThat(testOrderCart.getUpdateAt()).isEqualTo(UPDATED_UPDATE_AT);
     }

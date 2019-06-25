@@ -33,9 +33,6 @@ public class UserShippingAddress implements Serializable {
     @Column(name = "note")
     private String note;
 
-    @Column(name = "is_shipping_address")
-    private Boolean isShippingAddress;
-
     @Column(name = "create_at")
     private LocalDate createAt;
 
@@ -121,19 +118,6 @@ public class UserShippingAddress implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
-    }
-
-    public Boolean isIsShippingAddress() {
-        return isShippingAddress;
-    }
-
-    public UserShippingAddress isShippingAddress(Boolean isShippingAddress) {
-        this.isShippingAddress = isShippingAddress;
-        return this;
-    }
-
-    public void setIsShippingAddress(Boolean isShippingAddress) {
-        this.isShippingAddress = isShippingAddress;
     }
 
     public LocalDate getCreateAt() {
@@ -256,7 +240,6 @@ public class UserShippingAddress implements Serializable {
             ", address='" + getAddress() + "'" +
             ", mobile='" + getMobile() + "'" +
             ", note='" + getNote() + "'" +
-            ", isShippingAddress='" + isIsShippingAddress() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +
             "}";

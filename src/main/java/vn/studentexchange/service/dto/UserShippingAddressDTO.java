@@ -19,8 +19,6 @@ public class UserShippingAddressDTO implements Serializable {
 
     private String note;
 
-    private Boolean isShippingAddress;
-
     private LocalDate createAt;
 
     private LocalDate updateAt;
@@ -77,14 +75,6 @@ public class UserShippingAddressDTO implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
-    }
-
-    public Boolean isIsShippingAddress() {
-        return isShippingAddress;
-    }
-
-    public void setIsShippingAddress(Boolean isShippingAddress) {
-        this.isShippingAddress = isShippingAddress;
     }
 
     public LocalDate getCreateAt() {
@@ -188,7 +178,6 @@ public class UserShippingAddressDTO implements Serializable {
             ", address='" + getAddress() + "'" +
             ", mobile='" + getMobile() + "'" +
             ", note='" + getNote() + "'" +
-            ", isShippingAddress='" + isIsShippingAddress() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +
             ", userProfile=" + getUserProfileId() +

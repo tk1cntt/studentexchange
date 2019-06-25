@@ -169,6 +169,18 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <Translate contentKey="studentexchangeApp.orderCart.finalAmount">Final Amount</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.orderName">Order Name</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.orderAddress">Order Address</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.orderMobile">Order Mobile</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.orderNote">Order Note</Translate>
+                </th>
+                <th>
                   <Translate contentKey="studentexchangeApp.orderCart.createAt">Create At</Translate>
                 </th>
                 <th>
@@ -249,6 +261,10 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <td>{orderCart.serviceFeeDiscount}</td>
                   <td>{orderCart.totalServiceFee}</td>
                   <td>{orderCart.finalAmount}</td>
+                  <td>{orderCart.orderName}</td>
+                  <td>{orderCart.orderAddress}</td>
+                  <td>{orderCart.orderMobile}</td>
+                  <td>{orderCart.orderNote}</td>
                   <td>
                     <TextFormat type="date" value={orderCart.createAt} format={APP_LOCAL_DATE_FORMAT} />
                   </td>

@@ -65,6 +65,10 @@ export interface IOrderCart {
   serviceFeeDiscount?: number;
   totalServiceFee?: number;
   finalAmount?: number;
+  orderName?: string;
+  orderAddress?: string;
+  orderMobile?: string;
+  orderNote?: string;
   createAt?: Moment;
   updateAt?: Moment;
   items?: IOrderItem[];

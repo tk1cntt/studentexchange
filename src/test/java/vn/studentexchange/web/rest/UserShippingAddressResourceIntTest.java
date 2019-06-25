@@ -56,9 +56,6 @@ public class UserShippingAddressResourceIntTest {
     private static final String DEFAULT_NOTE = "AAAAAAAAAA";
     private static final String UPDATED_NOTE = "BBBBBBBBBB";
 
-    private static final Boolean DEFAULT_IS_SHIPPING_ADDRESS = false;
-    private static final Boolean UPDATED_IS_SHIPPING_ADDRESS = true;
-
     private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
 
@@ -113,7 +110,6 @@ public class UserShippingAddressResourceIntTest {
             .address(DEFAULT_ADDRESS)
             .mobile(DEFAULT_MOBILE)
             .note(DEFAULT_NOTE)
-            .isShippingAddress(DEFAULT_IS_SHIPPING_ADDRESS)
             .createAt(DEFAULT_CREATE_AT)
             .updateAt(DEFAULT_UPDATE_AT);
         return userShippingAddress;
@@ -144,7 +140,6 @@ public class UserShippingAddressResourceIntTest {
         assertThat(testUserShippingAddress.getAddress()).isEqualTo(DEFAULT_ADDRESS);
         assertThat(testUserShippingAddress.getMobile()).isEqualTo(DEFAULT_MOBILE);
         assertThat(testUserShippingAddress.getNote()).isEqualTo(DEFAULT_NOTE);
-        assertThat(testUserShippingAddress.isIsShippingAddress()).isEqualTo(DEFAULT_IS_SHIPPING_ADDRESS);
         assertThat(testUserShippingAddress.getCreateAt()).isEqualTo(DEFAULT_CREATE_AT);
         assertThat(testUserShippingAddress.getUpdateAt()).isEqualTo(DEFAULT_UPDATE_AT);
     }
@@ -184,7 +179,6 @@ public class UserShippingAddressResourceIntTest {
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE.toString())))
             .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE.toString())))
-            .andExpect(jsonPath("$.[*].isShippingAddress").value(hasItem(DEFAULT_IS_SHIPPING_ADDRESS.booleanValue())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
     }
@@ -204,7 +198,6 @@ public class UserShippingAddressResourceIntTest {
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
             .andExpect(jsonPath("$.mobile").value(DEFAULT_MOBILE.toString()))
             .andExpect(jsonPath("$.note").value(DEFAULT_NOTE.toString()))
-            .andExpect(jsonPath("$.isShippingAddress").value(DEFAULT_IS_SHIPPING_ADDRESS.booleanValue()))
             .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
             .andExpect(jsonPath("$.updateAt").value(DEFAULT_UPDATE_AT.toString()));
     }
@@ -234,7 +227,6 @@ public class UserShippingAddressResourceIntTest {
             .address(UPDATED_ADDRESS)
             .mobile(UPDATED_MOBILE)
             .note(UPDATED_NOTE)
-            .isShippingAddress(UPDATED_IS_SHIPPING_ADDRESS)
             .createAt(UPDATED_CREATE_AT)
             .updateAt(UPDATED_UPDATE_AT);
         UserShippingAddressDTO userShippingAddressDTO = userShippingAddressMapper.toDto(updatedUserShippingAddress);
@@ -252,7 +244,6 @@ public class UserShippingAddressResourceIntTest {
         assertThat(testUserShippingAddress.getAddress()).isEqualTo(UPDATED_ADDRESS);
         assertThat(testUserShippingAddress.getMobile()).isEqualTo(UPDATED_MOBILE);
         assertThat(testUserShippingAddress.getNote()).isEqualTo(UPDATED_NOTE);
-        assertThat(testUserShippingAddress.isIsShippingAddress()).isEqualTo(UPDATED_IS_SHIPPING_ADDRESS);
         assertThat(testUserShippingAddress.getCreateAt()).isEqualTo(UPDATED_CREATE_AT);
         assertThat(testUserShippingAddress.getUpdateAt()).isEqualTo(UPDATED_UPDATE_AT);
     }

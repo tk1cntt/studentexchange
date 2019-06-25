@@ -190,6 +190,22 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="order_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="order_address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="order_mobile" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="order_note" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="create_at" type="date">
                 <constraints nullable="true" />
             </column>

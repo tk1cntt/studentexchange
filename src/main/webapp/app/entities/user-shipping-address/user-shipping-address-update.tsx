@@ -139,17 +139,6 @@ export class UserShippingAddressUpdate extends React.Component<IUserShippingAddr
                   <AvField id="user-shipping-address-note" type="text" name="note" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="isShippingAddressLabel" check>
-                    <AvInput
-                      id="user-shipping-address-isShippingAddress"
-                      type="checkbox"
-                      className="form-control"
-                      name="isShippingAddress"
-                    />
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.isShippingAddress">Is Shipping Address</Translate>
-                  </Label>
-                </AvGroup>
-                <AvGroup>
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.userShippingAddress.createAt">Create At</Translate>
                   </Label>

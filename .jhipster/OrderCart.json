@@ -171,6 +171,22 @@
             "fieldType": "Float"
         },
         {
+            "fieldName": "orderName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "orderAddress",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "orderMobile",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "orderNote",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "createAt",
             "fieldType": "LocalDate"
         },

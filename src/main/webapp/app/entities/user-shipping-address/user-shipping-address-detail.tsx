@@ -54,12 +54,6 @@ export class UserShippingAddressDetail extends React.Component<IUserShippingAddr
             </dt>
             <dd>{userShippingAddressEntity.note}</dd>
             <dt>
-              <span id="isShippingAddress">
-                <Translate contentKey="studentexchangeApp.userShippingAddress.isShippingAddress">Is Shipping Address</Translate>
-              </span>
-            </dt>
-            <dd>{userShippingAddressEntity.isShippingAddress ? 'true' : 'false'}</dd>
-            <dt>
               <span id="createAt">
                 <Translate contentKey="studentexchangeApp.userShippingAddress.createAt">Create At</Translate>
               </span>

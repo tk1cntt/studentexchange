@@ -28,9 +28,9 @@ spring:
             #- tls
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mariadb://localhost:3306/dropshippingdb?useLegacyDatetimeCode=false
+        url: jdbc:mariadb://localhost:3306/dropshippingdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
         username: root
-        password:
+        password: 
         hikari:
             auto-commit: false
             data-source-properties:

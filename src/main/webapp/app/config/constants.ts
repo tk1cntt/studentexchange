@@ -4,8 +4,8 @@ const config = {
 
 export default config;
 
-// export const SERVER_API_URL = 'http://localhost:8080';
-export const SERVER_API_URL = 'http://api.tinvang.com.vn';
+export const SERVER_API_URL = 'http://localhost:8080';
+// export const SERVER_API_URL = 'http://api.tinvang.com.vn';
 // export const SERVER_API_URL = process.env.SERVER_API_URL;
 
 export const AUTHORITIES = {

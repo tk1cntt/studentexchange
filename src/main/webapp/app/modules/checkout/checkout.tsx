@@ -158,7 +158,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
     });
   };
 
-  createAddressClick = () => {
+  createUserShippingAddressClick = () => {
     const address = {
       cityId: this.state.parameters.cityId,
       districtId: this.state.parameters.districtId,
@@ -181,7 +181,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
           {this.props.userShippingAddressList.map((userShippingAddress, ii) => (
             <div className="radio" key={`entity-${ii}`}>
               <label>
-                <input type="radio" name="toasts" value="123" onChange={this.onChange} defaultChecked />
+                <input type="radio" name="userShippingAddressId" value={`${userShippingAddress.id}`} onChange={this.onChange} />
                 <b>{userShippingAddress.name}</b> - {userShippingAddress.mobile}
                 <br />
                 {userShippingAddress.address}
@@ -191,36 +191,18 @@ export class Checkout extends React.Component<ICheckoutProp> {
             </div>
           ))}
           <div className="radio">
-            <label>
-              <input type="radio" name="toasts" value="123" onChange={this.onChange} defaultChecked />
-              <b>Lê Thị Quỳnh Trang</b> - 0973556590
-              <br />
-              Số 165 Bạch Đằng, Ngân Hàng Á Châu (ACB) - Thành Phố Hải Dương - Hải Dương
-              <br />
-              <div className="shipping-note">Trong giờ hành chính</div>
-            </label>
-          </div>
-          <div className="radio">
-            <label className="radio">
-              <input type="radio" name="toasts" value="456" onChange={this.onChange} />
-              <b>Nguyen Thanh Cong</b> - 0973556590
-              <br />
-              So 1 Ngo 2 - Quận Cầu Giấy - Hà Nội
-            </label>
-          </div>
-          <div className="radio">
             <label className="radio">
               <input type="radio" name="toasts" value="789" onChange={this.onChange} />
               Thêm địa chỉ nhận hàng
             </label>
           </div>
         </div>
-        {this.state.addressChoose == 789 ? this.addressBox() : ''}
+        {this.state.addressChoose == 789 ? this.createUserShippingAddressBox() : ''}
       </div>
     );
   }
 
-  addressBox() {
+  createUserShippingAddressBox() {
     return (
       <form role="form" id="form">
         <div className="form-group">
@@ -248,10 +230,10 @@ export class Checkout extends React.Component<ICheckoutProp> {
         </div>
         <div className="form-group">
           <label>Ghi chú</label>
-          <input type="text" placeholder="Enter email" className="form-control" name="note" onChange={this.onChangeNote} />
+          <input type="text" placeholder="Trong giờ hành chính" className="form-control" name="note" onChange={this.onChangeNote} />
         </div>
         <div>
-          <button className="btn btn-sm btn-primary m-t-n-xs" type="button" onClick={this.createAddressClick}>
+          <button className="btn btn-sm btn-primary m-t-n-xs" type="button" onClick={this.createUserShippingAddressClick}>
             <strong>Thêm địa chỉ</strong>
           </button>
         </div>
@@ -275,38 +257,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
             </button>
           </div>
           <div className="row wrapper wrapper-content">
-            <div className="shipping-box">
-              <div className="ibox-content">
-                <div className="form-group" id="toastTypeGroup">
-                  <label>Chọn địa chỉ nhận hàng</label>
-                  <div className="radio">
-                    <label>
-                      <input type="radio" name="toasts" value="123" onChange={this.onChange} defaultChecked />
-                      <b>Lê Thị Quỳnh Trang</b> - 0973556590
-                      <br />
-                      Số 165 Bạch Đằng, Ngân Hàng Á Châu (ACB) - Thành Phố Hải Dương - Hải Dương
-                      <br />
-                      <div className="shipping-note">Trong giờ hành chính</div>
-                    </label>
-                  </div>
-                  <div className="radio">
-                    <label className="radio">
-                      <input type="radio" name="toasts" value="456" onChange={this.onChange} />
-                      <b>Nguyen Thanh Cong</b> - 0973556590
-                      <br />
-                      So 1 Ngo 2 - Quận Cầu Giấy - Hà Nội
-                    </label>
-                  </div>
-                  <div className="radio">
-                    <label className="radio">
-                      <input type="radio" name="toasts" value="789" onChange={this.onChange} />
-                      Thêm địa chỉ nhận hàng
-                    </label>
-                  </div>
-                </div>
-                {this.state.addressChoose == 789 ? this.addressBox() : ''}
-              </div>
-            </div>
+            <div className="shipping-box">{this.userShippingAddressListBox()}</div>
             {shoppingCartList.map((shoppingCart, ii) => (
               <div key={`entity-${ii}`}>
                 <div className="col-xs-12 col-md-12">

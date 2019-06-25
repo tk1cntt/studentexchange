@@ -19,4 +19,6 @@ public interface UserShippingAddressRepository extends JpaRepository<UserShippin
     @Query("select user_shipping_address from UserShippingAddress user_shipping_address where user_shipping_address.updateBy.login = ?#{principal.username}")
     List<UserShippingAddress> findByUpdateByIsCurrentUser();
 
+    @Query("select user_shipping_address from UserShippingAddress user_shipping_address where user_shipping_address.updateBy.login = ?#{principal.username} order by user_shipping_address.createAt desc")
+    List<UserShippingAddress> findByCreateByIsCurrentUserOrderByCreateAtDesc();
 }

@@ -112,6 +112,14 @@ export const getEntity: ICrudGetAction<IUserShippingAddress> = id => {
   };
 };
 
+export const getOwnerEntities: ICrudGetAllAction<IUserShippingAddress> = (page, size, sort) => {
+  const requestUrl = `${apiUrl}/owner${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_USERSHIPPINGADDRESS_LIST,
+    payload: axios.get<IUserShippingAddress>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
 export const createEntity: ICrudPutAction<IUserShippingAddress> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_USERSHIPPINGADDRESS,

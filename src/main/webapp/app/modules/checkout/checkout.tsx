@@ -6,9 +6,12 @@ import qs from 'query-string';
 import { Cascader } from 'antd';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities } from 'app/entities/shopping-cart/shopping-cart.reducer';
 import { getAllEntities as getCities } from 'app/entities/city/city.reducer';
-import { createEntity as createShippingAddress } from 'app/entities/user-shipping-address/user-shipping-address.reducer';
+import { getOwnerEntities as getOwnerShippingCart } from 'app/entities/shopping-cart/shopping-cart.reducer';
+import {
+  createEntity as createShippingAddress,
+  getOwnerEntities as getOwnerShippingAddress
+} from 'app/entities/user-shipping-address/user-shipping-address.reducer';
 import { queryString, stringToSlug } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
@@ -47,6 +50,8 @@ export class Checkout extends React.Component<ICheckoutProp> {
   };
 
   componentDidMount() {
+    this.props.getOwnerShippingCart();
+    this.props.getOwnerShippingAddress();
     if (this.props.cities.length === 0) {
       this.props.getCities();
     } else {
@@ -112,35 +117,30 @@ export class Checkout extends React.Component<ICheckoutProp> {
   };
 
   onChange = e => {
-    console.log('radio checked', e.target.value);
     this.setState({
       addressChoose: e.target.value
     });
   };
 
   onChangeAddress = e => {
-    console.log('radio checked', e.target.value);
     this.setState({
       address: e.target.value
     });
   };
 
   onChangeMobile = e => {
-    console.log('radio checked', e.target.value);
     this.setState({
       mobile: e.target.value
     });
   };
 
   onChangeNote = e => {
-    console.log('radio checked', e.target.value);
     this.setState({
       note: e.target.value
     });
   };
 
   onChangeName = e => {
-    console.log('radio checked', e.target.value);
     this.setState({
       name: e.target.value
     });
@@ -168,7 +168,57 @@ export class Checkout extends React.Component<ICheckoutProp> {
       note: this.state.note
     };
     this.props.createShippingAddress(address);
+    this.setState({
+      addressChoose: 0
+    });
   };
+
+  userShippingAddressListBox() {
+    return (
+      <div className="ibox-content">
+        <div className="form-group" id="toastTypeGroup">
+          <label>Chọn địa chỉ nhận hàng</label>
+          {this.props.userShippingAddressList.map((userShippingAddress, ii) => (
+            <div className="radio" key={`entity-${ii}`}>
+              <label>
+                <input type="radio" name="toasts" value="123" onChange={this.onChange} defaultChecked />
+                <b>{userShippingAddress.name}</b> - {userShippingAddress.mobile}
+                <br />
+                {userShippingAddress.address}
+                <br />
+                <div className="shipping-note">{userShippingAddress.note}</div>
+              </label>
+            </div>
+          ))}
+          <div className="radio">
+            <label>
+              <input type="radio" name="toasts" value="123" onChange={this.onChange} defaultChecked />
+              <b>Lê Thị Quỳnh Trang</b> - 0973556590
+              <br />
+              Số 165 Bạch Đằng, Ngân Hàng Á Châu (ACB) - Thành Phố Hải Dương - Hải Dương
+              <br />
+              <div className="shipping-note">Trong giờ hành chính</div>
+            </label>
+          </div>
+          <div className="radio">
+            <label className="radio">
+              <input type="radio" name="toasts" value="456" onChange={this.onChange} />
+              <b>Nguyen Thanh Cong</b> - 0973556590
+              <br />
+              So 1 Ngo 2 - Quận Cầu Giấy - Hà Nội
+            </label>
+          </div>
+          <div className="radio">
+            <label className="radio">
+              <input type="radio" name="toasts" value="789" onChange={this.onChange} />
+              Thêm địa chỉ nhận hàng
+            </label>
+          </div>
+        </div>
+        {this.state.addressChoose == 789 ? this.addressBox() : ''}
+      </div>
+    );
+  }
 
   addressBox() {
     return (
@@ -379,10 +429,17 @@ const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
   shoppingCartList: storeState.shoppingCart.entities,
   isAuthenticated: storeState.authentication.isAuthenticated,
-  cities: storeState.city.entities
+  cities: storeState.city.entities,
+  userShippingAddressList: storeState.userShippingAddress.entities
 });
 
-const mapDispatchToProps = { getSession, getOwnerEntities, getCities, createShippingAddress };
+const mapDispatchToProps = {
+  getSession,
+  getCities,
+  createShippingAddress,
+  getOwnerShippingAddress,
+  getOwnerShippingCart
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

@@ -1,19 +1,25 @@
 package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
+import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.UserShippingAddressService;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
+import vn.studentexchange.web.rest.util.PaginationUtil;
 import vn.studentexchange.service.dto.UserShippingAddressDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +54,8 @@ public class UserShippingAddressResource {
         if (userShippingAddressDTO.getId() != null) {
             throw new BadRequestAlertException("A new userShippingAddress cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        userShippingAddressDTO.setCreateByLogin(SecurityUtils.getCurrentUserLogin().get());
+        userShippingAddressDTO.setCreateAt(LocalDate.now());
         UserShippingAddressDTO result = userShippingAddressService.save(userShippingAddressDTO);
         return ResponseEntity.created(new URI("/api/user-shipping-addresses/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -70,6 +78,8 @@ public class UserShippingAddressResource {
         if (userShippingAddressDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        userShippingAddressDTO.setUpdateByLogin(SecurityUtils.getCurrentUserLogin().get());
+        userShippingAddressDTO.setUpdateAt(LocalDate.now());
         UserShippingAddressDTO result = userShippingAddressService.save(userShippingAddressDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userShippingAddressDTO.getId().toString()))
@@ -86,6 +96,13 @@ public class UserShippingAddressResource {
     public List<UserShippingAddressDTO> getAllUserShippingAddresses() {
         log.debug("REST request to get all UserShippingAddresses");
         return userShippingAddressService.findAll();
+    }
+
+    @GetMapping("/user-shipping-addresses/owner")
+    @Timed
+    public List<UserShippingAddressDTO> getOwnerUserShippingAddresses() {
+        log.debug("REST request to get owner UserShippingAddresses");
+        return userShippingAddressService.findByOwner();
     }
 
     /**

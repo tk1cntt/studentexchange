@@ -99,12 +99,9 @@ public class ShoppingCartResource {
 
     @GetMapping("/shopping-carts/owner")
     @Timed
-    public ResponseEntity<List<ShoppingCartDTO>> getOwberShoppingCarts(Pageable pageable) {
+    public List<ShoppingCartDTO> getOwberShoppingCarts() {
         log.debug("REST request to get owner ShoppingCarts");
-        String username = SecurityUtils.getCurrentUserLogin().get();
-        Page<ShoppingCartDTO> page = shoppingCartService.findByOwner(username, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/shopping-carts/owner");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return shoppingCartService.findByOwner();
     }
 
     /**

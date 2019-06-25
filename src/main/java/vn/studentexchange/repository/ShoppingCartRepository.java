@@ -24,5 +24,6 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long
 
     ShoppingCart findFirstByShopId(String shopId);
 
-    Page<ShoppingCart> findByCreateByLoginOrderByCreateAtDesc(String username, Pageable pageable);
+    @Query("select shopping_cart from ShoppingCart shopping_cart where shopping_cart.updateBy.login = ?#{principal.username} order by shopping_cart.createAt desc")
+    List<ShoppingCart> findByCreateByIsCurrentUserOrderByCreateAtDesc();
 }

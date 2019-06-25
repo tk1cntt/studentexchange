@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -63,12 +64,12 @@ public class ShoppingCartService {
         if (ObjectUtils.isEmpty(currentShop)) {
             ShoppingCart shoppingCart = shoppingCartMapper.toEntity(shoppingCartDTO);
             shoppingCart.setCreateBy(existingUser.get());
-            shoppingCart.setUpdateBy(existingUser.get());
+            shoppingCart.setCreateAt(LocalDate.now());
             shoppingCart = shoppingCartRepository.save(shoppingCart);
             List<ShoppingCartItem> items = shoppingCartItemMapper.toEntity(shoppingCartDTO.getItems());
             for (ShoppingCartItem shoppingCartItem: items) {
                 shoppingCartItem.setCreateBy(existingUser.get());
-                shoppingCartItem.setUpdateBy(existingUser.get());
+                shoppingCartItem.setCreateAt(LocalDate.now());
                 shoppingCartItem.setShoppingCart(shoppingCart);
                 shoppingCartItemRepository.save(shoppingCartItem);
             }
@@ -84,20 +85,21 @@ public class ShoppingCartService {
                         && currentItem.getPropertiesName().equals(shoppingCartItem.getPropertiesName())
                         && currentItem.getPropertiesType().equals(shoppingCartItem.getPropertiesType())) {
                             itemExist = true;
+                            currentItem.setUpdateBy(existingUser.get());
+                            currentItem.setUpdateAt(LocalDate.now());
                             currentItem.setQuantity(currentItem.getQuantity() + shoppingCartItem.getQuantity());
                             currentItem.setTotalAmountNDT(currentItem.getTotalAmountNDT() + shoppingCartItem.getTotalAmountNDT());        
                     }
                 }
                 if (!itemExist) {
                     shoppingCartItem.setCreateBy(existingUser.get());
-                    shoppingCartItem.setUpdateBy(existingUser.get());
+                    shoppingCartItem.setCreateAt(LocalDate.now());
                     shoppingCartItem.setShoppingCart(currentShop);
-                    // currentShop.addItems(shoppingCartItem);
                     shoppingCartItemRepository.save(shoppingCartItem);
                 }
             }
-            currentShop.setCreateBy(existingUser.get());
             currentShop.setUpdateBy(existingUser.get());
+            currentShop.setUpdateAt(LocalDate.now());
             currentShop = shoppingCartRepository.save(currentShop);
         }
         return shoppingCartMapper.toDto(currentShop);
@@ -117,10 +119,12 @@ public class ShoppingCartService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ShoppingCartDTO> findByOwner(String username, Pageable pageable) {
-        log.debug("Request to get all House of owner [{}]", username);
-        return shoppingCartRepository.findByCreateByLoginOrderByCreateAtDesc(username, pageable)
-            .map(shoppingCartMapper::toDto);
+    public List<ShoppingCartDTO> findByOwner() {
+        log.debug("Request to get all House of owner [{}]");
+        return shoppingCartRepository.findByCreateByIsCurrentUserOrderByCreateAtDesc()
+            .stream()
+            .map(shoppingCartMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

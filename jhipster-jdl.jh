@@ -75,7 +75,6 @@ entity UserShippingAddress {
    address String,
    mobile String,
    note String,
-   isShippingAddress Boolean,
    createAt LocalDate,
    updateAt LocalDate
 }
@@ -138,6 +137,10 @@ entity OrderCart {
    serviceFeeDiscount Float,
    totalServiceFee Float,
    finalAmount Float,
+   orderName String,
+   orderAddress String,
+   orderMobile String,
+   orderNote String,
    createAt LocalDate,
    updateAt LocalDate
 }

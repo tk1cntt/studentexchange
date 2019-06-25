@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 
@@ -34,11 +35,13 @@ export interface ICheckoutState {
   mobile: string;
   name: string;
   note: string;
+  isCreateAddress: boolean;
 }
 
 export class Checkout extends React.Component<ICheckoutProp> {
   state: ICheckoutState = {
-    addressChoose: 0,
+    isCreateAddress: false,
+    addressChoose: -1,
     address: null,
     name: null,
     mobile: null,
@@ -116,10 +119,20 @@ export class Checkout extends React.Component<ICheckoutProp> {
     // console.log(item);
   };
 
-  onChange = e => {
-    this.setState({
-      addressChoose: e.target.value
-    });
+  onChangeShippingAddress = e => {
+    //*
+    if (e.target.value == 0) {
+      this.setState({
+        addressChoose: e.target.value,
+        isCreateAddress: true
+      });
+    } else {
+      this.setState({
+        addressChoose: e.target.value,
+        isCreateAddress: false
+      });
+    }
+    //*/
   };
 
   onChangeAddress = e => {
@@ -169,8 +182,10 @@ export class Checkout extends React.Component<ICheckoutProp> {
     };
     this.props.createShippingAddress(address);
     this.setState({
-      addressChoose: 0
+      addressChoose: -1,
+      isCreateAddress: false
     });
+    window.scrollTo(0, 0);
   };
 
   userShippingAddressListBox() {
@@ -181,7 +196,12 @@ export class Checkout extends React.Component<ICheckoutProp> {
           {this.props.userShippingAddressList.map((userShippingAddress, ii) => (
             <div className="radio" key={`entity-${ii}`}>
               <label>
-                <input type="radio" name="userShippingAddressId" value={`${userShippingAddress.id}`} onChange={this.onChange} />
+                <input
+                  type="radio"
+                  name="userShippingAddressId"
+                  value={`${userShippingAddress.id}`}
+                  onChange={this.onChangeShippingAddress}
+                />
                 <b>{userShippingAddress.name}</b> - {userShippingAddress.mobile}
                 <br />
                 {userShippingAddress.address}
@@ -192,12 +212,18 @@ export class Checkout extends React.Component<ICheckoutProp> {
           ))}
           <div className="radio">
             <label className="radio">
-              <input type="radio" name="toasts" value="789" onChange={this.onChange} />
+              <input
+                type="radio"
+                name="userShippingAddressId"
+                value="0"
+                onChange={this.onChangeShippingAddress}
+                checked={this.state.isCreateAddress}
+              />
               Thêm địa chỉ nhận hàng
             </label>
           </div>
         </div>
-        {this.state.addressChoose == 789 ? this.createUserShippingAddressBox() : ''}
+        {this.state.addressChoose == 0 ? this.createUserShippingAddressBox() : ''}
       </div>
     );
   }

@@ -192,7 +192,13 @@ export class Checkout extends React.Component<ICheckoutProp> {
     return (
       <div className="ibox-content">
         <div className="form-group" id="toastTypeGroup">
-          <label>Chọn địa chỉ nhận hàng</label>
+          <div>
+            <label>Chọn địa chỉ nhận hàng</label>
+            {'    '}
+            <Link to="/entity/user-shipping-address">
+              <i className="fa fa-edit" /> Sửa địa chỉ
+            </Link>
+          </div>
           {this.props.userShippingAddressList.map((userShippingAddress, ii) => (
             <div className="radio" key={`entity-${ii}`}>
               <label>

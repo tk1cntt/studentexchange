@@ -196,7 +196,7 @@ export class UserShippingAddressUpdate extends React.Component<IUserShippingAddr
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="city.id">
+                  <Label for="city.name">
                     <Translate contentKey="studentexchangeApp.userShippingAddress.city">City</Translate>
                   </Label>
                   <AvInput id="user-shipping-address-city" type="select" className="form-control" name="cityId">
@@ -204,14 +204,14 @@ export class UserShippingAddressUpdate extends React.Component<IUserShippingAddr
                     {cities
                       ? cities.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.name}
                           </option>
                         ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="district.id">
+                  <Label for="district.name">
                     <Translate contentKey="studentexchangeApp.userShippingAddress.district">District</Translate>
                   </Label>
                   <AvInput id="user-shipping-address-district" type="select" className="form-control" name="districtId">
@@ -219,7 +219,7 @@ export class UserShippingAddressUpdate extends React.Component<IUserShippingAddr
                     {districts
                       ? districts.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.name}
                           </option>
                         ))
                       : null}

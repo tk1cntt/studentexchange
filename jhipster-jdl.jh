@@ -82,8 +82,8 @@ entity UserShippingAddress {
 relationship ManyToOne {
    UserShippingAddress{createBy(login)} to User,
    UserShippingAddress{updateBy(login)} to User,
-   UserShippingAddress{city} to City,
-   UserShippingAddress{district} to District
+   UserShippingAddress{city(name)} to City,
+   UserShippingAddress{district(name)} to District
 }
 
 relationship OneToMany {

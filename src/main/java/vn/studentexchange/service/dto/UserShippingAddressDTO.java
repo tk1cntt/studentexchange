@@ -35,7 +35,11 @@ public class UserShippingAddressDTO implements Serializable {
 
     private Long cityId;
 
+    private String cityName;
+
     private Long districtId;
+
+    private String districtName;
 
     public Long getId() {
         return id;
@@ -141,12 +145,28 @@ public class UserShippingAddressDTO implements Serializable {
         this.cityId = cityId;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
     public Long getDistrictId() {
         return districtId;
     }
 
     public void setDistrictId(Long districtId) {
         this.districtId = districtId;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 
     @Override
@@ -186,7 +206,9 @@ public class UserShippingAddressDTO implements Serializable {
             ", updateBy=" + getUpdateById() +
             ", updateBy='" + getUpdateByLogin() + "'" +
             ", city=" + getCityId() +
+            ", city='" + getCityName() + "'" +
             ", district=" + getDistrictId() +
+            ", district='" + getDistrictName() + "'" +
             "}";
     }
 }

@@ -84,11 +84,11 @@ export class UserShippingAddressDetail extends React.Component<IUserShippingAddr
             <dt>
               <Translate contentKey="studentexchangeApp.userShippingAddress.city">City</Translate>
             </dt>
-            <dd>{userShippingAddressEntity.cityId ? userShippingAddressEntity.cityId : ''}</dd>
+            <dd>{userShippingAddressEntity.cityName ? userShippingAddressEntity.cityName : ''}</dd>
             <dt>
               <Translate contentKey="studentexchangeApp.userShippingAddress.district">District</Translate>
             </dt>
-            <dd>{userShippingAddressEntity.districtId ? userShippingAddressEntity.districtId : ''}</dd>
+            <dd>{userShippingAddressEntity.districtName ? userShippingAddressEntity.districtName : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/user-shipping-address" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -13,7 +13,9 @@ export interface IUserShippingAddress {
   createById?: number;
   updateByLogin?: string;
   updateById?: number;
+  cityName?: string;
   cityId?: number;
+  districtName?: string;
   districtId?: number;
 }
 

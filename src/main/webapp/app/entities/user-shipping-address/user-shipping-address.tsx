@@ -6,21 +6,53 @@ import { Button, Col, Row, Table } from 'reactstrap';
 import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { Modal } from 'antd';
+
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './user-shipping-address.reducer';
+import { getEntities, deleteEntity as deleteUserShippingAddress } from './user-shipping-address.reducer';
+
 import { IUserShippingAddress } from 'app/shared/model/user-shipping-address.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IUserShippingAddressProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
+export interface ICheckoutState {
+  showDelete: boolean;
+  userShippingAddressId: number;
+}
+
 export class UserShippingAddress extends React.Component<IUserShippingAddressProps> {
+  state: ICheckoutState = {
+    showDelete: false,
+    userShippingAddressId: -1
+  };
   componentDidMount() {
     this.props.getEntities();
   }
+
+  showDeleteConfirm = userShippingAddressId => {
+    this.setState({
+      showDelete: true,
+      userShippingAddressId
+    });
+  };
+
+  handleDeleteOk = id => {
+    this.props.deleteUserShippingAddress(id);
+    this.setState({
+      showDelete: false
+    });
+  };
+
+  handleDeleteCancel = () => {
+    this.setState({
+      showDelete: false
+    });
+  };
 
   render() {
     const { userShippingAddressList, match } = this.props;
@@ -105,7 +137,7 @@ export class UserShippingAddress extends React.Component<IUserShippingAddressPro
                             <Translate contentKey="entity.action.edit">Edit</Translate>
                           </span>
                         </Button>
-                        <Button tag={Link} to={`${match.url}/${userShippingAddress.id}/delete`} color="danger" size="sm">
+                        <Button onClick={this.showDeleteConfirm.bind(this, userShippingAddress.id)} color="danger" size="sm">
                           <FontAwesomeIcon icon="trash" />{' '}
                           <span className="d-none d-md-inline">
                             <Translate contentKey="entity.action.delete">Delete</Translate>
@@ -117,6 +149,21 @@ export class UserShippingAddress extends React.Component<IUserShippingAddressPro
                 ))}
               </tbody>
             </Table>
+            {this.state.showDelete ? (
+              <Modal
+                title="Bạn có muốn xoá địa chỉ này?"
+                visible={this.state.showDelete}
+                okText="Xóa"
+                okType="danger"
+                cancelText="Hủy"
+                onOk={this.handleDeleteOk.bind(this, this.state.userShippingAddressId)}
+                onCancel={this.handleDeleteCancel}
+              >
+                <p>Hãy xác nhận lại thông tin trước khi thực hiện hành động xoá</p>
+              </Modal>
+            ) : (
+              ''
+            )}
           </div>
           <div className="footer">
             <div className="pull-right">
@@ -138,7 +185,8 @@ const mapStateToProps = ({ userShippingAddress, authentication }: IRootState) =>
 });
 
 const mapDispatchToProps = {
-  getEntities
+  getEntities,
+  deleteUserShippingAddress
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

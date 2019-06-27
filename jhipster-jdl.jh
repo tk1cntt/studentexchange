@@ -372,6 +372,19 @@ relationship OneToMany {
    Delivery{orders} to OrderPackage
 }
 
+enum CurrencyType {
+   USD, EUR, CNY, JPY, KPW
+}
+
+entity CurrencyRate {
+   currency CurrencyType,
+   rate Float,
+   createAt LocalDate
+}
+
+relationship ManyToOne {
+   Delivery{createBy(login)} to User
+}
 // Set pagination options
 paginate Region, City, District, Ward, Country with pagination
 

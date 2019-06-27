@@ -20,6 +20,10 @@ export const formatMoney = money => {
   return moneyFormat;
 };
 
+export const formatCurency = money => {
+  return money ? money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') : money;
+};
+
 export const humanize = x => {
   return x ? x.toFixed(2).replace(/\.?0*$/, '') : x;
 };

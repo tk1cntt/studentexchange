@@ -8,6 +8,9 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import Header from 'app/shared/layout/header/header';
+import Sidebar from 'app/shared/layout/sidebar/sidebar';
+
 import { IUserProfile } from 'app/shared/model/user-profile.model';
 import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
 import { IUser } from 'app/shared/model/user.model';
@@ -90,18 +93,19 @@ export class UserShippingAddressUpdate extends React.Component<IUserShippingAddr
     const { isNew } = this.state;
 
     return (
-      <div>
-        <Row className="justify-content-center">
-          <Col md="8">
-            <h2 id="studentexchangeApp.userShippingAddress.home.createOrEditLabel">
-              <Translate contentKey="studentexchangeApp.userShippingAddress.home.createOrEditLabel">
-                Create or edit a UserShippingAddress
-              </Translate>
-            </h2>
-          </Col>
-        </Row>
-        <Row className="justify-content-center">
-          <Col md="8">
+      <>
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />
+        <div id="page-wrapper" className="gray-bg dashbard-1">
+          <Header />
+          <div className="row  border-bottom white-bg dashboard-header">
+            Noi dung phia tren
+            <button className="btn btn-primary btn-block m-t checkout-cart">
+              <Link to={'/checkout'}>
+                <i className="fa fa-shopping-cart" /> Đặt tất cả hàng
+              </Link>
+            </button>
+          </div>
+          <div className="row wrapper wrapper-content">
             {loading ? (
               <p>Loading...</p>
             ) : (
@@ -240,9 +244,17 @@ export class UserShippingAddressUpdate extends React.Component<IUserShippingAddr
                 </Button>
               </AvForm>
             )}
-          </Col>
-        </Row>
-      </div>
+          </div>
+          <div className="footer">
+            <div className="pull-right">
+              10GB of <strong>250GB</strong> Free.
+            </div>
+            <div>
+              <strong>Copyright</strong> Example Company © 2014-2017
+            </div>
+          </div>
+        </div>
+      </>
     );
   }
 }
@@ -255,7 +267,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   userShippingAddressEntity: storeState.userShippingAddress.entity,
   loading: storeState.userShippingAddress.loading,
   updating: storeState.userShippingAddress.updating,
-  updateSuccess: storeState.userShippingAddress.updateSuccess
+  updateSuccess: storeState.userShippingAddress.updateSuccess,
+  isAuthenticated: storeState.authentication.isAuthenticated
 });
 
 const mapDispatchToProps = {

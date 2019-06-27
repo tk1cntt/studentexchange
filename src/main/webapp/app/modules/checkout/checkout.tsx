@@ -20,6 +20,7 @@ import { queryString, stringToSlug, encodeId, decodeId } from 'app/shared/util/u
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
+import Footer from 'app/shared/layout/footer/footer';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
@@ -39,6 +40,8 @@ export interface ICheckoutState {
   name: string;
   note: string;
   isCreateAddress: boolean;
+  totalQuantity: number;
+  totalAmount: number;
 }
 
 export class Checkout extends React.Component<ICheckoutProp> {
@@ -52,7 +55,9 @@ export class Checkout extends React.Component<ICheckoutProp> {
     city: null,
     parameters: {},
     locations: [],
-    addresses: []
+    addresses: [],
+    totalQuantity: 0,
+    totalAmount: 0
   };
 
   componentDidMount() {
@@ -117,7 +122,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
   };
 
   onChangeShippingAddress = e => {
-    //*
+    // tslint:disable-next-line
     if (e.target.value == 0) {
       this.setState({
         addressChoose: e.target.value,
@@ -129,7 +134,6 @@ export class Checkout extends React.Component<ICheckoutProp> {
         isCreateAddress: false
       });
     }
-    //*/
   };
 
   onChangeAddress = e => {
@@ -226,7 +230,8 @@ export class Checkout extends React.Component<ICheckoutProp> {
             </label>
           </div>
         </div>
-        {this.state.addressChoose == 0 ? this.createUserShippingAddressBox() : ''}
+        {// tslint:disable-next-line
+        this.state.addressChoose == 0 ? this.createUserShippingAddressBox() : ''}
       </div>
     );
   }
@@ -270,6 +275,31 @@ export class Checkout extends React.Component<ICheckoutProp> {
     );
   }
 
+  checkoutBox() {
+    const { shoppingCartList } = this.props;
+    const cartItem = [];
+    let totalQuantity = 0;
+    let totalAmount = 0;
+    shoppingCartList.map((shoppingCart, i) => {
+      totalQuantity = totalQuantity + shoppingCart.totalQuantity;
+      totalAmount = totalAmount + shoppingCart.totalAmount;
+      cartItem.push(
+        <tr key={`key-${i}`} className="footable-even" style={{}}>
+          <td className="footable-visible">
+            <a href={`${shoppingCart.shopLink}`} target="_blank">
+              {shoppingCart.shopName}
+            </a>
+            <br />
+            {shoppingCart.website}
+          </td>
+          <td className="footable-visible">{shoppingCart.totalQuantity}</td>
+          <td className="footable-visible">{shoppingCart.totalAmount}</td>
+        </tr>
+      );
+    });
+    return cartItem;
+  }
+
   render() {
     const { shoppingCartList, account } = this.props;
     return (
@@ -306,21 +336,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {shoppingCartList.map((shoppingCart, i) => (
-                      <tr className="footable-even" style={{}}>
-                        <td className="footable-visible">
-                          <a href={`${shoppingCart.shopLink}`} target="_blank">
-                            {shoppingCart.shopName}
-                          </a>
-                          <br />
-                          {shoppingCart.website}
-                        </td>
-                        <td className="footable-visible">{shoppingCart.items.length}</td>
-                        <td className="footable-visible">{shoppingCart.totalAmount}</td>
-                      </tr>
-                    ))}
-                  </tbody>
+                  <tbody>{this.checkoutBox()}</tbody>
                 </table>
               </div>
             </div>
@@ -335,31 +351,31 @@ export class Checkout extends React.Component<ICheckoutProp> {
                 </button>
                 <div className="col-xs-8 item">Tiền hàng:</div>
                 <div className="col-xs-4 item">
-                  <b>200,000,000đ</b>
+                  <b>{this.state.totalAmount * 3145}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí mua hàng:</div>
                 <div className="col-xs-4 item">
-                  <b>2,000,000đ</b>
+                  <b>{this.state.totalAmount * 3145 * 0.02}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí kiểm đếm:</div>
                 <div className="col-xs-4 item">
-                  <b>200,000,000đ</b>
+                  <b>{this.state.totalQuantity * 5000}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí vận chuyển nội địa TQ:</div>
                 <div className="col-xs-4 item">
-                  <b>200,000,000đ</b>
+                  <b>0đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí đóng kiện gỗ:</div>
                 <div className="col-xs-4 item">
-                  <b>200,000,000đ</b>
+                  <b>0đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí vận chuyển TQ - VN:</div>
                 <div className="col-xs-4 item">
-                  <b>200,000,000đ</b>
+                  <b>0đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí vận chuyển nội địa VN:</div>
                 <div className="col-xs-4 item">
-                  <b>200,000,000đ</b>
+                  <b>0đ</b>
                 </div>
               </div>
               <div className="row checkout-cart-detail checkout-cart-total">
@@ -367,19 +383,12 @@ export class Checkout extends React.Component<ICheckoutProp> {
                   <h4>Tổng tiền:</h4>
                 </div>
                 <div className="col-xs-4 item">
-                  <b>200,000,000đ</b>
+                  <b>{this.state.totalAmount * 3145 * 1.02}đ</b>
                 </div>
               </div>
             </div>
           </div>
-          <div className="footer">
-            <div className="pull-right">
-              10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-              <strong>Copyright</strong> Example Company © 2014-2017
-            </div>
-          </div>
+          <Footer />
         </div>
       </>
     );

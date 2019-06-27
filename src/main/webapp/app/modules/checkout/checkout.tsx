@@ -82,6 +82,9 @@ export class Checkout extends React.Component<ICheckoutProp> {
     if (this.props.cities !== prevProps.cities) {
       this.mappingCity();
     }
+    if (this.props.shoppingCartList !== prevProps.shoppingCartList) {
+      this.checkoutAmountData();
+    }
   }
 
   mappingCity() {
@@ -278,11 +281,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
   checkoutBox() {
     const { shoppingCartList } = this.props;
     const cartItem = [];
-    let totalQuantity = 0;
-    let totalAmount = 0;
     shoppingCartList.map((shoppingCart, i) => {
-      totalQuantity = totalQuantity + shoppingCart.totalQuantity;
-      totalAmount = totalAmount + shoppingCart.totalAmount;
       cartItem.push(
         <tr key={`key-${i}`} className="footable-even" style={{}}>
           <td className="footable-visible">
@@ -300,8 +299,21 @@ export class Checkout extends React.Component<ICheckoutProp> {
     return cartItem;
   }
 
+  checkoutAmountData() {
+    const { shoppingCartList } = this.props;
+    let totalQuantity = 0;
+    let totalAmount = 0;
+    shoppingCartList.map(shoppingCart => {
+      totalQuantity = totalQuantity + shoppingCart.totalQuantity;
+      totalAmount = totalAmount + shoppingCart.totalAmount;
+    });
+    this.setState({
+      totalQuantity,
+      totalAmount
+    });
+  }
+
   render() {
-    const { shoppingCartList, account } = this.props;
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />

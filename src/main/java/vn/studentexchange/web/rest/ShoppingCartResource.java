@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,9 +101,22 @@ public class ShoppingCartResource {
 
     @GetMapping("/shopping-carts/owner")
     @Timed
-    public List<ShoppingCartDTO> getOwberShoppingCarts() {
+    public List<ShoppingCartDTO> getOwnerShoppingCarts() {
         log.debug("REST request to get owner ShoppingCarts");
         return shoppingCartService.findByOwner();
+    }
+
+    @GetMapping("/shopping-carts/owner/{id}")
+    @Timed
+    public List<ShoppingCartDTO> getOwnerShoppingCartById(@PathVariable Long id) {
+        log.debug("REST request to get owner ShoppingCarts");
+        Optional<ShoppingCartDTO> dto = shoppingCartService.findOne(id);
+        if (!dto.isPresent()) {
+            return new ArrayList<>();
+        }
+        List<ShoppingCartDTO> carts = new ArrayList<>();
+        carts.add(dto.get());
+        return carts;
     }
 
     /**

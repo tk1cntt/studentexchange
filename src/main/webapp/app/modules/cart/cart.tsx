@@ -95,7 +95,7 @@ export class Cart extends React.Component<IHomeProp> {
                     <div className=".col-xs-12 col-md-4">
                       <div className="row checkout-cart-detail">
                         <span className="checkout-cart">
-                          <Link to={`/checkout?shopid=${encodeId(12345)}`}>
+                          <Link to={`/checkout?shopid=${encodeId(1)}`}>
                             <button className="btn btn-primary btn-block">
                               <i className="fa fa-shopping-cart" /> Đặt hàng
                             </button>

@@ -8,12 +8,15 @@ import { Cascader } from 'antd';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getAllEntities as getCities } from 'app/entities/city/city.reducer';
-import { getOwnerEntities as getOwnerShippingCart } from 'app/entities/shopping-cart/shopping-cart.reducer';
+import {
+  getOwnerEntities as getOwnerShippingCart,
+  getOwnerEntity as getShippingCart
+} from 'app/entities/shopping-cart/shopping-cart.reducer';
 import {
   createEntity as createShippingAddress,
   getOwnerEntities as getOwnerShippingAddress
 } from 'app/entities/user-shipping-address/user-shipping-address.reducer';
-import { queryString, stringToSlug } from 'app/shared/util/utils';
+import { queryString, stringToSlug, encodeId, decodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
@@ -53,26 +56,20 @@ export class Checkout extends React.Component<ICheckoutProp> {
   };
 
   componentDidMount() {
-    this.props.getOwnerShippingCart();
     this.props.getOwnerShippingAddress();
     if (this.props.cities.length === 0) {
       this.props.getCities();
     } else {
       this.mappingCity();
     }
-    /*
     if (this.props.location) {
       const parsed = qs.parse(this.props.location.search);
-      if (parsed) {
-        // tslint:disable-next-line 
-        const city = parsed.cityId ? [parseInt(parsed.cityId), parseInt(parsed.districtId), parseInt(parsed.wardId)] : null;
-        this.setState({
-          parameters: parsed,
-          city
-        });
+      if (parsed.shopid) {
+        this.props.getShippingCart(decodeId(parsed.shopid));
+      } else {
+        this.props.getOwnerShippingCart();
       }
     }
-    //*/
   }
 
   componentDidUpdate(prevProps) {
@@ -290,109 +287,90 @@ export class Checkout extends React.Component<ICheckoutProp> {
           </div>
           <div className="row wrapper wrapper-content">
             <div className="shipping-box">{this.userShippingAddressListBox()}</div>
-            {shoppingCartList.map((shoppingCart, ii) => (
-              <div key={`entity-${ii}`}>
-                <div className="col-xs-12 col-md-12">
-                  <div className="row">
-                    <div className="ibox float-e-margins">
-                      <div className="ibox-title">
-                        <h5>{`${shoppingCart.aliwangwang}`}</h5>
-                        <div className="ibox-tools">
-                          <span className="label label-warning-light pull-right">{`${shoppingCart.items.length}`} mặt hàng trong giỏ</span>
-                        </div>
-                      </div>
-                      <div className="ibox-content">
-                        <div>
-                          <div className="feed-activity-list">
-                            {shoppingCart.items.map((item, iy) => (
-                              <div className="feed-element" key={`entity-${iy}`}>
-                                <a href="profile.html" className="pull-left">
-                                  <img alt="image" className="img-circle" src={`${item.propertiesImage}`} />
-                                </a>
-                                <div className="media-body ">
-                                  <small className="pull-right">
-                                    <div className="input-group bootstrap-touchspin">
-                                      <span className="input-group-btn">
-                                        <button className="btn btn-default bootstrap-touchspin-down" type="button">
-                                          -
-                                        </button>
-                                      </span>
-                                      <input type="tel" className="form-control quantity" min="0" defaultValue={`${item.quantity}`} />
-                                      <span className="input-group-btn">
-                                        <button className="btn btn-default bootstrap-touchspin-up" type="button">
-                                          +
-                                        </button>
-                                      </span>
-                                    </div>
-                                  </small>
-                                  <strong>{`${item.itemName}`}</strong>
-                                  <br />
-                                  <small className="text-muted">
-                                    Thuộc tính: {`${item.propertiesName}`}({`${item.propertiesType}`})<br />
-                                    Số lượng: {`${item.quantity}`}
-                                    <br />
-                                    Đơn giá: ¥{`${item.itemPriceNDT}`}
-                                  </small>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-xs-12">
-                      <div className="row checkout-cart-detail">
-                        <button className="btn btn-primary btn-block">
-                          <span className="checkout-cart">
-                            <Link to={`/checkout?shopid=${ii}-12345`}>
-                              <i className="fa fa-shopping-cart" /> Đặt hàng
-                            </Link>
-                          </span>
-                        </button>
-                        <div className="col-xs-8 item">Tiền hàng:</div>
-                        <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí mua hàng:</div>
-                        <div className="col-xs-4 item">
-                          <b>2,000,000đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí kiểm đếm:</div>
-                        <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí vận chuyển nội địa TQ:</div>
-                        <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí đóng kiện gỗ:</div>
-                        <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí vận chuyển TQ - VN:</div>
-                        <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí vận chuyển nội địa VN:</div>
-                        <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
-                        </div>
-                      </div>
-                      <div className="row checkout-cart-detail checkout-cart-total">
-                        <div className="col-xs-8 item">
-                          <h4>Tổng tiền:</h4>
-                        </div>
-                        <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            <div className="ibox">
+              <div className="ibox-content">
+                <table className="footable table table-stripped toggle-arrow-tiny tablet breakpoint footable-loaded">
+                  <thead>
+                    <tr>
+                      <th data-hide="phone" className="footable-visible footable-sortable">
+                        Shop
+                        <span className="footable-sort-indicator" />
+                      </th>
+                      <th data-hide="phone" className="footable-visible footable-sortable">
+                        Số lượng
+                        <span className="footable-sort-indicator" />
+                      </th>
+                      <th data-hide="phone" className="footable-visible footable-sortable">
+                        Tổng tiền
+                        <span className="footable-sort-indicator" />
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {shoppingCartList.map((shoppingCart, i) => (
+                      <tr className="footable-even" style={{}}>
+                        <td className="footable-visible">
+                          <a href={`${shoppingCart.shopLink}`} target="_blank">
+                            {shoppingCart.shopName}
+                          </a>
+                          <br />
+                          {shoppingCart.website}
+                        </td>
+                        <td className="footable-visible">{shoppingCart.items.length}</td>
+                        <td className="footable-visible">{shoppingCart.totalAmount}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="col-xs-12">
+              <div className="row checkout-cart-detail">
+                <button className="btn btn-primary btn-block">
+                  <span className="checkout-cart">
+                    <Link to={`/checkout?shopid=12345`}>
+                      <i className="fa fa-shopping-cart" /> Đặt hàng
+                    </Link>
+                  </span>
+                </button>
+                <div className="col-xs-8 item">Tiền hàng:</div>
+                <div className="col-xs-4 item">
+                  <b>200,000,000đ</b>
+                </div>
+                <div className="col-xs-8 item">Phí mua hàng:</div>
+                <div className="col-xs-4 item">
+                  <b>2,000,000đ</b>
+                </div>
+                <div className="col-xs-8 item">Phí kiểm đếm:</div>
+                <div className="col-xs-4 item">
+                  <b>200,000,000đ</b>
+                </div>
+                <div className="col-xs-8 item">Phí vận chuyển nội địa TQ:</div>
+                <div className="col-xs-4 item">
+                  <b>200,000,000đ</b>
+                </div>
+                <div className="col-xs-8 item">Phí đóng kiện gỗ:</div>
+                <div className="col-xs-4 item">
+                  <b>200,000,000đ</b>
+                </div>
+                <div className="col-xs-8 item">Phí vận chuyển TQ - VN:</div>
+                <div className="col-xs-4 item">
+                  <b>200,000,000đ</b>
+                </div>
+                <div className="col-xs-8 item">Phí vận chuyển nội địa VN:</div>
+                <div className="col-xs-4 item">
+                  <b>200,000,000đ</b>
                 </div>
               </div>
-            ))}
+              <div className="row checkout-cart-detail checkout-cart-total">
+                <div className="col-xs-8 item">
+                  <h4>Tổng tiền:</h4>
+                </div>
+                <div className="col-xs-4 item">
+                  <b>200,000,000đ</b>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="footer">
             <div className="pull-right">
@@ -421,7 +399,8 @@ const mapDispatchToProps = {
   getCities,
   createShippingAddress,
   getOwnerShippingAddress,
-  getOwnerShippingCart
+  getOwnerShippingCart,
+  getShippingCart
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

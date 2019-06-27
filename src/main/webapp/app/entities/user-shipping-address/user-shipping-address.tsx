@@ -45,37 +45,22 @@ export class UserShippingAddress extends React.Component<IUserShippingAddressPro
                     <Translate contentKey="global.field.id">ID</Translate>
                   </th>
                   <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.name">Name</Translate>
+                    <Translate contentKey="studentexchangeApp.userShippingAddress.name">Người nhận</Translate>
                   </th>
                   <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.address">Address</Translate>
+                    <Translate contentKey="studentexchangeApp.userShippingAddress.address">Địa chỉ</Translate>
                   </th>
                   <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.mobile">Mobile</Translate>
+                    <Translate contentKey="studentexchangeApp.userShippingAddress.mobile">Điện thoại</Translate>
                   </th>
                   <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.note">Note</Translate>
+                    <Translate contentKey="studentexchangeApp.userShippingAddress.note">Ghi chú</Translate>
                   </th>
                   <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.createAt">Create At</Translate>
+                    <Translate contentKey="studentexchangeApp.userShippingAddress.city">Thành phố</Translate>
                   </th>
                   <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.updateAt">Update At</Translate>
-                  </th>
-                  <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.userProfile">User Profile</Translate>
-                  </th>
-                  <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.createBy">Create By</Translate>
-                  </th>
-                  <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.updateBy">Update By</Translate>
-                  </th>
-                  <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.city">City</Translate>
-                  </th>
-                  <th>
-                    <Translate contentKey="studentexchangeApp.userShippingAddress.district">District</Translate>
+                    <Translate contentKey="studentexchangeApp.userShippingAddress.district">Quận/Huyện</Translate>
                   </th>
                   <th />
                 </tr>
@@ -93,30 +78,15 @@ export class UserShippingAddress extends React.Component<IUserShippingAddressPro
                     <td>{userShippingAddress.mobile}</td>
                     <td>{userShippingAddress.note}</td>
                     <td>
-                      <TextFormat type="date" value={userShippingAddress.createAt} format={APP_LOCAL_DATE_FORMAT} />
-                    </td>
-                    <td>
-                      <TextFormat type="date" value={userShippingAddress.updateAt} format={APP_LOCAL_DATE_FORMAT} />
-                    </td>
-                    <td>
-                      {userShippingAddress.userProfileId ? (
-                        <Link to={`user-profile/${userShippingAddress.userProfileId}`}>{userShippingAddress.userProfileId}</Link>
-                      ) : (
-                        ''
-                      )}
-                    </td>
-                    <td>{userShippingAddress.createByLogin ? userShippingAddress.createByLogin : ''}</td>
-                    <td>{userShippingAddress.updateByLogin ? userShippingAddress.updateByLogin : ''}</td>
-                    <td>
-                      {userShippingAddress.cityId ? (
-                        <Link to={`city/${userShippingAddress.cityId}`}>{userShippingAddress.cityId}</Link>
+                      {userShippingAddress.cityName ? (
+                        <Link to={`city/${userShippingAddress.cityId}`}>{userShippingAddress.cityName}</Link>
                       ) : (
                         ''
                       )}
                     </td>
                     <td>
-                      {userShippingAddress.districtId ? (
-                        <Link to={`district/${userShippingAddress.districtId}`}>{userShippingAddress.districtId}</Link>
+                      {userShippingAddress.districtName ? (
+                        <Link to={`district/${userShippingAddress.districtId}`}>{userShippingAddress.districtName}</Link>
                       ) : (
                         ''
                       )}

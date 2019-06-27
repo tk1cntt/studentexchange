@@ -10,6 +10,7 @@ import { Modal } from 'antd';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
+import Footer from 'app/shared/layout/footer/footer';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities, deleteEntity as deleteUserShippingAddress } from './user-shipping-address.reducer';
@@ -125,12 +126,6 @@ export class UserShippingAddress extends React.Component<IUserShippingAddressPro
                     </td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
-                        <Button tag={Link} to={`${match.url}/${userShippingAddress.id}`} color="info" size="sm">
-                          <FontAwesomeIcon icon="eye" />{' '}
-                          <span className="d-none d-md-inline">
-                            <Translate contentKey="entity.action.view">View</Translate>
-                          </span>
-                        </Button>
                         <Button tag={Link} to={`${match.url}/${userShippingAddress.id}/edit`} color="primary" size="sm">
                           <FontAwesomeIcon icon="pencil-alt" />{' '}
                           <span className="d-none d-md-inline">
@@ -165,14 +160,7 @@ export class UserShippingAddress extends React.Component<IUserShippingAddressPro
               ''
             )}
           </div>
-          <div className="footer">
-            <div className="pull-right">
-              10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-              <strong>Copyright</strong> Example Company © 2014-2017
-            </div>
-          </div>
+          <Footer />
         </div>
       </>
     );

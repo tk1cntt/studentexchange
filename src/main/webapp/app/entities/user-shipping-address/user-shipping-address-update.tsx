@@ -10,6 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
+import Footer from 'app/shared/layout/footer/footer';
 
 import { IUserProfile } from 'app/shared/model/user-profile.model';
 import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
@@ -245,14 +246,7 @@ export class UserShippingAddressUpdate extends React.Component<IUserShippingAddr
               </AvForm>
             )}
           </div>
-          <div className="footer">
-            <div className="pull-right">
-              10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-              <strong>Copyright</strong> Example Company © 2014-2017
-            </div>
-          </div>
+          <Footer />
         </div>
       </>
     );

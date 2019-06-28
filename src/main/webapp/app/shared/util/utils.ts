@@ -21,7 +21,7 @@ export const formatMoney = money => {
 };
 
 export const formatCurency = money => {
-  return money ? money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') : 0;
+  return money ? money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : 0;
 };
 
 export const humanize = x => {

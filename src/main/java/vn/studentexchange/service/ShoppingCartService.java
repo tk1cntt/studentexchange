@@ -119,9 +119,9 @@ public class ShoppingCartService {
     }
 
     @Transactional(readOnly = true)
-    public List<ShoppingCartDTO> findByOwner() {
+    public List<ShoppingCartDTO> findByOwner(String username) {
         log.debug("Request to get all House of owner [{}]");
-        return shoppingCartRepository.findByCreateByIsCurrentUserOrderByCreateAtDesc()
+        return shoppingCartRepository.findByCreateByLoginOrderByCreateAtDesc(username)
             .stream()
             .map(shoppingCartMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));

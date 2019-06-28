@@ -104,7 +104,21 @@ public class ShoppingCartResource {
     @Timed
     public List<ShoppingCartDTO> getOwnerShoppingCarts() {
         log.debug("REST request to get owner ShoppingCarts");
-        return shoppingCartService.findByOwner();
+        String username = SecurityUtils.getCurrentUserLogin().get();
+        List<ShoppingCartDTO> carts = shoppingCartService.findByOwner(username);
+        for (ShoppingCartDTO dto: carts) {
+            ShoppingCartDTO currentCart = dto;
+            List<ShoppingCartItemDTO> items = currentCart.getItems();
+            int totalQuantity = 0;
+            float totalAmount = 0f;
+            for (ShoppingCartItemDTO item: items) {
+                totalQuantity += item.getQuantity();
+                totalAmount += (item.getItemPriceNDT() * item.getQuantity());
+            }
+            currentCart.setTotalAmount(totalAmount);
+            currentCart.setTotalQuantity(totalQuantity);
+        }
+        return carts;
     }
 
     @GetMapping("/shopping-carts/owner/{id}")

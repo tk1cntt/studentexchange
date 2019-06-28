@@ -16,7 +16,7 @@ import {
   createEntity as createShippingAddress,
   getOwnerEntities as getOwnerShippingAddress
 } from 'app/entities/user-shipping-address/user-shipping-address.reducer';
-import { queryString, stringToSlug, encodeId, decodeId } from 'app/shared/util/utils';
+import { formatCurency, stringToSlug, encodeId, decodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
@@ -81,6 +81,9 @@ export class Checkout extends React.Component<ICheckoutProp> {
     // Typical usage (don't forget to compare props):
     if (this.props.cities !== prevProps.cities) {
       this.mappingCity();
+    }
+    if (this.props.shoppingCartList !== prevProps.shoppingCartList) {
+      this.checkoutAmountData();
     }
   }
 
@@ -278,11 +281,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
   checkoutBox() {
     const { shoppingCartList } = this.props;
     const cartItem = [];
-    let totalQuantity = 0;
-    let totalAmount = 0;
     shoppingCartList.map((shoppingCart, i) => {
-      totalQuantity = totalQuantity + shoppingCart.totalQuantity;
-      totalAmount = totalAmount + shoppingCart.totalAmount;
       cartItem.push(
         <tr key={`key-${i}`} className="footable-even" style={{}}>
           <td className="footable-visible">
@@ -293,15 +292,28 @@ export class Checkout extends React.Component<ICheckoutProp> {
             {shoppingCart.website}
           </td>
           <td className="footable-visible">{shoppingCart.totalQuantity}</td>
-          <td className="footable-visible">{shoppingCart.totalAmount}</td>
+          <td className="footable-visible">{formatCurency(shoppingCart.totalAmount * this.props.currencyRateEntity.rate)}đ</td>
         </tr>
       );
     });
     return cartItem;
   }
 
+  checkoutAmountData() {
+    const { shoppingCartList } = this.props;
+    let totalQuantity = 0;
+    let totalAmount = 0;
+    shoppingCartList.map(shoppingCart => {
+      totalQuantity = totalQuantity + shoppingCart.totalQuantity;
+      totalAmount = totalAmount + shoppingCart.totalAmount;
+    });
+    this.setState({
+      totalQuantity,
+      totalAmount
+    });
+  }
+
   render() {
-    const { shoppingCartList, account } = this.props;
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />
@@ -351,15 +363,15 @@ export class Checkout extends React.Component<ICheckoutProp> {
                 </button>
                 <div className="col-xs-8 item">Tiền hàng:</div>
                 <div className="col-xs-4 item">
-                  <b>{this.state.totalAmount * 3145}đ</b>
+                  <b>{formatCurency(this.state.totalAmount * this.props.currencyRateEntity.rate)}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí mua hàng:</div>
                 <div className="col-xs-4 item">
-                  <b>{this.state.totalAmount * 3145 * 0.02}đ</b>
+                  <b>{formatCurency(this.state.totalAmount * this.props.currencyRateEntity.rate * 0.02)}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí kiểm đếm:</div>
                 <div className="col-xs-4 item">
-                  <b>{this.state.totalQuantity * 5000}đ</b>
+                  <b>{formatCurency(this.state.totalQuantity * 5000)}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí vận chuyển nội địa TQ:</div>
                 <div className="col-xs-4 item">
@@ -383,7 +395,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
                   <h4>Tổng tiền:</h4>
                 </div>
                 <div className="col-xs-4 item">
-                  <b>{this.state.totalAmount * 3145 * 1.02}đ</b>
+                  <b>{formatCurency(this.state.totalAmount * this.props.currencyRateEntity.rate * 1.02)}đ</b>
                 </div>
               </div>
             </div>
@@ -400,7 +412,8 @@ const mapStateToProps = storeState => ({
   shoppingCartList: storeState.shoppingCart.entities,
   isAuthenticated: storeState.authentication.isAuthenticated,
   cities: storeState.city.entities,
-  userShippingAddressList: storeState.userShippingAddress.entities
+  userShippingAddressList: storeState.userShippingAddress.entities,
+  currencyRateEntity: storeState.currencyRate.entity
 });
 
 const mapDispatchToProps = {

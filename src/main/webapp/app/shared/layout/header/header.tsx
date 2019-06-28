@@ -2,6 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 
+import { IRootState } from 'app/shared/reducers';
+import { getByCurrency } from 'app/entities/currency-rate/currency-rate.reducer';
+import { formatCurency } from 'app/shared/util/utils';
+
 export interface IHeaderProps extends StateProps, DispatchProps {}
 
 export interface IHeaderState {
@@ -12,6 +16,10 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
   state: IHeaderState = {
     showModal: true
   };
+
+  componentDidMount() {
+    this.props.getByCurrency('CNY');
+  }
 
   openMiniNavbar = () => () => {
     if (this.state.showModal) {
@@ -31,15 +39,12 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
               <div className="navbar-minimalize minimalize-styl-2 btn btn-primary" onClick={this.openMiniNavbar()}>
                 <i className="fa fa-bars" />{' '}
               </div>
-              <form role="search" className="navbar-form-custom" action="search_results.html">
-                <div className="form-group">
-                  <input type="text" placeholder="Search for something..." className="form-control" name="top-search" id="top-search" />
-                </div>
-              </form>
             </div>
             <ul className="nav navbar-top-links navbar-right">
               <li>
-                <span className="m-r-sm text-muted welcome-message">Welcome to Student Exchange.</span>
+                <span className="m-r-sm text-muted welcome-message">
+                  Tỷ giá: <b className="text-danger">{formatCurency(this.props.currencyRateEntity.rate)}đ</b>
+                </span>
               </li>
               <li className="dropdown">
                 <a className="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -155,9 +160,11 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ currencyRate }: IRootState) => ({
+  currencyRateEntity: currencyRate.entity
+});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { getByCurrency };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

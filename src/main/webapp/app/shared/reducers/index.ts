@@ -88,6 +88,10 @@ import delivery, {
 import deliveryPackage, {
   DeliveryPackageState
 } from 'app/entities/delivery-package/delivery-package.reducer';
+// prettier-ignore
+import currencyRate, {
+  CurrencyRateState
+} from 'app/entities/currency-rate/currency-rate.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -120,6 +124,7 @@ export interface IRootState {
   readonly warehouse: WarehouseState;
   readonly delivery: DeliveryState;
   readonly deliveryPackage: DeliveryPackageState;
+  readonly currencyRate: CurrencyRateState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -154,6 +159,7 @@ const rootReducer = combineReducers<IRootState>({
   warehouse,
   delivery,
   deliveryPackage,
+  currencyRate,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

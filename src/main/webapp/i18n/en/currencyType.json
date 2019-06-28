@@ -1,0 +1,12 @@
+{
+  "studentexchangeApp": {
+    "CurrencyType": {
+      "null": "",
+      "USD": "USD",
+      "EUR": "EUR",
+      "CNY": "CNY",
+      "JPY": "JPY",
+      "KPW": "KPW"
+    }
+  }
+}

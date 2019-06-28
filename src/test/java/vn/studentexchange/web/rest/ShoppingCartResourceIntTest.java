@@ -80,6 +80,9 @@ public class ShoppingCartResourceIntTest {
     private static final String DEFAULT_SOURCE_DATA = "AAAAAAAAAA";
     private static final String UPDATED_SOURCE_DATA = "BBBBBBBBBB";
 
+    private static final Float DEFAULT_TALLY_FEE = 1F;
+    private static final Float UPDATED_TALLY_FEE = 2F;
+
     private static final Float DEFAULT_TOTAL_AMOUNT = 1F;
     private static final Float UPDATED_TOTAL_AMOUNT = 2F;
 
@@ -157,6 +160,7 @@ public class ShoppingCartResourceIntTest {
             .shopName(DEFAULT_SHOP_NAME)
             .shopNote(DEFAULT_SHOP_NOTE)
             .sourceData(DEFAULT_SOURCE_DATA)
+            .tallyFee(DEFAULT_TALLY_FEE)
             .totalAmount(DEFAULT_TOTAL_AMOUNT)
             .totalLink(DEFAULT_TOTAL_LINK)
             .totalQuantity(DEFAULT_TOTAL_QUANTITY)
@@ -200,6 +204,7 @@ public class ShoppingCartResourceIntTest {
         assertThat(testShoppingCart.getShopName()).isEqualTo(DEFAULT_SHOP_NAME);
         assertThat(testShoppingCart.getShopNote()).isEqualTo(DEFAULT_SHOP_NOTE);
         assertThat(testShoppingCart.getSourceData()).isEqualTo(DEFAULT_SOURCE_DATA);
+        assertThat(testShoppingCart.getTallyFee()).isEqualTo(DEFAULT_TALLY_FEE);
         assertThat(testShoppingCart.getTotalAmount()).isEqualTo(DEFAULT_TOTAL_AMOUNT);
         assertThat(testShoppingCart.getTotalLink()).isEqualTo(DEFAULT_TOTAL_LINK);
         assertThat(testShoppingCart.getTotalQuantity()).isEqualTo(DEFAULT_TOTAL_QUANTITY);
@@ -252,6 +257,7 @@ public class ShoppingCartResourceIntTest {
             .andExpect(jsonPath("$.[*].shopName").value(hasItem(DEFAULT_SHOP_NAME.toString())))
             .andExpect(jsonPath("$.[*].shopNote").value(hasItem(DEFAULT_SHOP_NOTE.toString())))
             .andExpect(jsonPath("$.[*].sourceData").value(hasItem(DEFAULT_SOURCE_DATA.toString())))
+            .andExpect(jsonPath("$.[*].tallyFee").value(hasItem(DEFAULT_TALLY_FEE.doubleValue())))
             .andExpect(jsonPath("$.[*].totalAmount").value(hasItem(DEFAULT_TOTAL_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].totalLink").value(hasItem(DEFAULT_TOTAL_LINK)))
             .andExpect(jsonPath("$.[*].totalQuantity").value(hasItem(DEFAULT_TOTAL_QUANTITY)))
@@ -284,6 +290,7 @@ public class ShoppingCartResourceIntTest {
             .andExpect(jsonPath("$.shopName").value(DEFAULT_SHOP_NAME.toString()))
             .andExpect(jsonPath("$.shopNote").value(DEFAULT_SHOP_NOTE.toString()))
             .andExpect(jsonPath("$.sourceData").value(DEFAULT_SOURCE_DATA.toString()))
+            .andExpect(jsonPath("$.tallyFee").value(DEFAULT_TALLY_FEE.doubleValue()))
             .andExpect(jsonPath("$.totalAmount").value(DEFAULT_TOTAL_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.totalLink").value(DEFAULT_TOTAL_LINK))
             .andExpect(jsonPath("$.totalQuantity").value(DEFAULT_TOTAL_QUANTITY))
@@ -326,6 +333,7 @@ public class ShoppingCartResourceIntTest {
             .shopName(UPDATED_SHOP_NAME)
             .shopNote(UPDATED_SHOP_NOTE)
             .sourceData(UPDATED_SOURCE_DATA)
+            .tallyFee(UPDATED_TALLY_FEE)
             .totalAmount(UPDATED_TOTAL_AMOUNT)
             .totalLink(UPDATED_TOTAL_LINK)
             .totalQuantity(UPDATED_TOTAL_QUANTITY)
@@ -356,6 +364,7 @@ public class ShoppingCartResourceIntTest {
         assertThat(testShoppingCart.getShopName()).isEqualTo(UPDATED_SHOP_NAME);
         assertThat(testShoppingCart.getShopNote()).isEqualTo(UPDATED_SHOP_NOTE);
         assertThat(testShoppingCart.getSourceData()).isEqualTo(UPDATED_SOURCE_DATA);
+        assertThat(testShoppingCart.getTallyFee()).isEqualTo(UPDATED_TALLY_FEE);
         assertThat(testShoppingCart.getTotalAmount()).isEqualTo(UPDATED_TOTAL_AMOUNT);
         assertThat(testShoppingCart.getTotalLink()).isEqualTo(UPDATED_TOTAL_LINK);
         assertThat(testShoppingCart.getTotalQuantity()).isEqualTo(UPDATED_TOTAL_QUANTITY);

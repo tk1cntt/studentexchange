@@ -170,6 +170,12 @@ export class ShoppingCartUpdate extends React.Component<IShoppingCartUpdateProps
                   <AvField id="shopping-cart-sourceData" type="text" name="sourceData" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="tallyFeeLabel" for="tallyFee">
+                    <Translate contentKey="studentexchangeApp.shoppingCart.tallyFee">Tally Fee</Translate>
+                  </Label>
+                  <AvField id="shopping-cart-tallyFee" type="string" className="form-control" name="tallyFee" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="totalAmountLabel" for="totalAmount">
                     <Translate contentKey="studentexchangeApp.shoppingCart.totalAmount">Total Amount</Translate>
                   </Label>

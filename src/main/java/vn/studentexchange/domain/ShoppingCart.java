@@ -60,6 +60,9 @@ public class ShoppingCart implements Serializable {
     @Column(name = "source_data")
     private String sourceData;
 
+    @Column(name = "tally_fee")
+    private Float tallyFee;
+
     @Column(name = "total_amount")
     private Float totalAmount;
 
@@ -83,7 +86,6 @@ public class ShoppingCart implements Serializable {
 
     @OneToMany(mappedBy = "shoppingCart")
     private Set<ShoppingCartItem> items = new HashSet<>();
-    
     @ManyToOne
     @JsonIgnoreProperties("")
     private User createBy;
@@ -255,6 +257,19 @@ public class ShoppingCart implements Serializable {
 
     public void setSourceData(String sourceData) {
         this.sourceData = sourceData;
+    }
+
+    public Float getTallyFee() {
+        return tallyFee;
+    }
+
+    public ShoppingCart tallyFee(Float tallyFee) {
+        this.tallyFee = tallyFee;
+        return this;
+    }
+
+    public void setTallyFee(Float tallyFee) {
+        this.tallyFee = tallyFee;
     }
 
     public Float getTotalAmount() {
@@ -436,6 +451,7 @@ public class ShoppingCart implements Serializable {
             ", shopName='" + getShopName() + "'" +
             ", shopNote='" + getShopNote() + "'" +
             ", sourceData='" + getSourceData() + "'" +
+            ", tallyFee=" + getTallyFee() +
             ", totalAmount=" + getTotalAmount() +
             ", totalLink=" + getTotalLink() +
             ", totalQuantity=" + getTotalQuantity() +

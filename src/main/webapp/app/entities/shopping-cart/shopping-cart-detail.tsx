@@ -101,6 +101,12 @@ export class ShoppingCartDetail extends React.Component<IShoppingCartDetailProps
             </dt>
             <dd>{shoppingCartEntity.sourceData}</dd>
             <dt>
+              <span id="tallyFee">
+                <Translate contentKey="studentexchangeApp.shoppingCart.tallyFee">Tally Fee</Translate>
+              </span>
+            </dt>
+            <dd>{shoppingCartEntity.tallyFee}</dd>
+            <dt>
               <span id="totalAmount">
                 <Translate contentKey="studentexchangeApp.shoppingCart.totalAmount">Total Amount</Translate>
               </span>

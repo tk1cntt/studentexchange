@@ -15,6 +15,7 @@ export interface IShoppingCart {
   shopName?: string;
   shopNote?: string;
   sourceData?: string;
+  tallyFee?: number;
   totalAmount?: number;
   totalLink?: number;
   totalQuantity?: number;

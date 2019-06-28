@@ -50,6 +50,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "tallyFee",
+            "fieldType": "Float"
+        },
+        {
             "fieldName": "totalAmount",
             "fieldType": "Float"
         },

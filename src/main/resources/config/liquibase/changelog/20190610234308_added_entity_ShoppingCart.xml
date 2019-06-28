@@ -54,7 +54,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="shop_link" type="varchar(1000)">
+            <column name="shop_link" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -67,6 +67,10 @@
             </column>
 
             <column name="source_data" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="tally_fee" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 

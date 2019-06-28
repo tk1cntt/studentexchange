@@ -37,6 +37,8 @@ public class ShoppingCartDTO implements Serializable {
 
     private String sourceData;
 
+    private Float tallyFee;
+
     private Float totalAmount;
 
     private Integer totalLink;
@@ -165,6 +167,14 @@ public class ShoppingCartDTO implements Serializable {
         this.sourceData = sourceData;
     }
 
+    public Float getTallyFee() {
+        return tallyFee;
+    }
+
+    public void setTallyFee(Float tallyFee) {
+        this.tallyFee = tallyFee;
+    }
+
     public Float getTotalAmount() {
         return totalAmount;
     }
@@ -290,6 +300,7 @@ public class ShoppingCartDTO implements Serializable {
             ", shopName='" + getShopName() + "'" +
             ", shopNote='" + getShopNote() + "'" +
             ", sourceData='" + getSourceData() + "'" +
+            ", tallyFee=" + getTallyFee() +
             ", totalAmount=" + getTotalAmount() +
             ", totalLink=" + getTotalLink() +
             ", totalQuantity=" + getTotalQuantity() +

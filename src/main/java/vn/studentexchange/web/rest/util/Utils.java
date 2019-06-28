@@ -29,4 +29,30 @@ public final class Utils {
         tmp.append(time.getMinutes());
         return Long.valueOf(tmp.toString());
     }
+
+    public static int getTallyFee(int quantity) {
+        if (quantity > 100) {
+            return 1500;
+        } else if (quantity > 20) {
+            return 2000;
+        } else if (quantity > 5) {
+            return 3000;
+        } else {
+            return 5000;
+        }
+    }
+
+	public static float getServiceFee(float totalAmount) {
+        if (totalAmount > 300000000) {
+            return 0.01f;
+        } else if (totalAmount <= 300000000  && totalAmount > 100000000) {
+            return 0.02f;
+        } else if (totalAmount <= 100000000  && totalAmount > 50000000) {
+            return 0.03f;
+        } else if (totalAmount <= 50000000  && totalAmount > 10000000) {
+            return 0.04f;
+        } else {
+            return 0.05f;
+        }
+	}
 }

@@ -9,6 +9,7 @@ import vn.studentexchange.service.ShoppingCartService;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
 import vn.studentexchange.web.rest.util.PaginationUtil;
+import vn.studentexchange.web.rest.util.Utils;
 import vn.studentexchange.service.dto.CurrencyRateDTO;
 import vn.studentexchange.service.dto.ShoppingCartDTO;
 import vn.studentexchange.service.dto.ShoppingCartItemDTO;
@@ -142,7 +143,12 @@ public class ShoppingCartResource {
             totalQuantity += item.getQuantity();
             totalAmount += (item.getItemPriceNDT() * item.getQuantity());
         }
-        currentCart.setTotalAmount((float) Math.ceil(totalAmount * rate.get().getRate()));
+        if (currentCart.isItemChecking()) {
+            currentCart.setTallyFee((float) totalQuantity * Utils.getTallyFee(totalQuantity));
+        }
+        totalAmount = (float) Math.ceil(totalAmount * rate.get().getRate());
+        currentCart.setServiceFee((float) Math.ceil(totalAmount * Utils.getServiceFee(totalAmount));
+        currentCart.setTotalAmount(totalAmount);
         currentCart.setTotalQuantity(totalQuantity);
         return currentCart;
     }

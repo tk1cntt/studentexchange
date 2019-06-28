@@ -95,7 +95,7 @@ enum StatusType {
 }
 
 entity OrderCart {
-   code String,
+   code Long,
    avatar String,
    amountDiscount Float,
    amountPaid Float,
@@ -173,14 +173,6 @@ enum CustomerLevel {
    NORMAL, SILVER, GOLD, PLATINUM
 }
 
-enum PaymentMethod {
-   CASH, BANK_TRANSFER, CARD, PAYPAL
-}
-
-enum PaymentStatusType {
-   PENDING, PAID, CANCELED
-}
-
 entity OrderItem {
    avatar String,
    originLink String,
@@ -242,23 +234,20 @@ relationship ManyToOne {
    OrderPackageHistory{updateBy(login)} to User
 }
 
-enum TransactionType {
+enum OrderTransactionType {
    DEPOSIT, ORDER_PAYMENT, REFUND
 }
 
 entity OrderTransaction {
    amount Float,
    note String,
-   status TransactionType,
-   orderDate LocalDate,
-   createAt LocalDate,
-   updateAt LocalDate
+   status OrderTransactionType,
+   createAt LocalDate
 }
 
 relationship ManyToOne {
-   OrderTransaction{approver(login)} to User,
-   OrderTransaction{createBy(login)} to User,
-   OrderTransaction{updateBy(login)} to User
+   OrderTransaction{orderCode(code)} to OrderCart,
+   OrderTransaction{createBy(login)} to User
 }
 
 enum CommentType {
@@ -278,6 +267,49 @@ relationship OneToMany {
    OrderCart{histories} to OrderHistory,
    OrderCart{packages} to OrderPackage,
    OrderCart{transactions} to OrderTransaction
+}
+
+enum PaymentMethod {
+   CASH, BANK_TRANSFER, CARD, PAYPAL
+}
+
+enum PaymentStatusType {
+   PENDING, PAID, CANCELED
+}
+
+enum PaymentType {
+   DEPOSIT, ORDER_PAYMENT, REFUND
+}
+
+entity Payment {
+   amount Float,
+   code Long,
+   newBalance Float,
+   note String,
+   orderCode String,
+   method PaymentMethod,
+   type PaymentType,
+   status PaymentStatusType,
+   createAt LocalDate,
+   withdrawalFee Float
+}
+
+relationship ManyToOne {
+   Payment{staffApproval(login)} to User,
+   Payment{staffCancel(login)} to User,
+   Payment{createBy(login)} to User
+}
+
+entity UserBalance {
+   balanceAvailable Float,
+   balanceFreezing Float,
+   cash Float,
+   createAt LocalDate,
+   updateAt LocalDate
+}
+
+relationship ManyToOne {
+   UserBalance{createBy(login)} to User
 }
 
 entity ShoppingCart {

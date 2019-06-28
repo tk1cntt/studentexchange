@@ -42,9 +42,7 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
             </div>
             <ul className="nav navbar-top-links navbar-right">
               <li>
-                <span className="m-r-sm text-muted welcome-message">
-                  Tỷ giá: <b className="text-danger">{formatCurency(this.props.currencyRateEntity.rate)}đ</b>
-                </span>
+                Tỷ giá: <b className="text-danger">{formatCurency(this.props.currencyRateEntity.rate)}đ</b>
               </li>
               <li className="dropdown">
                 <a className="dropdown-toggle count-info" data-toggle="dropdown" href="#">

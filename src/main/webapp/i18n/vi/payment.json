@@ -1,0 +1,33 @@
+{
+  "studentexchangeApp": {
+    "payment": {
+      "home": {
+        "title": "Payments",
+        "createLabel": "Thêm mới một Payment",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Payment"
+      },
+      "created": "Một Payment mới được tạo với định danh {{ param }}",
+      "updated": "Một Payment cập nhật với định danh {{ param }}",
+      "deleted": "Một Payment đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Payment {{ id }}?"
+      },
+      "detail": {
+        "title": "Payment"
+      },
+      "amount": "Amount",
+      "code": "Code",
+      "newBalance": "New Balance",
+      "note": "Note",
+      "orderCode": "Order Code",
+      "method": "Method",
+      "type": "Type",
+      "status": "Status",
+      "createAt": "Create At",
+      "withdrawalFee": "Withdrawal Fee",
+      "staffApproval": "Staff Approval",
+      "staffCancel": "Staff Cancel",
+      "createBy": "Create By"
+    }
+  }
+}

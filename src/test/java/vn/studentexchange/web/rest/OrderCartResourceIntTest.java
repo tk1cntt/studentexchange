@@ -45,8 +45,8 @@ import vn.studentexchange.domain.enumeration.OrderStatus;
 @SpringBootTest(classes = StudentexchangeApp.class)
 public class OrderCartResourceIntTest {
 
-    private static final String DEFAULT_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_CODE = "BBBBBBBBBB";
+    private static final Long DEFAULT_CODE = 1L;
+    private static final Long UPDATED_CODE = 2L;
 
     private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
     private static final String UPDATED_AVATAR = "BBBBBBBBBB";
@@ -386,7 +386,7 @@ public class OrderCartResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(orderCart.getId().intValue())))
-            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.intValue())))
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
             .andExpect(jsonPath("$.[*].amountDiscount").value(hasItem(DEFAULT_AMOUNT_DISCOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].amountPaid").value(hasItem(DEFAULT_AMOUNT_PAID.doubleValue())))
@@ -447,7 +447,7 @@ public class OrderCartResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(orderCart.getId().intValue()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.intValue()))
             .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()))
             .andExpect(jsonPath("$.amountDiscount").value(DEFAULT_AMOUNT_DISCOUNT.doubleValue()))
             .andExpect(jsonPath("$.amountPaid").value(DEFAULT_AMOUNT_PAID.doubleValue()))

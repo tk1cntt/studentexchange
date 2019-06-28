@@ -1,0 +1,42 @@
+{
+    "name": "UserBalance",
+    "fields": [
+        {
+            "fieldName": "balanceAvailable",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "balanceFreezing",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "cash",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "createAt",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "updateAt",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "createBy",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        }
+    ],
+    "changelogDate": "20190628113311",
+    "entityTableName": "user_balance",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

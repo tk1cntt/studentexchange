@@ -12,7 +12,7 @@ public class OrderCartDTO implements Serializable {
 
     private Long id;
 
-    private String code;
+    private Long code;
 
     private String avatar;
 
@@ -140,11 +140,11 @@ public class OrderCartDTO implements Serializable {
         this.id = id;
     }
 
-    public String getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
@@ -645,7 +645,7 @@ public class OrderCartDTO implements Serializable {
     public String toString() {
         return "OrderCartDTO{" +
             "id=" + getId() +
-            ", code='" + getCode() + "'" +
+            ", code=" + getCode() +
             ", avatar='" + getAvatar() + "'" +
             ", amountDiscount=" + getAmountDiscount() +
             ", amountPaid=" + getAmountPaid() +

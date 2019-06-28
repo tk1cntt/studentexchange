@@ -3,7 +3,7 @@
     "fields": [
         {
             "fieldName": "code",
-            "fieldType": "String"
+            "fieldType": "Long"
         },
         {
             "fieldName": "avatar",

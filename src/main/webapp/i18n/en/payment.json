@@ -1,0 +1,33 @@
+{
+  "studentexchangeApp": {
+    "payment": {
+      "home": {
+        "title": "Payments",
+        "createLabel": "Create a new Payment",
+        "createOrEditLabel": "Create or edit a Payment"
+      },
+      "created": "A new Payment is created with identifier {{ param }}",
+      "updated": "A Payment is updated with identifier {{ param }}",
+      "deleted": "A Payment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Payment {{ id }}?"
+      },
+      "detail": {
+        "title": "Payment"
+      },
+      "amount": "Amount",
+      "code": "Code",
+      "newBalance": "New Balance",
+      "note": "Note",
+      "orderCode": "Order Code",
+      "method": "Method",
+      "type": "Type",
+      "status": "Status",
+      "createAt": "Create At",
+      "withdrawalFee": "Withdrawal Fee",
+      "staffApproval": "Staff Approval",
+      "staffCancel": "Staff Cancel",
+      "createBy": "Create By"
+    }
+  }
+}

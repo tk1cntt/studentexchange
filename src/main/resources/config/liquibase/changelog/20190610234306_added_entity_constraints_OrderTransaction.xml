@@ -14,21 +14,15 @@
                                  referencedColumnNames="id"
                                  referencedTableName="order_cart"/>
 
-        <addForeignKeyConstraint baseColumnNames="approver_id"
+        <addForeignKeyConstraint baseColumnNames="order_code_id"
                                  baseTableName="order_transaction"
-                                 constraintName="fk_order_transaction_approver_id"
+                                 constraintName="fk_order_transaction_order_code_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
+                                 referencedTableName="order_cart"/>
 
         <addForeignKeyConstraint baseColumnNames="create_by_id"
                                  baseTableName="order_transaction"
                                  constraintName="fk_order_transaction_create_by_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
-        <addForeignKeyConstraint baseColumnNames="update_by_id"
-                                 baseTableName="order_transaction"
-                                 constraintName="fk_order_transaction_update_by_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 

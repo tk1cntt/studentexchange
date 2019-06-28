@@ -23,9 +23,8 @@ export interface IOrderTransactionUpdateProps extends StateProps, DispatchProps,
 export interface IOrderTransactionUpdateState {
   isNew: boolean;
   orderCartId: string;
-  approverId: string;
+  orderCodeId: string;
   createById: string;
-  updateById: string;
 }
 
 export class OrderTransactionUpdate extends React.Component<IOrderTransactionUpdateProps, IOrderTransactionUpdateState> {
@@ -33,9 +32,8 @@ export class OrderTransactionUpdate extends React.Component<IOrderTransactionUpd
     super(props);
     this.state = {
       orderCartId: '0',
-      approverId: '0',
+      orderCodeId: '0',
       createById: '0',
-      updateById: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -130,33 +128,21 @@ export class OrderTransactionUpdate extends React.Component<IOrderTransactionUpd
                     value={(!isNew && orderTransactionEntity.status) || 'DEPOSIT'}
                   >
                     <option value="DEPOSIT">
-                      <Translate contentKey="studentexchangeApp.TransactionType.DEPOSIT" />
+                      <Translate contentKey="studentexchangeApp.OrderTransactionType.DEPOSIT" />
                     </option>
                     <option value="ORDER_PAYMENT">
-                      <Translate contentKey="studentexchangeApp.TransactionType.ORDER_PAYMENT" />
+                      <Translate contentKey="studentexchangeApp.OrderTransactionType.ORDER_PAYMENT" />
                     </option>
                     <option value="REFUND">
-                      <Translate contentKey="studentexchangeApp.TransactionType.REFUND" />
+                      <Translate contentKey="studentexchangeApp.OrderTransactionType.REFUND" />
                     </option>
                   </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="orderDateLabel" for="orderDate">
-                    <Translate contentKey="studentexchangeApp.orderTransaction.orderDate">Order Date</Translate>
-                  </Label>
-                  <AvField id="order-transaction-orderDate" type="date" className="form-control" name="orderDate" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.orderTransaction.createAt">Create At</Translate>
                   </Label>
                   <AvField id="order-transaction-createAt" type="date" className="form-control" name="createAt" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="updateAtLabel" for="updateAt">
-                    <Translate contentKey="studentexchangeApp.orderTransaction.updateAt">Update At</Translate>
-                  </Label>
-                  <AvField id="order-transaction-updateAt" type="date" className="form-control" name="updateAt" />
                 </AvGroup>
                 <AvGroup>
                   <Label for="orderCart.id">
@@ -174,15 +160,15 @@ export class OrderTransactionUpdate extends React.Component<IOrderTransactionUpd
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="approver.login">
-                    <Translate contentKey="studentexchangeApp.orderTransaction.approver">Approver</Translate>
+                  <Label for="orderCode.code">
+                    <Translate contentKey="studentexchangeApp.orderTransaction.orderCode">Order Code</Translate>
                   </Label>
-                  <AvInput id="order-transaction-approver" type="select" className="form-control" name="approverId">
+                  <AvInput id="order-transaction-orderCode" type="select" className="form-control" name="orderCodeId">
                     <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
+                    {orderCarts
+                      ? orderCarts.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.login}
+                            {otherEntity.code}
                           </option>
                         ))
                       : null}
@@ -193,21 +179,6 @@ export class OrderTransactionUpdate extends React.Component<IOrderTransactionUpd
                     <Translate contentKey="studentexchangeApp.orderTransaction.createBy">Create By</Translate>
                   </Label>
                   <AvInput id="order-transaction-createBy" type="select" className="form-control" name="createById">
-                    <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.login}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="updateBy.login">
-                    <Translate contentKey="studentexchangeApp.orderTransaction.updateBy">Update By</Translate>
-                  </Label>
-                  <AvInput id="order-transaction-updateBy" type="select" className="form-control" name="updateById">
                     <option value="" key="0" />
                     {users
                       ? users.map(otherEntity => (

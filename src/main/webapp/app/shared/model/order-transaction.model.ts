@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
 
-export const enum TransactionType {
+export const enum OrderTransactionType {
   DEPOSIT = 'DEPOSIT',
   ORDER_PAYMENT = 'ORDER_PAYMENT',
   REFUND = 'REFUND'
@@ -10,17 +10,13 @@ export interface IOrderTransaction {
   id?: number;
   amount?: number;
   note?: string;
-  status?: TransactionType;
-  orderDate?: Moment;
+  status?: OrderTransactionType;
   createAt?: Moment;
-  updateAt?: Moment;
   orderCartId?: number;
-  approverLogin?: string;
-  approverId?: number;
+  orderCodeCode?: string;
+  orderCodeId?: number;
   createByLogin?: string;
   createById?: number;
-  updateByLogin?: string;
-  updateById?: number;
 }
 
 export const defaultValue: Readonly<IOrderTransaction> = {};

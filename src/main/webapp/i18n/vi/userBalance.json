@@ -1,0 +1,26 @@
+{
+  "studentexchangeApp": {
+    "userBalance": {
+      "home": {
+        "title": "User Balances",
+        "createLabel": "Thêm mới một User Balance",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật User Balance"
+      },
+      "created": "Một User Balance mới được tạo với định danh {{ param }}",
+      "updated": "Một User Balance cập nhật với định danh {{ param }}",
+      "deleted": "Một User Balance đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa User Balance {{ id }}?"
+      },
+      "detail": {
+        "title": "User Balance"
+      },
+      "balanceAvailable": "Balance Available",
+      "balanceFreezing": "Balance Freezing",
+      "cash": "Cash",
+      "createAt": "Create At",
+      "updateAt": "Update At",
+      "createBy": "Create By"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+    "name": "Payment",
+    "fields": [
+        {
+            "fieldName": "amount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "code",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "newBalance",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "note",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "orderCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "method",
+            "fieldType": "PaymentMethod",
+            "fieldValues": "CASH,BANK_TRANSFER,CARD,PAYPAL"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "PaymentType",
+            "fieldValues": "DEPOSIT,ORDER_PAYMENT,REFUND"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "PaymentStatusType",
+            "fieldValues": "PENDING,PAID,CANCELED"
+        },
+        {
+            "fieldName": "createAt",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "withdrawalFee",
+            "fieldType": "Float"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "staffApproval",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "staffCancel",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "createBy",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        }
+    ],
+    "changelogDate": "20190628113310",
+    "entityTableName": "payment",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

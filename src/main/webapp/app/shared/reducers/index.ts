@@ -92,6 +92,14 @@ import deliveryPackage, {
 import currencyRate, {
   CurrencyRateState
 } from 'app/entities/currency-rate/currency-rate.reducer';
+// prettier-ignore
+import payment, {
+  PaymentState
+} from 'app/entities/payment/payment.reducer';
+// prettier-ignore
+import userBalance, {
+  UserBalanceState
+} from 'app/entities/user-balance/user-balance.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -125,6 +133,8 @@ export interface IRootState {
   readonly delivery: DeliveryState;
   readonly deliveryPackage: DeliveryPackageState;
   readonly currencyRate: CurrencyRateState;
+  readonly payment: PaymentState;
+  readonly userBalance: UserBalanceState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -160,6 +170,8 @@ const rootReducer = combineReducers<IRootState>({
   delivery,
   deliveryPackage,
   currencyRate,
+  payment,
+  userBalance,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

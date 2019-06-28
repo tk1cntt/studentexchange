@@ -18,13 +18,10 @@
       "amount": "Amount",
       "note": "Note",
       "status": "Status",
-      "orderDate": "Order Date",
       "createAt": "Create At",
-      "updateAt": "Update At",
       "orderCart": "Order Cart",
-      "approver": "Approver",
-      "createBy": "Create By",
-      "updateBy": "Update By"
+      "orderCode": "Order Code",
+      "createBy": "Create By"
     }
   }
 }

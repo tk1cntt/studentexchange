@@ -3,7 +3,7 @@ package vn.studentexchange.service.dto;
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.Objects;
-import vn.studentexchange.domain.enumeration.TransactionType;
+import vn.studentexchange.domain.enumeration.OrderTransactionType;
 
 /**
  * A DTO for the OrderTransaction entity.
@@ -16,27 +16,19 @@ public class OrderTransactionDTO implements Serializable {
 
     private String note;
 
-    private TransactionType status;
-
-    private LocalDate orderDate;
+    private OrderTransactionType status;
 
     private LocalDate createAt;
 
-    private LocalDate updateAt;
-
     private Long orderCartId;
 
-    private Long approverId;
+    private Long orderCodeId;
 
-    private String approverLogin;
+    private String orderCodeCode;
 
     private Long createById;
 
     private String createByLogin;
-
-    private Long updateById;
-
-    private String updateByLogin;
 
     public Long getId() {
         return id;
@@ -62,20 +54,12 @@ public class OrderTransactionDTO implements Serializable {
         this.note = note;
     }
 
-    public TransactionType getStatus() {
+    public OrderTransactionType getStatus() {
         return status;
     }
 
-    public void setStatus(TransactionType status) {
+    public void setStatus(OrderTransactionType status) {
         this.status = status;
-    }
-
-    public LocalDate getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
     }
 
     public LocalDate getCreateAt() {
@@ -86,14 +70,6 @@ public class OrderTransactionDTO implements Serializable {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(LocalDate updateAt) {
-        this.updateAt = updateAt;
-    }
-
     public Long getOrderCartId() {
         return orderCartId;
     }
@@ -102,20 +78,20 @@ public class OrderTransactionDTO implements Serializable {
         this.orderCartId = orderCartId;
     }
 
-    public Long getApproverId() {
-        return approverId;
+    public Long getOrderCodeId() {
+        return orderCodeId;
     }
 
-    public void setApproverId(Long userId) {
-        this.approverId = userId;
+    public void setOrderCodeId(Long orderCartId) {
+        this.orderCodeId = orderCartId;
     }
 
-    public String getApproverLogin() {
-        return approverLogin;
+    public String getOrderCodeCode() {
+        return orderCodeCode;
     }
 
-    public void setApproverLogin(String userLogin) {
-        this.approverLogin = userLogin;
+    public void setOrderCodeCode(String orderCartCode) {
+        this.orderCodeCode = orderCartCode;
     }
 
     public Long getCreateById() {
@@ -132,22 +108,6 @@ public class OrderTransactionDTO implements Serializable {
 
     public void setCreateByLogin(String userLogin) {
         this.createByLogin = userLogin;
-    }
-
-    public Long getUpdateById() {
-        return updateById;
-    }
-
-    public void setUpdateById(Long userId) {
-        this.updateById = userId;
-    }
-
-    public String getUpdateByLogin() {
-        return updateByLogin;
-    }
-
-    public void setUpdateByLogin(String userLogin) {
-        this.updateByLogin = userLogin;
     }
 
     @Override
@@ -178,16 +138,12 @@ public class OrderTransactionDTO implements Serializable {
             ", amount=" + getAmount() +
             ", note='" + getNote() + "'" +
             ", status='" + getStatus() + "'" +
-            ", orderDate='" + getOrderDate() + "'" +
             ", createAt='" + getCreateAt() + "'" +
-            ", updateAt='" + getUpdateAt() + "'" +
             ", orderCart=" + getOrderCartId() +
-            ", approver=" + getApproverId() +
-            ", approver='" + getApproverLogin() + "'" +
+            ", orderCode=" + getOrderCodeId() +
+            ", orderCode='" + getOrderCodeCode() + "'" +
             ", createBy=" + getCreateById() +
             ", createBy='" + getCreateByLogin() + "'" +
-            ", updateBy=" + getUpdateById() +
-            ", updateBy='" + getUpdateByLogin() + "'" +
             "}";
     }
 }

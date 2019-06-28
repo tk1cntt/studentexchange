@@ -23,7 +23,7 @@ export const enum OrderStatus {
 
 export interface IOrderCart {
   id?: number;
-  code?: string;
+  code?: number;
   avatar?: string;
   amountDiscount?: number;
   amountPaid?: number;

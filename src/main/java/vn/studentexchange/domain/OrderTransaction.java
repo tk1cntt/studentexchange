@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import vn.studentexchange.domain.enumeration.TransactionType;
+import vn.studentexchange.domain.enumeration.OrderTransactionType;
 
 /**
  * A OrderTransaction.
@@ -31,16 +31,10 @@ public class OrderTransaction implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private TransactionType status;
-
-    @Column(name = "order_date")
-    private LocalDate orderDate;
+    private OrderTransactionType status;
 
     @Column(name = "create_at")
     private LocalDate createAt;
-
-    @Column(name = "update_at")
-    private LocalDate updateAt;
 
     @ManyToOne
     @JsonIgnoreProperties("transactions")
@@ -48,15 +42,11 @@ public class OrderTransaction implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private User approver;
+    private OrderCart orderCode;
 
     @ManyToOne
     @JsonIgnoreProperties("")
     private User createBy;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private User updateBy;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -93,30 +83,17 @@ public class OrderTransaction implements Serializable {
         this.note = note;
     }
 
-    public TransactionType getStatus() {
+    public OrderTransactionType getStatus() {
         return status;
     }
 
-    public OrderTransaction status(TransactionType status) {
+    public OrderTransaction status(OrderTransactionType status) {
         this.status = status;
         return this;
     }
 
-    public void setStatus(TransactionType status) {
+    public void setStatus(OrderTransactionType status) {
         this.status = status;
-    }
-
-    public LocalDate getOrderDate() {
-        return orderDate;
-    }
-
-    public OrderTransaction orderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
-        return this;
-    }
-
-    public void setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
     }
 
     public LocalDate getCreateAt() {
@@ -132,19 +109,6 @@ public class OrderTransaction implements Serializable {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
-        return updateAt;
-    }
-
-    public OrderTransaction updateAt(LocalDate updateAt) {
-        this.updateAt = updateAt;
-        return this;
-    }
-
-    public void setUpdateAt(LocalDate updateAt) {
-        this.updateAt = updateAt;
-    }
-
     public OrderCart getOrderCart() {
         return orderCart;
     }
@@ -158,17 +122,17 @@ public class OrderTransaction implements Serializable {
         this.orderCart = orderCart;
     }
 
-    public User getApprover() {
-        return approver;
+    public OrderCart getOrderCode() {
+        return orderCode;
     }
 
-    public OrderTransaction approver(User user) {
-        this.approver = user;
+    public OrderTransaction orderCode(OrderCart orderCart) {
+        this.orderCode = orderCart;
         return this;
     }
 
-    public void setApprover(User user) {
-        this.approver = user;
+    public void setOrderCode(OrderCart orderCart) {
+        this.orderCode = orderCart;
     }
 
     public User getCreateBy() {
@@ -182,19 +146,6 @@ public class OrderTransaction implements Serializable {
 
     public void setCreateBy(User user) {
         this.createBy = user;
-    }
-
-    public User getUpdateBy() {
-        return updateBy;
-    }
-
-    public OrderTransaction updateBy(User user) {
-        this.updateBy = user;
-        return this;
-    }
-
-    public void setUpdateBy(User user) {
-        this.updateBy = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -225,9 +176,7 @@ public class OrderTransaction implements Serializable {
             ", amount=" + getAmount() +
             ", note='" + getNote() + "'" +
             ", status='" + getStatus() + "'" +
-            ", orderDate='" + getOrderDate() + "'" +
             ", createAt='" + getCreateAt() + "'" +
-            ", updateAt='" + getUpdateAt() + "'" +
             "}";
     }
 }

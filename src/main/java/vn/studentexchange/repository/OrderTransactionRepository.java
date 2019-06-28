@@ -13,13 +13,7 @@ import java.util.List;
 @Repository
 public interface OrderTransactionRepository extends JpaRepository<OrderTransaction, Long> {
 
-    @Query("select order_transaction from OrderTransaction order_transaction where order_transaction.approver.login = ?#{principal.username}")
-    List<OrderTransaction> findByApproverIsCurrentUser();
-
     @Query("select order_transaction from OrderTransaction order_transaction where order_transaction.createBy.login = ?#{principal.username}")
     List<OrderTransaction> findByCreateByIsCurrentUser();
-
-    @Query("select order_transaction from OrderTransaction order_transaction where order_transaction.updateBy.login = ?#{principal.username}")
-    List<OrderTransaction> findByUpdateByIsCurrentUser();
 
 }

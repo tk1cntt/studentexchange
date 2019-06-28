@@ -1,0 +1,11 @@
+{
+  "studentexchangeApp": {
+    "PaymentMethod": {
+      "null": "",
+      "CASH": "CASH",
+      "BANK_TRANSFER": "BANK_TRANSFER",
+      "CARD": "CARD",
+      "PAYPAL": "PAYPAL"
+    }
+  }
+}

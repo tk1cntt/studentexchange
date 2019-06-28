@@ -48,14 +48,6 @@ export class OrderTransactionDetail extends React.Component<IOrderTransactionDet
             </dt>
             <dd>{orderTransactionEntity.status}</dd>
             <dt>
-              <span id="orderDate">
-                <Translate contentKey="studentexchangeApp.orderTransaction.orderDate">Order Date</Translate>
-              </span>
-            </dt>
-            <dd>
-              <TextFormat value={orderTransactionEntity.orderDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
-            </dd>
-            <dt>
               <span id="createAt">
                 <Translate contentKey="studentexchangeApp.orderTransaction.createAt">Create At</Translate>
               </span>
@@ -64,29 +56,17 @@ export class OrderTransactionDetail extends React.Component<IOrderTransactionDet
               <TextFormat value={orderTransactionEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="updateAt">
-                <Translate contentKey="studentexchangeApp.orderTransaction.updateAt">Update At</Translate>
-              </span>
-            </dt>
-            <dd>
-              <TextFormat value={orderTransactionEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
-            </dd>
-            <dt>
               <Translate contentKey="studentexchangeApp.orderTransaction.orderCart">Order Cart</Translate>
             </dt>
             <dd>{orderTransactionEntity.orderCartId ? orderTransactionEntity.orderCartId : ''}</dd>
             <dt>
-              <Translate contentKey="studentexchangeApp.orderTransaction.approver">Approver</Translate>
+              <Translate contentKey="studentexchangeApp.orderTransaction.orderCode">Order Code</Translate>
             </dt>
-            <dd>{orderTransactionEntity.approverLogin ? orderTransactionEntity.approverLogin : ''}</dd>
+            <dd>{orderTransactionEntity.orderCodeCode ? orderTransactionEntity.orderCodeCode : ''}</dd>
             <dt>
               <Translate contentKey="studentexchangeApp.orderTransaction.createBy">Create By</Translate>
             </dt>
             <dd>{orderTransactionEntity.createByLogin ? orderTransactionEntity.createByLogin : ''}</dd>
-            <dt>
-              <Translate contentKey="studentexchangeApp.orderTransaction.updateBy">Update By</Translate>
-            </dt>
-            <dd>{orderTransactionEntity.updateByLogin ? orderTransactionEntity.updateByLogin : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/order-transaction" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

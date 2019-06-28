@@ -48,25 +48,16 @@ export class OrderTransaction extends React.Component<IOrderTransactionProps> {
                   <Translate contentKey="studentexchangeApp.orderTransaction.status">Status</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderTransaction.orderDate">Order Date</Translate>
-                </th>
-                <th>
                   <Translate contentKey="studentexchangeApp.orderTransaction.createAt">Create At</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderTransaction.updateAt">Update At</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.orderTransaction.orderCart">Order Cart</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderTransaction.approver">Approver</Translate>
+                  <Translate contentKey="studentexchangeApp.orderTransaction.orderCode">Order Code</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.orderTransaction.createBy">Create By</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderTransaction.updateBy">Update By</Translate>
                 </th>
                 <th />
               </tr>
@@ -82,16 +73,10 @@ export class OrderTransaction extends React.Component<IOrderTransactionProps> {
                   <td>{orderTransaction.amount}</td>
                   <td>{orderTransaction.note}</td>
                   <td>
-                    <Translate contentKey={`studentexchangeApp.TransactionType.${orderTransaction.status}`} />
-                  </td>
-                  <td>
-                    <TextFormat type="date" value={orderTransaction.orderDate} format={APP_LOCAL_DATE_FORMAT} />
+                    <Translate contentKey={`studentexchangeApp.OrderTransactionType.${orderTransaction.status}`} />
                   </td>
                   <td>
                     <TextFormat type="date" value={orderTransaction.createAt} format={APP_LOCAL_DATE_FORMAT} />
-                  </td>
-                  <td>
-                    <TextFormat type="date" value={orderTransaction.updateAt} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>
                     {orderTransaction.orderCartId ? (
@@ -100,9 +85,14 @@ export class OrderTransaction extends React.Component<IOrderTransactionProps> {
                       ''
                     )}
                   </td>
-                  <td>{orderTransaction.approverLogin ? orderTransaction.approverLogin : ''}</td>
+                  <td>
+                    {orderTransaction.orderCodeCode ? (
+                      <Link to={`order-cart/${orderTransaction.orderCodeId}`}>{orderTransaction.orderCodeCode}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td>{orderTransaction.createByLogin ? orderTransaction.createByLogin : ''}</td>
-                  <td>{orderTransaction.updateByLogin ? orderTransaction.updateByLogin : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${orderTransaction.id}`} color="info" size="sm">

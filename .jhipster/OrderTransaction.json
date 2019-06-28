@@ -11,19 +11,11 @@
         },
         {
             "fieldName": "status",
-            "fieldType": "TransactionType",
+            "fieldType": "OrderTransactionType",
             "fieldValues": "DEPOSIT,ORDER_PAYMENT,REFUND"
         },
         {
-            "fieldName": "orderDate",
-            "fieldType": "LocalDate"
-        },
-        {
             "fieldName": "createAt",
-            "fieldType": "LocalDate"
-        },
-        {
-            "fieldName": "updateAt",
             "fieldType": "LocalDate"
         }
     ],
@@ -36,19 +28,13 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "approver",
-            "otherEntityName": "user",
-            "otherEntityField": "login"
+            "relationshipName": "orderCode",
+            "otherEntityName": "orderCart",
+            "otherEntityField": "code"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "createBy",
-            "otherEntityName": "user",
-            "otherEntityField": "login"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "updateBy",
             "otherEntityName": "user",
             "otherEntityField": "login"
         }

@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import vn.studentexchange.domain.enumeration.TransactionType;
+import vn.studentexchange.domain.enumeration.OrderTransactionType;
 /**
  * Test class for the OrderTransactionResource REST controller.
  *
@@ -51,17 +51,11 @@ public class OrderTransactionResourceIntTest {
     private static final String DEFAULT_NOTE = "AAAAAAAAAA";
     private static final String UPDATED_NOTE = "BBBBBBBBBB";
 
-    private static final TransactionType DEFAULT_STATUS = TransactionType.DEPOSIT;
-    private static final TransactionType UPDATED_STATUS = TransactionType.ORDER_PAYMENT;
-
-    private static final LocalDate DEFAULT_ORDER_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_ORDER_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final OrderTransactionType DEFAULT_STATUS = OrderTransactionType.DEPOSIT;
+    private static final OrderTransactionType UPDATED_STATUS = OrderTransactionType.ORDER_PAYMENT;
 
     private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
-
-    private static final LocalDate DEFAULT_UPDATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_UPDATE_AT = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private OrderTransactionRepository orderTransactionRepository;
@@ -110,9 +104,7 @@ public class OrderTransactionResourceIntTest {
             .amount(DEFAULT_AMOUNT)
             .note(DEFAULT_NOTE)
             .status(DEFAULT_STATUS)
-            .orderDate(DEFAULT_ORDER_DATE)
-            .createAt(DEFAULT_CREATE_AT)
-            .updateAt(DEFAULT_UPDATE_AT);
+            .createAt(DEFAULT_CREATE_AT);
         return orderTransaction;
     }
 
@@ -140,9 +132,7 @@ public class OrderTransactionResourceIntTest {
         assertThat(testOrderTransaction.getAmount()).isEqualTo(DEFAULT_AMOUNT);
         assertThat(testOrderTransaction.getNote()).isEqualTo(DEFAULT_NOTE);
         assertThat(testOrderTransaction.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testOrderTransaction.getOrderDate()).isEqualTo(DEFAULT_ORDER_DATE);
         assertThat(testOrderTransaction.getCreateAt()).isEqualTo(DEFAULT_CREATE_AT);
-        assertThat(testOrderTransaction.getUpdateAt()).isEqualTo(DEFAULT_UPDATE_AT);
     }
 
     @Test
@@ -179,9 +169,7 @@ public class OrderTransactionResourceIntTest {
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].orderDate").value(hasItem(DEFAULT_ORDER_DATE.toString())))
-            .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
-            .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
+            .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())));
     }
     
     @Test
@@ -198,9 +186,7 @@ public class OrderTransactionResourceIntTest {
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.note").value(DEFAULT_NOTE.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.orderDate").value(DEFAULT_ORDER_DATE.toString()))
-            .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
-            .andExpect(jsonPath("$.updateAt").value(DEFAULT_UPDATE_AT.toString()));
+            .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()));
     }
 
     @Test
@@ -227,9 +213,7 @@ public class OrderTransactionResourceIntTest {
             .amount(UPDATED_AMOUNT)
             .note(UPDATED_NOTE)
             .status(UPDATED_STATUS)
-            .orderDate(UPDATED_ORDER_DATE)
-            .createAt(UPDATED_CREATE_AT)
-            .updateAt(UPDATED_UPDATE_AT);
+            .createAt(UPDATED_CREATE_AT);
         OrderTransactionDTO orderTransactionDTO = orderTransactionMapper.toDto(updatedOrderTransaction);
 
         restOrderTransactionMockMvc.perform(put("/api/order-transactions")
@@ -244,9 +228,7 @@ public class OrderTransactionResourceIntTest {
         assertThat(testOrderTransaction.getAmount()).isEqualTo(UPDATED_AMOUNT);
         assertThat(testOrderTransaction.getNote()).isEqualTo(UPDATED_NOTE);
         assertThat(testOrderTransaction.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testOrderTransaction.getOrderDate()).isEqualTo(UPDATED_ORDER_DATE);
         assertThat(testOrderTransaction.getCreateAt()).isEqualTo(UPDATED_CREATE_AT);
-        assertThat(testOrderTransaction.getUpdateAt()).isEqualTo(UPDATED_UPDATE_AT);
     }
 
     @Test

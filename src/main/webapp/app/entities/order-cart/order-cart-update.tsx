@@ -109,7 +109,7 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
                   <Label id="codeLabel" for="code">
                     <Translate contentKey="studentexchangeApp.orderCart.code">Code</Translate>
                   </Label>
-                  <AvField id="order-cart-code" type="text" name="code" />
+                  <AvField id="order-cart-code" type="string" className="form-control" name="code" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="avatarLabel" for="avatar">

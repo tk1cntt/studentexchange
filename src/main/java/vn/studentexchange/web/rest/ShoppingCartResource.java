@@ -2,11 +2,14 @@ package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 
+import vn.studentexchange.domain.enumeration.CurrencyType;
 import vn.studentexchange.security.SecurityUtils;
+import vn.studentexchange.service.CurrencyRateService;
 import vn.studentexchange.service.ShoppingCartService;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
 import vn.studentexchange.web.rest.util.PaginationUtil;
+import vn.studentexchange.service.dto.CurrencyRateDTO;
 import vn.studentexchange.service.dto.ShoppingCartDTO;
 import vn.studentexchange.service.dto.ShoppingCartItemDTO;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -24,6 +27,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Currency;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +44,11 @@ public class ShoppingCartResource {
 
     private final ShoppingCartService shoppingCartService;
 
-    public ShoppingCartResource(ShoppingCartService shoppingCartService) {
+    private final CurrencyRateService currencyRateService;
+
+    public ShoppingCartResource(ShoppingCartService shoppingCartService, CurrencyRateService currencyRateService) {
         this.shoppingCartService = shoppingCartService;
+        this.currencyRateService = currencyRateService;
     }
 
     /**
@@ -107,16 +114,7 @@ public class ShoppingCartResource {
         String username = SecurityUtils.getCurrentUserLogin().get();
         List<ShoppingCartDTO> carts = shoppingCartService.findByOwner(username);
         for (ShoppingCartDTO dto: carts) {
-            ShoppingCartDTO currentCart = dto;
-            List<ShoppingCartItemDTO> items = currentCart.getItems();
-            int totalQuantity = 0;
-            float totalAmount = 0f;
-            for (ShoppingCartItemDTO item: items) {
-                totalQuantity += item.getQuantity();
-                totalAmount += (item.getItemPriceNDT() * item.getQuantity());
-            }
-            currentCart.setTotalAmount(totalAmount);
-            currentCart.setTotalQuantity(totalQuantity);
+            calculate(dto);
         }
         return carts;
     }
@@ -129,19 +127,24 @@ public class ShoppingCartResource {
         if (!dto.isPresent()) {
             return new ArrayList<>();
         }
-        ShoppingCartDTO currentCart = dto.get();
-        List<ShoppingCartItemDTO> items = currentCart.getItems();
-        int totalQuantity = 0;
-        float totalAmount = 0f;
-        for (ShoppingCartItemDTO item: items) {
-            totalQuantity += item.getQuantity();
-            totalAmount += (item.getItemPriceNDT() * item.getQuantity());
-        }
-        currentCart.setTotalAmount(totalAmount);
-        currentCart.setTotalQuantity(totalQuantity);
+        ShoppingCartDTO currentCart = calculate(dto.get());
         List<ShoppingCartDTO> carts = new ArrayList<>();
         carts.add(currentCart);
         return carts;
+    }
+
+    private ShoppingCartDTO calculate(ShoppingCartDTO currentCart) {
+        Optional<CurrencyRateDTO> rate =  currencyRateService.findByCurrency(CurrencyType.CNY);
+        List<ShoppingCartItemDTO> items = currentCart.getItems();
+        int totalQuantity = 0;
+        float totalAmount = 0f;
+        for (ShoppingCartItemDTO item : items) {
+            totalQuantity += item.getQuantity();
+            totalAmount += (item.getItemPriceNDT() * item.getQuantity());
+        }
+        currentCart.setTotalAmount((float) Math.ceil(totalAmount * rate.get().getRate()));
+        currentCart.setTotalQuantity(totalQuantity);
+        return currentCart;
     }
 
     /**

@@ -58,7 +58,11 @@ export class Cart extends React.Component<IHomeProp> {
                               {shoppingCart.items.map((item, iy) => (
                                 <div className="feed-element" key={`entity-${iy}`}>
                                   <a href="profile.html" className="pull-left">
-                                    <img alt="image" className="img-circle" src={`${item.propertiesImage}`} />
+                                    <img
+                                      alt="image"
+                                      className="img-circle"
+                                      src={`${item.propertiesImage ? item.propertiesImage : item.itemImage}`}
+                                    />
                                   </a>
                                   <div className="media-body ">
                                     <small className="pull-right">

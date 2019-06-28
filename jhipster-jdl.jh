@@ -325,6 +325,7 @@ entity ShoppingCart {
    shopName String,
    shopNote String,
    sourceData String,
+   tallyFee Float,
    totalAmount Float,
    totalLink Integer,
    totalQuantity Integer,

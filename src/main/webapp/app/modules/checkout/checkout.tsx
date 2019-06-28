@@ -292,7 +292,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
             {shoppingCart.website}
           </td>
           <td className="footable-visible">{shoppingCart.totalQuantity}</td>
-          <td className="footable-visible">{formatCurency(shoppingCart.totalAmount * this.props.currencyRateEntity.rate)}đ</td>
+          <td className="footable-visible">{formatCurency(Math.ceil(shoppingCart.totalAmount * this.props.currencyRateEntity.rate))}đ</td>
         </tr>
       );
     });
@@ -363,11 +363,11 @@ export class Checkout extends React.Component<ICheckoutProp> {
                 </button>
                 <div className="col-xs-8 item">Tiền hàng:</div>
                 <div className="col-xs-4 item">
-                  <b>{formatCurency(this.state.totalAmount * this.props.currencyRateEntity.rate)}đ</b>
+                  <b>{formatCurency(Math.ceil(this.state.totalAmount * this.props.currencyRateEntity.rate))}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí mua hàng:</div>
                 <div className="col-xs-4 item">
-                  <b>{formatCurency(this.state.totalAmount * this.props.currencyRateEntity.rate * 0.02)}đ</b>
+                  <b>{formatCurency(Math.ceil(this.state.totalAmount * this.props.currencyRateEntity.rate * 0.02))}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí kiểm đếm:</div>
                 <div className="col-xs-4 item">
@@ -395,7 +395,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
                   <h4>Tổng tiền:</h4>
                 </div>
                 <div className="col-xs-4 item">
-                  <b>{formatCurency(this.state.totalAmount * this.props.currencyRateEntity.rate * 1.02)}đ</b>
+                  <b>{formatCurency(Math.ceil(this.state.totalAmount * this.props.currencyRateEntity.rate * 1.02))}đ</b>
                 </div>
               </div>
             </div>

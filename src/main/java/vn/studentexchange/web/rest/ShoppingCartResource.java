@@ -8,6 +8,7 @@ import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
 import vn.studentexchange.web.rest.util.PaginationUtil;
 import vn.studentexchange.service.dto.ShoppingCartDTO;
+import vn.studentexchange.service.dto.ShoppingCartItemDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,8 +115,18 @@ public class ShoppingCartResource {
         if (!dto.isPresent()) {
             return new ArrayList<>();
         }
+        ShoppingCartDTO currentCart = dto.get();
+        List<ShoppingCartItemDTO> items = currentCart.getItems();
+        int totalQuantity = 0;
+        float totalAmount = 0f;
+        for (ShoppingCartItemDTO item: items) {
+            totalQuantity += item.getQuantity();
+            totalAmount += (item.getItemPriceNDT() * item.getQuantity());
+        }
+        currentCart.setTotalAmount(totalAmount);
+        currentCart.setTotalQuantity(totalQuantity);
         List<ShoppingCartDTO> carts = new ArrayList<>();
-        carts.add(dto.get());
+        carts.add(currentCart);
         return carts;
     }
 

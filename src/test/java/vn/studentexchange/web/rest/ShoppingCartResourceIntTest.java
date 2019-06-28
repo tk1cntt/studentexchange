@@ -4,6 +4,7 @@ import vn.studentexchange.StudentexchangeApp;
 
 import vn.studentexchange.domain.ShoppingCart;
 import vn.studentexchange.repository.ShoppingCartRepository;
+import vn.studentexchange.service.CurrencyRateService;
 import vn.studentexchange.service.ShoppingCartService;
 import vn.studentexchange.service.dto.ShoppingCartDTO;
 import vn.studentexchange.service.mapper.ShoppingCartMapper;
@@ -114,6 +115,9 @@ public class ShoppingCartResourceIntTest {
     private ShoppingCartService shoppingCartService;
 
     @Autowired
+    private CurrencyRateService currencyRateService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -132,7 +136,7 @@ public class ShoppingCartResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ShoppingCartResource shoppingCartResource = new ShoppingCartResource(shoppingCartService);
+        final ShoppingCartResource shoppingCartResource = new ShoppingCartResource(shoppingCartService, currencyRateService);
         this.restShoppingCartMockMvc = MockMvcBuilders.standaloneSetup(shoppingCartResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

@@ -4,7 +4,7 @@ import { NavLink as Link } from 'react-router-dom';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getOwnerEntities } from 'app/entities/shopping-cart/shopping-cart.reducer';
-import { encodeId } from 'app/shared/util/utils';
+import { formatCurency, encodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
@@ -107,31 +107,31 @@ export class Cart extends React.Component<IHomeProp> {
                         </span>
                         <div className="col-xs-8 item">Tiền hàng:</div>
                         <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
+                          <b>{formatCurency(shoppingCart.totalAmount)}đ</b>
                         </div>
                         <div className="col-xs-8 item">Phí mua hàng:</div>
                         <div className="col-xs-4 item">
-                          <b>2,000,000đ</b>
+                          <b>{formatCurency(shoppingCart.serviceFee)}đ</b>
                         </div>
                         <div className="col-xs-8 item">Phí kiểm đếm:</div>
                         <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
+                          <b>{formatCurency(shoppingCart.tallyFee)}đ</b>
                         </div>
                         <div className="col-xs-8 item">Phí vận chuyển nội địa TQ:</div>
                         <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
+                          <b>0đ</b>
                         </div>
                         <div className="col-xs-8 item">Phí đóng kiện gỗ:</div>
                         <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
+                          <b>0đ</b>
                         </div>
                         <div className="col-xs-8 item">Phí vận chuyển TQ - VN:</div>
                         <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
+                          <b>0đ</b>
                         </div>
                         <div className="col-xs-8 item">Phí vận chuyển nội địa VN:</div>
                         <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
+                          <b>0đ</b>
                         </div>
                       </div>
                       <div className="row checkout-cart-detail checkout-cart-total">
@@ -139,7 +139,12 @@ export class Cart extends React.Component<IHomeProp> {
                           <h4>Tổng tiền:</h4>
                         </div>
                         <div className="col-xs-4 item">
-                          <b>200,000,000đ</b>
+                          <b>
+                            {formatCurency(
+                              shoppingCart.totalAmount + shoppingCart.serviceFee + (shoppingCart.tallyFee ? shoppingCart.tallyFee : 0)
+                            )}
+                            đ
+                          </b>
                         </div>
                       </div>
                     </div>

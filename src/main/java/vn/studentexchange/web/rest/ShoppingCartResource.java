@@ -143,11 +143,11 @@ public class ShoppingCartResource {
             totalQuantity += item.getQuantity();
             totalAmount += (item.getItemPriceNDT() * item.getQuantity());
         }
-        if (currentCart.isItemChecking()) {
+        if (currentCart.isItemChecking() != null && currentCart.isItemChecking()) {
             currentCart.setTallyFee((float) totalQuantity * Utils.getTallyFee(totalQuantity));
         }
         totalAmount = (float) Math.ceil(totalAmount * rate.get().getRate());
-        currentCart.setServiceFee((float) Math.ceil(totalAmount * Utils.getServiceFee(totalAmount));
+        currentCart.setServiceFee((float) Math.ceil(totalAmount * Utils.getServiceFee(totalAmount)));
         currentCart.setTotalAmount(totalAmount);
         currentCart.setTotalQuantity(totalQuantity);
         return currentCart;

@@ -42,6 +42,8 @@ export interface ICheckoutState {
   isCreateAddress: boolean;
   totalQuantity: number;
   totalAmount: number;
+  serviceFee: number;
+  tallyFee: number;
 }
 
 export class Checkout extends React.Component<ICheckoutProp> {
@@ -57,7 +59,9 @@ export class Checkout extends React.Component<ICheckoutProp> {
     locations: [],
     addresses: [],
     totalQuantity: 0,
-    totalAmount: 0
+    totalAmount: 0,
+    serviceFee: 0,
+    tallyFee: 0
   };
 
   componentDidMount() {
@@ -292,7 +296,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
             {shoppingCart.website}
           </td>
           <td className="footable-visible">{shoppingCart.totalQuantity}</td>
-          <td className="footable-visible">{formatCurency(Math.ceil(shoppingCart.totalAmount * this.props.currencyRateEntity.rate))}đ</td>
+          <td className="footable-visible">{formatCurency(shoppingCart.totalAmount)}đ</td>
         </tr>
       );
     });
@@ -303,13 +307,19 @@ export class Checkout extends React.Component<ICheckoutProp> {
     const { shoppingCartList } = this.props;
     let totalQuantity = 0;
     let totalAmount = 0;
+    let serviceFee = 0;
+    let tallyFee = 0;
     shoppingCartList.map(shoppingCart => {
       totalQuantity = totalQuantity + shoppingCart.totalQuantity;
       totalAmount = totalAmount + shoppingCart.totalAmount;
+      serviceFee = serviceFee + shoppingCart.serviceFee ? shoppingCart.serviceFee : 0;
+      tallyFee = tallyFee + shoppingCart.tallyFee ? shoppingCart.tallyFee : 0;
     });
     this.setState({
       totalQuantity,
-      totalAmount
+      totalAmount,
+      serviceFee,
+      tallyFee
     });
   }
 
@@ -363,15 +373,15 @@ export class Checkout extends React.Component<ICheckoutProp> {
                 </button>
                 <div className="col-xs-8 item">Tiền hàng:</div>
                 <div className="col-xs-4 item">
-                  <b>{formatCurency(Math.ceil(this.state.totalAmount * this.props.currencyRateEntity.rate))}đ</b>
+                  <b>{formatCurency(this.state.totalAmount)}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí mua hàng:</div>
                 <div className="col-xs-4 item">
-                  <b>{formatCurency(Math.ceil(this.state.totalAmount * this.props.currencyRateEntity.rate * 0.02))}đ</b>
+                  <b>{formatCurency(this.state.serviceFee)}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí kiểm đếm:</div>
                 <div className="col-xs-4 item">
-                  <b>{formatCurency(this.state.totalQuantity * 5000)}đ</b>
+                  <b>{formatCurency(this.state.tallyFee)}đ</b>
                 </div>
                 <div className="col-xs-8 item">Phí vận chuyển nội địa TQ:</div>
                 <div className="col-xs-4 item">
@@ -395,7 +405,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
                   <h4>Tổng tiền:</h4>
                 </div>
                 <div className="col-xs-4 item">
-                  <b>{formatCurency(Math.ceil(this.state.totalAmount * this.props.currencyRateEntity.rate * 1.02))}đ</b>
+                  <b>{formatCurency(this.state.totalAmount + this.state.serviceFee + this.state.tallyFee)}đ</b>
                 </div>
               </div>
             </div>

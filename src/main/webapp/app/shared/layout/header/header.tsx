@@ -154,7 +154,6 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
             </ul>
           </nav>
         </div>
-        <div className="row  border-bottom white-bg dashboard-header" />
       </>
     );
   }

@@ -13,17 +13,11 @@ export interface IHomeProp extends StateProps, DispatchProps {}
 
 export class Order extends React.Component<IHomeProp> {
   componentDidMount() {
-    this.props.getSession();
     this.props.getOwnerEntities();
   }
 
-  decreaseQuantity = (item: any) => {
-    // console.log(item);
-  };
-
   render() {
     const { shoppingCartList, account } = this.props;
-    // console.log('shoppingCartList', shoppingCartList);
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-cart" activeSubMenu="" />

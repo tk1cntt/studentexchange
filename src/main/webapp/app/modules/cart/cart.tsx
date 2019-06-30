@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 
+import { Checkbox } from 'antd';
+
 import { getSession } from 'app/shared/reducers/authentication';
 import { getOwnerEntities } from 'app/entities/shopping-cart/shopping-cart.reducer';
 import { formatCurency, encodeId } from 'app/shared/util/utils';
@@ -13,7 +15,6 @@ export interface IHomeProp extends StateProps, DispatchProps {}
 
 export class Cart extends React.Component<IHomeProp> {
   componentDidMount() {
-    this.props.getSession();
     this.props.getOwnerEntities();
   }
 
@@ -23,14 +24,12 @@ export class Cart extends React.Component<IHomeProp> {
 
   render() {
     const { shoppingCartList, account } = this.props;
-    // console.log('shoppingCartList', shoppingCartList);
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row border-bottom white-bg dashboard-header">
-            Noi dung phia tren
             <Link to={'/checkout'}>
               <button className="btn btn-primary btn-block m-t checkout-cart">
                 <i className="fa fa-shopping-cart" /> Đặt tất cả hàng
@@ -99,7 +98,7 @@ export class Cart extends React.Component<IHomeProp> {
                     <div className=".col-xs-12 col-md-4">
                       <div className="row checkout-cart-detail">
                         <span className="checkout-cart">
-                          <Link to={`/checkout?shopid=${encodeId(1)}`}>
+                          <Link to={`/checkout?shopid=${encodeId(shoppingCart.id)}`}>
                             <button className="btn btn-primary btn-block">
                               <i className="fa fa-shopping-cart" /> Đặt hàng
                             </button>

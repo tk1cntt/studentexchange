@@ -45,6 +45,7 @@ export interface ICheckoutState {
   serviceFee: number;
   tallyFee: number;
   finalAmount: number;
+  shopid: string;
 }
 
 export class Checkout extends React.Component<ICheckoutProp> {
@@ -63,7 +64,8 @@ export class Checkout extends React.Component<ICheckoutProp> {
     totalAmount: 0,
     serviceFee: 0,
     tallyFee: 0,
-    finalAmount: 0
+    finalAmount: 0,
+    shopid: null
   };
 
   componentDidMount() {
@@ -77,6 +79,9 @@ export class Checkout extends React.Component<ICheckoutProp> {
       const parsed = qs.parse(this.props.location.search);
       if (parsed.shopid) {
         this.props.getShippingCart(decodeId(parsed.shopid));
+        this.setState({
+          shopid: decodeId(parsed.shopid)
+        });
       } else {
         this.props.getOwnerShippingCart();
       }
@@ -341,7 +346,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
     const payment = (
       <button className="btn btn-danger btn-block">
         <span className="checkout-cart">
-          <Link to={`/payment?shopid=12345`}>
+          <Link to={`/payment`}>
             <i className="fa fa-shopping-cart" /> Nạp tiền
           </Link>
         </span>
@@ -350,14 +355,14 @@ export class Checkout extends React.Component<ICheckoutProp> {
     if (Number(this.props.userBalanceEntity.balanceAvailable) < Number(this.state.finalAmount)) {
       return (
         <>
-          <div className="col-xs-6">
+          <div className="col-xs-6 item">
             Quý khách đang thiếu:{' '}
             <b className="text-danger">
               {formatCurency(Math.ceil(this.state.finalAmount * 0.7) - this.props.userBalanceEntity.balanceAvailable)}đ
             </b>
           </div>
-          <div className="col-xs-6" />
-          <div className="col-xs-6">Quý khách vui lòng nạp tiền để đặt cọc</div>
+          <div className="col-xs-6 item" />
+          <div className="col-xs-6 item">Quý khách vui lòng nạp tiền để đặt cọc</div>
           {payment}
         </>
       );
@@ -378,14 +383,6 @@ export class Checkout extends React.Component<ICheckoutProp> {
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
-          <div className="row  border-bottom white-bg dashboard-header">
-            Noi dung phia tren
-            <button className="btn btn-primary btn-block m-t checkout-cart">
-              <Link to={'/checkout'}>
-                <i className="fa fa-shopping-cart" /> Đặt tất cả hàng
-              </Link>
-            </button>
-          </div>
           <div className="row wrapper wrapper-content">
             <div className="shipping-box">{this.userShippingAddressListBox()}</div>
             <div className="ibox">
@@ -413,13 +410,13 @@ export class Checkout extends React.Component<ICheckoutProp> {
             </div>
             <div className="col-xs-12">
               <div className="row checkout-cart-detail">
-                <div className="col-xs-6">
+                <div className="col-xs-6 item">
                   Tổng tiền: <b>{formatCurency(this.state.finalAmount)}đ</b>
                 </div>
-                <div className="col-xs-6">
+                <div className="col-xs-6 item">
                   Số dư hiện tại: <b>{formatCurency(this.state.tallyFee)}đ</b>
                 </div>
-                <div className="col-xs-6">
+                <div className="col-xs-6 item">
                   Đặt cọc (70%): <b>{formatCurency(Math.ceil(this.state.finalAmount * 0.7))}đ</b>
                 </div>
                 {this.checkoutForm()}

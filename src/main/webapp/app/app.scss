@@ -29,7 +29,7 @@
 }
 
 .checkout-cart-detail .item {
-  padding: 0 0 10px 10px;
+  padding: 5px 0 5px 20px;
 }
 
 .checkout-cart-total {
@@ -48,4 +48,10 @@
 
 .shipping-box {
   margin-bottom: 20px;
+}
+
+.payment-note {
+  padding: 10px;
+  background-color: #eff9fd !important;
+  border-color: #cde5ee !important;
 }

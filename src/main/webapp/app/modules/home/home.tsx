@@ -14,7 +14,6 @@ export interface IHomeProp extends StateProps, DispatchProps {}
 
 export class Home extends React.Component<IHomeProp> {
   componentDidMount() {
-    this.props.getSession();
     this.props.getOwnerEntities();
   }
 

@@ -137,6 +137,11 @@ export default class Sidebar extends React.Component<ISidebarProps> {
                 <i className="fa fa-files-o" /> <span className="nav-label">Danh sách đơn hàng</span>
               </Link>
             </li>
+            <li className={`${activeMenu === 'payment' ? 'active' : ''}`}>
+              <Link to={'/payment'}>
+                <i className="fa fa-sign-in" /> <span className="nav-label">Nạp tiền</span>
+              </Link>
+            </li>
             {this.userMenu()}
             {this.adminMenu()}
           </ul>

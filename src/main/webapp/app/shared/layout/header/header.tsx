@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 
 import { IRootState } from 'app/shared/reducers';
+import { getOwnerBalance as getUserBalance } from 'app/entities/user-balance/user-balance.reducer';
 import { getByCurrency } from 'app/entities/currency-rate/currency-rate.reducer';
 import { formatCurency } from 'app/shared/util/utils';
 
@@ -18,6 +19,7 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
   };
 
   componentDidMount() {
+    this.props.getUserBalance('');
     this.props.getByCurrency('CNY');
   }
 
@@ -162,7 +164,10 @@ const mapStateToProps = ({ currencyRate }: IRootState) => ({
   currencyRateEntity: currencyRate.entity
 });
 
-const mapDispatchToProps = { getByCurrency };
+const mapDispatchToProps = {
+  getByCurrency,
+  getUserBalance
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

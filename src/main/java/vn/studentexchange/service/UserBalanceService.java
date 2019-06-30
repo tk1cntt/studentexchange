@@ -74,6 +74,12 @@ public class UserBalanceService {
             .map(userBalanceMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<UserBalanceDTO> findByOwner(String username) {
+        log.debug("Request to get owner UserBalance: {}", username);
+        return userBalanceRepository.findFirstByCreateByLogin(username)
+            .map(userBalanceMapper::toDto);
+    }
     /**
      * Delete the userBalance by id.
      *

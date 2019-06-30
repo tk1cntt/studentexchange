@@ -44,6 +44,7 @@ export interface ICheckoutState {
   totalAmount: number;
   serviceFee: number;
   tallyFee: number;
+  finalAmount: number;
 }
 
 export class Checkout extends React.Component<ICheckoutProp> {
@@ -61,7 +62,8 @@ export class Checkout extends React.Component<ICheckoutProp> {
     totalQuantity: 0,
     totalAmount: 0,
     serviceFee: 0,
-    tallyFee: 0
+    tallyFee: 0,
+    finalAmount: 0
   };
 
   componentDidMount() {
@@ -309,18 +311,65 @@ export class Checkout extends React.Component<ICheckoutProp> {
     let totalAmount = 0;
     let serviceFee = 0;
     let tallyFee = 0;
+    let finalAmount = 0;
     shoppingCartList.map(shoppingCart => {
       totalQuantity = totalQuantity + shoppingCart.totalQuantity;
       totalAmount = totalAmount + shoppingCart.totalAmount;
       serviceFee = serviceFee + shoppingCart.serviceFee ? shoppingCart.serviceFee : 0;
       tallyFee = tallyFee + shoppingCart.tallyFee ? shoppingCart.tallyFee : 0;
     });
+    finalAmount = totalAmount + serviceFee + tallyFee;
     this.setState({
       totalQuantity,
       totalAmount,
       serviceFee,
-      tallyFee
+      tallyFee,
+      finalAmount
     });
+  }
+
+  checkoutForm() {
+    const checkout = (
+      <button className="btn btn-danger btn-block">
+        <span className="checkout-cart">
+          <Link to={`/checkout?shopid=12345`}>
+            <i className="fa fa-shopping-cart" /> Đặt hàng
+          </Link>
+        </span>
+      </button>
+    );
+    const payment = (
+      <button className="btn btn-danger btn-block">
+        <span className="checkout-cart">
+          <Link to={`/payment?shopid=12345`}>
+            <i className="fa fa-shopping-cart" /> Nạp tiền
+          </Link>
+        </span>
+      </button>
+    );
+    if (Number(this.props.userBalanceEntity.balanceAvailable) < Number(this.state.finalAmount)) {
+      return (
+        <>
+          <div className="col-xs-6">
+            Quý khách đang thiếu:{' '}
+            <b className="text-danger">
+              {formatCurency(Math.ceil(this.state.finalAmount * 0.7) - this.props.userBalanceEntity.balanceAvailable)}đ
+            </b>
+          </div>
+          <div className="col-xs-6" />
+          <div className="col-xs-6">Quý khách vui lòng nạp tiền để đặt cọc</div>
+          {payment}
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div className="col-xs-6" />
+          {checkout}
+        </>
+      );
+      return checkout;
+    }
   }
 
   render() {
@@ -364,49 +413,16 @@ export class Checkout extends React.Component<ICheckoutProp> {
             </div>
             <div className="col-xs-12">
               <div className="row checkout-cart-detail">
-                <button className="btn btn-primary btn-block">
-                  <span className="checkout-cart">
-                    <Link to={`/checkout?shopid=12345`}>
-                      <i className="fa fa-shopping-cart" /> Đặt hàng
-                    </Link>
-                  </span>
-                </button>
-                <div className="col-xs-8 item">Tiền hàng:</div>
-                <div className="col-xs-4 item">
-                  <b>{formatCurency(this.state.totalAmount)}đ</b>
+                <div className="col-xs-6">
+                  Tổng tiền: <b>{formatCurency(this.state.finalAmount)}đ</b>
                 </div>
-                <div className="col-xs-8 item">Phí mua hàng:</div>
-                <div className="col-xs-4 item">
-                  <b>{formatCurency(this.state.serviceFee)}đ</b>
+                <div className="col-xs-6">
+                  Số dư hiện tại: <b>{formatCurency(this.state.tallyFee)}đ</b>
                 </div>
-                <div className="col-xs-8 item">Phí kiểm đếm:</div>
-                <div className="col-xs-4 item">
-                  <b>{formatCurency(this.state.tallyFee)}đ</b>
+                <div className="col-xs-6">
+                  Đặt cọc (70%): <b>{formatCurency(Math.ceil(this.state.finalAmount * 0.7))}đ</b>
                 </div>
-                <div className="col-xs-8 item">Phí vận chuyển nội địa TQ:</div>
-                <div className="col-xs-4 item">
-                  <b>0đ</b>
-                </div>
-                <div className="col-xs-8 item">Phí đóng kiện gỗ:</div>
-                <div className="col-xs-4 item">
-                  <b>0đ</b>
-                </div>
-                <div className="col-xs-8 item">Phí vận chuyển TQ - VN:</div>
-                <div className="col-xs-4 item">
-                  <b>0đ</b>
-                </div>
-                <div className="col-xs-8 item">Phí vận chuyển nội địa VN:</div>
-                <div className="col-xs-4 item">
-                  <b>0đ</b>
-                </div>
-              </div>
-              <div className="row checkout-cart-detail checkout-cart-total">
-                <div className="col-xs-8 item">
-                  <h4>Tổng tiền:</h4>
-                </div>
-                <div className="col-xs-4 item">
-                  <b>{formatCurency(this.state.totalAmount + this.state.serviceFee + this.state.tallyFee)}đ</b>
-                </div>
+                {this.checkoutForm()}
               </div>
             </div>
           </div>
@@ -423,7 +439,8 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated,
   cities: storeState.city.entities,
   userShippingAddressList: storeState.userShippingAddress.entities,
-  currencyRateEntity: storeState.currencyRate.entity
+  currencyRateEntity: storeState.currencyRate.entity,
+  userBalanceEntity: storeState.userBalance.entity
 });
 
 const mapDispatchToProps = {

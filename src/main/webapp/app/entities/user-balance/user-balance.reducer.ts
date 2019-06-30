@@ -112,6 +112,14 @@ export const getEntity: ICrudGetAction<IUserBalance> = id => {
   };
 };
 
+export const getOwnerBalance: ICrudGetAction<IUserBalance> = id => {
+  const requestUrl = `${apiUrl}/owner`;
+  return {
+    type: ACTION_TYPES.FETCH_USERBALANCE,
+    payload: axios.get<IUserBalance>(requestUrl)
+  };
+};
+
 export const createEntity: ICrudPutAction<IUserBalance> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_USERBALANCE,

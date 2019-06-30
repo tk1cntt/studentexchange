@@ -1,6 +1,7 @@
 package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.UserBalanceService;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
@@ -86,6 +87,24 @@ public class UserBalanceResource {
     public List<UserBalanceDTO> getAllUserBalances() {
         log.debug("REST request to get all UserBalances");
         return userBalanceService.findAll();
+    }
+
+    @GetMapping("/user-balances/owner")
+    @Timed
+    public ResponseEntity<UserBalanceDTO> getOwnerUserBalances() {
+        log.debug("REST request to get all UserBalances");
+        String username = SecurityUtils.getCurrentUserLogin().get();
+        Optional<UserBalanceDTO> dto = userBalanceService.findByOwner(username);
+        if (dto.isPresent()) {
+            return ResponseUtil.wrapOrNotFound(dto);
+        } else {
+            UserBalanceDTO emptyBalance = new UserBalanceDTO();
+            emptyBalance.setBalanceAvailable(0f);
+            emptyBalance.setBalanceFreezing(0f);
+            emptyBalance.setCash(0f);
+            return ResponseEntity.ok()
+                .body(emptyBalance);
+        }
     }
 
     /**

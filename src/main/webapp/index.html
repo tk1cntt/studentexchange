@@ -24,12 +24,26 @@
     <link rel="stylesheet" href="content/css/loading.css">
     <link rel="stylesheet" href="content/css/animate.css">
     <link rel="stylesheet" href="content/css/style.css">
+    <!-- HTTPS required. HTTP will give a 403 forbidden response -->
+    <script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
     <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->
 </head>
 <body>
+    <script type="text/javascript" >
+        // initialize Account Kit with CSRF protection
+        AccountKit_OnInteractive = function(){
+            AccountKit.init(
+            {
+                appId:"504517876723313",
+                state:"ff4ff5ff6ff7ff8ff9ff10ff13ff15", 
+                version:"v1.1",
+                fbAppEventsEnabled:true
+            });
+            window.AccountKit = AccountKit;
+        };
+    </script>
     <script defer async type="text/javascript" src="app/main.bundle.js"></script>
     <noscript id="deferred-styles">
-               
       <!--
       <link href="content/main.css" rel="stylesheet">
       -->

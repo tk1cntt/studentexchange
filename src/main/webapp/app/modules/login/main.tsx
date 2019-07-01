@@ -19,6 +19,73 @@ export class Login extends React.Component<ILoginProps> {
     this.props.login(username, password, rememberMe);
   };
 
+  // phone form submission handler
+  smsLogin = () => {
+    //var countryCode = document.getElementById("country_code").value;
+    //var phoneNumber = document.getElementById("phone_number").value;
+    window.AccountKit.login(
+      'PHONE',
+      { countryCode: '+84', phoneNumber: '' }, // will use default values if not specified
+      this.loginCallback
+    );
+  };
+
+  // email form submission handler
+  emailLogin = () => {
+    //var emailAddress = document.getElementById("email").value;
+    window.AccountKit.login('EMAIL', { emailAddress: '' }, this.loginCallback);
+  };
+
+  fetchUserData = url => {
+    fetch(url, {
+      method: 'GET'
+    })
+      .then(response => {
+        if (!response.ok) throw new Error(response.statusText);
+        console.log('fetchUserData', response);
+        return response.json();
+      })
+      .then(resp => {
+        console.log('fetchUserData', resp);
+        this.setState({ isSuccessfulLogin: true, token: resp.access_token, userId: resp.id });
+      })
+      .catch(error => {
+        //console.error(error)
+      });
+  };
+
+  // login callback
+  loginCallback = response => {
+    console.log('loginCallback', response);
+    if (response.status === 'PARTIALLY_AUTHENTICATED') {
+      const code = response.code;
+      const account_kit_api_version = 'v1.1';
+      const app_id = '504517876723313';
+      const app_secret = 'a81ddcb2220085e41f9ec7b38bb6fd16';
+      const token_exchange_base_url = `https://graph.accountkit.com/${account_kit_api_version}/access_token`;
+
+      const app_access_token = ['AA', app_id, app_secret].join('|');
+      const params = {
+        grant_type: 'authorization_code',
+        code,
+        access_token: app_access_token
+      };
+
+      function toQueryString(paramsObject) {
+        return Object.keys(paramsObject)
+          .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(paramsObject[key])}`)
+          .join('&');
+      }
+
+      const token_exchange_url = token_exchange_base_url + '?' + toQueryString(params);
+      console.log(this.fetchUserData(token_exchange_url));
+    } else if (response.status === 'NOT_AUTHENTICATED') {
+      // handle authentication failure
+    } else if (response.status === 'BAD_PARAMS') {
+      // handle bad parameters
+    }
+  };
+
   render() {
     const { isAuthenticated } = this.props;
     return (
@@ -74,6 +141,17 @@ export class Login extends React.Component<ILoginProps> {
             <a className="btn btn-sm btn-white btn-block" href="register.html">
               Create an account
             </a>
+            <div>
+              <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={this.smsLogin}>
+                Login via SMS
+              </button>
+            </div>
+            <div>Or</div>
+            <div>
+              <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onClick={this.emailLogin}>
+                Login via Email
+              </button>
+            </div>
           </AvForm>
         </div>
       </div>

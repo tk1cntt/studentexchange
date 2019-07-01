@@ -127,6 +127,23 @@ export const login = (username, password, rememberMe = false) => async (dispatch
   await dispatch(getSession());
 };
 
+export const fblogin = (code, rememberMe = false) => async (dispatch, getState) => {
+  const result = await dispatch({
+    type: ACTION_TYPES.LOGIN,
+    payload: axios.get('api/token-exchange?code=' + code)
+  });
+  const bearerToken = result.value.headers.authorization;
+  if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
+    const jwt = bearerToken.slice(7, bearerToken.length);
+    if (rememberMe) {
+      Storage.local.set(AUTH_TOKEN_KEY, jwt);
+    } else {
+      Storage.session.set(AUTH_TOKEN_KEY, jwt);
+    }
+  }
+  await dispatch(getSession());
+};
+
 export const clearAuthToken = () => {
   if (Storage.local.get(AUTH_TOKEN_KEY)) {
     Storage.local.remove(AUTH_TOKEN_KEY);

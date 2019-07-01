@@ -2,14 +2,32 @@ package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.hash.Hashing;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import vn.studentexchange.domain.User;
 import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.security.SecurityUtils;
+import vn.studentexchange.security.jwt.JWTFilter;
+import vn.studentexchange.security.jwt.TokenProvider;
 import vn.studentexchange.service.MailService;
 import vn.studentexchange.service.UserService;
+import vn.studentexchange.service.dto.FBAccountDTO;
 import vn.studentexchange.service.dto.PasswordChangeDTO;
+import vn.studentexchange.service.dto.TokenExchangeDTO;
 import vn.studentexchange.service.dto.UserDTO;
 import vn.studentexchange.web.rest.errors.*;
+import vn.studentexchange.web.rest.util.Utils;
 import vn.studentexchange.web.rest.vm.KeyAndPasswordVM;
 import vn.studentexchange.web.rest.vm.ManagedUserVM;
 
@@ -21,7 +39,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -39,8 +62,10 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final TokenProvider tokenProvider;
 
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, TokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
@@ -91,6 +116,70 @@ public class AccountResource {
     public String isAuthenticated(HttpServletRequest request) {
         log.debug("REST request to check if the current user is authenticated");
         return request.getRemoteUser();
+    }
+
+    @GetMapping("/token-exchange")
+    @Timed
+    public ResponseEntity<String> tokenExchange(@RequestParam(value = "code") String code) {
+        try {
+            log.debug("REST request to check if fb code is authenticated");
+            StringBuilder tokenExchangeURL = new StringBuilder("https://graph.accountkit.com/v1.1/access_token?");
+            tokenExchangeURL.append("grant_type=authorization_code");
+            tokenExchangeURL.append("&code=").append(code);
+            tokenExchangeURL.append("&access_token=").append(URLEncoder.encode("AA|504517876723313|a81ddcb2220085e41f9ec7b38bb6fd16"));
+            FBAccountDTO fbAccountDTO = getHttpGetResponse(tokenExchangeURL);
+            StringBuilder meURL = new StringBuilder("https://graph.accountkit.com/v1.1/me?access_token=");
+            meURL.append(fbAccountDTO.getAccessToken());
+            meURL.append("&appsecret_proof=");
+            meURL.append(Utils.encode("a81ddcb2220085e41f9ec7b38bb6fd16", fbAccountDTO.getAccessToken()));
+            System.out.println(meURL);
+            fbAccountDTO = getHttpGetResponse(meURL);
+            // 2. Create account if ok
+            if (fbAccountDTO.getCode() == 200) {
+                String username = "0" + fbAccountDTO.getPhone().getNationalNumber();
+                Optional<User> user = userService.getUserWithAuthoritiesByLogin(username);
+                User currentUser = null;
+                if (user.isPresent()) {
+                    currentUser = user.get();
+                } else {
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setLogin(username);
+                    Set<String> authorities = new HashSet<>();
+                    authorities.add("ROLE_USER");
+                    userDTO.setAuthorities(authorities);
+                    currentUser = userService.createUser(userDTO);
+                }
+                // Create jwt from user
+                List<GrantedAuthority> grantedAuthorities = currentUser.getAuthorities().stream()
+                    .map(authority -> new SimpleGrantedAuthority(authority.getName()))
+                    .collect(Collectors.toList());
+                org.springframework.security.core.userdetails.User principal = new org.springframework.security.core.userdetails.User(username, "", grantedAuthorities);
+                Authentication authentication =  new UsernamePasswordAuthenticationToken(principal, null, grantedAuthorities);
+                String jwt = tokenProvider.createToken(authentication, true);
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+                ObjectMapper mapper = new ObjectMapper();
+                return new ResponseEntity<>(mapper.writeValueAsString(new UserJWTController.JWTToken(jwt)), httpHeaders, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("{code: 101, message: \"Token is invalid\"}", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception ex) {
+            log.info("FB Account Kit error: " + ex.getMessage());
+        }
+        return new ResponseEntity<>("{code: 100, message: \"Code is invalid\"}", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    }
+
+    private FBAccountDTO getHttpGetResponse(StringBuilder tokenExchangeURL) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpGet request = new HttpGet(tokenExchangeURL.toString());
+        HttpResponse response = client.execute(request);
+        System.out.println("Response Code : "
+            + response.getStatusLine().getStatusCode());
+        String result = IOUtils.toString(response.getEntity().getContent(), "utf-8");
+        FBAccountDTO fbAccountDTO = mapper.readValue(result, FBAccountDTO.class);
+        fbAccountDTO.setCode(response.getStatusLine().getStatusCode());
+        return fbAccountDTO;
     }
 
     /**

@@ -2,9 +2,13 @@ package vn.studentexchange.web.rest.util;
 
 import java.util.Date;
 
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Utility class for handling pagination.
@@ -55,4 +59,18 @@ public final class Utils {
             return 0.05f;
         }
 	}
+
+    public static String encode(String key, String data) {
+        try {
+            Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+            SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
+            sha256_HMAC.init(secret_key);
+
+            return new String(Hex.encodeHex(sha256_HMAC.doFinal(data.getBytes("UTF-8"))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

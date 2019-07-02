@@ -133,7 +133,7 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
                             <th className="footable-visible footable-sortable">Họ tên</th>
                             <th className="footable-visible footable-sortable">Thành phố</th>
                             <th className="footable-visible footable-sortable">Quận huyện</th>
-                            <th className="footable-visible footable-sortable"></th>
+                            <th className="footable-visible footable-sortable" />
                           </tr>
                         </thead>
                         <tbody>

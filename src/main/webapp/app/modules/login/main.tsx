@@ -91,28 +91,13 @@ export class Login extends React.Component<ILoginProps> {
                 </AvGroup>
               </Col>
             </Row>
-            <Button className="btn btn-primary block full-width m-b" type="submit">
-              Sign in
-            </Button>
-            <a href="#">
-              <small>Forgot password?</small>
-            </a>
-            <p className="text-muted text-center">
-              <small>Do not have an account?</small>
-            </p>
-            <a className="btn btn-sm btn-white btn-block" href="register.html">
-              Create an account
-            </a>
+            <button className="btn btn-primary block full-width m-b" type="submit">
+              Đăng nhập
+            </button>
           </AvForm>
           <div>
-            <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={this.smsLogin}>
-              Login via SMS
-            </button>
-          </div>
-          <div>Or</div>
-          <div>
-            <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" onClick={this.emailLogin}>
-              Login via Email
+            <button className="btn btn-sm btn-white btn-block" onClick={this.smsLogin}>
+              Đăng nhập sử dụng điện thoại
             </button>
           </div>
         </div>

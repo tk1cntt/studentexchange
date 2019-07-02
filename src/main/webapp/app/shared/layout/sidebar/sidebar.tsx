@@ -8,7 +8,11 @@ import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import { AUTHORITIES } from 'app/config/constants';
 
 export interface ISidebarProps {
+  account: any;
   isAuthenticated: boolean;
+  isManager: boolean;
+  isAdmin: boolean;
+  isStaff: boolean;
   activeMenu: string;
   activeSubMenu: string;
 }

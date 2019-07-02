@@ -16,8 +16,6 @@ export interface ICheckoutProp extends StateProps, DispatchProps {
   history: any;
 }
 
-export interface IPaymentState {}
-
 export class Payment extends React.Component<ICheckoutProp> {
   render() {
     return (

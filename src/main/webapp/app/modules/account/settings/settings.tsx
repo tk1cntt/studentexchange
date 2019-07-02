@@ -94,7 +94,10 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
   handleValidSubmit = (event, values) => {
     const account = {
       ...this.props.userProfileEntity,
-      ...values
+      ...values,
+      cityId: this.state.parameters.cityId ? this.state.parameters.cityId : this.props.userProfileEntity.cityId,
+      districtId: this.state.parameters.districtId ? this.state.parameters.districtId : this.props.userProfileEntity.districtId,
+      address: this.state.address
     };
 
     this.props.updateUserProfile(account);
@@ -121,6 +124,7 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
 
   render() {
     const { userProfileEntity } = this.props;
+    const defaultCascaderValue = [this.props.userProfileEntity.cityId, this.props.userProfileEntity.districtId];
 
     return (
       <div>
@@ -142,7 +146,7 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
                       placeholder="Số điện thoại"
                       className="form-control"
                       name="mobile"
-                      defaultValue={this.props.account.login}
+                      defaultValue={this.props.userProfileEntity.mobile}
                     />
                   </div>
                   {/* First name */}
@@ -173,7 +177,7 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
                   <div className="form-group">
                     <label>Thành phố</label>
                     <Cascader
-                      value={this.state.city}
+                      value={this.state.city || defaultCascaderValue}
                       options={this.state.locations}
                       onChange={this.onChangeCascader}
                       placeholder="Chọn thành phố"

@@ -10,17 +10,22 @@ import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import Footer from 'app/shared/layout/footer/footer';
 
-import { getAllEntities as getCities } from 'app/entities/city/city.reducer';
-import { encodeId } from 'app/shared/util/utils';
+import { getUserByMobile, reset } from 'app/entities/user-profile/user-profile.reducer';
 
 export interface IBankTransferProp extends StateProps, DispatchProps {
   location: any;
   history: any;
 }
 
-export interface IBankTransferState {}
+export interface IBankTransferState {
+  mobile: any;
+}
 
 export class BankTransfer extends React.Component<IBankTransferProp> {
+  state: IBankTransferState = {
+    mobile: null
+  };
+
   componentDidMount() {
     if (this.props.location) {
       const parsed = qs.parse(this.props.location.search);
@@ -30,7 +35,24 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
     }
   }
 
+  componentWillUnmount() {
+    this.props.reset();
+  }
+
+  onChangeMobile = e => {
+    this.setState({
+      mobile: e.target.value
+    });
+  };
+
+  searchClick = () => {
+    this.props.getUserByMobile('mobile.contains=' + this.state.mobile);
+  };
+
+  topupClick = () => {};
+
   render() {
+    console.log(this.props.userProfileList);
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="payment" activeSubMenu="" />
@@ -38,9 +60,15 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
             <div className="input-group">
-              <input type="text" placeholder="Số điện thoại" name="mobile" className="form-control form-control-lg" />
+              <input
+                type="text"
+                placeholder="Số điện thoại"
+                name="mobile"
+                className="form-control form-control-lg"
+                onChange={this.onChangeMobile}
+              />
               <div className="input-group-btn">
-                <button className="btn btn-primary" type="submit">
+                <button className="btn btn-primary" type="button" onClick={this.searchClick}>
                   <i className="fa fa-search" /> Tìm kiếm
                 </button>
               </div>
@@ -51,200 +79,44 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
               <div className="col-lg-12">
                 <div className="ibox">
                   <div className="ibox-content">
-                    <table
-                      className="footable table table-stripped toggle-arrow-tiny tablet breakpoint footable-loaded"
-                      data-page-size={15}
-                    >
-                      <thead>
-                        <tr>
-                          <th className="footable-visible footable-first-column footable-sortable">
-                            Mã đơn hàng
-                            <span className="footable-sort-indicator" />
-                          </th>
-                          <th data-hide="phone" className="footable-visible footable-sortable">
-                            Sản phẩm
-                            <span className="footable-sort-indicator" />
-                          </th>
-                          <th data-hide="phone" className="footable-visible footable-sortable">
-                            Tổng tiền
-                            <span className="footable-sort-indicator" />
-                          </th>
-                          <th data-hide="phone" className="footable-visible footable-sortable">
-                            Ngày mua
-                            <span className="footable-sort-indicator" />
-                          </th>
-                          <th data-hide="phone" className="footable-visible footable-sortable">
-                            Trạng thái
-                            <span className="footable-sort-indicator" />
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="footable-even" style={{}}>
-                          <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />
-                            {encodeId(3214)}
-                          </td>
-                          <td className="footable-visible">Customer example</td>
-                          <td className="footable-visible">$500.00</td>
-                          <td className="footable-visible">03/04/2015</td>
-                          <td className="footable-visible">
-                            <span className="label label-primary">Pending</span>
-                          </td>
-                        </tr>
-                        <tr className="footable-odd" style={{}}>
-                          <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />
-                            {encodeId(12345)}
-                          </td>
-                          <td className="footable-visible">Customer example</td>
-                          <td className="footable-visible">$320.00</td>
-                          <td className="footable-visible">12/04/2015</td>
-                          <td className="footable-visible">
-                            <span className="label label-primary">Pending</span>
-                          </td>
-                        </tr>
-                        <tr className="footable-even" style={{}}>
-                          <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />
-                            {encodeId(13214)}
-                          </td>
-                          <td className="footable-visible">Customer example</td>
-                          <td className="footable-visible">$2770.00</td>
-                          <td className="footable-visible">06/07/2015</td>
-                          <td className="footable-visible">
-                            <span className="label label-primary">Pending</span>
-                          </td>
-                        </tr>
-                        <tr className="footable-odd" style={{}}>
-                          <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />
-                            {encodeId(12346)}
-                          </td>
-                          <td className="footable-visible">Customer example</td>
-                          <td className="footable-visible">$8560.00</td>
-                          <td className="footable-visible">01/12/2015</td>
-                          <td className="footable-visible">
-                            <span className="label label-primary">Pending</span>
-                          </td>
-                        </tr>
-                        <tr className="footable-even" style={{}}>
-                          <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />
-                            642
-                          </td>
-                          <td className="footable-visible">Customer example</td>
-                          <td className="footable-visible">$6843.00</td>
-                          <td className="footable-visible">10/04/2015</td>
-                          <td className="footable-visible">
-                            <span className="label label-success">Shipped</span>
-                          </td>
-                        </tr>
-                        <tr className="footable-odd" style={{}}>
-                          <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />
-                            {encodeId(123467)}
-                          </td>
-                          <td className="footable-visible">Customer example</td>
-                          <td className="footable-visible">$750.00</td>
-                          <td className="footable-visible">04/04/2015</td>
-                          <td className="footable-visible">
-                            <span className="label label-success">Shipped</span>
-                          </td>
-                        </tr>
-                        <tr className="footable-even" style={{}}>
-                          <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />
-                            {encodeId(23214)}
-                          </td>
-                          <td className="footable-visible">Customer example</td>
-                          <td className="footable-visible">$500.00</td>
-                          <td className="footable-visible">03/04/2015</td>
-                          <td className="footable-visible">
-                            <span className="label label-primary">Pending</span>
-                          </td>
-                        </tr>
-                        <tr className="footable-odd" style={{}}>
-                          <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />
-                            324
-                          </td>
-                          <td className="footable-visible">Customer example</td>
-                          <td className="footable-visible">$320.00</td>
-                          <td className="footable-visible">12/04/2015</td>
-                          <td className="footable-visible">
-                            <span className="label label-primary">Pending</span>
-                          </td>
-                        </tr>
-                        <tr className="footable-even" style={{}}>
-                          <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />
-                            {encodeId(33214)}
-                          </td>
-                          <td className="footable-visible">Customer example</td>
-                          <td className="footable-visible">$2770.00</td>
-                          <td className="footable-visible">06/07/2015</td>
-                          <td className="footable-visible">
-                            <span className="label label-danger">Canceled</span>
-                          </td>
-                        </tr>
-                        <tr className="footable-odd" style={{}}>
-                          <td className="footable-visible footable-first-column">
-                            <span className="footable-toggle" />
-                            {encodeId(34214)}
-                          </td>
-                          <td className="footable-visible">Customer example</td>
-                          <td className="footable-visible">$8560.00</td>
-                          <td className="footable-visible">01/12/2015</td>
-                          <td className="footable-visible">
-                            <span className="label label-primary">Pending</span>
-                          </td>
-                        </tr>
-                      </tbody>
-                      <tfoot>
-                        <tr>
-                          <td colSpan={7} className="footable-visible">
-                            <ul className="pagination pull-right">
-                              <li className="footable-page-arrow disabled">
-                                <a data-page="first" href="#first">
-                                  «
-                                </a>
-                              </li>
-                              <li className="footable-page-arrow disabled">
-                                <a data-page="prev" href="#prev">
-                                  ‹
-                                </a>
-                              </li>
-                              <li className="footable-page active">
-                                <a data-page={0} href="#">
-                                  1
-                                </a>
-                              </li>
-                              <li className="footable-page">
-                                <a data-page={1} href="#">
-                                  2
-                                </a>
-                              </li>
-                              <li className="footable-page">
-                                <a data-page={2} href="#">
-                                  3
-                                </a>
-                              </li>
-                              <li className="footable-page-arrow">
-                                <a data-page="next" href="#next">
-                                  ›
-                                </a>
-                              </li>
-                              <li className="footable-page-arrow">
-                                <a data-page="last" href="#last">
-                                  »
-                                </a>
-                              </li>
-                            </ul>
-                          </td>
-                        </tr>
-                      </tfoot>
-                    </table>
+                    {this.props.userProfileList.length === 0 ? (
+                      <div className="no-content">Không có dữ liệu</div>
+                    ) : (
+                      <table
+                        className="footable table table-stripped toggle-arrow-tiny tablet breakpoint footable-loaded"
+                        data-page-size={15}
+                      >
+                        <thead>
+                          <tr>
+                            <th className="footable-visible footable-first-column footable-sortable">Số điện thoại</th>
+                            <th className="footable-visible footable-sortable">Họ tên</th>
+                            <th className="footable-visible footable-sortable">Thành phố</th>
+                            <th className="footable-visible footable-sortable">Quận huyện</th>
+                            <th className="footable-visible footable-sortable"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.props.userProfileList.map((userProfile, i) => (
+                            <tr key={`id-${i}`} className="footable-even" style={{}}>
+                              <td className="footable-visible footable-first-column">
+                                <span className="footable-toggle" />
+                                {userProfile.mobile}
+                              </td>
+                              <td className="footable-visible">{userProfile.fullName}</td>
+                              <td className="footable-visible">{userProfile.cityName}</td>
+                              <td className="footable-visible">{userProfile.districtName}</td>
+                              <td className="footable-visible">
+                                <div className="input-group-btn">
+                                  <button className="btn btn-primary" type="button" onClick={this.topupClick}>
+                                    <i className="fa fa-search" /> Tìm kiếm
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    )}
                   </div>
                 </div>
               </div>
@@ -261,10 +133,11 @@ const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
   currencyRateEntity: storeState.currencyRate.entity,
   userBalanceEntity: storeState.userBalance.entity,
+  userProfileList: storeState.userProfile.entities,
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession };
+const mapDispatchToProps = { getSession, reset, getUserByMobile };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

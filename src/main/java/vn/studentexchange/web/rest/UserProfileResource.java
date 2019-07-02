@@ -133,6 +133,7 @@ public class UserProfileResource {
         Optional<UserProfileDTO> userProfileDTO = userProfileService.findByOwner(username);
         if (!userProfileDTO.isPresent()) {
             UserProfileDTO newUserProfile = new UserProfileDTO();
+            newUserProfile.setMobile(username);
             return ResponseUtil.wrapOrNotFound(userProfileService.save(newUserProfile, username));
         }
         return ResponseUtil.wrapOrNotFound(userProfileDTO);

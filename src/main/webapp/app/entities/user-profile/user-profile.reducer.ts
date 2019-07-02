@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudSearchAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -108,6 +108,11 @@ export const getEntities: ICrudGetAllAction<IUserProfile> = (page, size, sort) =
     payload: axios.get<IUserProfile>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };
+
+export const getUserByMobile: ICrudSearchAction<IUserProfile> = query => ({
+  type: ACTION_TYPES.FETCH_USERPROFILE_LIST,
+  payload: axios.get<IUserProfile>(`${apiUrl}?${query}&sort=createAt,desc`)
+});
 
 export const getEntity: ICrudGetAction<IUserProfile> = id => {
   const requestUrl = `${apiUrl}/${id}`;

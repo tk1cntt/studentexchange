@@ -12,6 +12,8 @@ import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
 import { saveAccountSettings, reset } from './settings.reducer';
 
+import { getOwnerEntity as getUserProfile, updateEntity as updateUserProfile } from 'app/entities/user-profile/user-profile.reducer';
+
 export interface IUserSettingsProps extends StateProps, DispatchProps {}
 
 export interface IUserSettingsState {
@@ -20,7 +22,7 @@ export interface IUserSettingsState {
 
 export class SettingsPage extends React.Component<IUserSettingsProps, IUserSettingsState> {
   componentDidMount() {
-    this.props.getSession();
+    this.props.getUserProfile('');
   }
 
   componentWillUnmount() {
@@ -33,85 +35,89 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
       ...values
     };
 
-    this.props.saveAccountSettings(account);
+    this.props.updateUserProfile(account);
     event.persist();
   };
 
   render() {
-    const { account } = this.props;
+    const { userProfileEntity } = this.props;
 
     return (
       <div>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="user-management" activeSubMenu="setting" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
-          <Row className="justify-content-center">
-            <Col md="8">
-              <h2 id="settings-title">
-                <Translate contentKey="settings.title" interpolate={{ username: account.login }}>
-                  User settings for {account.login}
-                </Translate>
-              </h2>
-              <AvForm id="settings-form" onValidSubmit={this.handleValidSubmit}>
-                {/* First name */}
-                <AvField
-                  className="form-control"
-                  name="firstName"
-                  label={translate('settings.form.firstname')}
-                  id="firstName"
-                  placeholder={translate('settings.form.firstname.placeholder')}
-                  validate={{
-                    required: { value: true, errorMessage: translate('settings.messages.validate.firstname.required') },
-                    minLength: { value: 1, errorMessage: translate('settings.messages.validate.firstname.minlength') },
-                    maxLength: { value: 50, errorMessage: translate('settings.messages.validate.firstname.maxlength') }
-                  }}
-                  value={account.firstName}
-                />
-                {/* Last name */}
-                <AvField
-                  className="form-control"
-                  name="lastName"
-                  label={translate('settings.form.lastname')}
-                  id="lastName"
-                  placeholder={translate('settings.form.lastname.placeholder')}
-                  validate={{
-                    required: { value: true, errorMessage: translate('settings.messages.validate.lastname.required') },
-                    minLength: { value: 1, errorMessage: translate('settings.messages.validate.lastname.minlength') },
-                    maxLength: { value: 50, errorMessage: translate('settings.messages.validate.lastname.maxlength') }
-                  }}
-                  value={account.lastName}
-                />
-                {/* Email */}
-                <AvField
-                  name="email"
-                  label={translate('global.form.email')}
-                  placeholder={translate('global.form.email.placeholder')}
-                  type="email"
-                  validate={{
-                    required: { value: true, errorMessage: translate('global.messages.validate.email.required') },
-                    minLength: { value: 5, errorMessage: translate('global.messages.validate.email.minlength') },
-                    maxLength: { value: 254, errorMessage: translate('global.messages.validate.email.maxlength') }
-                  }}
-                  value={account.email}
-                />
-                <Button color="primary" type="submit">
-                  <Translate contentKey="settings.form.button">Save</Translate>
-                </Button>
-              </AvForm>
-            </Col>
-          </Row>
+          <div className="row  border-bottom white-bg dashboard-header">
+            <h3>Thông tin tài khoản</h3>
+          </div>
+          <div className="row wrapper wrapper-content">
+            <div className="ibox">
+              <div className="ibox-content">
+                <AvForm id="settings-form" onValidSubmit={this.handleValidSubmit}>
+                  {/* First name */}
+                  <AvField
+                    className="form-control"
+                    name="fullName"
+                    label="Họ tên"
+                    id="fullName"
+                    placeholder="Họ tên"
+                    validate={{
+                      minLength: { value: 1, errorMessage: translate('settings.messages.validate.firstname.minlength') },
+                      maxLength: { value: 100, errorMessage: translate('settings.messages.validate.firstname.maxlength') }
+                    }}
+                    value={userProfileEntity.fullName}
+                  />
+                  {/* Email */}
+                  <AvField
+                    name="email"
+                    label={translate('global.form.email')}
+                    placeholder={translate('global.form.email.placeholder')}
+                    type="email"
+                    validate={{
+                      minLength: { value: 5, errorMessage: translate('global.messages.validate.email.minlength') },
+                      maxLength: { value: 254, errorMessage: translate('global.messages.validate.email.maxlength') }
+                    }}
+                    value={userProfileEntity.email}
+                  />
+                  {/* Email */}
+                  <AvField
+                    className="form-control"
+                    name="mobile"
+                    label="Mobile"
+                    id="mobile"
+                    placeholder="Điện thoại"
+                    validate={{
+                      minLength: { value: 1, errorMessage: translate('settings.messages.validate.firstname.minlength') },
+                      maxLength: { value: 11, errorMessage: translate('settings.messages.validate.firstname.maxlength') }
+                    }}
+                    value={userProfileEntity.mobile}
+                  />
+                  <Button color="primary" type="submit">
+                    Cập nhật
+                  </Button>
+                </AvForm>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ authentication }: IRootState) => ({
+const mapStateToProps = ({ authentication, userProfile }: IRootState) => ({
   account: authentication.account,
+  userProfileEntity: userProfile.entity,
   isAuthenticated: authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, saveAccountSettings, reset };
+const mapDispatchToProps = {
+  getSession,
+  saveAccountSettings,
+  reset,
+  getUserProfile,
+  updateUserProfile
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

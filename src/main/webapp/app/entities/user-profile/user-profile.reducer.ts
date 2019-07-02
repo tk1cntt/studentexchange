@@ -117,6 +117,14 @@ export const getEntity: ICrudGetAction<IUserProfile> = id => {
   };
 };
 
+export const getOwnerEntity: ICrudGetAction<IUserProfile> = id => {
+  const requestUrl = `${apiUrl}/owner`;
+  return {
+    type: ACTION_TYPES.FETCH_USERPROFILE,
+    payload: axios.get<IUserProfile>(requestUrl)
+  };
+};
+
 export const createEntity: ICrudPutAction<IUserProfile> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_USERPROFILE,

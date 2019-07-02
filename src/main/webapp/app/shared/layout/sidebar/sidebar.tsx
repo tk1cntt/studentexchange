@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Translate, translate } from 'react-jhipster';
 
@@ -9,7 +11,7 @@ export interface ISidebarProps {
   activeSubMenu: string;
 }
 
-export default class Sidebar extends React.Component<ISidebarProps> {
+export class Sidebar extends React.Component<ISidebarProps> {
   userMenu() {
     const { activeMenu, activeSubMenu } = this.props;
 
@@ -97,7 +99,7 @@ export default class Sidebar extends React.Component<ISidebarProps> {
                     {' '}
                     <span className="block m-t-xs">
                       {' '}
-                      <strong className="font-bold">David Williams</strong>
+                      <strong className="font-bold">{this.props.account.login}</strong>
                     </span>{' '}
                     <span className="text-muted text-xs block">
                       Manager <b className="caret" />
@@ -139,7 +141,7 @@ export default class Sidebar extends React.Component<ISidebarProps> {
             </li>
             <li className={`${activeMenu === 'payment' ? 'active' : ''}`}>
               <Link to={'/payment'}>
-                <i className="fa fa-sign-in" /> <span className="nav-label">Nạp tiền</span>
+                <i className="fa fa-sign-in" /> <span className="nav-label">Ví tiền</span>
               </Link>
             </li>
             {this.userMenu()}
@@ -150,3 +152,17 @@ export default class Sidebar extends React.Component<ISidebarProps> {
     );
   }
 }
+
+const mapStateToProps = storeState => ({
+  account: storeState.authentication.account
+});
+
+const mapDispatchToProps = {};
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Sidebar);

@@ -73,6 +73,13 @@ public class UserProfileService {
             .map(userProfileMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<UserProfileDTO> findByOwner(String username) {
+        log.debug("Request to get UserProfile : {}", username);
+        return userProfileRepository.findFirstByCreateByLogin(username)
+            .map(userProfileMapper::toDto);
+    }
+
     /**
      * Delete the userProfile by id.
      *

@@ -8,6 +8,7 @@ import Cart from 'app/modules/cart/cart';
 import Order from 'app/modules/order/order';
 import Checkout from 'app/modules/checkout/checkout';
 import Payment from 'app/modules/payment/payment';
+import Management from 'app/modules/management';
 import Register from 'app/modules/account/register/register';
 import Activate from 'app/modules/account/activate/activate';
 import PasswordResetInit from 'app/modules/account/password-reset/init/password-reset-init';
@@ -43,6 +44,8 @@ const Routes = () => (
       <PrivateRoute path="/order-cart" component={Order} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/checkout" component={Checkout} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/payment" component={Payment} hasAnyAuthorities={[AUTHORITIES.USER]} />
+      <PrivateRoute path="/management" component={Management} hasAnyAuthorities={[AUTHORITIES.MANAGER]} />
+
       <ErrorBoundaryRoute path="/" component={Home} />
       <ErrorBoundaryRoute path="/register" component={Register} />
       <ErrorBoundaryRoute path="/activate/:key?" component={Activate} />

@@ -1,4 +1,4 @@
-import axios from 'axios';
+/* tslint:disable */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Translate, translate } from 'react-jhipster';
@@ -23,8 +23,6 @@ export class Login extends React.Component<ILoginProps> {
 
   // phone form submission handler
   smsLogin = () => {
-    //var countryCode = document.getElementById("country_code").value;
-    //var phoneNumber = document.getElementById("phone_number").value;
     // tslint:disable-next-line
     window.AccountKit.login(
       'PHONE',
@@ -35,32 +33,12 @@ export class Login extends React.Component<ILoginProps> {
 
   // email form submission handler
   emailLogin = () => {
-    //var emailAddress = document.getElementById("email").value;
     // tslint:disable-next-line
     window.AccountKit.login('EMAIL', { emailAddress: '' }, this.loginCallback);
   };
 
-  fetchUserData = url => {
-    fetch(url, {
-      method: 'GET'
-    })
-      .then(response => {
-        if (!response.ok) throw new Error(response.statusText);
-        console.log('fetchUserData', response);
-        return response.json();
-      })
-      .then(resp => {
-        console.log('fetchUserData', resp);
-        this.setState({ isSuccessfulLogin: true, token: resp.access_token, userId: resp.id });
-      })
-      .catch(error => {
-        //console.error(error)
-      });
-  };
-
   // login callback
   loginCallback = response => {
-    console.log('loginCallback', response);
     if (response.status === 'PARTIALLY_AUTHENTICATED') {
       this.props.fblogin(response.code, true);
     } else if (response.status === 'NOT_AUTHENTICATED') {

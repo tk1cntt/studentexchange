@@ -16,9 +16,9 @@ export interface ICheckoutProp extends StateProps, DispatchProps {
   history: any;
 }
 
-export interface ICheckoutState {}
+export interface IPaymentState {}
 
-export class Checkout extends React.Component<ICheckoutProp> {
+export class Payment extends React.Component<ICheckoutProp> {
   render() {
     return (
       <>
@@ -58,7 +58,8 @@ export class Checkout extends React.Component<ICheckoutProp> {
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
   currencyRateEntity: storeState.currencyRate.entity,
-  userBalanceEntity: storeState.userBalance.entity
+  userBalanceEntity: storeState.userBalance.entity,
+  isAuthenticated: storeState.authentication.isAuthenticated
 });
 
 const mapDispatchToProps = { getSession };
@@ -69,4 +70,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Checkout);
+)(Payment);

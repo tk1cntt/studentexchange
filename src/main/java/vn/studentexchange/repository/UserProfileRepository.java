@@ -1,6 +1,9 @@
 package vn.studentexchange.repository;
 
 import vn.studentexchange.domain.UserProfile;
+
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +14,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface UserProfileRepository extends JpaRepository<UserProfile, Long>, JpaSpecificationExecutor<UserProfile> {
-
+    Optional<UserProfile> findFirstByCreateByLogin(String username);
 }

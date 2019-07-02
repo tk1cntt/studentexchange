@@ -7,6 +7,7 @@ import vn.studentexchange.web.rest.util.HeaderUtil;
 import vn.studentexchange.web.rest.util.PaginationUtil;
 import vn.studentexchange.service.dto.UserProfileDTO;
 import vn.studentexchange.service.dto.UserProfileCriteria;
+import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.UserProfileQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -121,6 +122,15 @@ public class UserProfileResource {
      * @param id the id of the userProfileDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the userProfileDTO, or with status 404 (Not Found)
      */
+    @GetMapping("/user-profiles/owner")
+    @Timed
+    public ResponseEntity<UserProfileDTO> getOwnerUserProfile() {
+        log.debug("REST request to get owner UserProfile");
+        String username = SecurityUtils.getCurrentUserLogin().get();
+        Optional<UserProfileDTO> userProfileDTO = userProfileService.findByOwner(username);
+        return ResponseUtil.wrapOrNotFound(userProfileDTO);
+    }
+
     @GetMapping("/user-profiles/{id}")
     @Timed
     public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable Long id) {

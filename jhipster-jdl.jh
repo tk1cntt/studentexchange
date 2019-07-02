@@ -59,6 +59,7 @@ entity UserProfile {
    gender Gender,
    email String,
    mobile String,
+   address String,
    createAt LocalDate,
    updateAt LocalDate
 }

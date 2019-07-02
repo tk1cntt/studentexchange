@@ -3,7 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 import qs from 'query-string';
-import { Modal } from 'antd';
+import { Input, Modal } from 'antd';
+import NumberFormat from 'react-number-format';
 
 import { getSession } from 'app/shared/reducers/authentication';
 
@@ -66,6 +67,16 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
   onChangeTopupAmount = e => {
     this.setState({
       topupAmount: e.target.value
+    });
+  };
+
+  onChangeMoney = values => {
+    const { formattedValue, value } = values;
+    this.setState({
+      money: formattedValue
+    });
+    this.setState({
+      topupAmount: value
     });
   };
 
@@ -170,13 +181,12 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
               <p>Hãy xác nhận lại thông tin trước khi thực hiện nạp tiền</p>
               <div className="form-group">
                 <label>Số tiền</label>
-                <input
-                  type="text"
-                  placeholder="Số tiền cần nạp"
-                  className="form-control"
-                  name="topupAmount"
-                  onChange={this.onChangeTopupAmount}
-                  defaultValue="0"
+                <NumberFormat
+                  value={this.state.topupAmount}
+                  displayType={'input'}
+                  customInput={Input}
+                  thousandSeparator
+                  onValueChange={this.onChangeMoney}
                 />
               </div>
             </Modal>

@@ -156,24 +156,10 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
                     label="Họ tên"
                     id="fullName"
                     placeholder="Họ tên"
-                    validate={{
-                      minLength: { value: 1, errorMessage: translate('settings.messages.validate.firstname.minlength') },
-                      maxLength: { value: 100, errorMessage: translate('settings.messages.validate.firstname.maxlength') }
-                    }}
                     value={userProfileEntity.fullName}
                   />
                   {/* Email */}
-                  <AvField
-                    name="email"
-                    label={translate('global.form.email')}
-                    placeholder={translate('global.form.email.placeholder')}
-                    type="email"
-                    validate={{
-                      minLength: { value: 5, errorMessage: translate('global.messages.validate.email.minlength') },
-                      maxLength: { value: 254, errorMessage: translate('global.messages.validate.email.maxlength') }
-                    }}
-                    value={userProfileEntity.email}
-                  />
+                  <AvField name="email" label="Email" placeholder="Email" type="email" value={userProfileEntity.email} />
                   <div className="form-group">
                     <label>Thành phố</label>
                     <Cascader
@@ -183,10 +169,7 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
                       placeholder="Chọn thành phố"
                     />
                   </div>
-                  <div className="form-group">
-                    <label>Địa chỉ người nhận</label>
-                    <input type="text" placeholder="Địa chỉ" className="form-control" name="address" onChange={this.onChangeAddress} />
-                  </div>
+                  <AvField name="address" label="Địa chỉ" placeholder="Địa chỉ" value={userProfileEntity.address} />
                   <Button color="primary" type="submit">
                     Cập nhật
                   </Button>

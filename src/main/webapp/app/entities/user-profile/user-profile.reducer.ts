@@ -135,7 +135,7 @@ export const createEntity: ICrudPutAction<IUserProfile> = entity => async dispat
     type: ACTION_TYPES.CREATE_USERPROFILE,
     payload: axios.post(apiUrl, cleanEntity(entity))
   });
-  dispatch(getEntities());
+  // dispatch(getEntities());
   return result;
 };
 
@@ -144,7 +144,7 @@ export const updateEntity: ICrudPutAction<IUserProfile> = entity => async dispat
     type: ACTION_TYPES.UPDATE_USERPROFILE,
     payload: axios.put(apiUrl, cleanEntity(entity))
   });
-  dispatch(getEntities());
+  // dispatch(getEntities());
   return result;
 };
 
@@ -154,7 +154,7 @@ export const deleteEntity: ICrudDeleteAction<IUserProfile> = id => async dispatc
     type: ACTION_TYPES.DELETE_USERPROFILE,
     payload: axios.delete(requestUrl)
   });
-  dispatch(getEntities());
+  // dispatch(getEntities());
   return result;
 };
 

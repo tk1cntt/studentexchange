@@ -13,6 +13,7 @@ import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import Footer from 'app/shared/layout/footer/footer';
 
 import { getUserByMobile, reset } from 'app/entities/user-profile/user-profile.reducer';
+import { createEntity as createUserBalance } from 'app/entities/user-balance/user-balance.reducer';
 
 export interface IBankTransferProp extends StateProps, DispatchProps {
   location: any;
@@ -30,18 +31,9 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
   state: IBankTransferState = {
     showPayment: false,
     topupMobile: null,
-    topupAmount: 0,
+    topupAmount: null,
     mobile: null
   };
-
-  componentDidMount() {
-    if (this.props.location) {
-      const parsed = qs.parse(this.props.location.search);
-      if (parsed.mobile) {
-        // this.props.getShippingCart(decodeId(parsed.shopid));
-      }
-    }
-  }
 
   componentWillUnmount() {
     this.props.reset();
@@ -81,9 +73,16 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
   };
 
   topupClick = () => {
-    console.log(this.state.topupMobile, this.state.topupAmount);
+    const entity = {
+      createByLogin: this.state.topupMobile,
+      cash: this.state.topupAmount
+    };
+    this.props.createUserBalance(entity);
     this.setState({
-      showPayment: false
+      showPayment: false,
+      topupMobile: null,
+      topupAmount: null,
+      mobile: null
     });
   };
 
@@ -94,17 +93,17 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
   };
 
   render() {
-    console.log(this.props.userProfileList);
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="payment" activeSubMenu="" />
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="manager-management" activeSubMenu="banktransfer" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
+            <label>Số điện thoại</label>
             <div className="input-group">
               <input
                 type="text"
-                placeholder="Số điện thoại"
+                placeholder="Nhập số điện thoại cần tìm"
                 name="mobile"
                 className="form-control form-control-lg"
                 onChange={this.onChangeMobile}
@@ -208,7 +207,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, reset, getUserByMobile };
+const mapDispatchToProps = { getSession, reset, getUserByMobile, createUserBalance };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

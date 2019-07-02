@@ -125,7 +125,7 @@ export const createEntity: ICrudPutAction<IUserBalance> = entity => async dispat
     type: ACTION_TYPES.CREATE_USERBALANCE,
     payload: axios.post(apiUrl, cleanEntity(entity))
   });
-  dispatch(getEntities());
+  // dispatch(getEntities());
   return result;
 };
 
@@ -134,7 +134,7 @@ export const updateEntity: ICrudPutAction<IUserBalance> = entity => async dispat
     type: ACTION_TYPES.UPDATE_USERBALANCE,
     payload: axios.put(apiUrl, cleanEntity(entity))
   });
-  dispatch(getEntities());
+  // dispatch(getEntities());
   return result;
 };
 
@@ -144,7 +144,7 @@ export const deleteEntity: ICrudDeleteAction<IUserBalance> = id => async dispatc
     type: ACTION_TYPES.DELETE_USERBALANCE,
     payload: axios.delete(requestUrl)
   });
-  dispatch(getEntities());
+  // dispatch(getEntities());
   return result;
 };
 

@@ -1,6 +1,10 @@
 package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
+import vn.studentexchange.domain.User;
+import vn.studentexchange.repository.UserRepository;
+import vn.studentexchange.security.AuthoritiesConstants;
 import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.UserBalanceService;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
@@ -10,6 +14,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -31,8 +36,11 @@ public class UserBalanceResource {
 
     private final UserBalanceService userBalanceService;
 
-    public UserBalanceResource(UserBalanceService userBalanceService) {
+    private final UserRepository userRepository;
+
+    public UserBalanceResource(UserBalanceService userBalanceService, UserRepository userRepository) {
         this.userBalanceService = userBalanceService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -42,8 +50,10 @@ public class UserBalanceResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new userBalanceDTO, or with status 400 (Bad Request) if the userBalance has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    /*
     @PostMapping("/user-balances")
     @Timed
+    @Secured(AuthoritiesConstants.MANAGER)
     public ResponseEntity<UserBalanceDTO> createUserBalance(@RequestBody UserBalanceDTO userBalanceDTO) throws URISyntaxException {
         log.debug("REST request to save UserBalance : {}", userBalanceDTO);
         if (userBalanceDTO.getId() != null) {
@@ -53,6 +63,32 @@ public class UserBalanceResource {
         return ResponseEntity.created(new URI("/api/user-balances/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+    //*/
+
+    @PostMapping("/user-balances")
+    @Timed
+    @Secured(AuthoritiesConstants.MANAGER)
+    public ResponseEntity<UserBalanceDTO> createUserBalance(@RequestBody UserBalanceDTO userBalanceDTO) throws URISyntaxException {
+        log.debug("REST request to save UserBalance : {}", userBalanceDTO);
+        Optional<User> paymentUser = userRepository.findOneByLogin(userBalanceDTO.getCreateByLogin());
+        if (!paymentUser.isPresent()) {
+            throw new BadRequestAlertException("User not found", ENTITY_NAME, "idexists");
+        }
+        Optional<UserBalanceDTO> dto = userBalanceService.findByOwner(userBalanceDTO.getCreateByLogin());
+        UserBalanceDTO currentBalance;
+        if (dto.isPresent()) {
+            currentBalance = dto.get();
+        } else {
+            currentBalance = new UserBalanceDTO();
+            currentBalance.setCreateById(paymentUser.get().getId());
+            currentBalance.setCreateByLogin(paymentUser.get().getLogin());
+        }
+        currentBalance.setBalanceAvailable(currentBalance.getBalanceAvailable() + userBalanceDTO.getCash());
+        currentBalance.setCash(currentBalance.getCash() + userBalanceDTO.getCash());
+        UserBalanceDTO result = userBalanceService.save(currentBalance);
+        // Add to history
+        return ResponseEntity.ok().body(result);
     }
 
     /**
@@ -66,6 +102,7 @@ public class UserBalanceResource {
      */
     @PutMapping("/user-balances")
     @Timed
+    @Secured(AuthoritiesConstants.MANAGER)
     public ResponseEntity<UserBalanceDTO> updateUserBalance(@RequestBody UserBalanceDTO userBalanceDTO) throws URISyntaxException {
         log.debug("REST request to update UserBalance : {}", userBalanceDTO);
         if (userBalanceDTO.getId() == null) {
@@ -84,6 +121,7 @@ public class UserBalanceResource {
      */
     @GetMapping("/user-balances")
     @Timed
+    @Secured(AuthoritiesConstants.MANAGER)
     public List<UserBalanceDTO> getAllUserBalances() {
         log.debug("REST request to get all UserBalances");
         return userBalanceService.findAll();
@@ -99,9 +137,9 @@ public class UserBalanceResource {
             return ResponseUtil.wrapOrNotFound(dto);
         } else {
             UserBalanceDTO emptyBalance = new UserBalanceDTO();
-            emptyBalance.setBalanceAvailable(0f);
-            emptyBalance.setBalanceFreezing(0f);
-            emptyBalance.setCash(0f);
+            // emptyBalance.setBalanceAvailable(0f);
+            // emptyBalance.setBalanceFreezing(0f);
+            // emptyBalance.setCash(0f);
             return ResponseEntity.ok()
                 .body(emptyBalance);
         }
@@ -115,6 +153,7 @@ public class UserBalanceResource {
      */
     @GetMapping("/user-balances/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.MANAGER)
     public ResponseEntity<UserBalanceDTO> getUserBalance(@PathVariable Long id) {
         log.debug("REST request to get UserBalance : {}", id);
         Optional<UserBalanceDTO> userBalanceDTO = userBalanceService.findOne(id);
@@ -129,6 +168,7 @@ public class UserBalanceResource {
      */
     @DeleteMapping("/user-balances/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.MANAGER)
     public ResponseEntity<Void> deleteUserBalance(@PathVariable Long id) {
         log.debug("REST request to delete UserBalance : {}", id);
         userBalanceService.delete(id);

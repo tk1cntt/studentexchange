@@ -11,11 +11,11 @@ public class UserBalanceDTO implements Serializable {
 
     private Long id;
 
-    private Float balanceAvailable;
+    private Float balanceAvailable = 0f;
 
-    private Float balanceFreezing;
+    private Float balanceFreezing = 0f;
 
-    private Float cash;
+    private Float cash  = 0f;
 
     private LocalDate createAt;
 

@@ -4,6 +4,8 @@ import { NavLink as Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Translate, translate } from 'react-jhipster';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import { AUTHORITIES } from 'app/config/constants';
 
 export interface ISidebarProps {
   isAuthenticated: boolean;
@@ -36,9 +38,33 @@ export class Sidebar extends React.Component<ISidebarProps> {
     );
   }
 
-  adminMenu() {
-    const { activeMenu, activeSubMenu } = this.props;
+  managerMenu() {
+    const { activeMenu, activeSubMenu, isManager } = this.props;
+    if (!isManager) return '';
+    return (
+      <li className={`${activeMenu === 'manager-management' ? 'active' : ''}`}>
+        <Link to={'/management/banktransfer'}>
+          <i className="fa fa-gift" /> <span className="nav-label">Payment</span> <span className="fa arrow" />
+        </Link>
+        <ul className={`${activeMenu === 'manager-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
+          <li className={`${activeSubMenu === 'banktransfer' ? 'active' : ''}`}>
+            <Link to={'/management/banktransfer'}>
+              <i className="fa fa-sign-in" /> Nạp tiền
+            </Link>
+          </li>
+          <li className={`${activeSubMenu === 'change-password' ? 'active' : ''}`}>
+            <Link to={'/payment/history'}>
+              <FontAwesomeIcon icon="clock" /> Lịch sử thanh toán
+            </Link>
+          </li>
+        </ul>
+      </li>
+    );
+  }
 
+  adminMenu() {
+    const { activeMenu, activeSubMenu, isAdmin } = this.props;
+    if (!isAdmin) return '';
     return (
       <li className={`${activeMenu === 'administration' ? 'active' : ''}`}>
         <Link to={'/admin/user-management'}>
@@ -145,6 +171,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
               </Link>
             </li>
             {this.userMenu()}
+            {this.managerMenu()}
             {this.adminMenu()}
           </ul>
         </div>
@@ -153,8 +180,11 @@ export class Sidebar extends React.Component<ISidebarProps> {
   }
 }
 
-const mapStateToProps = storeState => ({
-  account: storeState.authentication.account
+const mapStateToProps = ({ authentication }) => ({
+  account: authentication.account,
+  isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
+  isManager: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.MANAGER]),
+  isStaff: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.STAFF])
 });
 
 const mapDispatchToProps = {};

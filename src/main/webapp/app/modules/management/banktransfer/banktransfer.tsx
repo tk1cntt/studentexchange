@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 import qs from 'query-string';
+import { Modal } from 'antd';
 
 import { getSession } from 'app/shared/reducers/authentication';
 
@@ -18,11 +19,17 @@ export interface IBankTransferProp extends StateProps, DispatchProps {
 }
 
 export interface IBankTransferState {
+  showPayment: boolean;
+  topupMobile: string;
+  topupAmount: number;
   mobile: any;
 }
 
 export class BankTransfer extends React.Component<IBankTransferProp> {
   state: IBankTransferState = {
+    showPayment: false,
+    topupMobile: null,
+    topupAmount: 0,
     mobile: null
   };
 
@@ -49,7 +56,31 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
     this.props.getUserByMobile('mobile.contains=' + this.state.mobile);
   };
 
-  topupClick = () => {};
+  showPaymentConfirm = topupMobile => {
+    this.setState({
+      showPayment: true,
+      topupMobile
+    });
+  };
+
+  onChangeTopupAmount = e => {
+    this.setState({
+      topupAmount: e.target.value
+    });
+  };
+
+  topupClick = () => {
+    console.log(this.state.topupMobile, this.state.topupAmount);
+    this.setState({
+      showPayment: false
+    });
+  };
+
+  topupCancel = () => {
+    this.setState({
+      showPayment: false
+    });
+  };
 
   render() {
     console.log(this.props.userProfileList);
@@ -107,8 +138,12 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
                               <td className="footable-visible">{userProfile.districtName}</td>
                               <td className="footable-visible">
                                 <div className="input-group-btn">
-                                  <button className="btn btn-primary" type="button" onClick={this.topupClick}>
-                                    <i className="fa fa-search" /> Tìm kiếm
+                                  <button
+                                    className="btn btn-xs btn-danger"
+                                    type="button"
+                                    onClick={this.showPaymentConfirm.bind(this, userProfile.mobile)}
+                                  >
+                                    <i className="fa fa-sign-in" /> Nạp tiền
                                   </button>
                                 </div>
                               </td>
@@ -122,6 +157,32 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
               </div>
             </div>{' '}
           </div>
+          {this.state.showPayment ? (
+            <Modal
+              title={`Nạp tiền cho tài khoản ${this.state.topupMobile}`}
+              visible={this.state.showPayment}
+              okText="Nạp tiền"
+              okType="danger"
+              cancelText="Hủy"
+              onOk={this.topupClick}
+              onCancel={this.topupCancel}
+            >
+              <p>Hãy xác nhận lại thông tin trước khi thực hiện nạp tiền</p>
+              <div className="form-group">
+                <label>Số tiền</label>
+                <input
+                  type="text"
+                  placeholder="Số tiền cần nạp"
+                  className="form-control"
+                  name="topupAmount"
+                  onChange={this.onChangeTopupAmount}
+                  defaultValue="0"
+                />
+              </div>
+            </Modal>
+          ) : (
+            ''
+          )}
           <Footer />
         </div>
       </>

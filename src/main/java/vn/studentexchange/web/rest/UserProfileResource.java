@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -128,6 +129,10 @@ public class UserProfileResource {
         log.debug("REST request to get owner UserProfile");
         String username = SecurityUtils.getCurrentUserLogin().get();
         Optional<UserProfileDTO> userProfileDTO = userProfileService.findByOwner(username);
+        if (!userProfileDTO.isPresent()) {
+            UserProfileDTO newUserProfile = new UserProfileDTO();
+            return ResponseUtil.wrapOrNotFound(userProfileService.save(newUserProfile, username));
+        }
         return ResponseUtil.wrapOrNotFound(userProfileDTO);
     }
 

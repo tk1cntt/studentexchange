@@ -1,7 +1,9 @@
 package vn.studentexchange.service;
 
+import vn.studentexchange.domain.User;
 import vn.studentexchange.domain.UserProfile;
 import vn.studentexchange.repository.UserProfileRepository;
+import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.service.dto.UserProfileDTO;
 import vn.studentexchange.service.mapper.UserProfileMapper;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 /**
@@ -27,9 +30,12 @@ public class UserProfileService {
 
     private final UserProfileMapper userProfileMapper;
 
-    public UserProfileService(UserProfileRepository userProfileRepository, UserProfileMapper userProfileMapper) {
+    private final UserRepository userRepository;
+
+    public UserProfileService(UserProfileRepository userProfileRepository, UserProfileMapper userProfileMapper, UserRepository userRepository) {
         this.userProfileRepository = userProfileRepository;
         this.userProfileMapper = userProfileMapper;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -44,6 +50,16 @@ public class UserProfileService {
         UserProfile userProfile = userProfileMapper.toEntity(userProfileDTO);
         userProfile = userProfileRepository.save(userProfile);
         return userProfileMapper.toDto(userProfile);
+    }
+
+    public Optional<UserProfileDTO> save(UserProfileDTO userProfileDTO, String username) {
+        log.debug("Request to save UserProfile : {}", userProfileDTO);
+        Optional<User> existingUser = userRepository.findOneByLogin(username);
+        UserProfile userProfile = userProfileMapper.toEntity(userProfileDTO);
+        userProfile.setCreateAt(LocalDate.now());
+        userProfile.setCreateBy(existingUser.get());
+        userProfile = userProfileRepository.save(userProfile);
+        return Optional.of(userProfileMapper.toDto(userProfile));
     }
 
     /**

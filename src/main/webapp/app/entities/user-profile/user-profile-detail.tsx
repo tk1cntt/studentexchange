@@ -53,6 +53,12 @@ export class UserProfileDetail extends React.Component<IUserProfileDetailProps> 
             </dt>
             <dd>{userProfileEntity.mobile}</dd>
             <dt>
+              <span id="address">
+                <Translate contentKey="studentexchangeApp.userProfile.address">Address</Translate>
+              </span>
+            </dt>
+            <dd>{userProfileEntity.address}</dd>
+            <dt>
               <span id="createAt">
                 <Translate contentKey="studentexchangeApp.userProfile.createAt">Create At</Translate>
               </span>

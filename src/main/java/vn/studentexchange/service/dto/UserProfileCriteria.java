@@ -39,6 +39,8 @@ public class UserProfileCriteria implements Serializable {
 
     private StringFilter mobile;
 
+    private StringFilter address;
+
     private LocalDateFilter createAt;
 
     private LocalDateFilter updateAt;
@@ -94,6 +96,14 @@ public class UserProfileCriteria implements Serializable {
 
     public void setMobile(StringFilter mobile) {
         this.mobile = mobile;
+    }
+
+    public StringFilter getAddress() {
+        return address;
+    }
+
+    public void setAddress(StringFilter address) {
+        this.address = address;
     }
 
     public LocalDateFilter getCreateAt() {
@@ -168,6 +178,7 @@ public class UserProfileCriteria implements Serializable {
             Objects.equals(gender, that.gender) &&
             Objects.equals(email, that.email) &&
             Objects.equals(mobile, that.mobile) &&
+            Objects.equals(address, that.address) &&
             Objects.equals(createAt, that.createAt) &&
             Objects.equals(updateAt, that.updateAt) &&
             Objects.equals(createById, that.createById) &&
@@ -185,6 +196,7 @@ public class UserProfileCriteria implements Serializable {
         gender,
         email,
         mobile,
+        address,
         createAt,
         updateAt,
         createById,
@@ -203,6 +215,7 @@ public class UserProfileCriteria implements Serializable {
                 (gender != null ? "gender=" + gender + ", " : "") +
                 (email != null ? "email=" + email + ", " : "") +
                 (mobile != null ? "mobile=" + mobile + ", " : "") +
+                (address != null ? "address=" + address + ", " : "") +
                 (createAt != null ? "createAt=" + createAt + ", " : "") +
                 (updateAt != null ? "updateAt=" + updateAt + ", " : "") +
                 (createById != null ? "createById=" + createById + ", " : "") +

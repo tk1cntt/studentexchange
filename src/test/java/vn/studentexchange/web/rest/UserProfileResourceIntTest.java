@@ -64,6 +64,9 @@ public class UserProfileResourceIntTest {
     private static final String DEFAULT_MOBILE = "AAAAAAAAAA";
     private static final String UPDATED_MOBILE = "BBBBBBBBBB";
 
+    private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
+
     private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
 
@@ -121,6 +124,7 @@ public class UserProfileResourceIntTest {
             .gender(DEFAULT_GENDER)
             .email(DEFAULT_EMAIL)
             .mobile(DEFAULT_MOBILE)
+            .address(DEFAULT_ADDRESS)
             .createAt(DEFAULT_CREATE_AT)
             .updateAt(DEFAULT_UPDATE_AT);
         return userProfile;
@@ -151,6 +155,7 @@ public class UserProfileResourceIntTest {
         assertThat(testUserProfile.getGender()).isEqualTo(DEFAULT_GENDER);
         assertThat(testUserProfile.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testUserProfile.getMobile()).isEqualTo(DEFAULT_MOBILE);
+        assertThat(testUserProfile.getAddress()).isEqualTo(DEFAULT_ADDRESS);
         assertThat(testUserProfile.getCreateAt()).isEqualTo(DEFAULT_CREATE_AT);
         assertThat(testUserProfile.getUpdateAt()).isEqualTo(DEFAULT_UPDATE_AT);
     }
@@ -190,6 +195,7 @@ public class UserProfileResourceIntTest {
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE.toString())))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
     }
@@ -209,6 +215,7 @@ public class UserProfileResourceIntTest {
             .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
             .andExpect(jsonPath("$.mobile").value(DEFAULT_MOBILE.toString()))
+            .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
             .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
             .andExpect(jsonPath("$.updateAt").value(DEFAULT_UPDATE_AT.toString()));
     }
@@ -367,6 +374,45 @@ public class UserProfileResourceIntTest {
 
         // Get all the userProfileList where mobile is null
         defaultUserProfileShouldNotBeFound("mobile.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserProfilesByAddressIsEqualToSomething() throws Exception {
+        // Initialize the database
+        userProfileRepository.saveAndFlush(userProfile);
+
+        // Get all the userProfileList where address equals to DEFAULT_ADDRESS
+        defaultUserProfileShouldBeFound("address.equals=" + DEFAULT_ADDRESS);
+
+        // Get all the userProfileList where address equals to UPDATED_ADDRESS
+        defaultUserProfileShouldNotBeFound("address.equals=" + UPDATED_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserProfilesByAddressIsInShouldWork() throws Exception {
+        // Initialize the database
+        userProfileRepository.saveAndFlush(userProfile);
+
+        // Get all the userProfileList where address in DEFAULT_ADDRESS or UPDATED_ADDRESS
+        defaultUserProfileShouldBeFound("address.in=" + DEFAULT_ADDRESS + "," + UPDATED_ADDRESS);
+
+        // Get all the userProfileList where address equals to UPDATED_ADDRESS
+        defaultUserProfileShouldNotBeFound("address.in=" + UPDATED_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserProfilesByAddressIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        userProfileRepository.saveAndFlush(userProfile);
+
+        // Get all the userProfileList where address is not null
+        defaultUserProfileShouldBeFound("address.specified=true");
+
+        // Get all the userProfileList where address is null
+        defaultUserProfileShouldNotBeFound("address.specified=false");
     }
 
     @Test
@@ -607,6 +653,7 @@ public class UserProfileResourceIntTest {
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE.toString())))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
 
@@ -660,6 +707,7 @@ public class UserProfileResourceIntTest {
             .gender(UPDATED_GENDER)
             .email(UPDATED_EMAIL)
             .mobile(UPDATED_MOBILE)
+            .address(UPDATED_ADDRESS)
             .createAt(UPDATED_CREATE_AT)
             .updateAt(UPDATED_UPDATE_AT);
         UserProfileDTO userProfileDTO = userProfileMapper.toDto(updatedUserProfile);
@@ -677,6 +725,7 @@ public class UserProfileResourceIntTest {
         assertThat(testUserProfile.getGender()).isEqualTo(UPDATED_GENDER);
         assertThat(testUserProfile.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testUserProfile.getMobile()).isEqualTo(UPDATED_MOBILE);
+        assertThat(testUserProfile.getAddress()).isEqualTo(UPDATED_ADDRESS);
         assertThat(testUserProfile.getCreateAt()).isEqualTo(UPDATED_CREATE_AT);
         assertThat(testUserProfile.getUpdateAt()).isEqualTo(UPDATED_UPDATE_AT);
     }

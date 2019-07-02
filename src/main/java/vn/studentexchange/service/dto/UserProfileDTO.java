@@ -20,6 +20,8 @@ public class UserProfileDTO implements Serializable {
 
     private String mobile;
 
+    private String address;
+
     private LocalDate createAt;
 
     private LocalDate updateAt;
@@ -78,6 +80,14 @@ public class UserProfileDTO implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public LocalDate getCreateAt() {
@@ -189,6 +199,7 @@ public class UserProfileDTO implements Serializable {
             ", gender='" + getGender() + "'" +
             ", email='" + getEmail() + "'" +
             ", mobile='" + getMobile() + "'" +
+            ", address='" + getAddress() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +
             ", createBy=" + getCreateById() +

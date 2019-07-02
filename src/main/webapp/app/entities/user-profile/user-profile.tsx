@@ -87,6 +87,9 @@ export class UserProfile extends React.Component<IUserProfileProps, IUserProfile
                 <th className="hand" onClick={this.sort('mobile')}>
                   <Translate contentKey="studentexchangeApp.userProfile.mobile">Mobile</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={this.sort('address')}>
+                  <Translate contentKey="studentexchangeApp.userProfile.address">Address</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={this.sort('createAt')}>
                   <Translate contentKey="studentexchangeApp.userProfile.createAt">Create At</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -122,6 +125,7 @@ export class UserProfile extends React.Component<IUserProfileProps, IUserProfile
                   </td>
                   <td>{userProfile.email}</td>
                   <td>{userProfile.mobile}</td>
+                  <td>{userProfile.address}</td>
                   <td>
                     <TextFormat type="date" value={userProfile.createAt} format={APP_LOCAL_DATE_FORMAT} />
                   </td>

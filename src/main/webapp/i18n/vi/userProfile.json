@@ -19,6 +19,7 @@
       "gender": "Gender",
       "email": "Email",
       "mobile": "Mobile",
+      "address": "Address",
       "createAt": "Create At",
       "updateAt": "Update At",
       "createBy": "Create By",

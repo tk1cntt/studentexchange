@@ -101,6 +101,9 @@ public class UserProfileQueryService extends QueryService<UserProfile> {
             if (criteria.getMobile() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getMobile(), UserProfile_.mobile));
             }
+            if (criteria.getAddress() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getAddress(), UserProfile_.address));
+            }
             if (criteria.getCreateAt() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getCreateAt(), UserProfile_.createAt));
             }

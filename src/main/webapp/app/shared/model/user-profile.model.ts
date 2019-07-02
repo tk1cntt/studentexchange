@@ -13,6 +13,7 @@ export interface IUserProfile {
   gender?: Gender;
   email?: string;
   mobile?: string;
+  address?: string;
   createAt?: Moment;
   updateAt?: Moment;
   createByLogin?: string;

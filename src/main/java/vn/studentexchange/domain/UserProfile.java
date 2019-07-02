@@ -38,6 +38,9 @@ public class UserProfile implements Serializable {
     @Column(name = "mobile")
     private String mobile;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "create_at")
     private LocalDate createAt;
 
@@ -117,6 +120,19 @@ public class UserProfile implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public UserProfile address(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public LocalDate getCreateAt() {
@@ -251,6 +267,7 @@ public class UserProfile implements Serializable {
             ", gender='" + getGender() + "'" +
             ", email='" + getEmail() + "'" +
             ", mobile='" + getMobile() + "'" +
+            ", address='" + getAddress() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +
             "}";

@@ -148,6 +148,12 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
                   <AvField id="user-profile-mobile" type="text" name="mobile" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="addressLabel" for="address">
+                    <Translate contentKey="studentexchangeApp.userProfile.address">Address</Translate>
+                  </Label>
+                  <AvField id="user-profile-address" type="text" name="address" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.userProfile.createAt">Create At</Translate>
                   </Label>

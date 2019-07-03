@@ -1,6 +1,9 @@
 package vn.studentexchange.repository;
 
 import vn.studentexchange.domain.Payment;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +25,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     @Query("select payment from Payment payment where payment.createBy.login = ?#{principal.username}")
     List<Payment> findByCreateByIsCurrentUser();
 
+    Page<Payment> findByCreateByLoginOrderByCreateAtDesc(String username, Pageable pageable);
 }

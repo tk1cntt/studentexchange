@@ -58,7 +58,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
           </li>
           <li className={`${activeSubMenu === 'change-password' ? 'active' : ''}`}>
             <Link to={'/payment/history'}>
-              <FontAwesomeIcon icon="clock" /> Lịch sử thanh toán
+              <i className="fa fa-exchange" /> Lịch sử thanh toán
             </Link>
           </li>
         </ul>

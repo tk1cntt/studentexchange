@@ -6,7 +6,8 @@ import vn.studentexchange.service.dto.PaymentDTO;
 import vn.studentexchange.service.mapper.PaymentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +61,12 @@ public class PaymentService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Transactional(readOnly = true)
+    public Page<PaymentDTO> findByOwner(String username, Pageable pageable) {
+        log.debug("Request to get all Payments");
+        return paymentRepository.findByCreateByLoginOrderByCreateAtDesc(username, pageable)
+            .map(paymentMapper::toDto);
+    }
 
     /**
      * Get one payment by id.

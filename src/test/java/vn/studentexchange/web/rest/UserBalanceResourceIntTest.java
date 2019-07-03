@@ -4,6 +4,7 @@ import vn.studentexchange.StudentexchangeApp;
 
 import vn.studentexchange.domain.UserBalance;
 import vn.studentexchange.repository.UserBalanceRepository;
+import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.service.UserBalanceService;
 import vn.studentexchange.service.dto.UserBalanceDTO;
 import vn.studentexchange.service.mapper.UserBalanceMapper;
@@ -69,6 +70,9 @@ public class UserBalanceResourceIntTest {
     private UserBalanceService userBalanceService;
 
     @Autowired
+    private final UserRepository userRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -87,7 +91,7 @@ public class UserBalanceResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final UserBalanceResource userBalanceResource = new UserBalanceResource(userBalanceService);
+        final UserBalanceResource userBalanceResource = new UserBalanceResource(userBalanceService, userRepository);
         this.restUserBalanceMockMvc = MockMvcBuilders.standaloneSetup(userBalanceResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

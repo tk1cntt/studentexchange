@@ -21,11 +21,13 @@ import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.security.jwt.JWTFilter;
 import vn.studentexchange.security.jwt.TokenProvider;
 import vn.studentexchange.service.MailService;
+import vn.studentexchange.service.UserProfileService;
 import vn.studentexchange.service.UserService;
 import vn.studentexchange.service.dto.FBAccountDTO;
 import vn.studentexchange.service.dto.PasswordChangeDTO;
 import vn.studentexchange.service.dto.TokenExchangeDTO;
 import vn.studentexchange.service.dto.UserDTO;
+import vn.studentexchange.service.dto.UserProfileDTO;
 import vn.studentexchange.web.rest.errors.*;
 import vn.studentexchange.web.rest.util.Utils;
 import vn.studentexchange.web.rest.vm.KeyAndPasswordVM;
@@ -60,14 +62,17 @@ public class AccountResource {
 
     private final UserService userService;
 
+    private final UserProfileService userProfileService;
+
     private final MailService mailService;
 
     private final TokenProvider tokenProvider;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, TokenProvider tokenProvider) {
+    public AccountResource(UserRepository userRepository, UserService userService, UserProfileService userProfileService, MailService mailService, TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.userProfileService = userProfileService;
         this.mailService = mailService;
     }
 
@@ -148,6 +153,9 @@ public class AccountResource {
                     authorities.add("ROLE_USER");
                     userDTO.setAuthorities(authorities);
                     currentUser = userService.createUser(userDTO);
+                    UserProfileDTO newUserProfile = new UserProfileDTO();
+                    newUserProfile.setMobile(username);
+                    userProfileService.save(newUserProfile, username);
                 }
                 // Create jwt from user
                 List<GrantedAuthority> grantedAuthorities = currentUser.getAuthorities().stream()

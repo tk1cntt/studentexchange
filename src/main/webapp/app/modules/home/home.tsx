@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities } from 'app/entities/shopping-cart-item/shopping-cart-item.reducer';
+import { getOwnerEntities as getShoppingItem } from 'app/entities/shopping-cart-item/shopping-cart-item.reducer';
+import { getOwnerEntities as getOwnerPayment } from 'app/entities/payment/payment.reducer';
+import { formatCurency } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
@@ -14,7 +16,8 @@ export interface IHomeProp extends StateProps, DispatchProps {}
 
 export class Home extends React.Component<IHomeProp> {
   componentDidMount() {
-    this.props.getOwnerEntities();
+    this.props.getShoppingItem();
+    this.props.getOwnerPayment();
   }
 
   render() {
@@ -25,50 +28,45 @@ export class Home extends React.Component<IHomeProp> {
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row border-bottom white-bg dashboard-header">
-            <div className="col-md-6">
-              <h4>Xin chào {this.props.account.login}</h4>
-              <b>Lịch sử giao dịch</b>
+            <div className="col-md-8">
+              <h4>Lịch sử giao dịch</h4>
               <ul className="list-group clear-list m-t">
-                <li className="list-group-item fist-item">
-                  <span className="pull-right">09:00 pm</span>
-                  <span className="label label-success">1</span> Tôi muốn huỷ đơn hàng ABC31233
-                </li>
-                <li className="list-group-item">
-                  <span className="pull-right">10:16 am</span>
-                  <span className="label label-info">2</span> Đơn hàng của anh chị vừa chuyển về kho Trung Quốc
-                </li>
-                <li className="list-group-item">
-                  <span className="pull-right">08:22 pm</span>
-                  <span className="label label-primary">3</span> Bạn đã chuyển tiền thanh toán cho đơn hàng DH12345
-                </li>
-                <li className="list-group-item">
-                  <span className="pull-right">11:06 pm</span>
-                  <span className="label label-default">4</span> Bạn đã nạp 500.000 VNĐ vào tài khoản
-                </li>
-                <li className="list-group-item">
-                  <span className="pull-right">12:00 am</span>
-                  <span className="label label-primary">5</span> Đơn hàng DH12345 đã được mua
-                </li>
+                {this.props.paymentList.length === 0 ? (
+                  <li className="list-group-item fist-item">Chưa có giao dịch</li>
+                ) : (
+                  <>
+                    <li className="list-group-item fist-item">
+                      <span className="pull-right">09:00 pm</span>
+                      <span className="label label-success">1</span> Tôi muốn huỷ đơn hàng ABC31233
+                    </li>
+                    <li className="list-group-item">
+                      <span className="pull-right">10:16 am</span>
+                      <span className="label label-info">2</span> Đơn hàng của anh chị vừa chuyển về kho Trung Quốc
+                    </li>
+                    <li className="list-group-item">
+                      <span className="pull-right">08:22 pm</span>
+                      <span className="label label-primary">3</span> Bạn đã chuyển tiền thanh toán cho đơn hàng DH12345
+                    </li>
+                    <li className="list-group-item">
+                      <span className="pull-right">11:06 pm</span>
+                      <span className="label label-default">4</span> Bạn đã nạp 500.000 VNĐ vào tài khoản
+                    </li>
+                    <li className="list-group-item">
+                      <span className="pull-right">12:00 am</span>
+                      <span className="label label-primary">5</span> Đơn hàng DH12345 đã được mua
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
-            <div className="col-md-6">
-              <div className="statistic-box">
-                <h4>Project Beta progress</h4>
-                <p>You have two project with not compleated task.</p>
-                <div className="row text-center">
-                  <div className="col-lg-6">
-                    <canvas id="doughnutChart2" width={80} height={80} style={{ margin: '18px auto 0' }} />
-                    <h5>Kolter</h5>
-                  </div>
-                  <div className="col-lg-6">
-                    <canvas id="doughnutChart" width={80} height={80} style={{ margin: '18px auto 0' }} />
-                    <h5>Maxtor</h5>
-                  </div>
-                </div>
-                <div className="m-t">
-                  <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
-                </div>
-              </div>
+            <div className="col-md-4">
+              <h4>Thông tin tài khoản</h4>
+              <ul className="list-group clear-list m-t">
+                <li className="list-group-item fist-item">
+                  <span className="pull-right">{formatCurency(this.props.userBalanceEntity.balanceAvailable)}đ</span>
+                  <i className="fa fa-money" /> Số dư tài khoản
+                </li>
+              </ul>
             </div>
           </div>
           <div className="row">
@@ -489,10 +487,12 @@ export class Home extends React.Component<IHomeProp> {
 
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
+  userBalanceEntity: storeState.userBalance.entity,
+  paymentList: storeState.payment.entities,
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOwnerEntities };
+const mapDispatchToProps = { getSession, getShoppingItem, getOwnerPayment };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

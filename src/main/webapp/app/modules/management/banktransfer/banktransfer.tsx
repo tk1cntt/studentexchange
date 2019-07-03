@@ -165,7 +165,7 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
                   </div>
                 </div>
               </div>
-            </div>{' '}
+            </div>
           </div>
           {this.state.showPayment ? (
             <Modal

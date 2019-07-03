@@ -3,12 +3,20 @@ package vn.studentexchange.web.rest;
 import com.codahale.metrics.annotation.Timed;
 
 import vn.studentexchange.domain.User;
+import vn.studentexchange.domain.enumeration.PaymentMethod;
+import vn.studentexchange.domain.enumeration.PaymentStatusType;
+import vn.studentexchange.domain.enumeration.PaymentType;
+import vn.studentexchange.repository.PaymentRepository;
 import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.security.AuthoritiesConstants;
 import vn.studentexchange.security.SecurityUtils;
+import vn.studentexchange.service.PaymentService;
 import vn.studentexchange.service.UserBalanceService;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
+import vn.studentexchange.web.rest.util.Utils;
+import vn.studentexchange.service.dto.OrderTransactionDTO;
+import vn.studentexchange.service.dto.PaymentDTO;
 import vn.studentexchange.service.dto.UserBalanceDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -19,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,9 +46,12 @@ public class UserBalanceResource {
 
     private final UserRepository userRepository;
 
-    public UserBalanceResource(UserBalanceService userBalanceService, UserRepository userRepository) {
+    private final PaymentService paymentService;
+
+    public UserBalanceResource(UserBalanceService userBalanceService, UserRepository userRepository, PaymentService paymentService) {
         this.userBalanceService = userBalanceService;
         this.userRepository = userRepository;
+        this.paymentService = paymentService;
     }
 
     /**
@@ -79,15 +90,29 @@ public class UserBalanceResource {
         UserBalanceDTO currentBalance;
         if (dto.isPresent()) {
             currentBalance = dto.get();
+            currentBalance.setUpdateAt(LocalDate.now());
         } else {
             currentBalance = new UserBalanceDTO();
+            currentBalance.setCreateAt(LocalDate.now());
             currentBalance.setCreateById(paymentUser.get().getId());
             currentBalance.setCreateByLogin(paymentUser.get().getLogin());
         }
         currentBalance.setBalanceAvailable(currentBalance.getBalanceAvailable() + userBalanceDTO.getCash());
         currentBalance.setCash(currentBalance.getCash() + userBalanceDTO.getCash());
         UserBalanceDTO result = userBalanceService.save(currentBalance);
-        // Add to history
+        // Add to payment history
+        PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setCode(Utils.generateNumber());
+        paymentDTO.setAmount(userBalanceDTO.getCash());
+        paymentDTO.setNote("Nạp tiền vào tài khoản");
+        paymentDTO.setMethod(PaymentMethod.BANK_TRANSFER);
+        paymentDTO.setType(PaymentType.DEPOSIT);
+        paymentDTO.setNewBalance(currentBalance.getCash());
+        paymentDTO.setCreateAt(LocalDate.now());
+        paymentDTO.setCreateById(paymentUser.get().getId());
+        paymentDTO.setCreateByLogin(paymentUser.get().getLogin());
+        paymentDTO.setStatus(PaymentStatusType.PAID);
+        paymentService.save(paymentDTO);
         return ResponseEntity.ok().body(result);
     }
 

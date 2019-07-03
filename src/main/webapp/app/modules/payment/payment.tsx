@@ -33,7 +33,7 @@ export class Payment extends React.Component<ICheckoutProp> {
           <div className="row  border-bottom white-bg dashboard-header">
             <h4>Quý khách hàng chuyển khoản qua ngân hàng của Abuma dưới đây</h4>
           </div>
-          <div className="row wrapper wrapper-content">
+          <div className="row wrapper">
             <div className="ibox">
               <div className="ibox-content">
                 Số tài khoản: <b className="text-danger">0123456789</b>
@@ -53,50 +53,51 @@ export class Payment extends React.Component<ICheckoutProp> {
               </div>
             </div>
           </div>
-          <div className="row wrapper wrapper-content">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="ibox">
-                  <div className="ibox-content">
-                    {this.props.paymentList.length === 0 ? (
-                      <div className="no-content">Không có dữ liệu</div>
-                    ) : (
-                      <table
-                        className="footable table table-stripped toggle-arrow-tiny tablet breakpoint footable-loaded"
-                        data-page-size={15}
-                      >
-                        <thead>
-                          <tr>
-                            <th className="footable-visible footable-sortable">Mã giao dịch</th>
-                            <th className="footable-visible footable-sortable">Số tiền</th>
-                            <th className="footable-visible footable-sortable">Số dư sau giao dịch</th>
-                            <th className="footable-visible footable-sortable">Loại giao dịch</th>
-                            <th className="footable-visible footable-sortable">Nội dung</th>
-                            <th className="footable-visible footable-sortable">Trạng thái</th>
+          <div className="row  border-bottom white-bg dashboard-header">
+            <h4>Thông tin giao dịch</h4>
+          </div>
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="ibox">
+                <div className="ibox-content">
+                  {this.props.paymentList.length === 0 ? (
+                    <div className="no-content">Không có dữ liệu</div>
+                  ) : (
+                    <table
+                      className="footable table table-stripped toggle-arrow-tiny tablet breakpoint footable-loaded"
+                      data-page-size={15}
+                    >
+                      <thead>
+                        <tr>
+                          <th className="footable-visible footable-sortable">Mã giao dịch</th>
+                          <th className="footable-visible footable-sortable">Số tiền</th>
+                          <th className="footable-visible footable-sortable">Số dư sau giao dịch</th>
+                          <th className="footable-visible footable-sortable">Loại giao dịch</th>
+                          <th className="footable-visible footable-sortable">Nội dung</th>
+                          <th className="footable-visible footable-sortable">Trạng thái</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.props.paymentList.map((payment, i) => (
+                          <tr key={`id-${i}`} className="footable-even" style={{}}>
+                            <td className="footable-visible footable-first-column">{payment.code}</td>
+                            <td className="footable-visible">
+                              <b className="text-danger">
+                                {payment.type === PaymentType.ORDER_PAYMENT ? '-' : '+'}
+                                {formatCurency(payment.amount)}đ
+                              </b>
+                            </td>
+                            <td className="footable-visible">{formatCurency(payment.newBalance)}đ</td>
+                            <td className="footable-visible">{payment.type}</td>
+                            <td className="footable-visible">{payment.note}</td>
+                            <td className="footable-visible">
+                              <span className="label label-success">{payment.status}</span>
+                            </td>
                           </tr>
-                        </thead>
-                        <tbody>
-                          {this.props.paymentList.map((payment, i) => (
-                            <tr key={`id-${i}`} className="footable-even" style={{}}>
-                              <td className="footable-visible footable-first-column">{payment.code}</td>
-                              <td className="footable-visible">
-                                <b className="text-danger">
-                                  {payment.type == PaymentType.ORDER_PAYMENT ? '-' : '+'}
-                                  {formatCurency(payment.amount)}đ
-                                </b>
-                              </td>
-                              <td className="footable-visible">{formatCurency(payment.newBalance)}đ</td>
-                              <td className="footable-visible">{payment.type}</td>
-                              <td className="footable-visible">{payment.note}</td>
-                              <td className="footable-visible">
-                                <span className="label label-success">{payment.status}</span>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    )}
-                  </div>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
                 </div>
               </div>
             </div>

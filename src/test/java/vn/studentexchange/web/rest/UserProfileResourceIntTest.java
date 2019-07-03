@@ -31,8 +31,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -67,11 +67,11 @@ public class UserProfileResourceIntTest {
     private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_CREATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final LocalDate DEFAULT_UPDATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_UPDATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_UPDATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_UPDATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private UserProfileRepository userProfileRepository;
@@ -456,33 +456,6 @@ public class UserProfileResourceIntTest {
 
     @Test
     @Transactional
-    public void getAllUserProfilesByCreateAtIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        userProfileRepository.saveAndFlush(userProfile);
-
-        // Get all the userProfileList where createAt greater than or equals to DEFAULT_CREATE_AT
-        defaultUserProfileShouldBeFound("createAt.greaterOrEqualThan=" + DEFAULT_CREATE_AT);
-
-        // Get all the userProfileList where createAt greater than or equals to UPDATED_CREATE_AT
-        defaultUserProfileShouldNotBeFound("createAt.greaterOrEqualThan=" + UPDATED_CREATE_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllUserProfilesByCreateAtIsLessThanSomething() throws Exception {
-        // Initialize the database
-        userProfileRepository.saveAndFlush(userProfile);
-
-        // Get all the userProfileList where createAt less than or equals to DEFAULT_CREATE_AT
-        defaultUserProfileShouldNotBeFound("createAt.lessThan=" + DEFAULT_CREATE_AT);
-
-        // Get all the userProfileList where createAt less than or equals to UPDATED_CREATE_AT
-        defaultUserProfileShouldBeFound("createAt.lessThan=" + UPDATED_CREATE_AT);
-    }
-
-
-    @Test
-    @Transactional
     public void getAllUserProfilesByUpdateAtIsEqualToSomething() throws Exception {
         // Initialize the database
         userProfileRepository.saveAndFlush(userProfile);
@@ -519,33 +492,6 @@ public class UserProfileResourceIntTest {
         // Get all the userProfileList where updateAt is null
         defaultUserProfileShouldNotBeFound("updateAt.specified=false");
     }
-
-    @Test
-    @Transactional
-    public void getAllUserProfilesByUpdateAtIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        userProfileRepository.saveAndFlush(userProfile);
-
-        // Get all the userProfileList where updateAt greater than or equals to DEFAULT_UPDATE_AT
-        defaultUserProfileShouldBeFound("updateAt.greaterOrEqualThan=" + DEFAULT_UPDATE_AT);
-
-        // Get all the userProfileList where updateAt greater than or equals to UPDATED_UPDATE_AT
-        defaultUserProfileShouldNotBeFound("updateAt.greaterOrEqualThan=" + UPDATED_UPDATE_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllUserProfilesByUpdateAtIsLessThanSomething() throws Exception {
-        // Initialize the database
-        userProfileRepository.saveAndFlush(userProfile);
-
-        // Get all the userProfileList where updateAt less than or equals to DEFAULT_UPDATE_AT
-        defaultUserProfileShouldNotBeFound("updateAt.lessThan=" + DEFAULT_UPDATE_AT);
-
-        // Get all the userProfileList where updateAt less than or equals to UPDATED_UPDATE_AT
-        defaultUserProfileShouldBeFound("updateAt.lessThan=" + UPDATED_UPDATE_AT);
-    }
-
 
     @Test
     @Transactional

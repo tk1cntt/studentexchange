@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +56,7 @@ public class UserShippingAddressResource {
             throw new BadRequestAlertException("A new userShippingAddress cannot already have an ID", ENTITY_NAME, "idexists");
         }
         userShippingAddressDTO.setCreateByLogin(SecurityUtils.getCurrentUserLogin().get());
-        userShippingAddressDTO.setCreateAt(LocalDate.now());
+        userShippingAddressDTO.setCreateAt(Instant.now());
         UserShippingAddressDTO result = userShippingAddressService.save(userShippingAddressDTO);
         return ResponseEntity.created(new URI("/api/user-shipping-addresses/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -79,7 +80,7 @@ public class UserShippingAddressResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         userShippingAddressDTO.setUpdateByLogin(SecurityUtils.getCurrentUserLogin().get());
-        userShippingAddressDTO.setUpdateAt(LocalDate.now());
+        userShippingAddressDTO.setUpdateAt(Instant.now());
         UserShippingAddressDTO result = userShippingAddressService.save(userShippingAddressDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userShippingAddressDTO.getId().toString()))

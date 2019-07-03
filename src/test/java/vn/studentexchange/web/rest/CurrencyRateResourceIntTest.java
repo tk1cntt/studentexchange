@@ -24,8 +24,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -51,8 +51,8 @@ public class CurrencyRateResourceIntTest {
     private static final Float DEFAULT_RATE = 1F;
     private static final Float UPDATED_RATE = 2F;
 
-    private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_CREATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private CurrencyRateRepository currencyRateRepository;

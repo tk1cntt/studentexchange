@@ -240,9 +240,6 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="order_cart" columnName="deposit_time" columnDataType="datetime"/>
-        <dropDefaultValue tableName="order_cart" columnName="create_at" columnDataType="datetime"/>
-        <dropDefaultValue tableName="order_cart" columnName="update_at" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

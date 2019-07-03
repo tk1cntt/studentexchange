@@ -28,8 +28,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -63,11 +63,11 @@ public class DistrictResourceIntTest {
     private static final Boolean DEFAULT_ENABLED = false;
     private static final Boolean UPDATED_ENABLED = true;
 
-    private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_CREATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final LocalDate DEFAULT_UPDATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_UPDATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_UPDATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_UPDATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private DistrictRepository districtRepository;
@@ -452,33 +452,6 @@ public class DistrictResourceIntTest {
 
     @Test
     @Transactional
-    public void getAllDistrictsByCreateAtIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        districtRepository.saveAndFlush(district);
-
-        // Get all the districtList where createAt greater than or equals to DEFAULT_CREATE_AT
-        defaultDistrictShouldBeFound("createAt.greaterOrEqualThan=" + DEFAULT_CREATE_AT);
-
-        // Get all the districtList where createAt greater than or equals to UPDATED_CREATE_AT
-        defaultDistrictShouldNotBeFound("createAt.greaterOrEqualThan=" + UPDATED_CREATE_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllDistrictsByCreateAtIsLessThanSomething() throws Exception {
-        // Initialize the database
-        districtRepository.saveAndFlush(district);
-
-        // Get all the districtList where createAt less than or equals to DEFAULT_CREATE_AT
-        defaultDistrictShouldNotBeFound("createAt.lessThan=" + DEFAULT_CREATE_AT);
-
-        // Get all the districtList where createAt less than or equals to UPDATED_CREATE_AT
-        defaultDistrictShouldBeFound("createAt.lessThan=" + UPDATED_CREATE_AT);
-    }
-
-
-    @Test
-    @Transactional
     public void getAllDistrictsByUpdateAtIsEqualToSomething() throws Exception {
         // Initialize the database
         districtRepository.saveAndFlush(district);
@@ -515,33 +488,6 @@ public class DistrictResourceIntTest {
         // Get all the districtList where updateAt is null
         defaultDistrictShouldNotBeFound("updateAt.specified=false");
     }
-
-    @Test
-    @Transactional
-    public void getAllDistrictsByUpdateAtIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        districtRepository.saveAndFlush(district);
-
-        // Get all the districtList where updateAt greater than or equals to DEFAULT_UPDATE_AT
-        defaultDistrictShouldBeFound("updateAt.greaterOrEqualThan=" + DEFAULT_UPDATE_AT);
-
-        // Get all the districtList where updateAt greater than or equals to UPDATED_UPDATE_AT
-        defaultDistrictShouldNotBeFound("updateAt.greaterOrEqualThan=" + UPDATED_UPDATE_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllDistrictsByUpdateAtIsLessThanSomething() throws Exception {
-        // Initialize the database
-        districtRepository.saveAndFlush(district);
-
-        // Get all the districtList where updateAt less than or equals to DEFAULT_UPDATE_AT
-        defaultDistrictShouldNotBeFound("updateAt.lessThan=" + DEFAULT_UPDATE_AT);
-
-        // Get all the districtList where updateAt less than or equals to UPDATED_UPDATE_AT
-        defaultDistrictShouldBeFound("updateAt.lessThan=" + UPDATED_UPDATE_AT);
-    }
-
 
     @Test
     @Transactional

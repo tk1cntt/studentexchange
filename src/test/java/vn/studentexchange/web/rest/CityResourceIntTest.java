@@ -27,8 +27,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -56,11 +56,11 @@ public class CityResourceIntTest {
     private static final Boolean DEFAULT_ENABLED = false;
     private static final Boolean UPDATED_ENABLED = true;
 
-    private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_CREATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final LocalDate DEFAULT_UPDATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_UPDATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_UPDATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_UPDATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private CityRepository cityRepository;
@@ -386,33 +386,6 @@ public class CityResourceIntTest {
 
     @Test
     @Transactional
-    public void getAllCitiesByCreateAtIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        cityRepository.saveAndFlush(city);
-
-        // Get all the cityList where createAt greater than or equals to DEFAULT_CREATE_AT
-        defaultCityShouldBeFound("createAt.greaterOrEqualThan=" + DEFAULT_CREATE_AT);
-
-        // Get all the cityList where createAt greater than or equals to UPDATED_CREATE_AT
-        defaultCityShouldNotBeFound("createAt.greaterOrEqualThan=" + UPDATED_CREATE_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllCitiesByCreateAtIsLessThanSomething() throws Exception {
-        // Initialize the database
-        cityRepository.saveAndFlush(city);
-
-        // Get all the cityList where createAt less than or equals to DEFAULT_CREATE_AT
-        defaultCityShouldNotBeFound("createAt.lessThan=" + DEFAULT_CREATE_AT);
-
-        // Get all the cityList where createAt less than or equals to UPDATED_CREATE_AT
-        defaultCityShouldBeFound("createAt.lessThan=" + UPDATED_CREATE_AT);
-    }
-
-
-    @Test
-    @Transactional
     public void getAllCitiesByUpdateAtIsEqualToSomething() throws Exception {
         // Initialize the database
         cityRepository.saveAndFlush(city);
@@ -449,33 +422,6 @@ public class CityResourceIntTest {
         // Get all the cityList where updateAt is null
         defaultCityShouldNotBeFound("updateAt.specified=false");
     }
-
-    @Test
-    @Transactional
-    public void getAllCitiesByUpdateAtIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        cityRepository.saveAndFlush(city);
-
-        // Get all the cityList where updateAt greater than or equals to DEFAULT_UPDATE_AT
-        defaultCityShouldBeFound("updateAt.greaterOrEqualThan=" + DEFAULT_UPDATE_AT);
-
-        // Get all the cityList where updateAt greater than or equals to UPDATED_UPDATE_AT
-        defaultCityShouldNotBeFound("updateAt.greaterOrEqualThan=" + UPDATED_UPDATE_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllCitiesByUpdateAtIsLessThanSomething() throws Exception {
-        // Initialize the database
-        cityRepository.saveAndFlush(city);
-
-        // Get all the cityList where updateAt less than or equals to DEFAULT_UPDATE_AT
-        defaultCityShouldNotBeFound("updateAt.lessThan=" + DEFAULT_UPDATE_AT);
-
-        // Get all the cityList where updateAt less than or equals to UPDATED_UPDATE_AT
-        defaultCityShouldBeFound("updateAt.lessThan=" + UPDATED_UPDATE_AT);
-    }
-
 
     @Test
     @Transactional

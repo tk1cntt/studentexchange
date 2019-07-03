@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -90,10 +91,10 @@ public class UserBalanceResource {
         UserBalanceDTO currentBalance;
         if (dto.isPresent()) {
             currentBalance = dto.get();
-            currentBalance.setUpdateAt(LocalDate.now());
+            currentBalance.setUpdateAt(Instant.now());
         } else {
             currentBalance = new UserBalanceDTO();
-            currentBalance.setCreateAt(LocalDate.now());
+            currentBalance.setCreateAt(Instant.now());
             currentBalance.setCreateById(paymentUser.get().getId());
             currentBalance.setCreateByLogin(paymentUser.get().getLogin());
         }
@@ -108,7 +109,7 @@ public class UserBalanceResource {
         paymentDTO.setMethod(PaymentMethod.BANK_TRANSFER);
         paymentDTO.setType(PaymentType.DEPOSIT);
         paymentDTO.setNewBalance(currentBalance.getCash());
-        paymentDTO.setCreateAt(LocalDate.now());
+        paymentDTO.setCreateAt(Instant.now());
         paymentDTO.setCreateById(paymentUser.get().getId());
         paymentDTO.setCreateByLogin(paymentUser.get().getLogin());
         paymentDTO.setStatus(PaymentStatusType.PAID);

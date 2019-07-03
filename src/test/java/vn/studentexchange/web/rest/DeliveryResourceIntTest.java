@@ -24,8 +24,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -50,11 +50,11 @@ public class DeliveryResourceIntTest {
     private static final String DEFAULT_DELIVERY_METHOD_NAME = "AAAAAAAAAA";
     private static final String UPDATED_DELIVERY_METHOD_NAME = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_EXPORT_TIME = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_EXPORT_TIME = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_EXPORT_TIME = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_EXPORT_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final LocalDate DEFAULT_PACKED_TIME = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_PACKED_TIME = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_PACKED_TIME = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_PACKED_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final String DEFAULT_STATUS = "AAAAAAAAAA";
     private static final String UPDATED_STATUS = "BBBBBBBBBB";
@@ -68,11 +68,11 @@ public class DeliveryResourceIntTest {
     private static final Float DEFAULT_TOTAL_WEIGHT = 1F;
     private static final Float UPDATED_TOTAL_WEIGHT = 2F;
 
-    private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_CREATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final LocalDate DEFAULT_UPDATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_UPDATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_UPDATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_UPDATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private DeliveryRepository deliveryRepository;

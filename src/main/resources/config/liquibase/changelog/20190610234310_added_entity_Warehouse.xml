@@ -40,8 +40,6 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="warehouse" columnName="create_at" columnDataType="datetime"/>
-        <dropDefaultValue tableName="warehouse" columnName="update_at" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

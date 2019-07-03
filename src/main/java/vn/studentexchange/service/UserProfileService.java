@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -56,7 +57,7 @@ public class UserProfileService {
         log.debug("Request to save UserProfile : {}", userProfileDTO);
         Optional<User> existingUser = userRepository.findOneByLogin(username);
         UserProfile userProfile = userProfileMapper.toEntity(userProfileDTO);
-        userProfile.setCreateAt(LocalDate.now());
+        userProfile.setCreateAt(Instant.now());
         userProfile.setCreateBy(existingUser.get());
         userProfile = userProfileRepository.save(userProfile);
         return Optional.of(userProfileMapper.toDto(userProfile));

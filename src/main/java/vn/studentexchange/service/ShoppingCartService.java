@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,12 +65,12 @@ public class ShoppingCartService {
         if (ObjectUtils.isEmpty(currentShop)) {
             ShoppingCart shoppingCart = shoppingCartMapper.toEntity(shoppingCartDTO);
             shoppingCart.setCreateBy(existingUser.get());
-            shoppingCart.setCreateAt(LocalDate.now());
+            shoppingCart.setCreateAt(Instant.now());
             shoppingCart = shoppingCartRepository.save(shoppingCart);
             List<ShoppingCartItem> items = shoppingCartItemMapper.toEntity(shoppingCartDTO.getItems());
             for (ShoppingCartItem shoppingCartItem: items) {
                 shoppingCartItem.setCreateBy(existingUser.get());
-                shoppingCartItem.setCreateAt(LocalDate.now());
+                shoppingCartItem.setCreateAt(Instant.now());
                 shoppingCartItem.setShoppingCart(shoppingCart);
                 shoppingCartItemRepository.save(shoppingCartItem);
             }
@@ -86,20 +87,20 @@ public class ShoppingCartService {
                         && currentItem.getPropertiesType().equals(shoppingCartItem.getPropertiesType())) {
                             itemExist = true;
                             currentItem.setUpdateBy(existingUser.get());
-                            currentItem.setUpdateAt(LocalDate.now());
+                            currentItem.setUpdateAt(Instant.now());
                             currentItem.setQuantity(currentItem.getQuantity() + shoppingCartItem.getQuantity());
                             currentItem.setTotalAmountNDT(currentItem.getTotalAmountNDT() + shoppingCartItem.getTotalAmountNDT());        
                     }
                 }
                 if (!itemExist) {
                     shoppingCartItem.setCreateBy(existingUser.get());
-                    shoppingCartItem.setCreateAt(LocalDate.now());
+                    shoppingCartItem.setCreateAt(Instant.now());
                     shoppingCartItem.setShoppingCart(currentShop);
                     shoppingCartItemRepository.save(shoppingCartItem);
                 }
             }
             currentShop.setUpdateBy(existingUser.get());
-            currentShop.setUpdateAt(LocalDate.now());
+            currentShop.setUpdateAt(Instant.now());
             currentShop = shoppingCartRepository.save(currentShop);
         }
         return shoppingCartMapper.toDto(currentShop);

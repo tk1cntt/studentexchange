@@ -3,11 +3,17 @@ package vn.studentexchange.web.rest;
 import vn.studentexchange.StudentexchangeApp;
 
 import vn.studentexchange.domain.Payment;
+import vn.studentexchange.domain.User;
+import vn.studentexchange.domain.User;
+import vn.studentexchange.domain.User;
+import vn.studentexchange.domain.User;
 import vn.studentexchange.repository.PaymentRepository;
 import vn.studentexchange.service.PaymentService;
 import vn.studentexchange.service.dto.PaymentDTO;
 import vn.studentexchange.service.mapper.PaymentMapper;
 import vn.studentexchange.web.rest.errors.ExceptionTranslator;
+import vn.studentexchange.service.dto.PaymentCriteria;
+import vn.studentexchange.service.PaymentQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +30,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -71,8 +77,8 @@ public class PaymentResourceIntTest {
     private static final PaymentStatusType DEFAULT_STATUS = PaymentStatusType.PENDING;
     private static final PaymentStatusType UPDATED_STATUS = PaymentStatusType.PAID;
 
-    private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_CREATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final Float DEFAULT_WITHDRAWAL_FEE = 1F;
     private static final Float UPDATED_WITHDRAWAL_FEE = 2F;
@@ -85,6 +91,9 @@ public class PaymentResourceIntTest {
 
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    private PaymentQueryService paymentQueryService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -105,7 +114,7 @@ public class PaymentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PaymentResource paymentResource = new PaymentResource(paymentService);
+        final PaymentResource paymentResource = new PaymentResource(paymentService, paymentQueryService);
         this.restPaymentMockMvc = MockMvcBuilders.standaloneSetup(paymentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -232,6 +241,542 @@ public class PaymentResourceIntTest {
             .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
             .andExpect(jsonPath("$.withdrawalFee").value(DEFAULT_WITHDRAWAL_FEE.doubleValue()));
     }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByAmountIsEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where amount equals to DEFAULT_AMOUNT
+        defaultPaymentShouldBeFound("amount.equals=" + DEFAULT_AMOUNT);
+
+        // Get all the paymentList where amount equals to UPDATED_AMOUNT
+        defaultPaymentShouldNotBeFound("amount.equals=" + UPDATED_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByAmountIsInShouldWork() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where amount in DEFAULT_AMOUNT or UPDATED_AMOUNT
+        defaultPaymentShouldBeFound("amount.in=" + DEFAULT_AMOUNT + "," + UPDATED_AMOUNT);
+
+        // Get all the paymentList where amount equals to UPDATED_AMOUNT
+        defaultPaymentShouldNotBeFound("amount.in=" + UPDATED_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByAmountIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where amount is not null
+        defaultPaymentShouldBeFound("amount.specified=true");
+
+        // Get all the paymentList where amount is null
+        defaultPaymentShouldNotBeFound("amount.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByCodeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where code equals to DEFAULT_CODE
+        defaultPaymentShouldBeFound("code.equals=" + DEFAULT_CODE);
+
+        // Get all the paymentList where code equals to UPDATED_CODE
+        defaultPaymentShouldNotBeFound("code.equals=" + UPDATED_CODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByCodeIsInShouldWork() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where code in DEFAULT_CODE or UPDATED_CODE
+        defaultPaymentShouldBeFound("code.in=" + DEFAULT_CODE + "," + UPDATED_CODE);
+
+        // Get all the paymentList where code equals to UPDATED_CODE
+        defaultPaymentShouldNotBeFound("code.in=" + UPDATED_CODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByCodeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where code is not null
+        defaultPaymentShouldBeFound("code.specified=true");
+
+        // Get all the paymentList where code is null
+        defaultPaymentShouldNotBeFound("code.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByCodeIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where code greater than or equals to DEFAULT_CODE
+        defaultPaymentShouldBeFound("code.greaterOrEqualThan=" + DEFAULT_CODE);
+
+        // Get all the paymentList where code greater than or equals to UPDATED_CODE
+        defaultPaymentShouldNotBeFound("code.greaterOrEqualThan=" + UPDATED_CODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByCodeIsLessThanSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where code less than or equals to DEFAULT_CODE
+        defaultPaymentShouldNotBeFound("code.lessThan=" + DEFAULT_CODE);
+
+        // Get all the paymentList where code less than or equals to UPDATED_CODE
+        defaultPaymentShouldBeFound("code.lessThan=" + UPDATED_CODE);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByNewBalanceIsEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where newBalance equals to DEFAULT_NEW_BALANCE
+        defaultPaymentShouldBeFound("newBalance.equals=" + DEFAULT_NEW_BALANCE);
+
+        // Get all the paymentList where newBalance equals to UPDATED_NEW_BALANCE
+        defaultPaymentShouldNotBeFound("newBalance.equals=" + UPDATED_NEW_BALANCE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByNewBalanceIsInShouldWork() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where newBalance in DEFAULT_NEW_BALANCE or UPDATED_NEW_BALANCE
+        defaultPaymentShouldBeFound("newBalance.in=" + DEFAULT_NEW_BALANCE + "," + UPDATED_NEW_BALANCE);
+
+        // Get all the paymentList where newBalance equals to UPDATED_NEW_BALANCE
+        defaultPaymentShouldNotBeFound("newBalance.in=" + UPDATED_NEW_BALANCE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByNewBalanceIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where newBalance is not null
+        defaultPaymentShouldBeFound("newBalance.specified=true");
+
+        // Get all the paymentList where newBalance is null
+        defaultPaymentShouldNotBeFound("newBalance.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByNoteIsEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where note equals to DEFAULT_NOTE
+        defaultPaymentShouldBeFound("note.equals=" + DEFAULT_NOTE);
+
+        // Get all the paymentList where note equals to UPDATED_NOTE
+        defaultPaymentShouldNotBeFound("note.equals=" + UPDATED_NOTE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByNoteIsInShouldWork() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where note in DEFAULT_NOTE or UPDATED_NOTE
+        defaultPaymentShouldBeFound("note.in=" + DEFAULT_NOTE + "," + UPDATED_NOTE);
+
+        // Get all the paymentList where note equals to UPDATED_NOTE
+        defaultPaymentShouldNotBeFound("note.in=" + UPDATED_NOTE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByNoteIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where note is not null
+        defaultPaymentShouldBeFound("note.specified=true");
+
+        // Get all the paymentList where note is null
+        defaultPaymentShouldNotBeFound("note.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByOrderCodeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where orderCode equals to DEFAULT_ORDER_CODE
+        defaultPaymentShouldBeFound("orderCode.equals=" + DEFAULT_ORDER_CODE);
+
+        // Get all the paymentList where orderCode equals to UPDATED_ORDER_CODE
+        defaultPaymentShouldNotBeFound("orderCode.equals=" + UPDATED_ORDER_CODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByOrderCodeIsInShouldWork() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where orderCode in DEFAULT_ORDER_CODE or UPDATED_ORDER_CODE
+        defaultPaymentShouldBeFound("orderCode.in=" + DEFAULT_ORDER_CODE + "," + UPDATED_ORDER_CODE);
+
+        // Get all the paymentList where orderCode equals to UPDATED_ORDER_CODE
+        defaultPaymentShouldNotBeFound("orderCode.in=" + UPDATED_ORDER_CODE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByOrderCodeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where orderCode is not null
+        defaultPaymentShouldBeFound("orderCode.specified=true");
+
+        // Get all the paymentList where orderCode is null
+        defaultPaymentShouldNotBeFound("orderCode.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByMethodIsEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where method equals to DEFAULT_METHOD
+        defaultPaymentShouldBeFound("method.equals=" + DEFAULT_METHOD);
+
+        // Get all the paymentList where method equals to UPDATED_METHOD
+        defaultPaymentShouldNotBeFound("method.equals=" + UPDATED_METHOD);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByMethodIsInShouldWork() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where method in DEFAULT_METHOD or UPDATED_METHOD
+        defaultPaymentShouldBeFound("method.in=" + DEFAULT_METHOD + "," + UPDATED_METHOD);
+
+        // Get all the paymentList where method equals to UPDATED_METHOD
+        defaultPaymentShouldNotBeFound("method.in=" + UPDATED_METHOD);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByMethodIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where method is not null
+        defaultPaymentShouldBeFound("method.specified=true");
+
+        // Get all the paymentList where method is null
+        defaultPaymentShouldNotBeFound("method.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByTypeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where type equals to DEFAULT_TYPE
+        defaultPaymentShouldBeFound("type.equals=" + DEFAULT_TYPE);
+
+        // Get all the paymentList where type equals to UPDATED_TYPE
+        defaultPaymentShouldNotBeFound("type.equals=" + UPDATED_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByTypeIsInShouldWork() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where type in DEFAULT_TYPE or UPDATED_TYPE
+        defaultPaymentShouldBeFound("type.in=" + DEFAULT_TYPE + "," + UPDATED_TYPE);
+
+        // Get all the paymentList where type equals to UPDATED_TYPE
+        defaultPaymentShouldNotBeFound("type.in=" + UPDATED_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByTypeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where type is not null
+        defaultPaymentShouldBeFound("type.specified=true");
+
+        // Get all the paymentList where type is null
+        defaultPaymentShouldNotBeFound("type.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where status equals to DEFAULT_STATUS
+        defaultPaymentShouldBeFound("status.equals=" + DEFAULT_STATUS);
+
+        // Get all the paymentList where status equals to UPDATED_STATUS
+        defaultPaymentShouldNotBeFound("status.equals=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where status in DEFAULT_STATUS or UPDATED_STATUS
+        defaultPaymentShouldBeFound("status.in=" + DEFAULT_STATUS + "," + UPDATED_STATUS);
+
+        // Get all the paymentList where status equals to UPDATED_STATUS
+        defaultPaymentShouldNotBeFound("status.in=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where status is not null
+        defaultPaymentShouldBeFound("status.specified=true");
+
+        // Get all the paymentList where status is null
+        defaultPaymentShouldNotBeFound("status.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByCreateAtIsEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where createAt equals to DEFAULT_CREATE_AT
+        defaultPaymentShouldBeFound("createAt.equals=" + DEFAULT_CREATE_AT);
+
+        // Get all the paymentList where createAt equals to UPDATED_CREATE_AT
+        defaultPaymentShouldNotBeFound("createAt.equals=" + UPDATED_CREATE_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByCreateAtIsInShouldWork() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where createAt in DEFAULT_CREATE_AT or UPDATED_CREATE_AT
+        defaultPaymentShouldBeFound("createAt.in=" + DEFAULT_CREATE_AT + "," + UPDATED_CREATE_AT);
+
+        // Get all the paymentList where createAt equals to UPDATED_CREATE_AT
+        defaultPaymentShouldNotBeFound("createAt.in=" + UPDATED_CREATE_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByCreateAtIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where createAt is not null
+        defaultPaymentShouldBeFound("createAt.specified=true");
+
+        // Get all the paymentList where createAt is null
+        defaultPaymentShouldNotBeFound("createAt.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByWithdrawalFeeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where withdrawalFee equals to DEFAULT_WITHDRAWAL_FEE
+        defaultPaymentShouldBeFound("withdrawalFee.equals=" + DEFAULT_WITHDRAWAL_FEE);
+
+        // Get all the paymentList where withdrawalFee equals to UPDATED_WITHDRAWAL_FEE
+        defaultPaymentShouldNotBeFound("withdrawalFee.equals=" + UPDATED_WITHDRAWAL_FEE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByWithdrawalFeeIsInShouldWork() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where withdrawalFee in DEFAULT_WITHDRAWAL_FEE or UPDATED_WITHDRAWAL_FEE
+        defaultPaymentShouldBeFound("withdrawalFee.in=" + DEFAULT_WITHDRAWAL_FEE + "," + UPDATED_WITHDRAWAL_FEE);
+
+        // Get all the paymentList where withdrawalFee equals to UPDATED_WITHDRAWAL_FEE
+        defaultPaymentShouldNotBeFound("withdrawalFee.in=" + UPDATED_WITHDRAWAL_FEE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByWithdrawalFeeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        paymentRepository.saveAndFlush(payment);
+
+        // Get all the paymentList where withdrawalFee is not null
+        defaultPaymentShouldBeFound("withdrawalFee.specified=true");
+
+        // Get all the paymentList where withdrawalFee is null
+        defaultPaymentShouldNotBeFound("withdrawalFee.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByStaffApprovalIsEqualToSomething() throws Exception {
+        // Initialize the database
+        User staffApproval = UserResourceIntTest.createEntity(em);
+        em.persist(staffApproval);
+        em.flush();
+        payment.setStaffApproval(staffApproval);
+        paymentRepository.saveAndFlush(payment);
+        Long staffApprovalId = staffApproval.getId();
+
+        // Get all the paymentList where staffApproval equals to staffApprovalId
+        defaultPaymentShouldBeFound("staffApprovalId.equals=" + staffApprovalId);
+
+        // Get all the paymentList where staffApproval equals to staffApprovalId + 1
+        defaultPaymentShouldNotBeFound("staffApprovalId.equals=" + (staffApprovalId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByStaffCancelIsEqualToSomething() throws Exception {
+        // Initialize the database
+        User staffCancel = UserResourceIntTest.createEntity(em);
+        em.persist(staffCancel);
+        em.flush();
+        payment.setStaffCancel(staffCancel);
+        paymentRepository.saveAndFlush(payment);
+        Long staffCancelId = staffCancel.getId();
+
+        // Get all the paymentList where staffCancel equals to staffCancelId
+        defaultPaymentShouldBeFound("staffCancelId.equals=" + staffCancelId);
+
+        // Get all the paymentList where staffCancel equals to staffCancelId + 1
+        defaultPaymentShouldNotBeFound("staffCancelId.equals=" + (staffCancelId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByCustomerIsEqualToSomething() throws Exception {
+        // Initialize the database
+        User customer = UserResourceIntTest.createEntity(em);
+        em.persist(customer);
+        em.flush();
+        payment.setCustomer(customer);
+        paymentRepository.saveAndFlush(payment);
+        Long customerId = customer.getId();
+
+        // Get all the paymentList where customer equals to customerId
+        defaultPaymentShouldBeFound("customerId.equals=" + customerId);
+
+        // Get all the paymentList where customer equals to customerId + 1
+        defaultPaymentShouldNotBeFound("customerId.equals=" + (customerId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPaymentsByCreateByIsEqualToSomething() throws Exception {
+        // Initialize the database
+        User createBy = UserResourceIntTest.createEntity(em);
+        em.persist(createBy);
+        em.flush();
+        payment.setCreateBy(createBy);
+        paymentRepository.saveAndFlush(payment);
+        Long createById = createBy.getId();
+
+        // Get all the paymentList where createBy equals to createById
+        defaultPaymentShouldBeFound("createById.equals=" + createById);
+
+        // Get all the paymentList where createBy equals to createById + 1
+        defaultPaymentShouldNotBeFound("createById.equals=" + (createById + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultPaymentShouldBeFound(String filter) throws Exception {
+        restPaymentMockMvc.perform(get("/api/payments?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(payment.getId().intValue())))
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.intValue())))
+            .andExpect(jsonPath("$.[*].newBalance").value(hasItem(DEFAULT_NEW_BALANCE.doubleValue())))
+            .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE.toString())))
+            .andExpect(jsonPath("$.[*].orderCode").value(hasItem(DEFAULT_ORDER_CODE.toString())))
+            .andExpect(jsonPath("$.[*].method").value(hasItem(DEFAULT_METHOD.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
+            .andExpect(jsonPath("$.[*].withdrawalFee").value(hasItem(DEFAULT_WITHDRAWAL_FEE.doubleValue())));
+
+        // Check, that the count call also returns 1
+        restPaymentMockMvc.perform(get("/api/payments/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultPaymentShouldNotBeFound(String filter) throws Exception {
+        restPaymentMockMvc.perform(get("/api/payments?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restPaymentMockMvc.perform(get("/api/payments/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("0"));
+    }
+
 
     @Test
     @Transactional

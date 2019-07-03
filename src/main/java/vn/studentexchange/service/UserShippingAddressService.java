@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,9 +54,9 @@ public class UserShippingAddressService {
         Optional<User> existingUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
         UserShippingAddress userShippingAddress = userShippingAddressMapper.toEntity(userShippingAddressDTO);
         userShippingAddress.setCreateBy(existingUser.get());
-        userShippingAddress.setCreateAt(LocalDate.now());
+        userShippingAddress.setCreateAt(Instant.now());
         userShippingAddress.setUpdateBy(existingUser.get());
-        userShippingAddress.setUpdateAt(LocalDate.now());
+        userShippingAddress.setUpdateAt(Instant.now());
         userShippingAddress = userShippingAddressRepository.save(userShippingAddress);
         return userShippingAddressMapper.toDto(userShippingAddress);
     }

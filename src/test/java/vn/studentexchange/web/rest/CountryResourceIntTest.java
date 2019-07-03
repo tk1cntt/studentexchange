@@ -27,8 +27,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -53,11 +53,11 @@ public class CountryResourceIntTest {
     private static final Boolean DEFAULT_ENABLED = false;
     private static final Boolean UPDATED_ENABLED = true;
 
-    private static final LocalDate DEFAULT_CREATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_CREATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_CREATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final LocalDate DEFAULT_UPDATE_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_UPDATE_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Instant DEFAULT_UPDATE_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_UPDATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private CountryRepository countryRepository;
@@ -313,33 +313,6 @@ public class CountryResourceIntTest {
 
     @Test
     @Transactional
-    public void getAllCountriesByCreateAtIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        countryRepository.saveAndFlush(country);
-
-        // Get all the countryList where createAt greater than or equals to DEFAULT_CREATE_AT
-        defaultCountryShouldBeFound("createAt.greaterOrEqualThan=" + DEFAULT_CREATE_AT);
-
-        // Get all the countryList where createAt greater than or equals to UPDATED_CREATE_AT
-        defaultCountryShouldNotBeFound("createAt.greaterOrEqualThan=" + UPDATED_CREATE_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllCountriesByCreateAtIsLessThanSomething() throws Exception {
-        // Initialize the database
-        countryRepository.saveAndFlush(country);
-
-        // Get all the countryList where createAt less than or equals to DEFAULT_CREATE_AT
-        defaultCountryShouldNotBeFound("createAt.lessThan=" + DEFAULT_CREATE_AT);
-
-        // Get all the countryList where createAt less than or equals to UPDATED_CREATE_AT
-        defaultCountryShouldBeFound("createAt.lessThan=" + UPDATED_CREATE_AT);
-    }
-
-
-    @Test
-    @Transactional
     public void getAllCountriesByUpdateAtIsEqualToSomething() throws Exception {
         // Initialize the database
         countryRepository.saveAndFlush(country);
@@ -376,33 +349,6 @@ public class CountryResourceIntTest {
         // Get all the countryList where updateAt is null
         defaultCountryShouldNotBeFound("updateAt.specified=false");
     }
-
-    @Test
-    @Transactional
-    public void getAllCountriesByUpdateAtIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        countryRepository.saveAndFlush(country);
-
-        // Get all the countryList where updateAt greater than or equals to DEFAULT_UPDATE_AT
-        defaultCountryShouldBeFound("updateAt.greaterOrEqualThan=" + DEFAULT_UPDATE_AT);
-
-        // Get all the countryList where updateAt greater than or equals to UPDATED_UPDATE_AT
-        defaultCountryShouldNotBeFound("updateAt.greaterOrEqualThan=" + UPDATED_UPDATE_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllCountriesByUpdateAtIsLessThanSomething() throws Exception {
-        // Initialize the database
-        countryRepository.saveAndFlush(country);
-
-        // Get all the countryList where updateAt less than or equals to DEFAULT_UPDATE_AT
-        defaultCountryShouldNotBeFound("updateAt.lessThan=" + DEFAULT_UPDATE_AT);
-
-        // Get all the countryList where updateAt less than or equals to UPDATED_UPDATE_AT
-        defaultCountryShouldBeFound("updateAt.lessThan=" + UPDATED_UPDATE_AT);
-    }
-
 
     @Test
     @Transactional

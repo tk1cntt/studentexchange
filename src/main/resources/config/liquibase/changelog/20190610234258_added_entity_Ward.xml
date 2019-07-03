@@ -26,7 +26,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="jhi_type" type="varchar(255)">
+            <column name="type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -56,8 +56,6 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="ward" columnName="create_at" columnDataType="datetime"/>
-        <dropDefaultValue tableName="ward" columnName="update_at" columnDataType="datetime"/>
         
         <loadData encoding="UTF-8"
             file="config/liquibase/ward.csv"

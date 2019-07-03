@@ -64,10 +64,10 @@ export class Warehouse extends React.Component<IWarehouseProps> {
                   <td>{warehouse.name}</td>
                   <td>{warehouse.address}</td>
                   <td>
-                    <TextFormat type="date" value={warehouse.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={warehouse.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={warehouse.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={warehouse.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

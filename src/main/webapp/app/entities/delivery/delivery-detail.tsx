@@ -46,7 +46,7 @@ export class DeliveryDetail extends React.Component<IDeliveryDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={deliveryEntity.exportTime} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={deliveryEntity.exportTime} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="packedTime">
@@ -54,7 +54,7 @@ export class DeliveryDetail extends React.Component<IDeliveryDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={deliveryEntity.packedTime} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={deliveryEntity.packedTime} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="status">
@@ -86,7 +86,7 @@ export class DeliveryDetail extends React.Component<IDeliveryDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={deliveryEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={deliveryEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -94,7 +94,7 @@ export class DeliveryDetail extends React.Component<IDeliveryDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={deliveryEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={deliveryEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.delivery.warehouse">Warehouse</Translate>

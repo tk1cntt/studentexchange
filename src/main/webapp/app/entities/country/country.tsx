@@ -104,10 +104,10 @@ export class Country extends React.Component<ICountryProps, ICountryState> {
                   <td>{country.name}</td>
                   <td>{country.enabled ? 'true' : 'false'}</td>
                   <td>
-                    <TextFormat type="date" value={country.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={country.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={country.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={country.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{country.regionId ? <Link to={`region/${country.regionId}`}>{country.regionId}</Link> : ''}</td>
                   <td className="text-right">

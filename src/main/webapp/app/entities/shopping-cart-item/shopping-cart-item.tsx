@@ -129,10 +129,10 @@ export class ShoppingCartItem extends React.Component<IShoppingCartItemProps> {
                   <td>{shoppingCartItem.totalAmount}</td>
                   <td>{shoppingCartItem.totalAmountNDT}</td>
                   <td>
-                    <TextFormat type="date" value={shoppingCartItem.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={shoppingCartItem.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={shoppingCartItem.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={shoppingCartItem.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
                     {shoppingCartItem.shoppingCartId ? (

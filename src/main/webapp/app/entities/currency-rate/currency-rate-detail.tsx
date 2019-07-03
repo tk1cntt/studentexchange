@@ -46,7 +46,7 @@ export class CurrencyRateDetail extends React.Component<ICurrencyRateDetailProps
               </span>
             </dt>
             <dd>
-              <TextFormat value={currencyRateEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={currencyRateEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
           </dl>
           <Button tag={Link} to="/entity/currency-rate" replace color="info">

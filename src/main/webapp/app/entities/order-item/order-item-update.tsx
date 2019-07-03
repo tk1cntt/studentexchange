@@ -56,6 +56,9 @@ export class OrderItemUpdate extends React.Component<IOrderItemUpdateProps, IOrd
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { orderItemEntity } = this.props;
       const entity = {
@@ -208,13 +211,25 @@ export class OrderItemUpdate extends React.Component<IOrderItemUpdateProps, IOrd
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.orderItem.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="order-item-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="order-item-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.orderItemEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.orderItem.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="order-item-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="order-item-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.orderItemEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="orderCart.id">

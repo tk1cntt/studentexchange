@@ -43,6 +43,9 @@ export class WarehouseUpdate extends React.Component<IWarehouseUpdateProps, IWar
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { warehouseEntity } = this.props;
       const entity = {
@@ -105,13 +108,25 @@ export class WarehouseUpdate extends React.Component<IWarehouseUpdateProps, IWar
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.warehouse.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="warehouse-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="warehouse-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.warehouseEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.warehouse.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="warehouse-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="warehouse-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.warehouseEntity.updateAt)}
+                  />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/warehouse" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />

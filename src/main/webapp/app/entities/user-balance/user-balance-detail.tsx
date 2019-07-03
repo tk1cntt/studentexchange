@@ -52,7 +52,7 @@ export class UserBalanceDetail extends React.Component<IUserBalanceDetailProps> 
               </span>
             </dt>
             <dd>
-              <TextFormat value={userBalanceEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={userBalanceEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -60,7 +60,7 @@ export class UserBalanceDetail extends React.Component<IUserBalanceDetailProps> 
               </span>
             </dt>
             <dd>
-              <TextFormat value={userBalanceEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={userBalanceEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.userBalance.createBy">Create By</Translate>

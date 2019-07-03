@@ -53,7 +53,7 @@ export class OrderPackageHistoryDetail extends React.Component<IOrderPackageHist
               </span>
             </dt>
             <dd>
-              <TextFormat value={orderPackageHistoryEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={orderPackageHistoryEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -61,7 +61,7 @@ export class OrderPackageHistoryDetail extends React.Component<IOrderPackageHist
               </span>
             </dt>
             <dd>
-              <TextFormat value={orderPackageHistoryEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={orderPackageHistoryEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.orderPackageHistory.orderPackage">Order Package</Translate>

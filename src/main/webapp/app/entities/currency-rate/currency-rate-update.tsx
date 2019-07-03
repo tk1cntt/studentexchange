@@ -43,6 +43,8 @@ export class CurrencyRateUpdate extends React.Component<ICurrencyRateUpdateProps
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+
     if (errors.length === 0) {
       const { currencyRateEntity } = this.props;
       const entity = {
@@ -127,7 +129,13 @@ export class CurrencyRateUpdate extends React.Component<ICurrencyRateUpdateProps
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.currencyRate.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="currency-rate-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="currency-rate-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.currencyRateEntity.createAt)}
+                  />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/currency-rate" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />

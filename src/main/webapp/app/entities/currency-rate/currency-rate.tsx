@@ -63,7 +63,7 @@ export class CurrencyRate extends React.Component<ICurrencyRateProps> {
                   </td>
                   <td>{currencyRate.rate}</td>
                   <td>
-                    <TextFormat type="date" value={currencyRate.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={currencyRate.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

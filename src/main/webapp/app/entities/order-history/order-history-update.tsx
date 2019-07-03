@@ -56,6 +56,8 @@ export class OrderHistoryUpdate extends React.Component<IOrderHistoryUpdateProps
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+
     if (errors.length === 0) {
       const { orderHistoryEntity } = this.props;
       const entity = {
@@ -164,7 +166,13 @@ export class OrderHistoryUpdate extends React.Component<IOrderHistoryUpdateProps
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.orderHistory.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="order-history-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="order-history-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.orderHistoryEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="orderCart.id">

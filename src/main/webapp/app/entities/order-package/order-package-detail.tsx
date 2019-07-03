@@ -82,7 +82,7 @@ export class OrderPackageDetail extends React.Component<IOrderPackageDetailProps
               </span>
             </dt>
             <dd>
-              <TextFormat value={orderPackageEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={orderPackageEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -90,7 +90,7 @@ export class OrderPackageDetail extends React.Component<IOrderPackageDetailProps
               </span>
             </dt>
             <dd>
-              <TextFormat value={orderPackageEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={orderPackageEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.orderPackage.orderCart">Order Cart</Translate>

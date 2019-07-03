@@ -52,7 +52,7 @@ export class OrderCommentDetail extends React.Component<IOrderCommentDetailProps
               </span>
             </dt>
             <dd>
-              <TextFormat value={orderCommentEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={orderCommentEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.orderComment.orderCart">Order Cart</Translate>

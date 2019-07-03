@@ -51,6 +51,9 @@ export class ShoppingCartUpdate extends React.Component<IShoppingCartUpdateProps
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { shoppingCartEntity } = this.props;
       const entity = {
@@ -209,13 +212,25 @@ export class ShoppingCartUpdate extends React.Component<IShoppingCartUpdateProps
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.shoppingCart.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="shopping-cart-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="shopping-cart-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.shoppingCartEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.shoppingCart.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="shopping-cart-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="shopping-cart-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.shoppingCartEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="createBy.login">

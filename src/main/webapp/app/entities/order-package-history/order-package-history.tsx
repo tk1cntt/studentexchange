@@ -80,10 +80,10 @@ export class OrderPackageHistory extends React.Component<IOrderPackageHistoryPro
                   <td>{orderPackageHistory.statusName}</td>
                   <td>{orderPackageHistory.statusStyle}</td>
                   <td>
-                    <TextFormat type="date" value={orderPackageHistory.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderPackageHistory.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={orderPackageHistory.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderPackageHistory.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
                     {orderPackageHistory.orderPackageId ? (

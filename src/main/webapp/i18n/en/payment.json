@@ -27,6 +27,7 @@
       "withdrawalFee": "Withdrawal Fee",
       "staffApproval": "Staff Approval",
       "staffCancel": "Staff Cancel",
+      "customer": "Customer",
       "createBy": "Create By"
     }
   }

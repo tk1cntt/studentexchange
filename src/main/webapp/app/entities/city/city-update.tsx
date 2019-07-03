@@ -43,6 +43,9 @@ export class CityUpdate extends React.Component<ICityUpdateProps, ICityUpdateSta
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { cityEntity } = this.props;
       const entity = {
@@ -111,13 +114,25 @@ export class CityUpdate extends React.Component<ICityUpdateProps, ICityUpdateSta
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.city.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="city-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="city-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.cityEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.city.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="city-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="city-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.cityEntity.updateAt)}
+                  />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/city" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />

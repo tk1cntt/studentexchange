@@ -53,7 +53,7 @@ export class OrderTransactionDetail extends React.Component<IOrderTransactionDet
               </span>
             </dt>
             <dd>
-              <TextFormat value={orderTransactionEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={orderTransactionEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.orderTransaction.orderCart">Order Cart</Translate>

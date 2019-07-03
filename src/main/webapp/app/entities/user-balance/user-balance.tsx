@@ -71,10 +71,10 @@ export class UserBalance extends React.Component<IUserBalanceProps> {
                   <td>{userBalance.balanceFreezing}</td>
                   <td>{userBalance.cash}</td>
                   <td>
-                    <TextFormat type="date" value={userBalance.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={userBalance.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={userBalance.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={userBalance.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{userBalance.createByLogin ? userBalance.createByLogin : ''}</td>
                   <td className="text-right">

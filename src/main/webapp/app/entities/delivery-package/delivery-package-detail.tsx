@@ -35,7 +35,7 @@ export class DeliveryPackageDetail extends React.Component<IDeliveryPackageDetai
               </span>
             </dt>
             <dd>
-              <TextFormat value={deliveryPackageEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={deliveryPackageEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -43,7 +43,7 @@ export class DeliveryPackageDetail extends React.Component<IDeliveryPackageDetai
               </span>
             </dt>
             <dd>
-              <TextFormat value={deliveryPackageEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={deliveryPackageEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.deliveryPackage.delivery">Delivery</Translate>

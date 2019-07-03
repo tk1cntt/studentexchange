@@ -76,7 +76,7 @@ export class OrderTransaction extends React.Component<IOrderTransactionProps> {
                     <Translate contentKey={`studentexchangeApp.OrderTransactionType.${orderTransaction.status}`} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={orderTransaction.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderTransaction.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
                     {orderTransaction.orderCartId ? (

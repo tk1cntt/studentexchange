@@ -65,10 +65,10 @@ export class DeliveryPackage extends React.Component<IDeliveryPackageProps> {
                     </Button>
                   </td>
                   <td>
-                    <TextFormat type="date" value={deliveryPackage.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={deliveryPackage.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={deliveryPackage.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={deliveryPackage.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
                     {deliveryPackage.deliveryId ? (

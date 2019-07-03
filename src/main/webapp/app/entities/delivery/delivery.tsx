@@ -91,20 +91,20 @@ export class Delivery extends React.Component<IDeliveryProps> {
                   <td>{delivery.deliveryMethod}</td>
                   <td>{delivery.deliveryMethodName}</td>
                   <td>
-                    <TextFormat type="date" value={delivery.exportTime} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={delivery.exportTime} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={delivery.packedTime} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={delivery.packedTime} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{delivery.status}</td>
                   <td>{delivery.statusName}</td>
                   <td>{delivery.statusStyle}</td>
                   <td>{delivery.totalWeight}</td>
                   <td>
-                    <TextFormat type="date" value={delivery.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={delivery.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={delivery.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={delivery.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{delivery.warehouseId ? <Link to={`warehouse/${delivery.warehouseId}`}>{delivery.warehouseId}</Link> : ''}</td>
                   <td>{delivery.createByLogin ? delivery.createByLogin : ''}</td>

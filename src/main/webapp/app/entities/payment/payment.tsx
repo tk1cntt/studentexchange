@@ -75,6 +75,9 @@ export class Payment extends React.Component<IPaymentProps> {
                   <Translate contentKey="studentexchangeApp.payment.staffCancel">Staff Cancel</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="studentexchangeApp.payment.customer">Customer</Translate>
+                </th>
+                <th>
                   <Translate contentKey="studentexchangeApp.payment.createBy">Create By</Translate>
                 </th>
                 <th />
@@ -103,11 +106,12 @@ export class Payment extends React.Component<IPaymentProps> {
                     <Translate contentKey={`studentexchangeApp.PaymentStatusType.${payment.status}`} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={payment.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={payment.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{payment.withdrawalFee}</td>
                   <td>{payment.staffApprovalLogin ? payment.staffApprovalLogin : ''}</td>
                   <td>{payment.staffCancelLogin ? payment.staffCancelLogin : ''}</td>
+                  <td>{payment.customerLogin ? payment.customerLogin : ''}</td>
                   <td>{payment.createByLogin ? payment.createByLogin : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

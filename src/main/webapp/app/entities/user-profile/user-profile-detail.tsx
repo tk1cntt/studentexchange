@@ -64,7 +64,7 @@ export class UserProfileDetail extends React.Component<IUserProfileDetailProps> 
               </span>
             </dt>
             <dd>
-              <TextFormat value={userProfileEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={userProfileEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -72,7 +72,7 @@ export class UserProfileDetail extends React.Component<IUserProfileDetailProps> 
               </span>
             </dt>
             <dd>
-              <TextFormat value={userProfileEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={userProfileEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.userProfile.createBy">Create By</Translate>

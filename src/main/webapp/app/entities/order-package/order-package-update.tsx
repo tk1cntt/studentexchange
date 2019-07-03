@@ -66,6 +66,9 @@ export class OrderPackageUpdate extends React.Component<IOrderPackageUpdateProps
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { orderPackageEntity } = this.props;
       const entity = {
@@ -164,13 +167,25 @@ export class OrderPackageUpdate extends React.Component<IOrderPackageUpdateProps
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.orderPackage.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="order-package-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="order-package-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.orderPackageEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.orderPackage.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="order-package-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="order-package-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.orderPackageEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="orderCart.id">

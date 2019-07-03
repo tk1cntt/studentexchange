@@ -127,10 +127,10 @@ export class UserProfile extends React.Component<IUserProfileProps, IUserProfile
                   <td>{userProfile.mobile}</td>
                   <td>{userProfile.address}</td>
                   <td>
-                    <TextFormat type="date" value={userProfile.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={userProfile.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={userProfile.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={userProfile.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{userProfile.createByLogin ? userProfile.createByLogin : ''}</td>
                   <td>{userProfile.updateByLogin ? userProfile.updateByLogin : ''}</td>

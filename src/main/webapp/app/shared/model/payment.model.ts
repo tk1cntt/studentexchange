@@ -35,6 +35,8 @@ export interface IPayment {
   staffApprovalId?: number;
   staffCancelLogin?: string;
   staffCancelId?: number;
+  customerLogin?: string;
+  customerId?: number;
   createByLogin?: string;
   createById?: number;
 }

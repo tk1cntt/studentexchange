@@ -22,6 +22,7 @@ export interface IPaymentUpdateState {
   isNew: boolean;
   staffApprovalId: string;
   staffCancelId: string;
+  customerId: string;
   createById: string;
 }
 
@@ -31,6 +32,7 @@ export class PaymentUpdate extends React.Component<IPaymentUpdateProps, IPayment
     this.state = {
       staffApprovalId: '0',
       staffCancelId: '0',
+      customerId: '0',
       createById: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -53,6 +55,8 @@ export class PaymentUpdate extends React.Component<IPaymentUpdateProps, IPayment
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+
     if (errors.length === 0) {
       const { paymentEntity } = this.props;
       const entity = {
@@ -202,7 +206,13 @@ export class PaymentUpdate extends React.Component<IPaymentUpdateProps, IPayment
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.payment.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="payment-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="payment-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.paymentEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="withdrawalFeeLabel" for="withdrawalFee">
@@ -230,6 +240,21 @@ export class PaymentUpdate extends React.Component<IPaymentUpdateProps, IPayment
                     <Translate contentKey="studentexchangeApp.payment.staffCancel">Staff Cancel</Translate>
                   </Label>
                   <AvInput id="payment-staffCancel" type="select" className="form-control" name="staffCancelId">
+                    <option value="" key="0" />
+                    {users
+                      ? users.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.login}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="customer.login">
+                    <Translate contentKey="studentexchangeApp.payment.customer">Customer</Translate>
+                  </Label>
+                  <AvInput id="payment-customer" type="select" className="form-control" name="customerId">
                     <option value="" key="0" />
                     {users
                       ? users.map(otherEntity => (

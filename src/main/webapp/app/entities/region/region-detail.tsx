@@ -46,7 +46,7 @@ export class RegionDetail extends React.Component<IRegionDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={regionEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={regionEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -54,7 +54,7 @@ export class RegionDetail extends React.Component<IRegionDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={regionEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={regionEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.region.user">User</Translate>

@@ -116,10 +116,10 @@ export class District extends React.Component<IDistrictProps, IDistrictState> {
                   <td>{district.longitude}</td>
                   <td>{district.enabled ? 'true' : 'false'}</td>
                   <td>
-                    <TextFormat type="date" value={district.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={district.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={district.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={district.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{district.cityId ? <Link to={`city/${district.cityId}`}>{district.cityId}</Link> : ''}</td>
                   <td className="text-right">

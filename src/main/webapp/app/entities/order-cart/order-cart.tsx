@@ -222,7 +222,7 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <td>{orderCart.depositAmount}</td>
                   <td>{orderCart.depositRatio}</td>
                   <td>
-                    <TextFormat type="date" value={orderCart.depositTime} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderCart.depositTime} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{orderCart.domesticShippingChinaFeeNDT}</td>
                   <td>{orderCart.domesticShippingChinaFee}</td>
@@ -266,10 +266,10 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <td>{orderCart.orderMobile}</td>
                   <td>{orderCart.orderNote}</td>
                   <td>
-                    <TextFormat type="date" value={orderCart.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderCart.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={orderCart.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderCart.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{orderCart.buyerLogin ? orderCart.buyerLogin : ''}</td>
                   <td>{orderCart.chinaStockerLogin ? orderCart.chinaStockerLogin : ''}</td>

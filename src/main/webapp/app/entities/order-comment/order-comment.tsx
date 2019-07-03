@@ -70,7 +70,7 @@ export class OrderComment extends React.Component<IOrderCommentProps> {
                     <Translate contentKey={`studentexchangeApp.CommentType.${orderComment.type}`} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={orderComment.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderComment.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
                     {orderComment.orderCartId ? <Link to={`order-cart/${orderComment.orderCartId}`}>{orderComment.orderCartId}</Link> : ''}

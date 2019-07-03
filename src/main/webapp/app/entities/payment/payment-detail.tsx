@@ -82,7 +82,7 @@ export class PaymentDetail extends React.Component<IPaymentDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={paymentEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={paymentEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="withdrawalFee">
@@ -98,6 +98,10 @@ export class PaymentDetail extends React.Component<IPaymentDetailProps> {
               <Translate contentKey="studentexchangeApp.payment.staffCancel">Staff Cancel</Translate>
             </dt>
             <dd>{paymentEntity.staffCancelLogin ? paymentEntity.staffCancelLogin : ''}</dd>
+            <dt>
+              <Translate contentKey="studentexchangeApp.payment.customer">Customer</Translate>
+            </dt>
+            <dd>{paymentEntity.customerLogin ? paymentEntity.customerLogin : ''}</dd>
             <dt>
               <Translate contentKey="studentexchangeApp.payment.createBy">Create By</Translate>
             </dt>

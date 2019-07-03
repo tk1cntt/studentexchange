@@ -49,6 +49,9 @@ export class UserBalanceUpdate extends React.Component<IUserBalanceUpdateProps, 
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { userBalanceEntity } = this.props;
       const entity = {
@@ -117,13 +120,25 @@ export class UserBalanceUpdate extends React.Component<IUserBalanceUpdateProps, 
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.userBalance.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="user-balance-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="user-balance-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.userBalanceEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.userBalance.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="user-balance-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="user-balance-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.userBalanceEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="createBy.login">

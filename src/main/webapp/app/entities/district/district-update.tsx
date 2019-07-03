@@ -49,6 +49,9 @@ export class DistrictUpdate extends React.Component<IDistrictUpdateProps, IDistr
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { districtEntity } = this.props;
       const entity = {
@@ -129,13 +132,25 @@ export class DistrictUpdate extends React.Component<IDistrictUpdateProps, IDistr
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.district.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="district-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="district-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.districtEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.district.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="district-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="district-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.districtEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="city.id">

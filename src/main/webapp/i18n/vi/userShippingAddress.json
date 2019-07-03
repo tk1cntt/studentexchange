@@ -15,17 +15,17 @@
       "detail": {
         "title": "User Shipping Address"
       },
-      "name": "Người nhận",
-      "address": "Địa chỉ",
-      "mobile": "Điện thoại",
-      "note": "Ghi chú",
+      "name": "Name",
+      "address": "Address",
+      "mobile": "Mobile",
+      "note": "Note",
       "createAt": "Create At",
       "updateAt": "Update At",
       "userProfile": "User Profile",
       "createBy": "Create By",
       "updateBy": "Update By",
-      "city": "Thành phố",
-      "district": "Quận/Huyện"
+      "city": "City",
+      "district": "District"
     }
   }
 }

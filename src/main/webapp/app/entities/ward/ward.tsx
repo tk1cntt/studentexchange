@@ -116,10 +116,10 @@ export class Ward extends React.Component<IWardProps, IWardState> {
                   <td>{ward.longitude}</td>
                   <td>{ward.enabled ? 'true' : 'false'}</td>
                   <td>
-                    <TextFormat type="date" value={ward.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={ward.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={ward.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={ward.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{ward.districtId ? <Link to={`district/${ward.districtId}`}>{ward.districtId}</Link> : ''}</td>
                   <td className="text-right">

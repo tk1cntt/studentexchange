@@ -134,10 +134,10 @@ export class ShoppingCart extends React.Component<IShoppingCartProps> {
                   <td>{shoppingCart.finalAmount}</td>
                   <td>{shoppingCart.website}</td>
                   <td>
-                    <TextFormat type="date" value={shoppingCart.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={shoppingCart.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={shoppingCart.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={shoppingCart.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{shoppingCart.createByLogin ? shoppingCart.createByLogin : ''}</td>
                   <td>{shoppingCart.updateByLogin ? shoppingCart.updateByLogin : ''}</td>

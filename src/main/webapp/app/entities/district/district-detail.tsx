@@ -64,7 +64,7 @@ export class DistrictDetail extends React.Component<IDistrictDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={districtEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={districtEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -72,7 +72,7 @@ export class DistrictDetail extends React.Component<IDistrictDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={districtEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={districtEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.district.city">City</Translate>

@@ -142,7 +142,7 @@ export class ShoppingCartDetail extends React.Component<IShoppingCartDetailProps
               </span>
             </dt>
             <dd>
-              <TextFormat value={shoppingCartEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={shoppingCartEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -150,7 +150,7 @@ export class ShoppingCartDetail extends React.Component<IShoppingCartDetailProps
               </span>
             </dt>
             <dd>
-              <TextFormat value={shoppingCartEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={shoppingCartEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.shoppingCart.createBy">Create By</Translate>

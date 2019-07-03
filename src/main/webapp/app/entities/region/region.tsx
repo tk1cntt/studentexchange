@@ -101,10 +101,10 @@ export class Region extends React.Component<IRegionProps, IRegionState> {
                   <td>{region.name}</td>
                   <td>{region.enabled ? 'true' : 'false'}</td>
                   <td>
-                    <TextFormat type="date" value={region.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={region.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={region.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={region.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

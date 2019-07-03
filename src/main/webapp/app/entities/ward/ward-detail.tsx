@@ -64,7 +64,7 @@ export class WardDetail extends React.Component<IWardDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={wardEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={wardEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -72,7 +72,7 @@ export class WardDetail extends React.Component<IWardDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={wardEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={wardEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.ward.district">District</Translate>

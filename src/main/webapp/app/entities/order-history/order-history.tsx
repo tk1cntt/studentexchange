@@ -72,7 +72,7 @@ export class OrderHistory extends React.Component<IOrderHistoryProps> {
                   </td>
                   <td>{orderHistory.description}</td>
                   <td>
-                    <TextFormat type="date" value={orderHistory.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderHistory.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
                     {orderHistory.orderCartId ? <Link to={`order-cart/${orderHistory.orderCartId}`}>{orderHistory.orderCartId}</Link> : ''}

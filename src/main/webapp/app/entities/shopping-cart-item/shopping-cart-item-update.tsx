@@ -56,6 +56,9 @@ export class ShoppingCartItemUpdate extends React.Component<IShoppingCartItemUpd
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { shoppingCartItemEntity } = this.props;
       const entity = {
@@ -204,13 +207,25 @@ export class ShoppingCartItemUpdate extends React.Component<IShoppingCartItemUpd
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.shoppingCartItem.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="shopping-cart-item-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="shopping-cart-item-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.shoppingCartItemEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.shoppingCartItem.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="shopping-cart-item-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="shopping-cart-item-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.shoppingCartItemEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="shoppingCart.id">

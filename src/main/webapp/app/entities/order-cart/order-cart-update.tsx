@@ -59,6 +59,10 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
   }
 
   saveEntity = (event, errors, values) => {
+    values.depositTime = new Date(values.depositTime);
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { orderCartEntity } = this.props;
       const entity = {
@@ -145,7 +149,13 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
                   <Label id="depositTimeLabel" for="depositTime">
                     <Translate contentKey="studentexchangeApp.orderCart.depositTime">Deposit Time</Translate>
                   </Label>
-                  <AvField id="order-cart-depositTime" type="date" className="form-control" name="depositTime" />
+                  <AvInput
+                    id="order-cart-depositTime"
+                    type="datetime-local"
+                    className="form-control"
+                    name="depositTime"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.orderCartEntity.depositTime)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="domesticShippingChinaFeeNDTLabel" for="domesticShippingChinaFeeNDT">
@@ -457,13 +467,25 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.orderCart.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="order-cart-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="order-cart-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.orderCartEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.orderCart.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="order-cart-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="order-cart-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.orderCartEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="buyer.login">

@@ -56,6 +56,11 @@ export class DeliveryUpdate extends React.Component<IDeliveryUpdateProps, IDeliv
   }
 
   saveEntity = (event, errors, values) => {
+    values.exportTime = new Date(values.exportTime);
+    values.packedTime = new Date(values.packedTime);
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { deliveryEntity } = this.props;
       const entity = {
@@ -118,13 +123,25 @@ export class DeliveryUpdate extends React.Component<IDeliveryUpdateProps, IDeliv
                   <Label id="exportTimeLabel" for="exportTime">
                     <Translate contentKey="studentexchangeApp.delivery.exportTime">Export Time</Translate>
                   </Label>
-                  <AvField id="delivery-exportTime" type="date" className="form-control" name="exportTime" />
+                  <AvInput
+                    id="delivery-exportTime"
+                    type="datetime-local"
+                    className="form-control"
+                    name="exportTime"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.deliveryEntity.exportTime)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="packedTimeLabel" for="packedTime">
                     <Translate contentKey="studentexchangeApp.delivery.packedTime">Packed Time</Translate>
                   </Label>
-                  <AvField id="delivery-packedTime" type="date" className="form-control" name="packedTime" />
+                  <AvInput
+                    id="delivery-packedTime"
+                    type="datetime-local"
+                    className="form-control"
+                    name="packedTime"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.deliveryEntity.packedTime)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="statusLabel" for="status">
@@ -154,13 +171,25 @@ export class DeliveryUpdate extends React.Component<IDeliveryUpdateProps, IDeliv
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.delivery.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="delivery-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="delivery-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.deliveryEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.delivery.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="delivery-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="delivery-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.deliveryEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="warehouse.id">

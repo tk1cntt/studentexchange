@@ -103,10 +103,10 @@ export class OrderPackage extends React.Component<IOrderPackageProps> {
                   <td>{orderPackage.statusName}</td>
                   <td>{orderPackage.statusStyle}</td>
                   <td>
-                    <TextFormat type="date" value={orderPackage.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderPackage.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={orderPackage.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderPackage.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
                     {orderPackage.orderCartId ? <Link to={`order-cart/${orderPackage.orderCartId}`}>{orderPackage.orderCartId}</Link> : ''}

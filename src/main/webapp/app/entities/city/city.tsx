@@ -105,10 +105,10 @@ export class City extends React.Component<ICityProps, ICityState> {
                   <td>{city.index}</td>
                   <td>{city.enabled ? 'true' : 'false'}</td>
                   <td>
-                    <TextFormat type="date" value={city.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={city.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={city.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={city.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

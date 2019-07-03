@@ -46,7 +46,7 @@ export class WarehouseDetail extends React.Component<IWarehouseDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={warehouseEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={warehouseEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -54,7 +54,7 @@ export class WarehouseDetail extends React.Component<IWarehouseDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={warehouseEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={warehouseEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
           </dl>
           <Button tag={Link} to="/entity/warehouse" replace color="info">

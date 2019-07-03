@@ -49,6 +49,9 @@ export class WardUpdate extends React.Component<IWardUpdateProps, IWardUpdateSta
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { wardEntity } = this.props;
       const entity = {
@@ -129,13 +132,25 @@ export class WardUpdate extends React.Component<IWardUpdateProps, IWardUpdateSta
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.ward.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="ward-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="ward-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.wardEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.ward.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="ward-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="ward-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.wardEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="district.id">

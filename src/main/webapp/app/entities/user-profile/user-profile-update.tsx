@@ -61,6 +61,9 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { userProfileEntity } = this.props;
       const entity = {
@@ -157,13 +160,25 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.userProfile.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="user-profile-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="user-profile-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.userProfileEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.userProfile.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="user-profile-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="user-profile-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.userProfileEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="createBy.login">

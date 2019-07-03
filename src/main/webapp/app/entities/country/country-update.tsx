@@ -49,6 +49,9 @@ export class CountryUpdate extends React.Component<ICountryUpdateProps, ICountry
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { countryEntity } = this.props;
       const entity = {
@@ -111,13 +114,25 @@ export class CountryUpdate extends React.Component<ICountryUpdateProps, ICountry
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.country.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="country-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="country-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.countryEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.country.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="country-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="country-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.countryEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="region.id">

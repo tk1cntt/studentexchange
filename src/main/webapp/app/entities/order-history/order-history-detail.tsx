@@ -46,7 +46,7 @@ export class OrderHistoryDetail extends React.Component<IOrderHistoryDetailProps
               </span>
             </dt>
             <dd>
-              <TextFormat value={orderHistoryEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={orderHistoryEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <Translate contentKey="studentexchangeApp.orderHistory.orderCart">Order Cart</Translate>

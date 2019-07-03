@@ -133,10 +133,10 @@ export class OrderItem extends React.Component<IOrderItemProps> {
                   <td>{orderItem.totalPriceNDT}</td>
                   <td>{orderItem.website}</td>
                   <td>
-                    <TextFormat type="date" value={orderItem.createAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderItem.createAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={orderItem.updateAt} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={orderItem.updateAt} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{orderItem.orderCartId ? <Link to={`order-cart/${orderItem.orderCartId}`}>{orderItem.orderCartId}</Link> : ''}</td>
                   <td>{orderItem.createByLogin ? orderItem.createByLogin : ''}</td>

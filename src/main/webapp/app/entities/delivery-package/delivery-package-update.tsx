@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
-import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -56,6 +56,9 @@ export class DeliveryPackageUpdate extends React.Component<IDeliveryPackageUpdat
   }
 
   saveEntity = (event, errors, values) => {
+    values.createAt = new Date(values.createAt);
+    values.updateAt = new Date(values.updateAt);
+
     if (errors.length === 0) {
       const { deliveryPackageEntity } = this.props;
       const entity = {
@@ -106,13 +109,25 @@ export class DeliveryPackageUpdate extends React.Component<IDeliveryPackageUpdat
                   <Label id="createAtLabel" for="createAt">
                     <Translate contentKey="studentexchangeApp.deliveryPackage.createAt">Create At</Translate>
                   </Label>
-                  <AvField id="delivery-package-createAt" type="date" className="form-control" name="createAt" />
+                  <AvInput
+                    id="delivery-package-createAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="createAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.deliveryPackageEntity.createAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updateAtLabel" for="updateAt">
                     <Translate contentKey="studentexchangeApp.deliveryPackage.updateAt">Update At</Translate>
                   </Label>
-                  <AvField id="delivery-package-updateAt" type="date" className="form-control" name="updateAt" />
+                  <AvInput
+                    id="delivery-package-updateAt"
+                    type="datetime-local"
+                    className="form-control"
+                    name="updateAt"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.deliveryPackageEntity.updateAt)}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="delivery.id">

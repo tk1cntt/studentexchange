@@ -4,7 +4,7 @@ package vn.studentexchange.domain;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Objects;
 
 import vn.studentexchange.domain.enumeration.CurrencyType;
@@ -30,7 +30,7 @@ public class CurrencyRate implements Serializable {
     private Float rate;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -67,16 +67,16 @@ public class CurrencyRate implements Serializable {
         this.rate = rate;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public CurrencyRate createAt(LocalDate createAt) {
+    public CurrencyRate createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Objects;
 
 import vn.studentexchange.domain.enumeration.CommentType;
@@ -34,7 +34,7 @@ public class OrderComment implements Serializable {
     private CommentType type;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     @ManyToOne
     @JsonIgnoreProperties("comments")
@@ -88,16 +88,16 @@ public class OrderComment implements Serializable {
         this.type = type;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public OrderComment createAt(LocalDate createAt) {
+    public OrderComment createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 

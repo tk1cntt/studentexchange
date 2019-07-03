@@ -16,7 +16,7 @@
         },
         {
             "fieldName": "createAt",
-            "fieldType": "LocalDate"
+            "fieldType": "Instant"
         }
     ],
     "relationships": [

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -24,7 +24,7 @@ public class Ward implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "type")
+    @Column(name = "jhi_type")
     private String type;
 
     @Column(name = "latitude")
@@ -37,10 +37,10 @@ public class Ward implements Serializable {
     private Boolean enabled;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     @Column(name = "update_at")
-    private LocalDate updateAt;
+    private Instant updateAt;
 
     @ManyToOne
     @JsonIgnoreProperties("wards")
@@ -120,29 +120,29 @@ public class Ward implements Serializable {
         this.enabled = enabled;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public Ward createAt(LocalDate createAt) {
+    public Ward createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
+    public Instant getUpdateAt() {
         return updateAt;
     }
 
-    public Ward updateAt(LocalDate updateAt) {
+    public Ward updateAt(Instant updateAt) {
         this.updateAt = updateAt;
         return this;
     }
 
-    public void setUpdateAt(LocalDate updateAt) {
+    public void setUpdateAt(Instant updateAt) {
         this.updateAt = updateAt;
     }
 

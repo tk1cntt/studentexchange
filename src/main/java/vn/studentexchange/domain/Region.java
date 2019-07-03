@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -30,10 +30,10 @@ public class Region implements Serializable {
     private Boolean enabled;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     @Column(name = "update_at")
-    private LocalDate updateAt;
+    private Instant updateAt;
 
     @OneToMany(mappedBy = "region")
     private Set<Country> countries = new HashSet<>();
@@ -78,29 +78,29 @@ public class Region implements Serializable {
         this.enabled = enabled;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public Region createAt(LocalDate createAt) {
+    public Region createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
+    public Instant getUpdateAt() {
         return updateAt;
     }
 
-    public Region updateAt(LocalDate updateAt) {
+    public Region updateAt(Instant updateAt) {
         this.updateAt = updateAt;
         return this;
     }
 
-    public void setUpdateAt(LocalDate updateAt) {
+    public void setUpdateAt(Instant updateAt) {
         this.updateAt = updateAt;
     }
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Objects;
 
 import vn.studentexchange.domain.enumeration.OrderTransactionType;
@@ -34,7 +34,7 @@ public class OrderTransaction implements Serializable {
     private OrderTransactionType status;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     @ManyToOne
     @JsonIgnoreProperties("transactions")
@@ -96,16 +96,16 @@ public class OrderTransaction implements Serializable {
         this.status = status;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public OrderTransaction createAt(LocalDate createAt) {
+    public OrderTransaction createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 

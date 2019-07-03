@@ -20,6 +20,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
+        <addForeignKeyConstraint baseColumnNames="customer_id"
+                                 baseTableName="payment"
+                                 constraintName="fk_payment_customer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
         <addForeignKeyConstraint baseColumnNames="create_by_id"
                                  baseTableName="payment"
                                  constraintName="fk_payment_create_by_id"

@@ -9,7 +9,7 @@ import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
-import io.github.jhipster.service.filter.LocalDateFilter;
+import io.github.jhipster.service.filter.InstantFilter;
 
 /**
  * Criteria class for the Region entity. This class is used in RegionResource to
@@ -29,9 +29,9 @@ public class RegionCriteria implements Serializable {
 
     private BooleanFilter enabled;
 
-    private LocalDateFilter createAt;
+    private InstantFilter createAt;
 
-    private LocalDateFilter updateAt;
+    private InstantFilter updateAt;
 
     private LongFilter countriesId;
 
@@ -64,19 +64,19 @@ public class RegionCriteria implements Serializable {
         this.enabled = enabled;
     }
 
-    public LocalDateFilter getCreateAt() {
+    public InstantFilter getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(LocalDateFilter createAt) {
+    public void setCreateAt(InstantFilter createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDateFilter getUpdateAt() {
+    public InstantFilter getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(LocalDateFilter updateAt) {
+    public void setUpdateAt(InstantFilter updateAt) {
         this.updateAt = updateAt;
     }
 

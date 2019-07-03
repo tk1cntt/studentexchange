@@ -15,12 +15,15 @@ public interface PaymentMapper extends EntityMapper<PaymentDTO, Payment> {
     @Mapping(source = "staffApproval.login", target = "staffApprovalLogin")
     @Mapping(source = "staffCancel.id", target = "staffCancelId")
     @Mapping(source = "staffCancel.login", target = "staffCancelLogin")
+    @Mapping(source = "customer.id", target = "customerId")
+    @Mapping(source = "customer.login", target = "customerLogin")
     @Mapping(source = "createBy.id", target = "createById")
     @Mapping(source = "createBy.login", target = "createByLogin")
     PaymentDTO toDto(Payment payment);
 
     @Mapping(source = "staffApprovalId", target = "staffApproval")
     @Mapping(source = "staffCancelId", target = "staffCancel")
+    @Mapping(source = "customerId", target = "customer")
     @Mapping(source = "createById", target = "createBy")
     Payment toEntity(PaymentDTO paymentDTO);
 

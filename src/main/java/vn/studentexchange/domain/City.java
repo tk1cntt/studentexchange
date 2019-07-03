@@ -8,7 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -37,11 +37,11 @@ public class City implements Serializable {
 
     @CreationTimestamp
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     @UpdateTimestamp
     @Column(name = "update_at")
-    private LocalDate updateAt;
+    private Instant updateAt;
 
     @OneToMany(mappedBy = "city")
     @OrderBy("type DESC, name ASC")
@@ -94,29 +94,29 @@ public class City implements Serializable {
         this.enabled = enabled;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public City createAt(LocalDate createAt) {
+    public City createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
+    public Instant getUpdateAt() {
         return updateAt;
     }
 
-    public City updateAt(LocalDate updateAt) {
+    public City updateAt(Instant updateAt) {
         this.updateAt = updateAt;
         return this;
     }
 
-    public void setUpdateAt(LocalDate updateAt) {
+    public void setUpdateAt(Instant updateAt) {
         this.updateAt = updateAt;
     }
 

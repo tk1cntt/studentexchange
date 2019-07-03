@@ -34,16 +34,18 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="create_at" type="date">
+            <column name="create_at" type="datetime">
                 <constraints nullable="true" />
             </column>
 
-            <column name="update_at" type="date">
+            <column name="update_at" type="datetime">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="city" columnName="create_at" columnDataType="datetime"/>
+        <dropDefaultValue tableName="city" columnName="update_at" columnDataType="datetime"/>
         
         <loadData encoding="UTF-8"
             file="config/liquibase/city.csv"

@@ -1,6 +1,6 @@
 package vn.studentexchange.service.dto;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,9 +11,9 @@ public class DeliveryPackageDTO implements Serializable {
 
     private Long id;
 
-    private LocalDate createAt;
+    private Instant createAt;
 
-    private LocalDate updateAt;
+    private Instant updateAt;
 
     private Long deliveryId;
 
@@ -33,19 +33,19 @@ public class DeliveryPackageDTO implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
+    public Instant getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(LocalDate updateAt) {
+    public void setUpdateAt(Instant updateAt) {
         this.updateAt = updateAt;
     }
 

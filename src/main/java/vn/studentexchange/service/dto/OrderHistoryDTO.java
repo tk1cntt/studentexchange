@@ -1,6 +1,6 @@
 package vn.studentexchange.service.dto;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.Objects;
 import vn.studentexchange.domain.enumeration.OrderStatus;
@@ -16,7 +16,7 @@ public class OrderHistoryDTO implements Serializable {
 
     private String description;
 
-    private LocalDate createAt;
+    private Instant createAt;
 
     private Long orderCartId;
 
@@ -52,11 +52,11 @@ public class OrderHistoryDTO implements Serializable {
         this.description = description;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 

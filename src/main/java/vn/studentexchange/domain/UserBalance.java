@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -31,10 +31,10 @@ public class UserBalance implements Serializable {
     private Float cash;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     @Column(name = "update_at")
-    private LocalDate updateAt;
+    private Instant updateAt;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -88,29 +88,29 @@ public class UserBalance implements Serializable {
         this.cash = cash;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public UserBalance createAt(LocalDate createAt) {
+    public UserBalance createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
+    public Instant getUpdateAt() {
         return updateAt;
     }
 
-    public UserBalance updateAt(LocalDate updateAt) {
+    public UserBalance updateAt(Instant updateAt) {
         this.updateAt = updateAt;
         return this;
     }
 
-    public void setUpdateAt(LocalDate updateAt) {
+    public void setUpdateAt(Instant updateAt) {
         this.updateAt = updateAt;
     }
 

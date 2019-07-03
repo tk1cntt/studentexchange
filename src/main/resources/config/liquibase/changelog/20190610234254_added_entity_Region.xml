@@ -30,16 +30,18 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="create_at" type="date">
+            <column name="create_at" type="datetime">
                 <constraints nullable="true" />
             </column>
 
-            <column name="update_at" type="date">
+            <column name="update_at" type="datetime">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="region" columnName="create_at" columnDataType="datetime"/>
+        <dropDefaultValue tableName="region" columnName="update_at" columnDataType="datetime"/>
         
         <createTable tableName="region_user">
             <column name="users_id" type="bigint">

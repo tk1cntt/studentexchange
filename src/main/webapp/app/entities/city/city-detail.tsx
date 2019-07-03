@@ -52,7 +52,7 @@ export class CityDetail extends React.Component<ICityDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={cityEntity.createAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={cityEntity.createAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="updateAt">
@@ -60,7 +60,7 @@ export class CityDetail extends React.Component<ICityDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={cityEntity.updateAt} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={cityEntity.updateAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
           </dl>
           <Button tag={Link} to="/entity/city" replace color="info">

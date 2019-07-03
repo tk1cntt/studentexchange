@@ -38,7 +38,7 @@
         },
         {
             "fieldName": "createAt",
-            "fieldType": "LocalDate"
+            "fieldType": "Instant"
         },
         {
             "fieldName": "withdrawalFee",
@@ -60,6 +60,12 @@
         },
         {
             "relationshipType": "many-to-one",
+            "relationshipName": "customer",
+            "otherEntityName": "user",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
             "relationshipName": "createBy",
             "otherEntityName": "user",
             "otherEntityField": "login"
@@ -70,7 +76,7 @@
     "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceClass",
-    "jpaMetamodelFiltering": false,
+    "jpaMetamodelFiltering": true,
     "fluentMethods": true,
     "clientRootFolder": "",
     "applications": "*"

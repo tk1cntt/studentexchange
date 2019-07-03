@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Objects;
 
 import vn.studentexchange.domain.enumeration.PaymentMethod;
@@ -55,7 +55,7 @@ public class Payment implements Serializable {
     private PaymentStatusType status;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     @Column(name = "withdrawal_fee")
     private Float withdrawalFee;
@@ -67,6 +67,10 @@ public class Payment implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("")
     private User staffCancel;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private User customer;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -185,16 +189,16 @@ public class Payment implements Serializable {
         this.status = status;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public Payment createAt(LocalDate createAt) {
+    public Payment createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
@@ -235,6 +239,19 @@ public class Payment implements Serializable {
 
     public void setStaffCancel(User user) {
         this.staffCancel = user;
+    }
+
+    public User getCustomer() {
+        return customer;
+    }
+
+    public Payment customer(User user) {
+        this.customer = user;
+        return this;
+    }
+
+    public void setCustomer(User user) {
+        this.customer = user;
     }
 
     public User getCreateBy() {

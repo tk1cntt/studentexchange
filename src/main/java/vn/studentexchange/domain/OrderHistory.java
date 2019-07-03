@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Objects;
 
 import vn.studentexchange.domain.enumeration.OrderStatus;
@@ -31,7 +31,7 @@ public class OrderHistory implements Serializable {
     private String description;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     @ManyToOne
     @JsonIgnoreProperties("histories")
@@ -80,16 +80,16 @@ public class OrderHistory implements Serializable {
         this.description = description;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public OrderHistory createAt(LocalDate createAt) {
+    public OrderHistory createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 

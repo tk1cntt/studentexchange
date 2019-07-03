@@ -25,6 +25,8 @@
     <include file="config/liquibase/changelog/20190627225705_added_entity_CurrencyRate.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190628113310_added_entity_Payment.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190628113311_added_entity_UserBalance.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190610234253_added_entity_Country.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190610234254_added_entity_Region.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20190610234256_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190610234257_added_entity_constraints_District.xml" relativeToChangelogFile="false"/>
@@ -44,5 +46,7 @@
     <include file="config/liquibase/changelog/20190610234312_added_entity_constraints_DeliveryPackage.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190628113310_added_entity_constraints_Payment.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190628113311_added_entity_constraints_UserBalance.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190610234253_added_entity_constraints_Country.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190610234254_added_entity_constraints_Region.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

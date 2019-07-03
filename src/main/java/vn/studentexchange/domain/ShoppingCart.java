@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -79,10 +79,10 @@ public class ShoppingCart implements Serializable {
     private String website;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     @Column(name = "update_at")
-    private LocalDate updateAt;
+    private Instant updateAt;
 
     @OneToMany(mappedBy = "shoppingCart")
     private Set<ShoppingCartItem> items = new HashSet<>();
@@ -337,29 +337,29 @@ public class ShoppingCart implements Serializable {
         this.website = website;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public ShoppingCart createAt(LocalDate createAt) {
+    public ShoppingCart createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
+    public Instant getUpdateAt() {
         return updateAt;
     }
 
-    public ShoppingCart updateAt(LocalDate updateAt) {
+    public ShoppingCart updateAt(Instant updateAt) {
         this.updateAt = updateAt;
         return this;
     }
 
-    public void setUpdateAt(LocalDate updateAt) {
+    public void setUpdateAt(Instant updateAt) {
         this.updateAt = updateAt;
     }
 

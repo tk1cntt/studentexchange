@@ -30,11 +30,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="export_time" type="date">
+            <column name="export_time" type="datetime">
                 <constraints nullable="true" />
             </column>
 
-            <column name="packed_time" type="date">
+            <column name="packed_time" type="datetime">
                 <constraints nullable="true" />
             </column>
 
@@ -54,11 +54,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="create_at" type="date">
+            <column name="create_at" type="datetime">
                 <constraints nullable="true" />
             </column>
 
-            <column name="update_at" type="date">
+            <column name="update_at" type="datetime">
                 <constraints nullable="true" />
             </column>
 
@@ -76,6 +76,10 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="delivery" columnName="export_time" columnDataType="datetime"/>
+        <dropDefaultValue tableName="delivery" columnName="packed_time" columnDataType="datetime"/>
+        <dropDefaultValue tableName="delivery" columnName="create_at" columnDataType="datetime"/>
+        <dropDefaultValue tableName="delivery" columnName="update_at" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

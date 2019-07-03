@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -31,10 +31,10 @@ public class Delivery implements Serializable {
     private String deliveryMethodName;
 
     @Column(name = "export_time")
-    private LocalDate exportTime;
+    private Instant exportTime;
 
     @Column(name = "packed_time")
-    private LocalDate packedTime;
+    private Instant packedTime;
 
     @Column(name = "status")
     private String status;
@@ -49,10 +49,10 @@ public class Delivery implements Serializable {
     private Float totalWeight;
 
     @Column(name = "create_at")
-    private LocalDate createAt;
+    private Instant createAt;
 
     @Column(name = "update_at")
-    private LocalDate updateAt;
+    private Instant updateAt;
 
     @OneToMany(mappedBy = "delivery")
     private Set<DeliveryPackage> packages = new HashSet<>();
@@ -105,29 +105,29 @@ public class Delivery implements Serializable {
         this.deliveryMethodName = deliveryMethodName;
     }
 
-    public LocalDate getExportTime() {
+    public Instant getExportTime() {
         return exportTime;
     }
 
-    public Delivery exportTime(LocalDate exportTime) {
+    public Delivery exportTime(Instant exportTime) {
         this.exportTime = exportTime;
         return this;
     }
 
-    public void setExportTime(LocalDate exportTime) {
+    public void setExportTime(Instant exportTime) {
         this.exportTime = exportTime;
     }
 
-    public LocalDate getPackedTime() {
+    public Instant getPackedTime() {
         return packedTime;
     }
 
-    public Delivery packedTime(LocalDate packedTime) {
+    public Delivery packedTime(Instant packedTime) {
         this.packedTime = packedTime;
         return this;
     }
 
-    public void setPackedTime(LocalDate packedTime) {
+    public void setPackedTime(Instant packedTime) {
         this.packedTime = packedTime;
     }
 
@@ -183,29 +183,29 @@ public class Delivery implements Serializable {
         this.totalWeight = totalWeight;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public Delivery createAt(LocalDate createAt) {
+    public Delivery createAt(Instant createAt) {
         this.createAt = createAt;
         return this;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
+    public Instant getUpdateAt() {
         return updateAt;
     }
 
-    public Delivery updateAt(LocalDate updateAt) {
+    public Delivery updateAt(Instant updateAt) {
         this.updateAt = updateAt;
         return this;
     }
 
-    public void setUpdateAt(LocalDate updateAt) {
+    public void setUpdateAt(Instant updateAt) {
         this.updateAt = updateAt;
     }
 

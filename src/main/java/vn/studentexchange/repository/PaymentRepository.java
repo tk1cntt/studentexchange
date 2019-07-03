@@ -14,13 +14,16 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface PaymentRepository extends JpaRepository<Payment, Long> {
+public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpecificationExecutor<Payment> {
 
     @Query("select payment from Payment payment where payment.staffApproval.login = ?#{principal.username}")
     List<Payment> findByStaffApprovalIsCurrentUser();
 
     @Query("select payment from Payment payment where payment.staffCancel.login = ?#{principal.username}")
     List<Payment> findByStaffCancelIsCurrentUser();
+
+    @Query("select payment from Payment payment where payment.customer.login = ?#{principal.username}")
+    List<Payment> findByCustomerIsCurrentUser();
 
     @Query("select payment from Payment payment where payment.createBy.login = ?#{principal.username}")
     List<Payment> findByCreateByIsCurrentUser();

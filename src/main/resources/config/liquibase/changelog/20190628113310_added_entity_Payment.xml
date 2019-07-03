@@ -54,7 +54,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="create_at" type="date">
+            <column name="create_at" type="datetime">
                 <constraints nullable="true" />
             </column>
 
@@ -70,12 +70,17 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="customer_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="create_by_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="payment" columnName="create_at" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

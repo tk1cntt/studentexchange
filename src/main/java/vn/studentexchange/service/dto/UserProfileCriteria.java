@@ -10,7 +10,7 @@ import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
-import io.github.jhipster.service.filter.LocalDateFilter;
+import io.github.jhipster.service.filter.InstantFilter;
 
 /**
  * Criteria class for the UserProfile entity. This class is used in UserProfileResource to
@@ -41,9 +41,9 @@ public class UserProfileCriteria implements Serializable {
 
     private StringFilter address;
 
-    private LocalDateFilter createAt;
+    private InstantFilter createAt;
 
-    private LocalDateFilter updateAt;
+    private InstantFilter updateAt;
 
     private LongFilter createById;
 
@@ -106,19 +106,19 @@ public class UserProfileCriteria implements Serializable {
         this.address = address;
     }
 
-    public LocalDateFilter getCreateAt() {
+    public InstantFilter getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(LocalDateFilter createAt) {
+    public void setCreateAt(InstantFilter createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDateFilter getUpdateAt() {
+    public InstantFilter getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(LocalDateFilter updateAt) {
+    public void setUpdateAt(InstantFilter updateAt) {
         this.updateAt = updateAt;
     }
 

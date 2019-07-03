@@ -1,6 +1,6 @@
 package vn.studentexchange.service.dto;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -15,9 +15,9 @@ public class DeliveryDTO implements Serializable {
 
     private String deliveryMethodName;
 
-    private LocalDate exportTime;
+    private Instant exportTime;
 
-    private LocalDate packedTime;
+    private Instant packedTime;
 
     private String status;
 
@@ -27,9 +27,9 @@ public class DeliveryDTO implements Serializable {
 
     private Float totalWeight;
 
-    private LocalDate createAt;
+    private Instant createAt;
 
-    private LocalDate updateAt;
+    private Instant updateAt;
 
     private Long warehouseId;
 
@@ -65,19 +65,19 @@ public class DeliveryDTO implements Serializable {
         this.deliveryMethodName = deliveryMethodName;
     }
 
-    public LocalDate getExportTime() {
+    public Instant getExportTime() {
         return exportTime;
     }
 
-    public void setExportTime(LocalDate exportTime) {
+    public void setExportTime(Instant exportTime) {
         this.exportTime = exportTime;
     }
 
-    public LocalDate getPackedTime() {
+    public Instant getPackedTime() {
         return packedTime;
     }
 
-    public void setPackedTime(LocalDate packedTime) {
+    public void setPackedTime(Instant packedTime) {
         this.packedTime = packedTime;
     }
 
@@ -113,19 +113,19 @@ public class DeliveryDTO implements Serializable {
         this.totalWeight = totalWeight;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
-    public LocalDate getUpdateAt() {
+    public Instant getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(LocalDate updateAt) {
+    public void setUpdateAt(Instant updateAt) {
         this.updateAt = updateAt;
     }
 

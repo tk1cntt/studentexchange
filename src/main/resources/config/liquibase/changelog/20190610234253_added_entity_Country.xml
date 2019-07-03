@@ -30,11 +30,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="create_at" type="date">
+            <column name="create_at" type="datetime">
                 <constraints nullable="true" />
             </column>
 
-            <column name="update_at" type="date">
+            <column name="update_at" type="datetime">
                 <constraints nullable="true" />
             </column>
 
@@ -44,6 +44,8 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="country" columnName="create_at" columnDataType="datetime"/>
+        <dropDefaultValue tableName="country" columnName="update_at" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

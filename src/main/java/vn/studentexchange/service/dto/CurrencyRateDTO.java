@@ -1,6 +1,6 @@
 package vn.studentexchange.service.dto;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.Objects;
 import vn.studentexchange.domain.enumeration.CurrencyType;
@@ -16,7 +16,7 @@ public class CurrencyRateDTO implements Serializable {
 
     private Float rate;
 
-    private LocalDate createAt;
+    private Instant createAt;
 
     public Long getId() {
         return id;
@@ -42,11 +42,11 @@ public class CurrencyRateDTO implements Serializable {
         this.rate = rate;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 

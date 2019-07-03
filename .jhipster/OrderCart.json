@@ -27,7 +27,7 @@
         },
         {
             "fieldName": "depositTime",
-            "fieldType": "LocalDate"
+            "fieldType": "Instant"
         },
         {
             "fieldName": "domesticShippingChinaFeeNDT",
@@ -188,11 +188,11 @@
         },
         {
             "fieldName": "createAt",
-            "fieldType": "LocalDate"
+            "fieldType": "Instant"
         },
         {
             "fieldName": "updateAt",
-            "fieldType": "LocalDate"
+            "fieldType": "Instant"
         }
     ],
     "relationships": [

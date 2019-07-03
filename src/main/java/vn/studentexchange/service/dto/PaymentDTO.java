@@ -1,6 +1,6 @@
 package vn.studentexchange.service.dto;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.Objects;
 import vn.studentexchange.domain.enumeration.PaymentMethod;
@@ -30,7 +30,7 @@ public class PaymentDTO implements Serializable {
 
     private PaymentStatusType status;
 
-    private LocalDate createAt;
+    private Instant createAt;
 
     private Float withdrawalFee;
 
@@ -41,6 +41,10 @@ public class PaymentDTO implements Serializable {
     private Long staffCancelId;
 
     private String staffCancelLogin;
+
+    private Long customerId;
+
+    private String customerLogin;
 
     private Long createById;
 
@@ -118,11 +122,11 @@ public class PaymentDTO implements Serializable {
         this.status = status;
     }
 
-    public LocalDate getCreateAt() {
+    public Instant getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(LocalDate createAt) {
+    public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
@@ -164,6 +168,22 @@ public class PaymentDTO implements Serializable {
 
     public void setStaffCancelLogin(String userLogin) {
         this.staffCancelLogin = userLogin;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long userId) {
+        this.customerId = userId;
+    }
+
+    public String getCustomerLogin() {
+        return customerLogin;
+    }
+
+    public void setCustomerLogin(String userLogin) {
+        this.customerLogin = userLogin;
     }
 
     public Long getCreateById() {
@@ -221,6 +241,8 @@ public class PaymentDTO implements Serializable {
             ", staffApproval='" + getStaffApprovalLogin() + "'" +
             ", staffCancel=" + getStaffCancelId() +
             ", staffCancel='" + getStaffCancelLogin() + "'" +
+            ", customer=" + getCustomerId() +
+            ", customer='" + getCustomerLogin() + "'" +
             ", createBy=" + getCreateById() +
             ", createBy='" + getCreateByLogin() + "'" +
             "}";

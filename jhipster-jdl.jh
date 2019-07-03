@@ -1,23 +1,23 @@
 entity Country {
    name String,
    enabled Boolean,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 entity Region {
    name String,
    enabled Boolean,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 entity City {
    name String,
    index Integer,
    enabled Boolean,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 entity District {
@@ -26,8 +26,8 @@ entity District {
    latitude Float,
    longitude Float,
    enabled Boolean,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 entity Ward {
@@ -36,8 +36,8 @@ entity Ward {
    latitude Float,
    longitude Float,
    enabled Boolean,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 relationship ManyToMany {
@@ -60,8 +60,8 @@ entity UserProfile {
    email String,
    mobile String,
    address String,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 relationship OneToOne {
@@ -76,8 +76,8 @@ entity UserShippingAddress {
    address String,
    mobile String,
    note String,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 relationship ManyToOne {
@@ -102,7 +102,7 @@ entity OrderCart {
    amountPaid Float,
    depositAmount Float,
    depositRatio Float,
-   depositTime LocalDate,
+   depositTime Instant,
    domesticShippingChinaFeeNDT Float,
    domesticShippingChinaFee Float,
    domesticShippingVietnamFee Float,
@@ -142,8 +142,8 @@ entity OrderCart {
    orderAddress String,
    orderMobile String,
    orderNote String,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 relationship ManyToOne {
@@ -162,7 +162,7 @@ enum OrderStatus {
 entity OrderHistory {
    status OrderStatus,
    description String,
-   createAt LocalDate
+   createAt Instant
 }
 
 relationship ManyToOne {
@@ -192,8 +192,8 @@ entity OrderItem {
    totalPrice Float,
    totalPriceNDT Float,
    website String,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 relationship ManyToOne {
@@ -210,16 +210,16 @@ entity OrderPackage {
    status String,
    statusName String,
    statusStyle String,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 entity OrderPackageHistory {
    status String,
    statusName String,
    statusStyle String,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 relationship OneToMany {
@@ -243,7 +243,7 @@ entity OrderTransaction {
    amount Float,
    note String,
    status OrderTransactionType,
-   createAt LocalDate
+   createAt Instant
 }
 
 relationship ManyToOne {
@@ -259,7 +259,7 @@ entity OrderComment {
    message String,
    sender String,
    type CommentType,
-   createAt LocalDate
+   createAt Instant
 }
 
 relationship OneToMany {
@@ -291,13 +291,14 @@ entity Payment {
    method PaymentMethod,
    type PaymentType,
    status PaymentStatusType,
-   createAt LocalDate,
+   createAt Instant,
    withdrawalFee Float
 }
 
 relationship ManyToOne {
    Payment{staffApproval(login)} to User,
    Payment{staffCancel(login)} to User,
+   Payment{customer(login)} to User,
    Payment{createBy(login)} to User
 }
 
@@ -305,8 +306,8 @@ entity UserBalance {
    balanceAvailable Float,
    balanceFreezing Float,
    cash Float,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 relationship ManyToOne {
@@ -332,8 +333,8 @@ entity ShoppingCart {
    totalQuantity Integer,
    finalAmount Float,
    website String,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 relationship ManyToOne {
@@ -358,8 +359,8 @@ entity ShoppingCartItem {
    requireMin Integer,
    totalAmount Float,
    totalAmountNDT Float,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 relationship ManyToOne {
@@ -370,26 +371,26 @@ relationship ManyToOne {
 entity Warehouse {
    name String,
    address String,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 entity Delivery {
    deliveryMethod String,
    deliveryMethodName String,
-   exportTime LocalDate,
-   packedTime LocalDate,
+   exportTime Instant,
+   packedTime Instant,
    status String,
    statusName String,
    statusStyle String,
    totalWeight Float,
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 entity DeliveryPackage {
-   createAt LocalDate,
-   updateAt LocalDate
+   createAt Instant,
+   updateAt Instant
 }
 
 relationship ManyToOne {
@@ -413,7 +414,7 @@ enum CurrencyType {
 entity CurrencyRate {
    currency CurrencyType,
    rate Float,
-   createAt LocalDate
+   createAt Instant
 }
 
 relationship ManyToOne {

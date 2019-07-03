@@ -344,13 +344,13 @@ export class Checkout extends React.Component<ICheckoutProp> {
       </button>
     );
     const payment = (
-      <button className="btn btn-danger btn-block">
-        <span className="checkout-cart">
-          <Link to={`/payment`}>
+      <Link to={`/payment`}>
+        <button className="btn btn-danger btn-block">
+          <span className="checkout-cart">
             <i className="fa fa-shopping-cart" /> Nạp tiền
-          </Link>
-        </span>
-      </button>
+          </span>
+        </button>
+      </Link>
     );
     if (Number(this.props.userBalanceEntity.balanceAvailable) < Number(this.state.finalAmount)) {
       return (
@@ -384,6 +384,9 @@ export class Checkout extends React.Component<ICheckoutProp> {
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row wrapper wrapper-content">
+            <div className="row border-bottom white-bg dashboard-header">
+              <h4>Tiến hành đặt hàng</h4>
+            </div>
             <div className="shipping-box">{this.userShippingAddressListBox()}</div>
             <div className="ibox">
               <div className="ibox-content">

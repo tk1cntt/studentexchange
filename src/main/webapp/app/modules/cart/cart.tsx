@@ -104,34 +104,50 @@ export class Cart extends React.Component<IHomeProp> {
                             </button>
                           </Link>
                         </span>
-                        <div className="col-xs-8 item">Tiền hàng:</div>
-                        <div className="col-xs-4 item">
-                          <b>{formatCurency(shoppingCart.totalAmount)}đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí mua hàng:</div>
-                        <div className="col-xs-4 item">
-                          <b>{formatCurency(shoppingCart.serviceFee)}đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí kiểm đếm:</div>
-                        <div className="col-xs-4 item">
-                          <b>{formatCurency(shoppingCart.tallyFee)}đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí vận chuyển nội địa TQ:</div>
-                        <div className="col-xs-4 item">
-                          <b>0đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí đóng kiện gỗ:</div>
-                        <div className="col-xs-4 item">
-                          <b>0đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí vận chuyển TQ - VN:</div>
-                        <div className="col-xs-4 item">
-                          <b>0đ</b>
-                        </div>
-                        <div className="col-xs-8 item">Phí vận chuyển nội địa VN:</div>
-                        <div className="col-xs-4 item">
-                          <b>0đ</b>
-                        </div>
+                        <ul className="list-group clear-list m-t">
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>{formatCurency(shoppingCart.totalAmount)}đ</b>
+                            </span>
+                            Tiền hàng:
+                          </li>
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>{formatCurency(shoppingCart.serviceFee)}đ</b>
+                            </span>
+                            Phí mua hàng:
+                          </li>
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>{formatCurency(shoppingCart.tallyFee)}đ</b>
+                            </span>
+                            Phí kiểm đếm:
+                          </li>
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>0đ</b>
+                            </span>
+                            Phí vận chuyển nội địa TQ:
+                          </li>
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>0đ</b>
+                            </span>
+                            Phí đóng kiện gỗ:
+                          </li>
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>0đ</b>
+                            </span>
+                            Phí vận chuyển TQ - VN:
+                          </li>
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>0đ</b>
+                            </span>
+                            Phí vận chuyển nội địa VN:
+                          </li>
+                        </ul>
                       </div>
                       <div className="row checkout-cart-detail checkout-cart-total">
                         <div className="col-xs-8 item">

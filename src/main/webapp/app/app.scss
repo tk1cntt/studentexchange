@@ -32,6 +32,18 @@
   padding: 5px 0 5px 20px;
 }
 
+.checkout-cart-detail ul {
+  padding: 0 20px 0 20px;
+}
+
+.checkout-cart-detail ul > li {
+  padding: 5px 0 5px 0 !important;
+}
+
+.checkout-cart-detail .list-group.clear-list .list-group-item {
+  border-top: 0 !important;
+}
+
 .checkout-cart-total {
   background-color: #ffffff;
   border-color: #e7eaec;

@@ -28,5 +28,9 @@ public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpec
     @Query("select payment from Payment payment where payment.createBy.login = ?#{principal.username}")
     List<Payment> findByCreateByIsCurrentUser();
 
+    Page<Payment> findByOrderByCreateAtDesc(Pageable pageable);
+
     Page<Payment> findByCreateByLoginOrderByCreateAtDesc(String username, Pageable pageable);
+
+    Page<Payment> findByCustomerLoginOrderByCreateAtDesc(String username, Pageable pageable);
 }

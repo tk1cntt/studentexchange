@@ -2,17 +2,15 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
-import { TextFormat } from 'react-jhipster';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities as getOwnerPayment } from 'app/entities/payment/payment.reducer';
+import { getEntities as getAllPayment } from 'app/entities/payment/payment.reducer';
 import { formatCurency } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import Footer from 'app/shared/layout/footer/footer';
 import { PaymentType } from 'app/shared/model/payment.model';
-import { APP_DATE_FORMAT } from 'app/config/constants';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
@@ -23,38 +21,15 @@ export interface ICheckoutProp extends StateProps, DispatchProps {
 
 export class Payment extends React.Component<ICheckoutProp> {
   componentDidMount() {
-    this.props.getOwnerPayment();
+    this.props.getAllPayment();
   }
 
   render() {
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="payment" activeSubMenu="" />
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="manager-management" activeSubMenu="history" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
-          <div className="row  border-bottom white-bg dashboard-header">
-            <h4>Quý khách hàng chuyển khoản qua ngân hàng của Abuma dưới đây</h4>
-          </div>
-          <div className="row wrapper">
-            <div className="ibox">
-              <div className="ibox-content">
-                Số tài khoản: <b className="text-danger">0123456789</b>
-                <br />
-                Chủ tài khoản: <b>Công ty TNHH Abuma</b>
-                <br />
-                Ngân hàng: <b>Á Châu (ACB)</b>
-                <br />
-                Nội dung chuyển khoản ghi rõ:
-                <div className="payment-note">
-                  <b>Naptien</b> Số điện thoại đăng ký tài khoản
-                </div>
-                (Ví dụ: Naptien 0973556590)
-                <br />
-                (*) Với những giao dịch nạp tiền chuyển khoản ngoài giờ hành chính. Thời gian nạp vào hệ thống có thể chậm hơn bình thường.
-                Mong quý khách hàng thông cảm!
-              </div>
-            </div>
-          </div>
           <div className="row  border-bottom white-bg dashboard-header">
             <h4>Thông tin giao dịch</h4>
           </div>
@@ -71,6 +46,7 @@ export class Payment extends React.Component<ICheckoutProp> {
                     >
                       <thead>
                         <tr>
+                          <th className="footable-visible footable-sortable">Khách hàng</th>
                           <th className="footable-visible footable-sortable">Mã giao dịch</th>
                           <th className="footable-visible footable-sortable">Số tiền</th>
                           <th className="footable-visible footable-sortable">Số dư sau giao dịch</th>
@@ -82,19 +58,17 @@ export class Payment extends React.Component<ICheckoutProp> {
                       <tbody>
                         {this.props.paymentList.map((payment, i) => (
                           <tr key={`id-${i}`} className="footable-even" style={{}}>
+                            <td className="footable-visible footable-first-column">{payment.customerLogin}</td>
                             <td className="footable-visible footable-first-column">
-                              <b className="text-primary">{payment.code}</b>
+                              {payment.code}
                               <br />
-                              <small>
-                                <TextFormat type="date" value={payment.createAt} format={APP_DATE_FORMAT} />
-                              </small>
+                              {payment.createAt}
                             </td>
                             <td className="footable-visible">
-                              {payment.type === PaymentType.ORDER_PAYMENT ? (
-                                <b className="text-danger">-{formatCurency(payment.amount)}đ</b>
-                              ) : (
-                                <b className="text-info">+{formatCurency(payment.amount)}đ</b>
-                              )}
+                              <b className="text-danger">
+                                {payment.type === PaymentType.ORDER_PAYMENT ? '-' : '+'}
+                                {formatCurency(payment.amount)}đ
+                              </b>
                             </td>
                             <td className="footable-visible">{formatCurency(payment.newBalance)}đ</td>
                             <td className="footable-visible">{payment.type}</td>
@@ -126,7 +100,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOwnerPayment };
+const mapDispatchToProps = { getSession, getAllPayment };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

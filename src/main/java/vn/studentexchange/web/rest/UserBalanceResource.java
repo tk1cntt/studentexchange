@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.SecureCacheResponse;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
@@ -102,6 +103,7 @@ public class UserBalanceResource {
         currentBalance.setCash(currentBalance.getCash() + userBalanceDTO.getCash());
         UserBalanceDTO result = userBalanceService.save(currentBalance);
         // Add to payment history
+        Optional<User> manager = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setCode(Utils.generateNumber());
         paymentDTO.setAmount(userBalanceDTO.getCash());
@@ -110,8 +112,10 @@ public class UserBalanceResource {
         paymentDTO.setType(PaymentType.DEPOSIT);
         paymentDTO.setNewBalance(currentBalance.getCash());
         paymentDTO.setCreateAt(Instant.now());
-        paymentDTO.setCreateById(paymentUser.get().getId());
-        paymentDTO.setCreateByLogin(paymentUser.get().getLogin());
+        paymentDTO.setCreateById(manager.get().getId());
+        paymentDTO.setCreateByLogin(manager.get().getLogin());
+        paymentDTO.setCustomerId(paymentUser.get().getId());
+        paymentDTO.setCustomerLogin(paymentUser.get().getLogin());
         paymentDTO.setStatus(PaymentStatusType.PAID);
         paymentService.save(paymentDTO);
         return ResponseEntity.ok().body(result);

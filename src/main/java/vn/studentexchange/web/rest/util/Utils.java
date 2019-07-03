@@ -25,10 +25,10 @@ public final class Utils {
     public static long generateNumber() {
         Date time = new Date();
         StringBuilder tmp = new StringBuilder();
-        tmp.append(time.getDate());
-        tmp.append(time.getHours());
-        tmp.append(time.getYear());
         tmp.append(time.getSeconds());
+        tmp.append(time.getYear());
+        tmp.append(time.getHours());
+        tmp.append(time.getDate());
         tmp.append(time.getMonth());
         tmp.append(time.getMinutes());
         return Long.valueOf(tmp.toString());

@@ -61,10 +61,16 @@ public class PaymentService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    public Page<PaymentDTO> findAll(Pageable pageable) {
+        log.debug("Request to get all Payments");
+        return paymentRepository.findByOrderByCreateAtDesc(pageable)
+            .map(paymentMapper::toDto);
+    }
+
     @Transactional(readOnly = true)
     public Page<PaymentDTO> findByOwner(String username, Pageable pageable) {
         log.debug("Request to get all Payments");
-        return paymentRepository.findByCreateByLoginOrderByCreateAtDesc(username, pageable)
+        return paymentRepository.findByCustomerLoginOrderByCreateAtDesc(username, pageable)
             .map(paymentMapper::toDto);
     }
 

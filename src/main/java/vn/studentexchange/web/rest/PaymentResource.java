@@ -6,12 +6,14 @@ import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.PaymentService;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
+import vn.studentexchange.web.rest.util.PaginationUtil;
 import vn.studentexchange.service.dto.PaymentDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,17 +89,21 @@ public class PaymentResource {
      */
     @GetMapping("/payments")
     @Timed
-    public List<PaymentDTO> getAllPayments() {
+    public ResponseEntity<List<PaymentDTO>> getAllPayments(Pageable pageable) {
         log.debug("REST request to get all Payments");
-        return paymentService.findAll();
+        Page<PaymentDTO> page = paymentService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/payments");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     @GetMapping("/payments/owner")
     @Timed
-    public Page<PaymentDTO> getOwnerPayments(Pageable pageable) {
+    public ResponseEntity<List<PaymentDTO>> getOwnerPayments(Pageable pageable) {
         log.debug("REST request to get all Payments");
         String username = SecurityUtils.getCurrentUserLogin().get();
-        return paymentService.findByOwner(username, pageable);
+        Page<PaymentDTO> page = paymentService.findByOwner(username, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/payments/owner");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

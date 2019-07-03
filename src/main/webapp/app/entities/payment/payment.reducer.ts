@@ -99,13 +99,16 @@ const apiUrl = 'api/payments';
 
 // Actions
 
-export const getEntities: ICrudGetAllAction<IPayment> = (page, size, sort) => ({
-  type: ACTION_TYPES.FETCH_PAYMENT_LIST,
-  payload: axios.get<IPayment>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
-});
+export const getEntities: ICrudGetAllAction<IPayment> = (page, size, sort) => {
+  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_PAYMENT_LIST,
+    payload: axios.get<IPayment>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
 
 export const getOwnerEntities: ICrudGetAllAction<IPayment> = (page, size, sort) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  const requestUrl = `${apiUrl}/owner${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_PAYMENT_LIST,
     payload: axios.get<IPayment>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)

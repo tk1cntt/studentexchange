@@ -568,25 +568,6 @@ public class UserProfileResourceIntTest {
         defaultUserProfileShouldNotBeFound("districtId.equals=" + (districtId + 1));
     }
 
-
-    @Test
-    @Transactional
-    public void getAllUserProfilesByAddressIsEqualToSomething() throws Exception {
-        // Initialize the database
-        UserShippingAddress address = UserShippingAddressResourceIntTest.createEntity(em);
-        em.persist(address);
-        em.flush();
-        userProfile.addAddress(address);
-        userProfileRepository.saveAndFlush(userProfile);
-        Long addressId = address.getId();
-
-        // Get all the userProfileList where address equals to addressId
-        defaultUserProfileShouldBeFound("addressId.equals=" + addressId);
-
-        // Get all the userProfileList where address equals to addressId + 1
-        defaultUserProfileShouldNotBeFound("addressId.equals=" + (addressId + 1));
-    }
-
     /**
      * Executes the search, and checks that the default entity is returned
      */

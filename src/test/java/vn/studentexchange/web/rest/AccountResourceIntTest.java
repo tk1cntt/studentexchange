@@ -7,7 +7,9 @@ import vn.studentexchange.domain.User;
 import vn.studentexchange.repository.AuthorityRepository;
 import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.security.AuthoritiesConstants;
+import vn.studentexchange.security.jwt.TokenProvider;
 import vn.studentexchange.service.MailService;
+import vn.studentexchange.service.UserProfileService;
 import vn.studentexchange.service.UserService;
 import vn.studentexchange.service.dto.PasswordChangeDTO;
 import vn.studentexchange.service.dto.UserDTO;
@@ -61,6 +63,12 @@ public class AccountResourceIntTest {
     private UserService userService;
 
     @Autowired
+    private UserProfileService userProfileService;
+
+    @Autowired
+    private TokenProvider tokenProvider;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -84,10 +92,10 @@ public class AccountResourceIntTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService);
+            new AccountResource(userRepository, userService, userProfileService, mockMailService, tokenProvider);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService);
+            new AccountResource(userRepository, mockUserService, userProfileService, mockMailService, tokenProvider);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
             .setControllerAdvice(exceptionTranslator)

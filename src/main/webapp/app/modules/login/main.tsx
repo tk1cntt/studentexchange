@@ -5,6 +5,7 @@ import { Translate, translate } from 'react-jhipster';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Alert, Row, Col } from 'reactstrap';
 import { AvForm, AvField, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { Link } from 'react-router-dom';
+import AccountKit from 'react-facebook-account-kit';
 
 import { IRootState } from 'app/shared/reducers';
 import { login, fblogin } from 'app/shared/reducers/authentication';
@@ -21,22 +22,6 @@ export class Login extends React.Component<ILoginProps> {
     this.props.login(username, password, rememberMe);
   };
 
-  // phone form submission handler
-  smsLogin = () => {
-    // tslint:disable-next-line
-    window.AccountKit.login(
-      'PHONE',
-      { countryCode: '+84', phoneNumber: '' }, // will use default values if not specified
-      this.loginCallback
-    );
-  };
-
-  // email form submission handler
-  emailLogin = () => {
-    // tslint:disable-next-line
-    window.AccountKit.login('EMAIL', { emailAddress: '' }, this.loginCallback);
-  };
-
   // login callback
   loginCallback = response => {
     if (response.status === 'PARTIALLY_AUTHENTICATED') {
@@ -50,6 +35,9 @@ export class Login extends React.Component<ILoginProps> {
 
   render() {
     const { isAuthenticated } = this.props;
+    const csrf = Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, '');
     return (
       <div className="middle-box text-center loginscreen animated fadeInDown">
         <div>
@@ -96,9 +84,19 @@ export class Login extends React.Component<ILoginProps> {
             </button>
           </AvForm>
           <div>
-            <button className="btn btn-sm btn-white btn-block" onClick={this.smsLogin}>
-              Đăng nhập sử dụng điện thoại
-            </button>
+            <AccountKit
+              appId="504517876723313"
+              version="v1.1"
+              onResponse={this.loginCallback}
+              csrf={`${csrf}`} // Required for security
+              countryCode={'+84'} // eg. +60
+            >
+              {p => (
+                <button {...p} className="btn btn-sm btn-white btn-block">
+                  Đăng nhập sử dụng điện thoại
+                </button>
+              )}
+            </AccountKit>
           </div>
         </div>
       </div>

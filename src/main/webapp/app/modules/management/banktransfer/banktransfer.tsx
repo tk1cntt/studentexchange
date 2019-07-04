@@ -77,19 +77,14 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
       createByLogin: this.state.topupMobile,
       cash: this.state.topupAmount
     };
-    this.props.createUserBalance(entity).then(response => {
-      if (response.action.payload && response.action.payload.status === 200) {
-        this.props.history.push('/management/history');
-      } else {
-        // console.log("createUserBalance", response.action.payload);
-      }
-    });
+    this.props.createUserBalance(entity);
     this.setState({
       showPayment: false,
       topupMobile: null,
       topupAmount: null,
       mobile: null
     });
+    this.props.history.push('/management/history');
   };
 
   topupCancel = () => {

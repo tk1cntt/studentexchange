@@ -7,7 +7,10 @@ import { NavLink as Link } from 'react-router-dom';
 import { getSession } from 'app/shared/reducers/authentication';
 import { getOwnerEntities as getShoppingItem } from 'app/entities/shopping-cart-item/shopping-cart-item.reducer';
 import { getOwnerEntities as getOwnerPayment } from 'app/entities/payment/payment.reducer';
-import { formatCurency } from 'app/shared/util/utils';
+import { PaymentType } from 'app/shared/model/payment.model';
+import { formatCurency, getLabelFromNumber } from 'app/shared/util/utils';
+import { TextFormat } from 'react-jhipster';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
@@ -17,7 +20,7 @@ export interface IHomeProp extends StateProps, DispatchProps {}
 export class Home extends React.Component<IHomeProp> {
   componentDidMount() {
     this.props.getShoppingItem();
-    this.props.getOwnerPayment();
+    this.props.getOwnerPayment(0, 5, 'createAt');
   }
 
   render() {
@@ -29,32 +32,27 @@ export class Home extends React.Component<IHomeProp> {
           <Header />
           <div className="row border-bottom white-bg dashboard-header">
             <div className="col-md-8">
-              <h4>Lịch sử giao dịch</h4>
+              <h4>5 lịch sử giao dịch</h4>
               <ul className="list-group clear-list m-t">
                 {this.props.paymentList.length === 0 ? (
                   <li className="list-group-item fist-item">Chưa có giao dịch</li>
                 ) : (
                   <>
-                    <li className="list-group-item fist-item">
-                      <span className="pull-right">09:00 pm</span>
-                      <span className="label label-success">1</span> Tôi muốn huỷ đơn hàng ABC31233
-                    </li>
-                    <li className="list-group-item">
-                      <span className="pull-right">10:16 am</span>
-                      <span className="label label-info">2</span> Đơn hàng của anh chị vừa chuyển về kho Trung Quốc
-                    </li>
-                    <li className="list-group-item">
-                      <span className="pull-right">08:22 pm</span>
-                      <span className="label label-primary">3</span> Bạn đã chuyển tiền thanh toán cho đơn hàng DH12345
-                    </li>
-                    <li className="list-group-item">
-                      <span className="pull-right">11:06 pm</span>
-                      <span className="label label-default">4</span> Bạn đã nạp 500.000 VNĐ vào tài khoản
-                    </li>
-                    <li className="list-group-item">
-                      <span className="pull-right">12:00 am</span>
-                      <span className="label label-primary">5</span> Đơn hàng DH12345 đã được mua
-                    </li>
+                    {this.props.paymentList.map((payment, i) => (
+                      <li className="list-group-item">
+                        <span className="pull-right">
+                          <small>
+                            <TextFormat type="date" value={payment.createAt} format={APP_DATE_FORMAT} />
+                          </small>
+                        </span>
+                        <span className={`label ${getLabelFromNumber(i + 1)}`}>{i + 1}</span>
+                        {payment.type === PaymentType.ORDER_PAYMENT
+                          ? payment.note
+                          : payment.type === PaymentType.DEPOSIT
+                          ? `Nạp ${formatCurency(payment.amount)}đ vào tài khoản`
+                          : `Hoàn ${formatCurency(payment.amount)}đ vào tài khoản`}
+                      </li>
+                    ))}
                   </>
                 )}
               </ul>

@@ -9151,6 +9151,13 @@ react-dom@16.4.2:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-facebook-account-kit@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/react-facebook-account-kit/-/react-facebook-account-kit-0.1.5.tgz#b3f5e4bbb70e85f2b76e6528e3fce2b2bd655356"
+  integrity sha512-T9tEXfOs/Sy1cZ/ppr1yIALSeDwSa19BWg+M5d+iqsEiuOTT4nqgvOw4MndDNhN4cou7URvBP4OCpv9PaZIIGg==
+  dependencies:
+    prop-types "^15.5.0"
+
 react-hot-loader@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-3.1.1.tgz#e06db8cd0841c41e3ab0b395b2b774126fc8914e"

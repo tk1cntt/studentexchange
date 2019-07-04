@@ -67,3 +67,20 @@ export const stringToSlug = str => {
 
   return str;
 };
+
+export const getLabelFromNumber = num => {
+  switch (num % 5) {
+    case 1:
+      return 'label-success';
+    case 2:
+      return 'label-primary';
+    case 3:
+      return 'label-default';
+    case 4:
+      return 'label-info';
+    case 5:
+      return 'label-warning';
+    default:
+      return 'label-default';
+  }
+};

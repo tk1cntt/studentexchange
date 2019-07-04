@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IUserBalance, defaultValue } from 'app/shared/model/user-balance.model';
+import { getEntities as getAllPayment } from 'app/entities/payment/payment.reducer';
 
 export const ACTION_TYPES = {
   FETCH_USERBALANCE_LIST: 'userBalance/FETCH_USERBALANCE_LIST',
@@ -125,7 +126,7 @@ export const createEntity: ICrudPutAction<IUserBalance> = entity => async dispat
     type: ACTION_TYPES.CREATE_USERBALANCE,
     payload: axios.post(apiUrl, cleanEntity(entity))
   });
-  // dispatch(getEntities());
+  dispatch(getAllPayment());
   return result;
 };
 

@@ -90,6 +90,7 @@ export class Login extends React.Component<ILoginProps> {
               onResponse={this.loginCallback}
               csrf={`${csrf}`} // Required for security
               countryCode={'+84'} // eg. +60
+              language={'vi_VN'}
             >
               {p => (
                 <button {...p} className="btn btn-sm btn-white btn-block">

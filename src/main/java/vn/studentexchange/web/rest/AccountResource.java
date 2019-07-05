@@ -242,6 +242,15 @@ public class AccountResource {
         userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
     }
 
+    @PostMapping(path = "/account/temporary-password")
+    @Timed
+    public ResponseEntity<String> temporaryPassword(@RequestBody PasswordChangeDTO passwordChangeDto) {
+        if (!checkPasswordLength(passwordChangeDto.getNewPassword())) {
+            throw new InvalidPasswordException();
+        }
+        return ResponseEntity.ok().body(userService.temporaryPassword());
+    }
+
     /**
      * POST   /account/reset-password/init : Send an email to reset the password of the user
      *

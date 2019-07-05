@@ -124,7 +124,11 @@ export const getOwnerBalance: ICrudGetAction<IUserBalance> = id => {
 export const createEntity: ICrudPutAction<IUserBalance> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_USERBALANCE,
-    payload: axios.post(apiUrl, cleanEntity(entity))
+    payload: axios.post(apiUrl, cleanEntity(entity)),
+    meta: {
+      successMessage: 'Nạp thành công tiền vào tài khoản',
+      errorMessage: 'Nạp tiền thất bại. Xin hãy kiểm tra lại'
+    }
   });
   dispatch(getAllPayment());
   return result;

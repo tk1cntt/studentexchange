@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 
 import qs from 'query-string';
-import { Cascader } from 'antd';
+import { Cascader, Modal, Button } from 'antd';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getAllEntities as getCities } from 'app/entities/city/city.reducer';
@@ -30,7 +30,8 @@ export interface ICheckoutProp extends StateProps, DispatchProps {
 }
 
 export interface ICheckoutState {
-  addressChoose: number;
+  userShippingAddressChoose: number;
+  userShippingAddress: any;
   city: any;
   parameters: any;
   locations: any;
@@ -51,7 +52,8 @@ export interface ICheckoutState {
 export class Checkout extends React.Component<ICheckoutProp> {
   state: ICheckoutState = {
     isCreateAddress: false,
-    addressChoose: -1,
+    userShippingAddressChoose: -1,
+    userShippingAddress: null,
     address: null,
     name: null,
     mobile: null,
@@ -139,13 +141,20 @@ export class Checkout extends React.Component<ICheckoutProp> {
     // tslint:disable-next-line
     if (e.target.value == 0) {
       this.setState({
-        addressChoose: e.target.value,
+        userShippingAddressChoose: e.target.value,
         isCreateAddress: true
       });
     } else {
       this.setState({
-        addressChoose: e.target.value,
+        userShippingAddressChoose: e.target.value,
         isCreateAddress: false
+      });
+      this.props.userShippingAddressList.map(shippingAddress => {
+        if (Number(shippingAddress.id) === Number(e.target.value)) {
+          this.setState({
+            userShippingAddress: shippingAddress
+          });
+        }
       });
     }
   };
@@ -197,7 +206,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
     };
     this.props.createShippingAddress(address);
     this.setState({
-      addressChoose: -1,
+      userShippingAddressChoose: -1,
       isCreateAddress: false
     });
     window.scrollTo(0, 0);
@@ -244,8 +253,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
             </label>
           </div>
         </div>
-        {// tslint:disable-next-line
-        this.state.addressChoose == 0 ? this.createUserShippingAddressBox() : ''}
+        {Number(this.state.userShippingAddressChoose) === 0 ? this.createUserShippingAddressBox() : ''}
       </div>
     );
   }
@@ -333,13 +341,28 @@ export class Checkout extends React.Component<ICheckoutProp> {
     });
   }
 
+  orderItem = () => {
+    console.log('Address choose: ' + this.state.userShippingAddressChoose);
+    if (this.state.userShippingAddressChoose < 1) {
+      Modal.error({
+        title: 'Cảnh báo',
+        content: 'Hãy lựa chọn địa chỉ giao hàng'
+      });
+    } else {
+      console.log(this.state.userShippingAddress);
+      if (this.state.shopid) {
+        console.log('Order shopid ' + this.state.shopid);
+      } else {
+        console.log('Order all');
+      }
+    }
+  };
+
   checkoutForm() {
     const checkout = (
-      <button className="btn btn-danger btn-block">
+      <button className="btn btn-danger btn-block" onClick={this.orderItem}>
         <span className="checkout-cart">
-          <Link to={`/checkout?shopid=12345`}>
-            <i className="fa fa-shopping-cart" /> Đặt hàng
-          </Link>
+          <i className="fa fa-shopping-cart" /> Đặt hàng
         </span>
       </button>
     );
@@ -352,7 +375,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
         </button>
       </Link>
     );
-    if (Number(this.props.userBalanceEntity.balanceAvailable) < Number(this.state.finalAmount)) {
+    if (this.props.userBalanceEntity.balanceAvailable < this.state.finalAmount * 0.7) {
       return (
         <>
           <div className="col-xs-6 item">
@@ -369,11 +392,10 @@ export class Checkout extends React.Component<ICheckoutProp> {
     } else {
       return (
         <>
-          <div className="col-xs-6" />
+          <div className="col-xs-6 item">Quý khách đã có đủ số tiền cọc. Hãy tiến hành đặt hàng</div>
           {checkout}
         </>
       );
-      return checkout;
     }
   }
 
@@ -417,7 +439,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
                   Tổng tiền: <b>{formatCurency(this.state.finalAmount)}đ</b>
                 </div>
                 <div className="col-xs-6 item">
-                  Số dư hiện tại: <b>{formatCurency(this.state.tallyFee)}đ</b>
+                  Số dư hiện tại: <b>{formatCurency(this.props.userBalanceEntity.balanceAvailable)}đ</b>
                 </div>
                 <div className="col-xs-6 item">
                   Đặt cọc (70%): <b>{formatCurency(Math.ceil(this.state.finalAmount * 0.7))}đ</b>

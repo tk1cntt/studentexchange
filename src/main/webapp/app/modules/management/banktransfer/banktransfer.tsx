@@ -84,7 +84,7 @@ export class BankTransfer extends React.Component<IBankTransferProp> {
       topupAmount: null,
       mobile: null
     });
-    this.props.history.push('/management/history');
+    // this.props.history.push('/management/history');
   };
 
   topupCancel = () => {

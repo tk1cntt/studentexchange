@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.studentexchange.web.rest.util.Utils;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -226,6 +227,18 @@ public class UserService {
                 user.setPassword(encryptedPassword);
                 log.debug("Changed password for User: {}", user);
             });
+    }
+
+    public String temporaryPassword() {
+        String temporaryPassword = String.valueOf(Utils.generateNumber());
+        SecurityUtils.getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .ifPresent(user -> {
+                String encryptedPassword = passwordEncoder.encode(temporaryPassword);
+                user.setPassword(encryptedPassword);
+                log.debug("Changed password for User: {}", user);
+            });
+        return temporaryPassword;
     }
 
     @Transactional(readOnly = true)

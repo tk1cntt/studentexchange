@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudSearchAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { translate, ICrudGetAction, ICrudGetAllAction, ICrudSearchAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -142,7 +142,10 @@ export const createEntity: ICrudPutAction<IUserProfile> = entity => async dispat
 export const updateEntity: ICrudPutAction<IUserProfile> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_USERPROFILE,
-    payload: axios.put(apiUrl, cleanEntity(entity))
+    payload: axios.put(apiUrl, cleanEntity(entity)),
+    meta: {
+      successMessage: translate('settings.messages.success')
+    }
   });
   // dispatch(getEntities());
   return result;

@@ -20,6 +20,7 @@ public interface UserShippingAddressMapper extends EntityMapper<UserShippingAddr
     @Mapping(source = "city.name", target = "cityName")
     @Mapping(source = "district.id", target = "districtId")
     @Mapping(source = "district.name", target = "districtName")
+    @Mapping(source = "district.type", target = "districtType")
     UserShippingAddressDTO toDto(UserShippingAddress userShippingAddress);
 
     @Mapping(source = "userProfileId", target = "userProfile")

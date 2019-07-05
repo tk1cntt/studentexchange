@@ -234,7 +234,8 @@ export class Checkout extends React.Component<ICheckoutProp> {
                 />
                 <b>{userShippingAddress.name}</b> - {userShippingAddress.mobile}
                 <br />
-                {userShippingAddress.address}
+                {userShippingAddress.address} - {userShippingAddress.districtType} {userShippingAddress.districtName} -{' '}
+                {userShippingAddress.cityName}
                 <br />
                 <div className="shipping-note">{userShippingAddress.note}</div>
               </label>
@@ -342,14 +343,12 @@ export class Checkout extends React.Component<ICheckoutProp> {
   }
 
   orderItem = () => {
-    console.log('Address choose: ' + this.state.userShippingAddressChoose);
     if (this.state.userShippingAddressChoose < 1) {
       Modal.error({
         title: 'Cảnh báo',
         content: 'Hãy lựa chọn địa chỉ giao hàng'
       });
     } else {
-      console.log(this.state.userShippingAddress);
       if (this.state.shopid) {
         console.log('Order shopid ' + this.state.shopid);
       } else {

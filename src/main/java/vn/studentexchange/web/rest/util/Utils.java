@@ -3,6 +3,7 @@ package vn.studentexchange.web.rest.util;
 import java.util.Date;
 
 import org.apache.commons.codec.binary.Hex;
+import org.hashids.Hashids;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,6 +19,7 @@ import javax.crypto.spec.SecretKeySpec;
  * and follow <a href="http://tools.ietf.org/html/rfc5988">RFC 5988 (Link header)</a>.
  */
 public final class Utils {
+    static Hashids hashids = new Hashids("id.dropshipping.com.vn");
 
     private Utils() {
     }
@@ -73,4 +75,11 @@ public final class Utils {
         return null;
     }
 
+    public static String encodeId(long data) {
+        return hashids.encode(data);
+    }
+
+    public static long decodeId(String hash) {
+        return hashids.decode(hash)[0];
+    }
 }

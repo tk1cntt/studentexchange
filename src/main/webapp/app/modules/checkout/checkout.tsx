@@ -356,6 +356,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
         console.log('Order all');
       }
       this.props.createOrder({ userShippingAddressId: encodeId(this.state.userShippingAddressChoose) });
+      this.props.history.push('/order-cart');
     }
   };
 

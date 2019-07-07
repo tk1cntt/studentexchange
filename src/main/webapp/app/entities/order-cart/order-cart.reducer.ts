@@ -115,9 +115,13 @@ export const getEntity: ICrudGetAction<IOrderCart> = id => {
 export const createEntity: ICrudPutAction<IOrderCart> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.FETCH_ORDERCART_LIST,
-    payload: axios.post(apiUrl, cleanEntity(entity))
+    payload: axios.post(apiUrl, cleanEntity(entity)),
+    meta: {
+      successMessage: 'Đặt hàng thành công',
+      errorMessage: 'Đặt hàng thất bại. Xin hãy kiểm tra lại'
+    }
   });
-  // dispatch(getEntities());
+  dispatch(getOwnerEntities());
   return result;
 };
 

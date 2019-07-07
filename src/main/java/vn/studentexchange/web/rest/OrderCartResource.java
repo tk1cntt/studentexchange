@@ -122,6 +122,7 @@ public class OrderCartResource {
                 orderCartDTO.setReceiverName(shippingAddressDTO.get().getName());
                 orderCartDTO.setReceiverNote(shippingAddressDTO.get().getNote());
                 orderCartService.save(orderCartDTO);
+                shoppingCartService.delete(shoppingCartDTO.getId());
                 orderCarts.add(orderCartDTO);
         }
         return ResponseEntity.ok().body(orderCarts);

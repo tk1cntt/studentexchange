@@ -81,7 +81,7 @@ public class ShoppingCart implements Serializable {
     @Column(name = "update_at")
     private Instant updateAt;
 
-    @OneToMany(mappedBy = "shoppingCart")
+    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.REMOVE)
     private Set<ShoppingCartItem> items = new HashSet<>();
     @ManyToOne
     @JsonIgnoreProperties("")

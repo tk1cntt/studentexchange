@@ -39,7 +39,7 @@ public interface OrderCartMapper extends EntityMapper<OrderCartDTO, OrderCart> {
     @Mapping(source = "updateById", target = "updateBy")
     OrderCart toEntity(OrderCartDTO orderCartDTO);
 
-    OrderCartDTO toOrderCart(ShoppingCartDTO shoppingCartDTO);
+    OrderCartDTO toOrderCartDto(ShoppingCartDTO shoppingCartDTO);
 
     default OrderCart fromId(Long id) {
         if (id == null) {

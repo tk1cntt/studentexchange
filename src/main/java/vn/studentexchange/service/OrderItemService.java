@@ -1,7 +1,10 @@
 package vn.studentexchange.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import vn.studentexchange.domain.OrderItem;
+import vn.studentexchange.domain.User;
 import vn.studentexchange.repository.OrderItemRepository;
+import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.service.dto.OrderItemDTO;
 import vn.studentexchange.service.mapper.OrderItemMapper;
 import org.slf4j.Logger;
@@ -28,6 +31,9 @@ public class OrderItemService {
 
     private final OrderItemMapper orderItemMapper;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public OrderItemService(OrderItemRepository orderItemRepository, OrderItemMapper orderItemMapper) {
         this.orderItemRepository = orderItemRepository;
         this.orderItemMapper = orderItemMapper;
@@ -43,6 +49,15 @@ public class OrderItemService {
         log.debug("Request to save OrderItem : {}", orderItemDTO);
 
         OrderItem orderItem = orderItemMapper.toEntity(orderItemDTO);
+        orderItem = orderItemRepository.save(orderItem);
+        return orderItemMapper.toDto(orderItem);
+    }
+
+    public OrderItemDTO save(String username, OrderItemDTO orderItemDTO) {
+        log.debug("Request to save OrderItem : {}", orderItemDTO);
+        Optional<User> currentUser = userRepository.findOneByLogin(username);
+        OrderItem orderItem = orderItemMapper.toEntity(orderItemDTO);
+        orderItem.setCreateBy(currentUser.get());
         orderItem = orderItemRepository.save(orderItem);
         return orderItemMapper.toDto(orderItem);
     }

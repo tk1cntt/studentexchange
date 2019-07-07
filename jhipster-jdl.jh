@@ -97,6 +97,7 @@ enum StatusType {
 
 entity OrderCart {
    code Long,
+   shippingChinaCode String,
    avatar String,
    aliwangwang String,
    amountDiscount Float,

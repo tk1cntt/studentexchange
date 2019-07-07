@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import vn.studentexchange.domain.OrderItem;
 import vn.studentexchange.service.dto.OrderItemDTO;
+import vn.studentexchange.service.dto.ShoppingCartItemDTO;
 
 /**
  * Mapper for the entity OrderItem and its DTO OrderItemDTO.
@@ -22,6 +23,8 @@ public interface OrderItemMapper extends EntityMapper<OrderItemDTO, OrderItem> {
     @Mapping(source = "createById", target = "createBy")
     @Mapping(source = "updateById", target = "updateBy")
     OrderItem toEntity(OrderItemDTO orderItemDTO);
+
+    OrderItemDTO toOrderItemDto(ShoppingCartItemDTO shoppingCartItemDTO);
 
     default OrderItem fromId(Long id) {
         if (id == null) {

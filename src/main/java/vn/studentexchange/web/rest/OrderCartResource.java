@@ -12,16 +12,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.studentexchange.domain.OrderItem;
 import vn.studentexchange.security.SecurityUtils;
-import vn.studentexchange.service.CurrencyRateService;
-import vn.studentexchange.service.OrderCartService;
-import vn.studentexchange.service.ShoppingCartService;
-import vn.studentexchange.service.UserShippingAddressService;
-import vn.studentexchange.service.dto.OrderCartDTO;
-import vn.studentexchange.service.dto.OrderDTO;
-import vn.studentexchange.service.dto.ShoppingCartDTO;
-import vn.studentexchange.service.dto.UserShippingAddressDTO;
+import vn.studentexchange.service.*;
+import vn.studentexchange.service.dto.*;
 import vn.studentexchange.service.mapper.OrderCartMapper;
+import vn.studentexchange.service.mapper.OrderItemMapper;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
 import vn.studentexchange.web.rest.util.PaginationUtil;
@@ -52,6 +48,12 @@ public class OrderCartResource {
 
     @Autowired
     private OrderCartMapper orderCartMapper;
+
+    @Autowired
+    private OrderItemMapper orderItemMapper;
+
+    @Autowired
+    private OrderItemService orderItemService;
 
     @Autowired
     private CurrencyRateService currencyRateService;
@@ -107,23 +109,29 @@ public class OrderCartResource {
         address.append(shippingAddressDTO.get().getCityName());
         ObjectMapper mapper = new ObjectMapper();
         List<OrderCartDTO> orderCarts = new ArrayList<>();
-        for (ShoppingCartDTO shoppingCartDTO: shoppingCarts) {
-                shoppingCartDTO = Utils.calculate(shoppingCartDTO, currencyRateService);
-                log.debug(orderCartMapper.toOrderCart(shoppingCartDTO).toString());
-                OrderCartDTO orderCartDTO = orderCartMapper.toOrderCart(shoppingCartDTO);
-                orderCartDTO.setId(null); // clear shopping id
-                orderCartDTO.setCode(Utils.generateNumber());
-                float finalAmount = orderCartDTO.getTotalAmount() + orderCartDTO.getServiceFee() + orderCartDTO.getTallyFee();
-                orderCartDTO.setDepositRatio(0.7f);
-                orderCartDTO.setDepositAmount((float) Math.ceil(finalAmount * 0.7));
-                orderCartDTO.setDepositTime(Instant.now());
-                orderCartDTO.setReceiverAddress(address.toString());
-                orderCartDTO.setReceiverMobile(shippingAddressDTO.get().getMobile());
-                orderCartDTO.setReceiverName(shippingAddressDTO.get().getName());
-                orderCartDTO.setReceiverNote(shippingAddressDTO.get().getNote());
-                orderCartService.save(orderCartDTO);
-                shoppingCartService.delete(shoppingCartDTO.getId());
-                orderCarts.add(orderCartDTO);
+        for (ShoppingCartDTO shoppingCartDTO : shoppingCarts) {
+            shoppingCartDTO = Utils.calculate(shoppingCartDTO, currencyRateService);
+            OrderCartDTO orderCartDTO = orderCartMapper.toOrderCartDto(shoppingCartDTO);
+            orderCartDTO.setId(null); // clear shopping id
+            orderCartDTO.setCode(Utils.generateNumber());
+            float finalAmount = orderCartDTO.getTotalAmount() + orderCartDTO.getServiceFee() + orderCartDTO.getTallyFee();
+            orderCartDTO.setDepositRatio(0.7f);
+            orderCartDTO.setDepositAmount((float) Math.ceil(finalAmount * 0.7));
+            orderCartDTO.setDepositTime(Instant.now());
+            orderCartDTO.setReceiverAddress(address.toString());
+            orderCartDTO.setReceiverMobile(shippingAddressDTO.get().getMobile());
+            orderCartDTO.setReceiverName(shippingAddressDTO.get().getName());
+            orderCartDTO.setReceiverNote(shippingAddressDTO.get().getNote());
+            orderCartDTO = orderCartService.save(orderCartDTO);
+            List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
+            for (ShoppingCartItemDTO item : shoppingCartDTO.getItems()) {
+                OrderItemDTO orderItemDTO = orderItemMapper.toOrderItemDto(item);
+                orderItemDTO.setCreateAt(Instant.now());
+                orderItemDTO.setOrderCartId(orderCartDTO.getId());
+                orderItemService.save(SecurityUtils.getCurrentUserLogin().get(), orderItemDTO);
+            }
+            shoppingCartService.delete(shoppingCartDTO.getId());
+            orderCarts.add(orderCartDTO);
         }
         return ResponseEntity.ok().body(orderCarts);
     }

@@ -24,11 +24,6 @@ export class Sidebar extends React.Component<ISidebarProps> {
     if (!isUser) return '';
     return (
       <>
-        <li className={`${activeMenu === 'dashboard' ? 'active' : ''}`}>
-          <Link to={'/'}>
-            <i className="fa fa-th-large" /> <span className="nav-label">Thông tin chung</span>
-          </Link>
-        </li>
         <li className={`${activeMenu === 'shopping-cart' ? 'active' : ''}`}>
           <Link to={'/shopping-cart'}>
             <i className="fa fa-shopping-cart" /> <span className="nav-label">Giỏ hàng</span>
@@ -82,17 +77,17 @@ export class Sidebar extends React.Component<ISidebarProps> {
     if (!isStaff) return '';
     return (
       <li className={`${activeMenu === 'order-management' ? 'active' : ''}`}>
-        <Link to={'/management/order-pending'}>
+        <Link to={'/staff/order-pending'}>
           <i className="fa fa-gift" /> <span className="nav-label">Quản lý đơn hàng</span> <span className="fa arrow" />
         </Link>
         <ul className={`${activeMenu === 'order-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
           <li className={`${activeSubMenu === 'order-pending' ? 'active' : ''}`}>
-            <Link to={'/management/order-pending'}>
+            <Link to={'/staff/order-pending'}>
               <i className="fa fa-sign-in" /> Đơn hàng chưa xử lý
             </Link>
           </li>
           <li className={`${activeSubMenu === 'order-deposit' ? 'active' : ''}`}>
-            <Link to={'/management/order-deposit'}>
+            <Link to={'/staff/order-deposit'}>
               <i className="fa fa-exchange" /> Đơn hàng đã mua
             </Link>
           </li>
@@ -188,6 +183,11 @@ export class Sidebar extends React.Component<ISidebarProps> {
                 </ul>
               </div>
               <div className="logo-element">IN+</div>
+            </li>
+            <li className={`${activeMenu === 'dashboard' ? 'active' : ''}`}>
+              <Link to={'/'}>
+                <i className="fa fa-th-large" /> <span className="nav-label">Thông tin chung</span>
+              </Link>
             </li>
             {this.userMenu()}
             {this.managerMenu()}

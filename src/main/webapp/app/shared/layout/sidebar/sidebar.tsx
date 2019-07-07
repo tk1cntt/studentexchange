@@ -46,23 +46,43 @@ export class Sidebar extends React.Component<ISidebarProps> {
     const { activeMenu, activeSubMenu, isManager } = this.props;
     if (!isManager) return '';
     return (
-      <li className={`${activeMenu === 'manager-management' ? 'active' : ''}`}>
-        <Link to={'/management/banktransfer'}>
-          <i className="fa fa-gift" /> <span className="nav-label">Payment</span> <span className="fa arrow" />
-        </Link>
-        <ul className={`${activeMenu === 'manager-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
-          <li className={`${activeSubMenu === 'banktransfer' ? 'active' : ''}`}>
-            <Link to={'/management/banktransfer'}>
-              <i className="fa fa-sign-in" /> Nạp tiền
-            </Link>
-          </li>
-          <li className={`${activeSubMenu === 'history' ? 'active' : ''}`}>
-            <Link to={'/management/history'}>
-              <i className="fa fa-exchange" /> Lịch sử thanh toán
-            </Link>
-          </li>
-        </ul>
-      </li>
+      <>
+        <li className={`${activeMenu === 'payment-management' ? 'active' : ''}`}>
+          <Link to={'/management/banktransfer'}>
+            <i className="fa fa-gift" /> <span className="nav-label">Payment</span> <span className="fa arrow" />
+          </Link>
+          <ul className={`${activeMenu === 'payment-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
+            <li className={`${activeSubMenu === 'banktransfer' ? 'active' : ''}`}>
+              <Link to={'/management/banktransfer'}>
+                <i className="fa fa-sign-in" /> Nạp tiền
+              </Link>
+            </li>
+            <li className={`${activeSubMenu === 'history' ? 'active' : ''}`}>
+              <Link to={'/management/history'}>
+                <i className="fa fa-exchange" /> Lịch sử thanh toán
+              </Link>
+            </li>
+          </ul>
+        </li>
+
+        <li className={`${activeMenu === 'order-management' ? 'active' : ''}`}>
+          <Link to={'/management/order-pending'}>
+            <i className="fa fa-gift" /> <span className="nav-label">Quản lý đơn hàng</span> <span className="fa arrow" />
+          </Link>
+          <ul className={`${activeMenu === 'order-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
+            <li className={`${activeSubMenu === 'order-pending' ? 'active' : ''}`}>
+              <Link to={'/management/order-pending'}>
+                <i className="fa fa-sign-in" /> Đơn hàng chưa xử lý
+              </Link>
+            </li>
+            <li className={`${activeSubMenu === 'order-deposit' ? 'active' : ''}`}>
+              <Link to={'/management/order-deposit'}>
+                <i className="fa fa-exchange" /> Đơn hàng đã mua
+              </Link>
+            </li>
+          </ul>
+        </li>
+      </>
     );
   }
 

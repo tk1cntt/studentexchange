@@ -48,7 +48,7 @@ export class Cart extends React.Component<IHomeProp> {
                 ) : (
                   shoppingCartList.map((shoppingCart, ii) => (
                     <div key={`entity-${ii}`}>
-                      <div className=".col-xs-12 col-md-8">
+                      <div className="col-xs-12 col-md-8">
                         <div className="ibox float-e-margins">
                           <div className="ibox-title">
                             <h5>{`${shoppingCart.aliwangwang}`}</h5>
@@ -102,7 +102,7 @@ export class Cart extends React.Component<IHomeProp> {
                           </div>
                         </div>
                       </div>
-                      <div className=".col-xs-12 col-md-4">
+                      <div className="col-xs-12 col-md-4">
                         <div className="row checkout-cart-detail">
                           <span className="checkout-cart">
                             <Link to={`/checkout?shopid=${encodeId(shoppingCart.id)}`}>
@@ -161,12 +161,7 @@ export class Cart extends React.Component<IHomeProp> {
                             <h4>Tổng tiền:</h4>
                           </div>
                           <div className="col-xs-4 item">
-                            <b>
-                              {formatCurency(
-                                shoppingCart.totalAmount + shoppingCart.serviceFee + (shoppingCart.tallyFee ? shoppingCart.tallyFee : 0)
-                              )}
-                              đ
-                            </b>
+                            <b>{formatCurency(shoppingCart.finalAmount)}đ</b>
                           </div>
                         </div>
                       </div>

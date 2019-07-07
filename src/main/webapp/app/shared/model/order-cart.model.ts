@@ -52,6 +52,7 @@ export interface IOrderCart {
   serviceFeeDiscount?: number;
   itemChecking?: boolean;
   itemWoodCrating?: boolean;
+  userShippingAddressId?: string;
   shopId?: string;
   shopLink?: string;
   shopName?: string;

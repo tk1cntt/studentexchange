@@ -16,6 +16,7 @@ import {
   createEntity as createShippingAddress,
   getOwnerEntities as getOwnerShippingAddress
 } from 'app/entities/user-shipping-address/user-shipping-address.reducer';
+import { createEntity as createOrder } from 'app/entities/order-cart/order-cart.reducer';
 import { formatCurency, stringToSlug, encodeId, decodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
@@ -354,6 +355,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
       } else {
         console.log('Order all');
       }
+      this.props.createOrder({ userShippingAddressId: encodeId(this.state.userShippingAddressChoose) });
     }
   };
 
@@ -470,7 +472,8 @@ const mapDispatchToProps = {
   createShippingAddress,
   getOwnerShippingAddress,
   getOwnerShippingCart,
-  getShippingCart
+  getShippingCart,
+  createOrder
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

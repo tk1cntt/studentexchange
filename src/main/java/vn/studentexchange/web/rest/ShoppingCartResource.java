@@ -115,7 +115,7 @@ public class ShoppingCartResource {
         String username = SecurityUtils.getCurrentUserLogin().get();
         List<ShoppingCartDTO> carts = shoppingCartService.findByOwner(username);
         for (ShoppingCartDTO dto: carts) {
-            calculate(dto);
+            Utils.calculate(dto, currencyRateService);
         }
         return carts;
     }
@@ -128,29 +128,10 @@ public class ShoppingCartResource {
         if (!dto.isPresent()) {
             return new ArrayList<>();
         }
-        ShoppingCartDTO currentCart = calculate(dto.get());
+        ShoppingCartDTO currentCart = Utils.calculate(dto.get(), currencyRateService);
         List<ShoppingCartDTO> carts = new ArrayList<>();
         carts.add(currentCart);
         return carts;
-    }
-
-    private ShoppingCartDTO calculate(ShoppingCartDTO currentCart) {
-        Optional<CurrencyRateDTO> rate =  currencyRateService.findByCurrency(CurrencyType.CNY);
-        List<ShoppingCartItemDTO> items = currentCart.getItems();
-        int totalQuantity = 0;
-        float totalAmount = 0f;
-        for (ShoppingCartItemDTO item : items) {
-            totalQuantity += item.getQuantity();
-            totalAmount += (item.getItemPriceNDT() * item.getQuantity());
-        }
-        if (currentCart.isItemChecking() != null && currentCart.isItemChecking()) {
-            currentCart.setTallyFee((float) totalQuantity * Utils.getTallyFee(totalQuantity));
-        }
-        totalAmount = (float) Math.ceil(totalAmount * rate.get().getRate());
-        currentCart.setServiceFee((float) Math.ceil(totalAmount * Utils.getServiceFee(totalAmount)));
-        currentCart.setTotalAmount(totalAmount);
-        currentCart.setTotalQuantity(totalQuantity);
-        return currentCart;
     }
 
     /**

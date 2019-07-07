@@ -1,28 +1,36 @@
 package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import liquibase.util.StringUtils;
+import org.hibernate.envers.Audited;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import vn.studentexchange.domain.UserShippingAddress;
 import vn.studentexchange.security.SecurityUtils;
+import vn.studentexchange.service.CurrencyRateService;
 import vn.studentexchange.service.OrderCartService;
 import vn.studentexchange.service.ShoppingCartService;
 import vn.studentexchange.service.UserShippingAddressService;
-import vn.studentexchange.service.dto.OrderDTO;
-import vn.studentexchange.service.dto.ShoppingCartDTO;
-import vn.studentexchange.service.dto.UserShippingAddressDTO;
+import vn.studentexchange.service.dto.*;
+import vn.studentexchange.service.mapper.OrderCartMapper;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
-import vn.studentexchange.service.dto.OrderCartDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.studentexchange.web.rest.util.PaginationUtil;
 import vn.studentexchange.web.rest.util.Utils;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +52,12 @@ public class OrderCartResource {
 
     private final ShoppingCartService shoppingCartService;
 
+    @Autowired
+    private OrderCartMapper orderCartMapper;
+
+    @Autowired
+    private CurrencyRateService currencyRateService;
+
     public OrderCartResource(OrderCartService orderCartService, UserShippingAddressService userShippingAddressService, ShoppingCartService shoppingCartService) {
         this.orderCartService = orderCartService;
         this.userShippingAddressService = userShippingAddressService;
@@ -53,12 +67,13 @@ public class OrderCartResource {
     /**
      * POST  /order-carts : Create a new orderCart.
      *
-     * @param orderCartDTO the orderCartDTO to create
+     * @param requestOrder the orderCartDTO to create
      * @return the ResponseEntity with status 201 (Created) and with body the new orderCartDTO, or with status 400 (Bad Request) if the orderCart has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/order-carts")
     @Timed
+    /*
     public ResponseEntity<OrderCartDTO> createOrderCart(@RequestBody OrderCartDTO orderCartDTO) throws URISyntaxException {
         log.debug("REST request to save OrderCart : {}", orderCartDTO);
         if (orderCartDTO.getId() != null) {
@@ -69,29 +84,51 @@ public class OrderCartResource {
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
-    /*
-    public ResponseEntity<OrderCartDTO> createOrderCart(@RequestBody OrderDTO orderCartDTO) throws URISyntaxException {
-        log.debug("REST request to save OrderCart : {}", orderCartDTO);
-        long userShippingAddressId = Utils.decodeId(orderCartDTO.getUserShippingAddressId());
+    */
+    //*
+    public ResponseEntity<List<OrderCartDTO>> createOrderCart(@RequestBody OrderDTO requestOrder) throws URISyntaxException {
+        log.debug("REST request to save OrderCart : {}", requestOrder);
+        long userShippingAddressId = Utils.decodeId(requestOrder.getUserShippingAddressId());
         Optional<UserShippingAddressDTO> shippingAddressDTO = userShippingAddressService.findOne(userShippingAddressId);
         List<ShoppingCartDTO> shoppingCarts = new ArrayList<>();
-        if (StringUtils.isEmpty(orderCartDTO.getShopid())) {
+        if (StringUtils.isEmpty(requestOrder.getShopid())) {
             String username = SecurityUtils.getCurrentUserLogin().get();
             shoppingCarts = shoppingCartService.findByOwner(username);
         } else {
-            long shopId = Utils.decodeId(orderCartDTO.getShopid());
-            String username = SecurityUtils.getCurrentUserLogin().get();
+            long shopId = Utils.decodeId(requestOrder.getShopid());
             Optional<ShoppingCartDTO> shoppingCartDTO = shoppingCartService.findOne(shopId);
             if (shoppingCartDTO.isPresent()) {
                 shoppingCarts.add(shoppingCartDTO.get());
             }
         }
-        return ResponseEntity.created(new URI("/api/order-carts/" + result.getId())
-
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        StringBuilder address = new StringBuilder();
+        address.append(shippingAddressDTO.get().getAddress());
+        address.append(" - ");
+        address.append(shippingAddressDTO.get().getDistrictType()).append(" ").append(shippingAddressDTO.get().getDistrictName());
+        address.append(" - ");
+        address.append(shippingAddressDTO.get().getCityName());
+        ObjectMapper mapper = new ObjectMapper();
+        List<OrderCartDTO> orderCarts = new ArrayList<>();
+        for (ShoppingCartDTO shoppingCartDTO: shoppingCarts) {
+                shoppingCartDTO = Utils.calculate(shoppingCartDTO, currencyRateService);
+                log.debug(orderCartMapper.toOrderCart(shoppingCartDTO).toString());
+                OrderCartDTO orderCartDTO = orderCartMapper.toOrderCart(shoppingCartDTO);
+                orderCartDTO.setId(null); // clear shopping id
+                orderCartDTO.setCode(Utils.generateNumber());
+                float finalAmount = orderCartDTO.getTotalAmount() + orderCartDTO.getServiceFee() + orderCartDTO.getTallyFee();
+                orderCartDTO.setDepositRatio(0.7f);
+                orderCartDTO.setDepositAmount((float) Math.ceil(finalAmount * 0.7));
+                orderCartDTO.setDepositTime(Instant.now());
+                orderCartDTO.setReceiverAddress(address.toString());
+                orderCartDTO.setReceiverMobile(shippingAddressDTO.get().getMobile());
+                orderCartDTO.setReceiverName(shippingAddressDTO.get().getName());
+                orderCartDTO.setReceiverNote(shippingAddressDTO.get().getNote());
+                orderCartService.save(orderCartDTO);
+                orderCarts.add(orderCartDTO);
+        }
+        return ResponseEntity.ok().body(orderCarts);
     }
-    */
+    //*/
 
     /**
      * PUT  /order-carts : Updates an existing orderCart.
@@ -125,6 +162,30 @@ public class OrderCartResource {
     public List<OrderCartDTO> getAllOrderCarts() {
         log.debug("REST request to get all OrderCarts");
         return orderCartService.findAll();
+    }
+
+    @GetMapping("/order-carts/owner")
+    @Timed
+    public ResponseEntity<List<OrderCartDTO>> getOwnerShoppingCarts(Pageable pageable) {
+        log.debug("REST request to get owner ShoppingCarts");
+        String username = SecurityUtils.getCurrentUserLogin().get();
+        Page<OrderCartDTO> page = orderCartService.findByOwner(username, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/order-carts/owner");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/order-carts/owner/{id}")
+    @Timed
+    public List<OrderCartDTO> getOwnerShoppingCartById(@PathVariable Long id) {
+        log.debug("REST request to get owner ShoppingCarts");
+        Optional<OrderCartDTO> dto = orderCartService.findOne(id);
+        if (!dto.isPresent()) {
+            return new ArrayList<>();
+        }
+        // OrderCartDTO currentCart = Utils.calculate(dto.get(), currencyRateService);
+        List<OrderCartDTO> carts = new ArrayList<>();
+        carts.add(dto.get());
+        return carts;
     }
 
     /**

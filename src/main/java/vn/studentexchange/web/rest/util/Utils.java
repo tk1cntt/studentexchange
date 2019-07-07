@@ -1,12 +1,19 @@
 package vn.studentexchange.web.rest.util;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.codec.binary.Hex;
 import org.hashids.Hashids;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponentsBuilder;
+import vn.studentexchange.domain.enumeration.CurrencyType;
+import vn.studentexchange.service.CurrencyRateService;
+import vn.studentexchange.service.dto.CurrencyRateDTO;
+import vn.studentexchange.service.dto.ShoppingCartDTO;
+import vn.studentexchange.service.dto.ShoppingCartItemDTO;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -81,5 +88,31 @@ public final class Utils {
 
     public static long decodeId(String hash) {
         return hashids.decode(hash)[0];
+    }
+
+    public static ShoppingCartDTO calculate(ShoppingCartDTO currentCart, CurrencyRateService currencyRateService) {
+        Optional<CurrencyRateDTO> rate =  currencyRateService.findByCurrency(CurrencyType.CNY);
+        List<ShoppingCartItemDTO> items = currentCart.getItems();
+        int totalQuantity = 0;
+        float totalAmount = 0f;
+        float tallyFee = 0f;
+        float serviceFee = 0f;
+        float finalAmount = 0f;
+        for (ShoppingCartItemDTO item : items) {
+            totalQuantity += item.getQuantity();
+            totalAmount += (item.getItemPriceNDT() * item.getQuantity());
+        }
+        if (currentCart.isItemChecking() != null && currentCart.isItemChecking()) {
+            tallyFee = (float) totalQuantity * Utils.getTallyFee(totalQuantity);
+        }
+        totalAmount = (float) Math.ceil(totalAmount * rate.get().getRate());
+        serviceFee = (float) Math.ceil(totalAmount * Utils.getServiceFee(totalAmount));
+        finalAmount = totalAmount + serviceFee + tallyFee;
+        currentCart.setTallyFee(tallyFee);
+        currentCart.setServiceFee(serviceFee);
+        currentCart.setTotalAmount(totalAmount);
+        currentCart.setTotalQuantity(totalQuantity);
+        currentCart.setFinalAmount(finalAmount);
+        return currentCart;
     }
 }

@@ -114,11 +114,19 @@ export const getEntity: ICrudGetAction<IOrderCart> = id => {
 
 export const createEntity: ICrudPutAction<IOrderCart> = entity => async dispatch => {
   const result = await dispatch({
-    type: ACTION_TYPES.CREATE_ORDERCART,
+    type: ACTION_TYPES.FETCH_ORDERCART_LIST,
     payload: axios.post(apiUrl, cleanEntity(entity))
   });
-  dispatch(getEntities());
+  // dispatch(getEntities());
   return result;
+};
+
+export const getOwnerEntities: ICrudGetAllAction<IOrderCart> = (page, size, sort) => {
+  const requestUrl = `${apiUrl}/owner${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ORDERCART_LIST,
+    payload: axios.get<IOrderCart>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
 };
 
 export const updateEntity: ICrudPutAction<IOrderCart> = entity => async dispatch => {

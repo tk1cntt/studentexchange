@@ -4,6 +4,7 @@ import vn.studentexchange.domain.*;
 import vn.studentexchange.service.dto.OrderCartDTO;
 
 import org.mapstruct.*;
+import vn.studentexchange.service.dto.ShoppingCartDTO;
 
 /**
  * Mapper for the entity OrderCart and its DTO OrderCartDTO.
@@ -37,6 +38,8 @@ public interface OrderCartMapper extends EntityMapper<OrderCartDTO, OrderCart> {
     @Mapping(source = "createById", target = "createBy")
     @Mapping(source = "updateById", target = "updateBy")
     OrderCart toEntity(OrderCartDTO orderCartDTO);
+
+    OrderCartDTO toOrderCart(ShoppingCartDTO shoppingCartDTO);
 
     default OrderCart fromId(Long id) {
         if (id == null) {

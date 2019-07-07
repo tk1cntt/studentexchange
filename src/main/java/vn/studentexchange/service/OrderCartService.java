@@ -60,6 +60,12 @@ public class OrderCartService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Transactional(readOnly = true)
+    public Page<OrderCartDTO> findByOwner(String username, Pageable pageable) {
+        log.debug("Request to get all House of owner [{}]");
+        return orderCartRepository.findByCreateByLoginOrderByCreateAtDesc(username, pageable)
+            .map(orderCartMapper::toDto);
+    }
 
     /**
      * Get one orderCart by id.

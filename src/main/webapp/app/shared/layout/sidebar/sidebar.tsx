@@ -13,32 +13,43 @@ export interface ISidebarProps {
   isManager: boolean;
   isAdmin: boolean;
   isStaff: boolean;
+  isUser: boolean;
   activeMenu: string;
   activeSubMenu: string;
 }
 
 export class Sidebar extends React.Component<ISidebarProps> {
   userMenu() {
-    const { activeMenu, activeSubMenu } = this.props;
-
+    const { activeMenu, activeSubMenu, isUser } = this.props;
+    if (!isUser) return '';
     return (
-      <li className={`${activeMenu === 'user-management' ? 'active' : ''}`}>
-        <Link to={'/account/settings'}>
-          <i className="fa fa-user" /> <span className="nav-label">Cá nhân</span> <span className="fa arrow" />
-        </Link>
-        <ul className={`${activeMenu === 'user-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
-          <li className={`${activeSubMenu === 'setting' ? 'active' : ''}`}>
-            <Link to={'/account/settings'}>
-              <FontAwesomeIcon icon="wrench" fixedWidth /> Thông tin cá nhân
-            </Link>
-          </li>
-          <li className={`${activeSubMenu === 'change-password' ? 'active' : ''}`}>
-            <Link to={'/account/password'}>
-              <FontAwesomeIcon icon="clock" fixedWidth /> Thay đổi mật khẩu
-            </Link>
-          </li>
-        </ul>
-      </li>
+      <>
+        <li className={`${activeMenu === 'dashboard' ? 'active' : ''}`}>
+          <Link to={'/'}>
+            <i className="fa fa-th-large" /> <span className="nav-label">Thông tin chung</span>
+          </Link>
+        </li>
+        <li className={`${activeMenu === 'shopping-cart' ? 'active' : ''}`}>
+          <Link to={'/shopping-cart'}>
+            <i className="fa fa-shopping-cart" /> <span className="nav-label">Giỏ hàng</span>
+          </Link>
+        </li>
+        <li className={`${activeMenu === 'order-cart' ? 'active' : ''}`}>
+          <Link to={'/order-cart'}>
+            <i className="fa fa-files-o" /> <span className="nav-label">Danh sách đơn hàng</span>
+          </Link>
+        </li>
+        <li className={`${activeMenu === 'payment' ? 'active' : ''}`}>
+          <Link to={'/payment'}>
+            <i className="fa fa-sign-in" /> <span className="nav-label">Ví tiền</span>
+          </Link>
+        </li>
+        <li className={`${activeMenu === 'setting' ? 'active' : ''}`}>
+          <Link to={'/account/settings'}>
+            <i className="fa fa-user" /> <span className="nav-label">Thông tin cá nhân</span>
+          </Link>
+        </li>
+      </>
     );
   }
 
@@ -46,43 +57,47 @@ export class Sidebar extends React.Component<ISidebarProps> {
     const { activeMenu, activeSubMenu, isManager } = this.props;
     if (!isManager) return '';
     return (
-      <>
-        <li className={`${activeMenu === 'payment-management' ? 'active' : ''}`}>
-          <Link to={'/management/banktransfer'}>
-            <i className="fa fa-gift" /> <span className="nav-label">Payment</span> <span className="fa arrow" />
-          </Link>
-          <ul className={`${activeMenu === 'payment-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
-            <li className={`${activeSubMenu === 'banktransfer' ? 'active' : ''}`}>
-              <Link to={'/management/banktransfer'}>
-                <i className="fa fa-sign-in" /> Nạp tiền
-              </Link>
-            </li>
-            <li className={`${activeSubMenu === 'history' ? 'active' : ''}`}>
-              <Link to={'/management/history'}>
-                <i className="fa fa-exchange" /> Lịch sử thanh toán
-              </Link>
-            </li>
-          </ul>
-        </li>
+      <li className={`${activeMenu === 'payment-management' ? 'active' : ''}`}>
+        <Link to={'/management/banktransfer'}>
+          <i className="fa fa-gift" /> <span className="nav-label">Payment</span> <span className="fa arrow" />
+        </Link>
+        <ul className={`${activeMenu === 'payment-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
+          <li className={`${activeSubMenu === 'banktransfer' ? 'active' : ''}`}>
+            <Link to={'/management/banktransfer'}>
+              <i className="fa fa-sign-in" /> Nạp tiền
+            </Link>
+          </li>
+          <li className={`${activeSubMenu === 'history' ? 'active' : ''}`}>
+            <Link to={'/management/history'}>
+              <i className="fa fa-exchange" /> Lịch sử thanh toán
+            </Link>
+          </li>
+        </ul>
+      </li>
+    );
+  }
 
-        <li className={`${activeMenu === 'order-management' ? 'active' : ''}`}>
-          <Link to={'/management/order-pending'}>
-            <i className="fa fa-gift" /> <span className="nav-label">Quản lý đơn hàng</span> <span className="fa arrow" />
-          </Link>
-          <ul className={`${activeMenu === 'order-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
-            <li className={`${activeSubMenu === 'order-pending' ? 'active' : ''}`}>
-              <Link to={'/management/order-pending'}>
-                <i className="fa fa-sign-in" /> Đơn hàng chưa xử lý
-              </Link>
-            </li>
-            <li className={`${activeSubMenu === 'order-deposit' ? 'active' : ''}`}>
-              <Link to={'/management/order-deposit'}>
-                <i className="fa fa-exchange" /> Đơn hàng đã mua
-              </Link>
-            </li>
-          </ul>
-        </li>
-      </>
+  staffMenu() {
+    const { activeMenu, activeSubMenu, isStaff } = this.props;
+    if (!isStaff) return '';
+    return (
+      <li className={`${activeMenu === 'order-management' ? 'active' : ''}`}>
+        <Link to={'/management/order-pending'}>
+          <i className="fa fa-gift" /> <span className="nav-label">Quản lý đơn hàng</span> <span className="fa arrow" />
+        </Link>
+        <ul className={`${activeMenu === 'order-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
+          <li className={`${activeSubMenu === 'order-pending' ? 'active' : ''}`}>
+            <Link to={'/management/order-pending'}>
+              <i className="fa fa-sign-in" /> Đơn hàng chưa xử lý
+            </Link>
+          </li>
+          <li className={`${activeSubMenu === 'order-deposit' ? 'active' : ''}`}>
+            <Link to={'/management/order-deposit'}>
+              <i className="fa fa-exchange" /> Đơn hàng đã mua
+            </Link>
+          </li>
+        </ul>
+      </li>
     );
   }
 
@@ -174,28 +189,9 @@ export class Sidebar extends React.Component<ISidebarProps> {
               </div>
               <div className="logo-element">IN+</div>
             </li>
-            <li className={`${activeMenu === 'dashboard' ? 'active' : ''}`}>
-              <Link to={'/'}>
-                <i className="fa fa-th-large" /> <span className="nav-label">Thông tin chung</span>
-              </Link>
-            </li>
-            <li className={`${activeMenu === 'shopping-cart' ? 'active' : ''}`}>
-              <Link to={'/shopping-cart'}>
-                <i className="fa fa-shopping-cart" /> <span className="nav-label">Giỏ hàng</span>
-              </Link>
-            </li>
-            <li className={`${activeMenu === 'order-cart' ? 'active' : ''}`}>
-              <Link to={'/order-cart'}>
-                <i className="fa fa-files-o" /> <span className="nav-label">Danh sách đơn hàng</span>
-              </Link>
-            </li>
-            <li className={`${activeMenu === 'payment' ? 'active' : ''}`}>
-              <Link to={'/payment'}>
-                <i className="fa fa-sign-in" /> <span className="nav-label">Ví tiền</span>
-              </Link>
-            </li>
             {this.userMenu()}
             {this.managerMenu()}
+            {this.staffMenu()}
             {this.adminMenu()}
           </ul>
         </div>
@@ -208,7 +204,8 @@ const mapStateToProps = ({ authentication }) => ({
   account: authentication.account,
   isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
   isManager: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.MANAGER]),
-  isStaff: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.STAFF])
+  isStaff: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.STAFF]),
+  isUser: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.USER])
 });
 
 const mapDispatchToProps = {};

@@ -128,7 +128,7 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
 
     return (
       <div>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="user-management" activeSubMenu="setting" />
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="setting" activeSubMenu="" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">

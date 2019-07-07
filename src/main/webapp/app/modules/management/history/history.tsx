@@ -2,6 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
+import { TextFormat } from 'react-jhipster';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getEntities as getAllPayment } from 'app/entities/payment/payment.reducer';
@@ -11,6 +12,7 @@ import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import Footer from 'app/shared/layout/footer/footer';
 import { PaymentType } from 'app/shared/model/payment.model';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
@@ -62,7 +64,9 @@ export class Payment extends React.Component<ICheckoutProp> {
                             <td className="footable-visible footable-first-column">
                               {payment.code}
                               <br />
-                              {payment.createAt}
+                              <small>
+                                <TextFormat type="date" value={payment.createAt} format={APP_DATE_FORMAT} />
+                              </small>
                             </td>
                             <td className="footable-visible">
                               <b className="text-danger">

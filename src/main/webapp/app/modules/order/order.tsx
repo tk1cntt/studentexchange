@@ -36,7 +36,7 @@ export class Order extends React.Component<IHomeProp> {
                 <div className="col-sm-4">
                   <div className="form-group">
                     <label className="control-label" htmlFor="order_id">
-                      Order ID
+                      Mã đơn hàng
                     </label>
                     <input type="text" id="order_id" name="order_id" placeholder="Order ID" className="form-control" />
                   </div>
@@ -44,17 +44,17 @@ export class Order extends React.Component<IHomeProp> {
                 <div className="col-sm-4">
                   <div className="form-group">
                     <label className="control-label" htmlFor="status">
-                      Order status
+                      Trạng thái đơn hàng
                     </label>
                     <input type="text" id="status" name="status" placeholder="Status" className="form-control" />
                   </div>
                 </div>
                 <div className="col-sm-4">
                   <div className="form-group">
-                    <label className="control-label" htmlFor="customer">
-                      Customer
-                    </label>
-                    <input type="text" id="customer" name="customer" placeholder="Customer" className="form-control" />
+                    <label className="control-label" htmlFor="status"></label>
+                    <button className="btn btn-primary btn-block">
+                      <i className="fa fa-search" /> Tìm kiếm
+                    </button>
                   </div>
                 </div>
               </div>

@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import vn.studentexchange.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import vn.studentexchange.domain.OrderItem;
 import vn.studentexchange.service.dto.OrderItemDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity OrderItem and its DTO OrderItemDTO.

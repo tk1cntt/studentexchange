@@ -1,18 +1,12 @@
 package vn.studentexchange.service.dto;
 
+import io.github.jhipster.service.filter.*;
+import vn.studentexchange.domain.enumeration.PaymentMethod;
+import vn.studentexchange.domain.enumeration.PaymentStatusType;
+import vn.studentexchange.domain.enumeration.PaymentType;
+
 import java.io.Serializable;
 import java.util.Objects;
-import vn.studentexchange.domain.enumeration.PaymentMethod;
-import vn.studentexchange.domain.enumeration.PaymentType;
-import vn.studentexchange.domain.enumeration.PaymentStatusType;
-import io.github.jhipster.service.filter.BooleanFilter;
-import io.github.jhipster.service.filter.DoubleFilter;
-import io.github.jhipster.service.filter.Filter;
-import io.github.jhipster.service.filter.FloatFilter;
-import io.github.jhipster.service.filter.IntegerFilter;
-import io.github.jhipster.service.filter.LongFilter;
-import io.github.jhipster.service.filter.StringFilter;
-import io.github.jhipster.service.filter.InstantFilter;
 
 /**
  * Criteria class for the Payment entity. This class is used in PaymentResource to

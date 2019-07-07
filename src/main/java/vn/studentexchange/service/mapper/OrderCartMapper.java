@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import vn.studentexchange.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import vn.studentexchange.domain.OrderCart;
 import vn.studentexchange.service.dto.OrderCartDTO;
-
-import org.mapstruct.*;
 import vn.studentexchange.service.dto.ShoppingCartDTO;
 
 /**

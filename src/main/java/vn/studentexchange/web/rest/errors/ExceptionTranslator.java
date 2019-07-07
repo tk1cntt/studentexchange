@@ -1,7 +1,5 @@
 package vn.studentexchange.web.rest.errors;
 
-import vn.studentexchange.web.rest.util.HeaderUtil;
-
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,6 +13,7 @@ import org.zalando.problem.ProblemBuilder;
 import org.zalando.problem.Status;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.violations.ConstraintViolationProblem;
+import vn.studentexchange.web.rest.util.HeaderUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

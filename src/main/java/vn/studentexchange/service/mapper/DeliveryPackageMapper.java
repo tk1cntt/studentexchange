@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import vn.studentexchange.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import vn.studentexchange.domain.DeliveryPackage;
 import vn.studentexchange.service.dto.DeliveryPackageDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity DeliveryPackage and its DTO DeliveryPackageDTO.

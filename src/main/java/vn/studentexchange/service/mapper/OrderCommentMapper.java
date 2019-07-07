@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import vn.studentexchange.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import vn.studentexchange.domain.OrderComment;
 import vn.studentexchange.service.dto.OrderCommentDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity OrderComment and its DTO OrderCommentDTO.

@@ -1,9 +1,10 @@
 package vn.studentexchange.service.dto;
 
-import java.time.Instant;
-import java.io.Serializable;
-import java.util.Objects;
 import vn.studentexchange.domain.enumeration.Gender;
+
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.Objects;
 
 /**
  * A DTO for the UserProfile entity.

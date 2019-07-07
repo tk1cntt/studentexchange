@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import vn.studentexchange.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import vn.studentexchange.domain.Region;
 import vn.studentexchange.service.dto.RegionDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity Region and its DTO RegionDTO.

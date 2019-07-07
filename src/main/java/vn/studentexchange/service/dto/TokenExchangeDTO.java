@@ -1,6 +1,5 @@
 package vn.studentexchange.service.dto;
 
-import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.Objects;
 

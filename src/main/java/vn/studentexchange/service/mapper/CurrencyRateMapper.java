@@ -1,9 +1,8 @@
 package vn.studentexchange.service.mapper;
 
-import vn.studentexchange.domain.*;
+import org.mapstruct.Mapper;
+import vn.studentexchange.domain.CurrencyRate;
 import vn.studentexchange.service.dto.CurrencyRateDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity CurrencyRate and its DTO CurrencyRateDTO.

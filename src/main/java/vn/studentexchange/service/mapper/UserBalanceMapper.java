@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import vn.studentexchange.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import vn.studentexchange.domain.UserBalance;
 import vn.studentexchange.service.dto.UserBalanceDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity UserBalance and its DTO UserBalanceDTO.

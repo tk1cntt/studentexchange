@@ -1,14 +1,7 @@
 package vn.studentexchange.web.rest.util;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
 import org.apache.commons.codec.binary.Hex;
 import org.hashids.Hashids;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.util.UriComponentsBuilder;
 import vn.studentexchange.domain.enumeration.CurrencyType;
 import vn.studentexchange.service.CurrencyRateService;
 import vn.studentexchange.service.dto.CurrencyRateDTO;
@@ -17,6 +10,9 @@ import vn.studentexchange.service.dto.ShoppingCartItemDTO;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Utility class for handling pagination.

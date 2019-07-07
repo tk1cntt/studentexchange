@@ -1,9 +1,8 @@
 package vn.studentexchange.service.mapper;
 
-import vn.studentexchange.domain.*;
+import org.mapstruct.Mapper;
+import vn.studentexchange.domain.Warehouse;
 import vn.studentexchange.service.dto.WarehouseDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity Warehouse and its DTO WarehouseDTO.

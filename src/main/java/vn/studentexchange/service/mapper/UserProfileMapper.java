@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import vn.studentexchange.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import vn.studentexchange.domain.UserProfile;
 import vn.studentexchange.service.dto.UserProfileDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity UserProfile and its DTO UserProfileDTO.

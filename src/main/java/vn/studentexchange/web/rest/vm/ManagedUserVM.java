@@ -1,6 +1,7 @@
 package vn.studentexchange.web.rest.vm;
 
 import vn.studentexchange.service.dto.UserDTO;
+
 import javax.validation.constraints.Size;
 
 /**

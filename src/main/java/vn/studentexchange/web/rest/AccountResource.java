@@ -1,20 +1,23 @@
 package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.hash.Hashing;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.web.bind.annotation.*;
 import vn.studentexchange.domain.User;
 import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.security.SecurityUtils;
@@ -25,7 +28,6 @@ import vn.studentexchange.service.UserProfileService;
 import vn.studentexchange.service.UserService;
 import vn.studentexchange.service.dto.FBAccountDTO;
 import vn.studentexchange.service.dto.PasswordChangeDTO;
-import vn.studentexchange.service.dto.TokenExchangeDTO;
 import vn.studentexchange.service.dto.UserDTO;
 import vn.studentexchange.service.dto.UserProfileDTO;
 import vn.studentexchange.web.rest.errors.*;
@@ -33,19 +35,14 @@ import vn.studentexchange.web.rest.util.Utils;
 import vn.studentexchange.web.rest.vm.KeyAndPasswordVM;
 import vn.studentexchange.web.rest.vm.ManagedUserVM;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 

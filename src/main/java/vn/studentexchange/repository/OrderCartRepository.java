@@ -1,8 +1,11 @@
 package vn.studentexchange.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import vn.studentexchange.domain.OrderCart;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
+import vn.studentexchange.domain.ShoppingCart;
 
 import java.util.List;
 
@@ -31,4 +34,5 @@ public interface OrderCartRepository extends JpaRepository<OrderCart, Long> {
     @Query("select order_cart from OrderCart order_cart where order_cart.updateBy.login = ?#{principal.username}")
     List<OrderCart> findByUpdateByIsCurrentUser();
 
+    Page<OrderCart> findByCreateByLoginOrderByCreateAtDesc(String username, Pageable pageable);
 }

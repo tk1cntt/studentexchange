@@ -262,7 +262,7 @@
     "changelogDate": "20190610234301",
     "entityTableName": "order_cart",
     "dto": "mapstruct",
-    "pagination": "no",
+    "pagination": "pagination",
     "service": "serviceClass",
     "jpaMetamodelFiltering": true,
     "fluentMethods": true,

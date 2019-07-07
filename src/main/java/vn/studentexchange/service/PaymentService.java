@@ -6,15 +6,13 @@ import vn.studentexchange.service.dto.PaymentDTO;
 import vn.studentexchange.service.mapper.PaymentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Payment.
@@ -51,19 +49,13 @@ public class PaymentService {
     /**
      * Get all the payments.
      *
+     * @param pageable the pagination information
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<PaymentDTO> findAll() {
-        log.debug("Request to get all Payments");
-        return paymentRepository.findAll().stream()
-            .map(paymentMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
-
     public Page<PaymentDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Payments");
-        return paymentRepository.findByOrderByCreateAtDesc(pageable)
+        return paymentRepository.findAll(pageable)
             .map(paymentMapper::toDto);
     }
 

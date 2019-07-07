@@ -1,16 +1,8 @@
 package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import io.github.jhipster.web.util.ResponseUtil;
-import liquibase.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.util.StringUtils;
 import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.*;
 import vn.studentexchange.service.dto.*;
@@ -19,9 +11,20 @@ import vn.studentexchange.service.mapper.OrderItemMapper;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
 import vn.studentexchange.web.rest.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import vn.studentexchange.web.rest.util.Utils;
 
+import java.net.URI;
 import java.net.URISyntaxException;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -161,23 +164,25 @@ public class OrderCartResource {
     /**
      * GET  /order-carts : get all the orderCarts.
      *
+     * @param pageable the pagination information
      * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of orderCarts in body
      */
     @GetMapping("/order-carts")
     @Timed
-    public ResponseEntity<List<OrderCartDTO>> getAllOrderCarts(OrderCartCriteria criteria) {
+    public ResponseEntity<List<OrderCartDTO>> getAllOrderCarts(OrderCartCriteria criteria, Pageable pageable) {
         log.debug("REST request to get OrderCarts by criteria: {}", criteria);
-        List<OrderCartDTO> entityList = orderCartQueryService.findByCriteria(criteria);
-        return ResponseEntity.ok().body(entityList);
+        Page<OrderCartDTO> page = orderCartQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/order-carts");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
-     * GET  /order-carts/count : count all the orderCarts.
-     *
-     * @param criteria the criterias which the requested entities should match
-     * @return the ResponseEntity with status 200 (OK) and the count in body
-     */
+    * GET  /order-carts/count : count all the orderCarts.
+    *
+    * @param criteria the criterias which the requested entities should match
+    * @return the ResponseEntity with status 200 (OK) and the count in body
+    */
     @GetMapping("/order-carts/count")
     @Timed
     public ResponseEntity<Long> countOrderCarts(OrderCartCriteria criteria) {

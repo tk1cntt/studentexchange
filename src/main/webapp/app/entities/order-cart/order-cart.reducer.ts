@@ -21,6 +21,7 @@ const initialState = {
   entities: [] as ReadonlyArray<IOrderCart>,
   entity: defaultValue,
   updating: false,
+  totalItems: 0,
   updateSuccess: false
 };
 
@@ -63,6 +64,7 @@ export default (state: OrderCartState = initialState, action): OrderCartState =>
       return {
         ...state,
         loading: false,
+        totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_ORDERCART):
@@ -99,10 +101,13 @@ const apiUrl = 'api/order-carts';
 
 // Actions
 
-export const getEntities: ICrudGetAllAction<IOrderCart> = (page, size, sort) => ({
-  type: ACTION_TYPES.FETCH_ORDERCART_LIST,
-  payload: axios.get<IOrderCart>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
-});
+export const getEntities: ICrudGetAllAction<IOrderCart> = (page, size, sort) => {
+  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ORDERCART_LIST,
+    payload: axios.get<IOrderCart>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
 
 export const getEntity: ICrudGetAction<IOrderCart> = id => {
   const requestUrl = `${apiUrl}/${id}`;

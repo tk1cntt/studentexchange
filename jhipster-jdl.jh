@@ -420,7 +420,7 @@ relationship ManyToOne {
 // Set pagination options
 paginate Region, City, District, Ward, Country with pagination
 
-paginate UserProfile with pagination
+paginate UserProfile, OrderCart, Payment with pagination
 
 dto * with mapstruct
 

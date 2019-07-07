@@ -16,6 +16,8 @@ import vn.studentexchange.domain.User;
 import vn.studentexchange.domain.User;
 import vn.studentexchange.repository.OrderCartRepository;
 import vn.studentexchange.service.OrderCartService;
+import vn.studentexchange.service.ShoppingCartService;
+import vn.studentexchange.service.UserShippingAddressService;
 import vn.studentexchange.service.dto.OrderCartDTO;
 import vn.studentexchange.service.mapper.OrderCartMapper;
 import vn.studentexchange.web.rest.errors.ExceptionTranslator;
@@ -212,6 +214,12 @@ public class OrderCartResourceIntTest {
     private OrderCartQueryService orderCartQueryService;
 
     @Autowired
+    private UserShippingAddressService userShippingAddressService;
+
+    @Autowired
+    private ShoppingCartService shoppingCartService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -230,7 +238,7 @@ public class OrderCartResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OrderCartResource orderCartResource = new OrderCartResource(orderCartService, orderCartQueryService);
+        final OrderCartResource orderCartResource = new OrderCartResource(orderCartService, orderCartQueryService, userShippingAddressService, shoppingCartService);
         this.restOrderCartMockMvc = MockMvcBuilders.standaloneSetup(orderCartResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -445,7 +453,7 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getOrderCart() throws Exception {

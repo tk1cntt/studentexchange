@@ -74,7 +74,7 @@
     "changelogDate": "20190628113310",
     "entityTableName": "payment",
     "dto": "mapstruct",
-    "pagination": "no",
+    "pagination": "pagination",
     "service": "serviceClass",
     "jpaMetamodelFiltering": true,
     "fluentMethods": true,

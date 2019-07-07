@@ -3,7 +3,15 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import {
+  Translate,
+  ICrudGetAllAction,
+  TextFormat,
+  getSortState,
+  IPaginationBaseState,
+  getPaginationItemsNumber,
+  JhiPagination
+} from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -11,16 +19,45 @@ import { getEntities } from './order-cart.reducer';
 import { IOrderCart } from 'app/shared/model/order-cart.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IOrderCartProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export class OrderCart extends React.Component<IOrderCartProps> {
+export type IOrderCartState = IPaginationBaseState;
+
+export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState> {
+  state: IOrderCartState = {
+    ...getSortState(this.props.location, ITEMS_PER_PAGE)
+  };
+
   componentDidMount() {
-    this.props.getEntities();
+    this.getEntities();
   }
 
+  sort = prop => () => {
+    this.setState(
+      {
+        order: this.state.order === 'asc' ? 'desc' : 'asc',
+        sort: prop
+      },
+      () => this.sortEntities()
+    );
+  };
+
+  sortEntities() {
+    this.getEntities();
+    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=${this.state.sort},${this.state.order}`);
+  }
+
+  handlePagination = activePage => this.setState({ activePage }, () => this.sortEntities());
+
+  getEntities = () => {
+    const { activePage, itemsPerPage, sort, order } = this.state;
+    this.props.getEntities(activePage - 1, itemsPerPage, `${sort},${order}`);
+  };
+
   render() {
-    const { orderCartList, match } = this.props;
+    const { orderCartList, match, totalItems } = this.props;
     return (
       <div>
         <h2 id="order-cart-heading">
@@ -35,171 +72,200 @@ export class OrderCart extends React.Component<IOrderCartProps> {
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
+                <th className="hand" onClick={this.sort('id')}>
+                  <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.code">Code</Translate>
+                <th className="hand" onClick={this.sort('code')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.code">Code</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.shippingChinaCode">Shipping China Code</Translate>
+                <th className="hand" onClick={this.sort('shippingChinaCode')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.shippingChinaCode">Shipping China Code</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.avatar">Avatar</Translate>
+                <th className="hand" onClick={this.sort('avatar')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.avatar">Avatar</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.aliwangwang">Aliwangwang</Translate>
+                <th className="hand" onClick={this.sort('aliwangwang')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.aliwangwang">Aliwangwang</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.amountDiscount">Amount Discount</Translate>
+                <th className="hand" onClick={this.sort('amountDiscount')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.amountDiscount">Amount Discount</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.amountPaid">Amount Paid</Translate>
+                <th className="hand" onClick={this.sort('amountPaid')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.amountPaid">Amount Paid</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.depositAmount">Deposit Amount</Translate>
+                <th className="hand" onClick={this.sort('depositAmount')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.depositAmount">Deposit Amount</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.depositRatio">Deposit Ratio</Translate>
+                <th className="hand" onClick={this.sort('depositRatio')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.depositRatio">Deposit Ratio</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.depositTime">Deposit Time</Translate>
+                <th className="hand" onClick={this.sort('depositTime')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.depositTime">Deposit Time</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
+                <th className="hand" onClick={this.sort('domesticShippingChinaFeeNDT')}>
                   <Translate contentKey="studentexchangeApp.orderCart.domesticShippingChinaFeeNDT">
                     Domestic Shipping China Fee NDT
-                  </Translate>
+                  </Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.domesticShippingChinaFee">Domestic Shipping China Fee</Translate>
+                <th className="hand" onClick={this.sort('domesticShippingChinaFee')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.domesticShippingChinaFee">Domestic Shipping China Fee</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.domesticShippingVietnamFee">Domestic Shipping Vietnam Fee</Translate>
+                <th className="hand" onClick={this.sort('domesticShippingVietnamFee')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.domesticShippingVietnamFee">Domestic Shipping Vietnam Fee</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.quantityOrder">Quantity Order</Translate>
+                <th className="hand" onClick={this.sort('quantityOrder')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.quantityOrder">Quantity Order</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.quantityPending">Quantity Pending</Translate>
+                <th className="hand" onClick={this.sort('quantityPending')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.quantityPending">Quantity Pending</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.quantityReceived">Quantity Received</Translate>
+                <th className="hand" onClick={this.sort('quantityReceived')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.quantityReceived">Quantity Received</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.rate">Rate</Translate>
+                <th className="hand" onClick={this.sort('rate')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.rate">Rate</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.receiverName">Receiver Name</Translate>
+                <th className="hand" onClick={this.sort('receiverName')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.receiverName">Receiver Name</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.receiverAddress">Receiver Address</Translate>
+                <th className="hand" onClick={this.sort('receiverAddress')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.receiverAddress">Receiver Address</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.receiverMobile">Receiver Mobile</Translate>
+                <th className="hand" onClick={this.sort('receiverMobile')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.receiverMobile">Receiver Mobile</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.receiverNote">Receiver Note</Translate>
+                <th className="hand" onClick={this.sort('receiverNote')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.receiverNote">Receiver Note</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.refundAmountByAlipay">Refund Amount By Alipay</Translate>
+                <th className="hand" onClick={this.sort('refundAmountByAlipay')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.refundAmountByAlipay">Refund Amount By Alipay</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.refundAmountByComplaint">Refund Amount By Complaint</Translate>
+                <th className="hand" onClick={this.sort('refundAmountByComplaint')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.refundAmountByComplaint">Refund Amount By Complaint</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.refundAmountByOrder">Refund Amount By Order</Translate>
+                <th className="hand" onClick={this.sort('refundAmountByOrder')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.refundAmountByOrder">Refund Amount By Order</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.refundAmountPending">Refund Amount Pending</Translate>
+                <th className="hand" onClick={this.sort('refundAmountPending')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.refundAmountPending">Refund Amount Pending</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.shippingChinaVietnamFee">Shipping China Vietnam Fee</Translate>
+                <th className="hand" onClick={this.sort('shippingChinaVietnamFee')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.shippingChinaVietnamFee">Shipping China Vietnam Fee</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
+                <th className="hand" onClick={this.sort('shippingChinaVietnamFeeDiscount')}>
                   <Translate contentKey="studentexchangeApp.orderCart.shippingChinaVietnamFeeDiscount">
                     Shipping China Vietnam Fee Discount
-                  </Translate>
+                  </Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('serviceFee')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.serviceFee">Service Fee</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('serviceFeeDiscount')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.serviceFeeDiscount">Service Fee Discount</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('itemChecking')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.itemChecking">Item Checking</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('itemWoodCrating')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.itemWoodCrating">Item Wood Crating</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('shopId')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.shopId">Shop Id</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('shopLink')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.shopLink">Shop Link</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('shopName')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.shopName">Shop Name</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('shopNote')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.shopNote">Shop Note</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('website')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.website">Website</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('status')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.status">Status</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('statusName')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.statusName">Status Name</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('statusStyle')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.statusStyle">Status Style</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('tallyFee')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.tallyFee">Tally Fee</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('totalAmount')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.totalAmount">Total Amount</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('totalAmountNDT')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.totalAmountNDT">Total Amount NDT</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('totalPaidByCustomer')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.totalPaidByCustomer">Total Paid By Customer</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('totalServiceFee')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.totalServiceFee">Total Service Fee</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('totalQuantity')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.totalQuantity">Total Quantity</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('finalAmount')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.finalAmount">Final Amount</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('createAt')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.createAt">Create At</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('updateAt')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.updateAt">Update At</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.serviceFee">Service Fee</Translate>
+                  <Translate contentKey="studentexchangeApp.orderCart.buyer">Buyer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.serviceFeeDiscount">Service Fee Discount</Translate>
+                  <Translate contentKey="studentexchangeApp.orderCart.chinaStocker">China Stocker</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.itemChecking">Item Checking</Translate>
+                  <Translate contentKey="studentexchangeApp.orderCart.vietnamStocker">Vietnam Stocker</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.itemWoodCrating">Item Wood Crating</Translate>
+                  <Translate contentKey="studentexchangeApp.orderCart.exporter">Exporter</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.shopId">Shop Id</Translate>
+                  <Translate contentKey="studentexchangeApp.orderCart.createBy">Create By</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.shopLink">Shop Link</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.shopName">Shop Name</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.shopNote">Shop Note</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.website">Website</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.status">Status</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.statusName">Status Name</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.statusStyle">Status Style</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.tallyFee">Tally Fee</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.totalAmount">Total Amount</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.totalAmountNDT">Total Amount NDT</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.totalPaidByCustomer">Total Paid By Customer</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.totalServiceFee">Total Service Fee</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.totalQuantity">Total Quantity</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.finalAmount">Final Amount</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.createAt">Create At</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.updateAt">Update At</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.buyer">Buyer</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.chinaStocker">China Stocker</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.vietnamStocker">Vietnam Stocker</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.exporter">Exporter</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.createBy">Create By</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.updateBy">Update By</Translate>
+                  <Translate contentKey="studentexchangeApp.orderCart.updateBy">Update By</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -300,13 +366,22 @@ export class OrderCart extends React.Component<IOrderCartProps> {
             </tbody>
           </Table>
         </div>
+        <Row className="justify-content-center">
+          <JhiPagination
+            items={getPaginationItemsNumber(totalItems, this.state.itemsPerPage)}
+            activePage={this.state.activePage}
+            onSelect={this.handlePagination}
+            maxButtons={5}
+          />
+        </Row>
       </div>
     );
   }
 }
 
 const mapStateToProps = ({ orderCart }: IRootState) => ({
-  orderCartList: orderCart.entities
+  orderCartList: orderCart.entities,
+  totalItems: orderCart.totalItems
 });
 
 const mapDispatchToProps = {

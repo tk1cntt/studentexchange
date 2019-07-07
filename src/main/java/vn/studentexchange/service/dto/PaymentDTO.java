@@ -1,12 +1,11 @@
 package vn.studentexchange.service.dto;
 
-import vn.studentexchange.domain.enumeration.PaymentMethod;
-import vn.studentexchange.domain.enumeration.PaymentStatusType;
-import vn.studentexchange.domain.enumeration.PaymentType;
-
-import java.io.Serializable;
 import java.time.Instant;
+import java.io.Serializable;
 import java.util.Objects;
+import vn.studentexchange.domain.enumeration.PaymentMethod;
+import vn.studentexchange.domain.enumeration.PaymentType;
+import vn.studentexchange.domain.enumeration.PaymentStatusType;
 
 /**
  * A DTO for the Payment entity.

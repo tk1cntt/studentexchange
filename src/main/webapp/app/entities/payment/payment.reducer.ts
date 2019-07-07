@@ -21,6 +21,7 @@ const initialState = {
   entities: [] as ReadonlyArray<IPayment>,
   entity: defaultValue,
   updating: false,
+  totalItems: 0,
   updateSuccess: false
 };
 
@@ -63,6 +64,7 @@ export default (state: PaymentState = initialState, action): PaymentState => {
       return {
         ...state,
         loading: false,
+        totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_PAYMENT):

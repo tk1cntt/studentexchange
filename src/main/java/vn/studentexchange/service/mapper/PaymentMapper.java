@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import vn.studentexchange.domain.Payment;
+import vn.studentexchange.domain.*;
 import vn.studentexchange.service.dto.PaymentDTO;
+
+import org.mapstruct.*;
 
 /**
  * Mapper for the entity Payment and its DTO PaymentDTO.

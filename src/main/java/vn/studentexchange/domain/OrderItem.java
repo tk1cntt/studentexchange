@@ -21,23 +21,26 @@ public class OrderItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "avatar")
-    private String avatar;
+    @Column(name = "item_id")
+    private String itemId;
 
-    @Column(name = "origin_link")
-    private String originLink;
+    @Column(name = "item_image")
+    private String itemImage;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "item_name")
+    private String itemName;
 
-    @Column(name = "note")
-    private String note;
+    @Column(name = "item_link")
+    private String itemLink;
 
-    @Column(name = "price")
-    private Float price;
+    @Column(name = "item_price")
+    private Float itemPrice;
 
-    @Column(name = "price_ndt")
-    private Float priceNDT;
+    @Column(name = "item_price_ndt")
+    private Float itemPriceNDT;
+
+    @Column(name = "item_note")
+    private String itemNote;
 
     @Column(name = "properties_id")
     private String propertiesId;
@@ -54,23 +57,17 @@ public class OrderItem implements Serializable {
     @Column(name = "properties_type")
     private String propertiesType;
 
-    @Column(name = "quantity_order")
-    private Integer quantityOrder;
+    @Column(name = "quantity")
+    private Integer quantity;
 
-    @Column(name = "quantity_pending")
-    private Integer quantityPending;
+    @Column(name = "require_min")
+    private Integer requireMin;
 
-    @Column(name = "quantity_received")
-    private Integer quantityReceived;
+    @Column(name = "total_amount")
+    private Float totalAmount;
 
-    @Column(name = "total_price")
-    private Float totalPrice;
-
-    @Column(name = "total_price_ndt")
-    private Float totalPriceNDT;
-
-    @Column(name = "website")
-    private String website;
+    @Column(name = "total_amount_ndt")
+    private Float totalAmountNDT;
 
     @Column(name = "create_at")
     private Instant createAt;
@@ -99,82 +96,95 @@ public class OrderItem implements Serializable {
         this.id = id;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getItemId() {
+        return itemId;
     }
 
-    public OrderItem avatar(String avatar) {
-        this.avatar = avatar;
+    public OrderItem itemId(String itemId) {
+        this.itemId = itemId;
         return this;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
-    public String getOriginLink() {
-        return originLink;
+    public String getItemImage() {
+        return itemImage;
     }
 
-    public OrderItem originLink(String originLink) {
-        this.originLink = originLink;
+    public OrderItem itemImage(String itemImage) {
+        this.itemImage = itemImage;
         return this;
     }
 
-    public void setOriginLink(String originLink) {
-        this.originLink = originLink;
+    public void setItemImage(String itemImage) {
+        this.itemImage = itemImage;
     }
 
-    public String getName() {
-        return name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public OrderItem name(String name) {
-        this.name = name;
+    public OrderItem itemName(String itemName) {
+        this.itemName = itemName;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public String getNote() {
-        return note;
+    public String getItemLink() {
+        return itemLink;
     }
 
-    public OrderItem note(String note) {
-        this.note = note;
+    public OrderItem itemLink(String itemLink) {
+        this.itemLink = itemLink;
         return this;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setItemLink(String itemLink) {
+        this.itemLink = itemLink;
     }
 
-    public Float getPrice() {
-        return price;
+    public Float getItemPrice() {
+        return itemPrice;
     }
 
-    public OrderItem price(Float price) {
-        this.price = price;
+    public OrderItem itemPrice(Float itemPrice) {
+        this.itemPrice = itemPrice;
         return this;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setItemPrice(Float itemPrice) {
+        this.itemPrice = itemPrice;
     }
 
-    public Float getPriceNDT() {
-        return priceNDT;
+    public Float getItemPriceNDT() {
+        return itemPriceNDT;
     }
 
-    public OrderItem priceNDT(Float priceNDT) {
-        this.priceNDT = priceNDT;
+    public OrderItem itemPriceNDT(Float itemPriceNDT) {
+        this.itemPriceNDT = itemPriceNDT;
         return this;
     }
 
-    public void setPriceNDT(Float priceNDT) {
-        this.priceNDT = priceNDT;
+    public void setItemPriceNDT(Float itemPriceNDT) {
+        this.itemPriceNDT = itemPriceNDT;
+    }
+
+    public String getItemNote() {
+        return itemNote;
+    }
+
+    public OrderItem itemNote(String itemNote) {
+        this.itemNote = itemNote;
+        return this;
+    }
+
+    public void setItemNote(String itemNote) {
+        this.itemNote = itemNote;
     }
 
     public String getPropertiesId() {
@@ -242,82 +252,56 @@ public class OrderItem implements Serializable {
         this.propertiesType = propertiesType;
     }
 
-    public Integer getQuantityOrder() {
-        return quantityOrder;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public OrderItem quantityOrder(Integer quantityOrder) {
-        this.quantityOrder = quantityOrder;
+    public OrderItem quantity(Integer quantity) {
+        this.quantity = quantity;
         return this;
     }
 
-    public void setQuantityOrder(Integer quantityOrder) {
-        this.quantityOrder = quantityOrder;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
-    public Integer getQuantityPending() {
-        return quantityPending;
+    public Integer getRequireMin() {
+        return requireMin;
     }
 
-    public OrderItem quantityPending(Integer quantityPending) {
-        this.quantityPending = quantityPending;
+    public OrderItem requireMin(Integer requireMin) {
+        this.requireMin = requireMin;
         return this;
     }
 
-    public void setQuantityPending(Integer quantityPending) {
-        this.quantityPending = quantityPending;
+    public void setRequireMin(Integer requireMin) {
+        this.requireMin = requireMin;
     }
 
-    public Integer getQuantityReceived() {
-        return quantityReceived;
+    public Float getTotalAmount() {
+        return totalAmount;
     }
 
-    public OrderItem quantityReceived(Integer quantityReceived) {
-        this.quantityReceived = quantityReceived;
+    public OrderItem totalAmount(Float totalAmount) {
+        this.totalAmount = totalAmount;
         return this;
     }
 
-    public void setQuantityReceived(Integer quantityReceived) {
-        this.quantityReceived = quantityReceived;
+    public void setTotalAmount(Float totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public Float getTotalPrice() {
-        return totalPrice;
+    public Float getTotalAmountNDT() {
+        return totalAmountNDT;
     }
 
-    public OrderItem totalPrice(Float totalPrice) {
-        this.totalPrice = totalPrice;
+    public OrderItem totalAmountNDT(Float totalAmountNDT) {
+        this.totalAmountNDT = totalAmountNDT;
         return this;
     }
 
-    public void setTotalPrice(Float totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public Float getTotalPriceNDT() {
-        return totalPriceNDT;
-    }
-
-    public OrderItem totalPriceNDT(Float totalPriceNDT) {
-        this.totalPriceNDT = totalPriceNDT;
-        return this;
-    }
-
-    public void setTotalPriceNDT(Float totalPriceNDT) {
-        this.totalPriceNDT = totalPriceNDT;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public OrderItem website(String website) {
-        this.website = website;
-        return this;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
+    public void setTotalAmountNDT(Float totalAmountNDT) {
+        this.totalAmountNDT = totalAmountNDT;
     }
 
     public Instant getCreateAt() {
@@ -410,23 +394,22 @@ public class OrderItem implements Serializable {
     public String toString() {
         return "OrderItem{" +
             "id=" + getId() +
-            ", avatar='" + getAvatar() + "'" +
-            ", originLink='" + getOriginLink() + "'" +
-            ", name='" + getName() + "'" +
-            ", note='" + getNote() + "'" +
-            ", price=" + getPrice() +
-            ", priceNDT=" + getPriceNDT() +
+            ", itemId='" + getItemId() + "'" +
+            ", itemImage='" + getItemImage() + "'" +
+            ", itemName='" + getItemName() + "'" +
+            ", itemLink='" + getItemLink() + "'" +
+            ", itemPrice=" + getItemPrice() +
+            ", itemPriceNDT=" + getItemPriceNDT() +
+            ", itemNote='" + getItemNote() + "'" +
             ", propertiesId='" + getPropertiesId() + "'" +
             ", propertiesImage='" + getPropertiesImage() + "'" +
             ", propertiesMD5='" + getPropertiesMD5() + "'" +
             ", propertiesName='" + getPropertiesName() + "'" +
             ", propertiesType='" + getPropertiesType() + "'" +
-            ", quantityOrder=" + getQuantityOrder() +
-            ", quantityPending=" + getQuantityPending() +
-            ", quantityReceived=" + getQuantityReceived() +
-            ", totalPrice=" + getTotalPrice() +
-            ", totalPriceNDT=" + getTotalPriceNDT() +
-            ", website='" + getWebsite() + "'" +
+            ", quantity=" + getQuantity() +
+            ", requireMin=" + getRequireMin() +
+            ", totalAmount=" + getTotalAmount() +
+            ", totalAmountNDT=" + getTotalAmountNDT() +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +
             "}";

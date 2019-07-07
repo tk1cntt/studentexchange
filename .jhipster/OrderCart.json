@@ -10,6 +10,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "aliwangwang",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "amountDiscount",
             "fieldType": "Float"
         },
@@ -55,7 +59,7 @@
         },
         {
             "fieldName": "rate",
-            "fieldType": "Integer"
+            "fieldType": "Float"
         },
         {
             "fieldName": "receiverName",
@@ -98,8 +102,20 @@
             "fieldType": "Float"
         },
         {
-            "fieldName": "shopAliwang",
-            "fieldType": "String"
+            "fieldName": "serviceFee",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "serviceFeeDiscount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "itemChecking",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "itemWoodCrating",
+            "fieldType": "Boolean"
         },
         {
             "fieldName": "shopId",
@@ -114,15 +130,11 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "shopNote",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "website",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "websiteCode",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "websiteLadingCode",
             "fieldType": "String"
         },
         {
@@ -140,7 +152,7 @@
         },
         {
             "fieldName": "tallyFee",
-            "fieldType": "Integer"
+            "fieldType": "Float"
         },
         {
             "fieldName": "totalAmount",
@@ -155,16 +167,12 @@
             "fieldType": "Float"
         },
         {
-            "fieldName": "serviceFee",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "serviceFeeDiscount",
-            "fieldType": "Float"
-        },
-        {
             "fieldName": "totalServiceFee",
             "fieldType": "Float"
+        },
+        {
+            "fieldName": "totalQuantity",
+            "fieldType": "Integer"
         },
         {
             "fieldName": "finalAmount",

@@ -22,6 +22,10 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="avatar" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="aliwangwang" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -66,7 +70,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="source_data" type="varchar(255)">
+            <column name="website" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -78,19 +82,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="total_link" type="integer">
-                <constraints nullable="true" />
-            </column>
-
             <column name="total_quantity" type="integer">
                 <constraints nullable="true" />
             </column>
 
             <column name="final_amount" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="website" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 

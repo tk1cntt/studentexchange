@@ -30,6 +30,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="aliwangwang" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="amount_discount" type="${floatType}">
                 <constraints nullable="true" />
             </column>
@@ -74,7 +78,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="rate" type="integer">
+            <column name="rate" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 
@@ -118,7 +122,19 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="shop_aliwang" type="varchar(255)">
+            <column name="service_fee" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="service_fee_discount" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="item_checking" type="bit">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="item_wood_crating" type="bit">
                 <constraints nullable="true" />
             </column>
 
@@ -134,15 +150,11 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="shop_note" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="website" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="website_code" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="website_lading_code" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -158,7 +170,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="tally_fee" type="integer">
+            <column name="tally_fee" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 
@@ -174,15 +186,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="service_fee" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="service_fee_discount" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-
             <column name="total_service_fee" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="total_quantity" type="integer">
                 <constraints nullable="true" />
             </column>
 

@@ -39,22 +39,25 @@ export class OrderItem extends React.Component<IOrderItemProps> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.avatar">Avatar</Translate>
+                  <Translate contentKey="studentexchangeApp.orderItem.itemId">Item Id</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.originLink">Origin Link</Translate>
+                  <Translate contentKey="studentexchangeApp.orderItem.itemImage">Item Image</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.name">Name</Translate>
+                  <Translate contentKey="studentexchangeApp.orderItem.itemName">Item Name</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.note">Note</Translate>
+                  <Translate contentKey="studentexchangeApp.orderItem.itemLink">Item Link</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.price">Price</Translate>
+                  <Translate contentKey="studentexchangeApp.orderItem.itemPrice">Item Price</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.priceNDT">Price NDT</Translate>
+                  <Translate contentKey="studentexchangeApp.orderItem.itemPriceNDT">Item Price NDT</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="studentexchangeApp.orderItem.itemNote">Item Note</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.orderItem.propertiesId">Properties Id</Translate>
@@ -72,22 +75,16 @@ export class OrderItem extends React.Component<IOrderItemProps> {
                   <Translate contentKey="studentexchangeApp.orderItem.propertiesType">Properties Type</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.quantityOrder">Quantity Order</Translate>
+                  <Translate contentKey="studentexchangeApp.orderItem.quantity">Quantity</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.quantityPending">Quantity Pending</Translate>
+                  <Translate contentKey="studentexchangeApp.orderItem.requireMin">Require Min</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.quantityReceived">Quantity Received</Translate>
+                  <Translate contentKey="studentexchangeApp.orderItem.totalAmount">Total Amount</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.totalPrice">Total Price</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.totalPriceNDT">Total Price NDT</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderItem.website">Website</Translate>
+                  <Translate contentKey="studentexchangeApp.orderItem.totalAmountNDT">Total Amount NDT</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.orderItem.createAt">Create At</Translate>
@@ -115,23 +112,22 @@ export class OrderItem extends React.Component<IOrderItemProps> {
                       {orderItem.id}
                     </Button>
                   </td>
-                  <td>{orderItem.avatar}</td>
-                  <td>{orderItem.originLink}</td>
-                  <td>{orderItem.name}</td>
-                  <td>{orderItem.note}</td>
-                  <td>{orderItem.price}</td>
-                  <td>{orderItem.priceNDT}</td>
+                  <td>{orderItem.itemId}</td>
+                  <td>{orderItem.itemImage}</td>
+                  <td>{orderItem.itemName}</td>
+                  <td>{orderItem.itemLink}</td>
+                  <td>{orderItem.itemPrice}</td>
+                  <td>{orderItem.itemPriceNDT}</td>
+                  <td>{orderItem.itemNote}</td>
                   <td>{orderItem.propertiesId}</td>
                   <td>{orderItem.propertiesImage}</td>
                   <td>{orderItem.propertiesMD5}</td>
                   <td>{orderItem.propertiesName}</td>
                   <td>{orderItem.propertiesType}</td>
-                  <td>{orderItem.quantityOrder}</td>
-                  <td>{orderItem.quantityPending}</td>
-                  <td>{orderItem.quantityReceived}</td>
-                  <td>{orderItem.totalPrice}</td>
-                  <td>{orderItem.totalPriceNDT}</td>
-                  <td>{orderItem.website}</td>
+                  <td>{orderItem.quantity}</td>
+                  <td>{orderItem.requireMin}</td>
+                  <td>{orderItem.totalAmount}</td>
+                  <td>{orderItem.totalAmountNDT}</td>
                   <td>
                     <TextFormat type="date" value={orderItem.createAt} format={APP_DATE_FORMAT} />
                   </td>

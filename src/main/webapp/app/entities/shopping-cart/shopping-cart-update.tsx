@@ -101,6 +101,12 @@ export class ShoppingCartUpdate extends React.Component<IShoppingCartUpdateProps
                   </AvGroup>
                 ) : null}
                 <AvGroup>
+                  <Label id="avatarLabel" for="avatar">
+                    <Translate contentKey="studentexchangeApp.shoppingCart.avatar">Avatar</Translate>
+                  </Label>
+                  <AvField id="shopping-cart-avatar" type="text" name="avatar" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="aliwangwangLabel" for="aliwangwang">
                     <Translate contentKey="studentexchangeApp.shoppingCart.aliwangwang">Aliwangwang</Translate>
                   </Label>
@@ -167,10 +173,10 @@ export class ShoppingCartUpdate extends React.Component<IShoppingCartUpdateProps
                   <AvField id="shopping-cart-shopNote" type="text" name="shopNote" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="sourceDataLabel" for="sourceData">
-                    <Translate contentKey="studentexchangeApp.shoppingCart.sourceData">Source Data</Translate>
+                  <Label id="websiteLabel" for="website">
+                    <Translate contentKey="studentexchangeApp.shoppingCart.website">Website</Translate>
                   </Label>
-                  <AvField id="shopping-cart-sourceData" type="text" name="sourceData" />
+                  <AvField id="shopping-cart-website" type="text" name="website" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="tallyFeeLabel" for="tallyFee">
@@ -185,12 +191,6 @@ export class ShoppingCartUpdate extends React.Component<IShoppingCartUpdateProps
                   <AvField id="shopping-cart-totalAmount" type="string" className="form-control" name="totalAmount" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="totalLinkLabel" for="totalLink">
-                    <Translate contentKey="studentexchangeApp.shoppingCart.totalLink">Total Link</Translate>
-                  </Label>
-                  <AvField id="shopping-cart-totalLink" type="string" className="form-control" name="totalLink" />
-                </AvGroup>
-                <AvGroup>
                   <Label id="totalQuantityLabel" for="totalQuantity">
                     <Translate contentKey="studentexchangeApp.shoppingCart.totalQuantity">Total Quantity</Translate>
                   </Label>
@@ -201,12 +201,6 @@ export class ShoppingCartUpdate extends React.Component<IShoppingCartUpdateProps
                     <Translate contentKey="studentexchangeApp.shoppingCart.finalAmount">Final Amount</Translate>
                   </Label>
                   <AvField id="shopping-cart-finalAmount" type="string" className="form-control" name="finalAmount" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="websiteLabel" for="website">
-                    <Translate contentKey="studentexchangeApp.shoppingCart.website">Website</Translate>
-                  </Label>
-                  <AvField id="shopping-cart-website" type="text" name="website" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="createAtLabel" for="createAt">

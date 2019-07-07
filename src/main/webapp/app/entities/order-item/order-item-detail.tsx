@@ -29,41 +29,47 @@ export class OrderItemDetail extends React.Component<IOrderItemDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="avatar">
-                <Translate contentKey="studentexchangeApp.orderItem.avatar">Avatar</Translate>
+              <span id="itemId">
+                <Translate contentKey="studentexchangeApp.orderItem.itemId">Item Id</Translate>
               </span>
             </dt>
-            <dd>{orderItemEntity.avatar}</dd>
+            <dd>{orderItemEntity.itemId}</dd>
             <dt>
-              <span id="originLink">
-                <Translate contentKey="studentexchangeApp.orderItem.originLink">Origin Link</Translate>
+              <span id="itemImage">
+                <Translate contentKey="studentexchangeApp.orderItem.itemImage">Item Image</Translate>
               </span>
             </dt>
-            <dd>{orderItemEntity.originLink}</dd>
+            <dd>{orderItemEntity.itemImage}</dd>
             <dt>
-              <span id="name">
-                <Translate contentKey="studentexchangeApp.orderItem.name">Name</Translate>
+              <span id="itemName">
+                <Translate contentKey="studentexchangeApp.orderItem.itemName">Item Name</Translate>
               </span>
             </dt>
-            <dd>{orderItemEntity.name}</dd>
+            <dd>{orderItemEntity.itemName}</dd>
             <dt>
-              <span id="note">
-                <Translate contentKey="studentexchangeApp.orderItem.note">Note</Translate>
+              <span id="itemLink">
+                <Translate contentKey="studentexchangeApp.orderItem.itemLink">Item Link</Translate>
               </span>
             </dt>
-            <dd>{orderItemEntity.note}</dd>
+            <dd>{orderItemEntity.itemLink}</dd>
             <dt>
-              <span id="price">
-                <Translate contentKey="studentexchangeApp.orderItem.price">Price</Translate>
+              <span id="itemPrice">
+                <Translate contentKey="studentexchangeApp.orderItem.itemPrice">Item Price</Translate>
               </span>
             </dt>
-            <dd>{orderItemEntity.price}</dd>
+            <dd>{orderItemEntity.itemPrice}</dd>
             <dt>
-              <span id="priceNDT">
-                <Translate contentKey="studentexchangeApp.orderItem.priceNDT">Price NDT</Translate>
+              <span id="itemPriceNDT">
+                <Translate contentKey="studentexchangeApp.orderItem.itemPriceNDT">Item Price NDT</Translate>
               </span>
             </dt>
-            <dd>{orderItemEntity.priceNDT}</dd>
+            <dd>{orderItemEntity.itemPriceNDT}</dd>
+            <dt>
+              <span id="itemNote">
+                <Translate contentKey="studentexchangeApp.orderItem.itemNote">Item Note</Translate>
+              </span>
+            </dt>
+            <dd>{orderItemEntity.itemNote}</dd>
             <dt>
               <span id="propertiesId">
                 <Translate contentKey="studentexchangeApp.orderItem.propertiesId">Properties Id</Translate>
@@ -95,41 +101,29 @@ export class OrderItemDetail extends React.Component<IOrderItemDetailProps> {
             </dt>
             <dd>{orderItemEntity.propertiesType}</dd>
             <dt>
-              <span id="quantityOrder">
-                <Translate contentKey="studentexchangeApp.orderItem.quantityOrder">Quantity Order</Translate>
+              <span id="quantity">
+                <Translate contentKey="studentexchangeApp.orderItem.quantity">Quantity</Translate>
               </span>
             </dt>
-            <dd>{orderItemEntity.quantityOrder}</dd>
+            <dd>{orderItemEntity.quantity}</dd>
             <dt>
-              <span id="quantityPending">
-                <Translate contentKey="studentexchangeApp.orderItem.quantityPending">Quantity Pending</Translate>
+              <span id="requireMin">
+                <Translate contentKey="studentexchangeApp.orderItem.requireMin">Require Min</Translate>
               </span>
             </dt>
-            <dd>{orderItemEntity.quantityPending}</dd>
+            <dd>{orderItemEntity.requireMin}</dd>
             <dt>
-              <span id="quantityReceived">
-                <Translate contentKey="studentexchangeApp.orderItem.quantityReceived">Quantity Received</Translate>
+              <span id="totalAmount">
+                <Translate contentKey="studentexchangeApp.orderItem.totalAmount">Total Amount</Translate>
               </span>
             </dt>
-            <dd>{orderItemEntity.quantityReceived}</dd>
+            <dd>{orderItemEntity.totalAmount}</dd>
             <dt>
-              <span id="totalPrice">
-                <Translate contentKey="studentexchangeApp.orderItem.totalPrice">Total Price</Translate>
+              <span id="totalAmountNDT">
+                <Translate contentKey="studentexchangeApp.orderItem.totalAmountNDT">Total Amount NDT</Translate>
               </span>
             </dt>
-            <dd>{orderItemEntity.totalPrice}</dd>
-            <dt>
-              <span id="totalPriceNDT">
-                <Translate contentKey="studentexchangeApp.orderItem.totalPriceNDT">Total Price NDT</Translate>
-              </span>
-            </dt>
-            <dd>{orderItemEntity.totalPriceNDT}</dd>
-            <dt>
-              <span id="website">
-                <Translate contentKey="studentexchangeApp.orderItem.website">Website</Translate>
-              </span>
-            </dt>
-            <dd>{orderItemEntity.website}</dd>
+            <dd>{orderItemEntity.totalAmountNDT}</dd>
             <dt>
               <span id="createAt">
                 <Translate contentKey="studentexchangeApp.orderItem.createAt">Create At</Translate>

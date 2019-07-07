@@ -29,6 +29,12 @@ export class ShoppingCartDetail extends React.Component<IShoppingCartDetailProps
           </h2>
           <dl className="jh-entity-details">
             <dt>
+              <span id="avatar">
+                <Translate contentKey="studentexchangeApp.shoppingCart.avatar">Avatar</Translate>
+              </span>
+            </dt>
+            <dd>{shoppingCartEntity.avatar}</dd>
+            <dt>
               <span id="aliwangwang">
                 <Translate contentKey="studentexchangeApp.shoppingCart.aliwangwang">Aliwangwang</Translate>
               </span>
@@ -95,11 +101,11 @@ export class ShoppingCartDetail extends React.Component<IShoppingCartDetailProps
             </dt>
             <dd>{shoppingCartEntity.shopNote}</dd>
             <dt>
-              <span id="sourceData">
-                <Translate contentKey="studentexchangeApp.shoppingCart.sourceData">Source Data</Translate>
+              <span id="website">
+                <Translate contentKey="studentexchangeApp.shoppingCart.website">Website</Translate>
               </span>
             </dt>
-            <dd>{shoppingCartEntity.sourceData}</dd>
+            <dd>{shoppingCartEntity.website}</dd>
             <dt>
               <span id="tallyFee">
                 <Translate contentKey="studentexchangeApp.shoppingCart.tallyFee">Tally Fee</Translate>
@@ -113,12 +119,6 @@ export class ShoppingCartDetail extends React.Component<IShoppingCartDetailProps
             </dt>
             <dd>{shoppingCartEntity.totalAmount}</dd>
             <dt>
-              <span id="totalLink">
-                <Translate contentKey="studentexchangeApp.shoppingCart.totalLink">Total Link</Translate>
-              </span>
-            </dt>
-            <dd>{shoppingCartEntity.totalLink}</dd>
-            <dt>
               <span id="totalQuantity">
                 <Translate contentKey="studentexchangeApp.shoppingCart.totalQuantity">Total Quantity</Translate>
               </span>
@@ -130,12 +130,6 @@ export class ShoppingCartDetail extends React.Component<IShoppingCartDetailProps
               </span>
             </dt>
             <dd>{shoppingCartEntity.finalAmount}</dd>
-            <dt>
-              <span id="website">
-                <Translate contentKey="studentexchangeApp.shoppingCart.website">Website</Translate>
-              </span>
-            </dt>
-            <dd>{shoppingCartEntity.website}</dd>
             <dt>
               <span id="createAt">
                 <Translate contentKey="studentexchangeApp.shoppingCart.createAt">Create At</Translate>

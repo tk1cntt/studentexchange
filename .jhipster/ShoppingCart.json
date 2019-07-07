@@ -2,6 +2,10 @@
     "name": "ShoppingCart",
     "fields": [
         {
+            "fieldName": "avatar",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "aliwangwang",
             "fieldType": "String"
         },
@@ -46,7 +50,7 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "sourceData",
+            "fieldName": "website",
             "fieldType": "String"
         },
         {
@@ -58,20 +62,12 @@
             "fieldType": "Float"
         },
         {
-            "fieldName": "totalLink",
-            "fieldType": "Integer"
-        },
-        {
             "fieldName": "totalQuantity",
             "fieldType": "Integer"
         },
         {
             "fieldName": "finalAmount",
             "fieldType": "Float"
-        },
-        {
-            "fieldName": "website",
-            "fieldType": "String"
         },
         {
             "fieldName": "createAt",

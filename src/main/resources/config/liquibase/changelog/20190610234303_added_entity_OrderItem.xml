@@ -22,27 +22,31 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="avatar" type="varchar(255)">
+            <column name="item_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="origin_link" type="varchar(255)">
+            <column name="item_image" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="name" type="varchar(255)">
+            <column name="item_name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="note" type="varchar(255)">
+            <column name="item_link" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="price" type="${floatType}">
+            <column name="item_price" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 
-            <column name="price_ndt" type="${floatType}">
+            <column name="item_price_ndt" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="item_note" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -66,27 +70,19 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="quantity_order" type="integer">
+            <column name="quantity" type="integer">
                 <constraints nullable="true" />
             </column>
 
-            <column name="quantity_pending" type="integer">
+            <column name="require_min" type="integer">
                 <constraints nullable="true" />
             </column>
 
-            <column name="quantity_received" type="integer">
+            <column name="total_amount" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 
-            <column name="total_price" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="total_price_ndt" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="website" type="varchar(255)">
+            <column name="total_amount_ndt" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 

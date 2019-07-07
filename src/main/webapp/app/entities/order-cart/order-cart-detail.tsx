@@ -41,6 +41,12 @@ export class OrderCartDetail extends React.Component<IOrderCartDetailProps> {
             </dt>
             <dd>{orderCartEntity.avatar}</dd>
             <dt>
+              <span id="aliwangwang">
+                <Translate contentKey="studentexchangeApp.orderCart.aliwangwang">Aliwangwang</Translate>
+              </span>
+            </dt>
+            <dd>{orderCartEntity.aliwangwang}</dd>
+            <dt>
               <span id="amountDiscount">
                 <Translate contentKey="studentexchangeApp.orderCart.amountDiscount">Amount Discount</Translate>
               </span>
@@ -177,11 +183,29 @@ export class OrderCartDetail extends React.Component<IOrderCartDetailProps> {
             </dt>
             <dd>{orderCartEntity.shippingChinaVietnamFeeDiscount}</dd>
             <dt>
-              <span id="shopAliwang">
-                <Translate contentKey="studentexchangeApp.orderCart.shopAliwang">Shop Aliwang</Translate>
+              <span id="serviceFee">
+                <Translate contentKey="studentexchangeApp.orderCart.serviceFee">Service Fee</Translate>
               </span>
             </dt>
-            <dd>{orderCartEntity.shopAliwang}</dd>
+            <dd>{orderCartEntity.serviceFee}</dd>
+            <dt>
+              <span id="serviceFeeDiscount">
+                <Translate contentKey="studentexchangeApp.orderCart.serviceFeeDiscount">Service Fee Discount</Translate>
+              </span>
+            </dt>
+            <dd>{orderCartEntity.serviceFeeDiscount}</dd>
+            <dt>
+              <span id="itemChecking">
+                <Translate contentKey="studentexchangeApp.orderCart.itemChecking">Item Checking</Translate>
+              </span>
+            </dt>
+            <dd>{orderCartEntity.itemChecking ? 'true' : 'false'}</dd>
+            <dt>
+              <span id="itemWoodCrating">
+                <Translate contentKey="studentexchangeApp.orderCart.itemWoodCrating">Item Wood Crating</Translate>
+              </span>
+            </dt>
+            <dd>{orderCartEntity.itemWoodCrating ? 'true' : 'false'}</dd>
             <dt>
               <span id="shopId">
                 <Translate contentKey="studentexchangeApp.orderCart.shopId">Shop Id</Translate>
@@ -201,23 +225,17 @@ export class OrderCartDetail extends React.Component<IOrderCartDetailProps> {
             </dt>
             <dd>{orderCartEntity.shopName}</dd>
             <dt>
+              <span id="shopNote">
+                <Translate contentKey="studentexchangeApp.orderCart.shopNote">Shop Note</Translate>
+              </span>
+            </dt>
+            <dd>{orderCartEntity.shopNote}</dd>
+            <dt>
               <span id="website">
                 <Translate contentKey="studentexchangeApp.orderCart.website">Website</Translate>
               </span>
             </dt>
             <dd>{orderCartEntity.website}</dd>
-            <dt>
-              <span id="websiteCode">
-                <Translate contentKey="studentexchangeApp.orderCart.websiteCode">Website Code</Translate>
-              </span>
-            </dt>
-            <dd>{orderCartEntity.websiteCode}</dd>
-            <dt>
-              <span id="websiteLadingCode">
-                <Translate contentKey="studentexchangeApp.orderCart.websiteLadingCode">Website Lading Code</Translate>
-              </span>
-            </dt>
-            <dd>{orderCartEntity.websiteLadingCode}</dd>
             <dt>
               <span id="status">
                 <Translate contentKey="studentexchangeApp.orderCart.status">Status</Translate>
@@ -261,23 +279,17 @@ export class OrderCartDetail extends React.Component<IOrderCartDetailProps> {
             </dt>
             <dd>{orderCartEntity.totalPaidByCustomer}</dd>
             <dt>
-              <span id="serviceFee">
-                <Translate contentKey="studentexchangeApp.orderCart.serviceFee">Service Fee</Translate>
-              </span>
-            </dt>
-            <dd>{orderCartEntity.serviceFee}</dd>
-            <dt>
-              <span id="serviceFeeDiscount">
-                <Translate contentKey="studentexchangeApp.orderCart.serviceFeeDiscount">Service Fee Discount</Translate>
-              </span>
-            </dt>
-            <dd>{orderCartEntity.serviceFeeDiscount}</dd>
-            <dt>
               <span id="totalServiceFee">
                 <Translate contentKey="studentexchangeApp.orderCart.totalServiceFee">Total Service Fee</Translate>
               </span>
             </dt>
             <dd>{orderCartEntity.totalServiceFee}</dd>
+            <dt>
+              <span id="totalQuantity">
+                <Translate contentKey="studentexchangeApp.orderCart.totalQuantity">Total Quantity</Translate>
+              </span>
+            </dt>
+            <dd>{orderCartEntity.totalQuantity}</dd>
             <dt>
               <span id="finalAmount">
                 <Translate contentKey="studentexchangeApp.orderCart.finalAmount">Final Amount</Translate>

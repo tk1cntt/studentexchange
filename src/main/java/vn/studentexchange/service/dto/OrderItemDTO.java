@@ -11,17 +11,19 @@ public class OrderItemDTO implements Serializable {
 
     private Long id;
 
-    private String avatar;
+    private String itemId;
 
-    private String originLink;
+    private String itemImage;
 
-    private String name;
+    private String itemName;
 
-    private String note;
+    private String itemLink;
 
-    private Float price;
+    private Float itemPrice;
 
-    private Float priceNDT;
+    private Float itemPriceNDT;
+
+    private String itemNote;
 
     private String propertiesId;
 
@@ -33,17 +35,13 @@ public class OrderItemDTO implements Serializable {
 
     private String propertiesType;
 
-    private Integer quantityOrder;
+    private Integer quantity;
 
-    private Integer quantityPending;
+    private Integer requireMin;
 
-    private Integer quantityReceived;
+    private Float totalAmount;
 
-    private Float totalPrice;
-
-    private Float totalPriceNDT;
-
-    private String website;
+    private Float totalAmountNDT;
 
     private Instant createAt;
 
@@ -67,52 +65,60 @@ public class OrderItemDTO implements Serializable {
         this.id = id;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getItemId() {
+        return itemId;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
-    public String getOriginLink() {
-        return originLink;
+    public String getItemImage() {
+        return itemImage;
     }
 
-    public void setOriginLink(String originLink) {
-        this.originLink = originLink;
+    public void setItemImage(String itemImage) {
+        this.itemImage = itemImage;
     }
 
-    public String getName() {
-        return name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public String getNote() {
-        return note;
+    public String getItemLink() {
+        return itemLink;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setItemLink(String itemLink) {
+        this.itemLink = itemLink;
     }
 
-    public Float getPrice() {
-        return price;
+    public Float getItemPrice() {
+        return itemPrice;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setItemPrice(Float itemPrice) {
+        this.itemPrice = itemPrice;
     }
 
-    public Float getPriceNDT() {
-        return priceNDT;
+    public Float getItemPriceNDT() {
+        return itemPriceNDT;
     }
 
-    public void setPriceNDT(Float priceNDT) {
-        this.priceNDT = priceNDT;
+    public void setItemPriceNDT(Float itemPriceNDT) {
+        this.itemPriceNDT = itemPriceNDT;
+    }
+
+    public String getItemNote() {
+        return itemNote;
+    }
+
+    public void setItemNote(String itemNote) {
+        this.itemNote = itemNote;
     }
 
     public String getPropertiesId() {
@@ -155,52 +161,36 @@ public class OrderItemDTO implements Serializable {
         this.propertiesType = propertiesType;
     }
 
-    public Integer getQuantityOrder() {
-        return quantityOrder;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setQuantityOrder(Integer quantityOrder) {
-        this.quantityOrder = quantityOrder;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
-    public Integer getQuantityPending() {
-        return quantityPending;
+    public Integer getRequireMin() {
+        return requireMin;
     }
 
-    public void setQuantityPending(Integer quantityPending) {
-        this.quantityPending = quantityPending;
+    public void setRequireMin(Integer requireMin) {
+        this.requireMin = requireMin;
     }
 
-    public Integer getQuantityReceived() {
-        return quantityReceived;
+    public Float getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setQuantityReceived(Integer quantityReceived) {
-        this.quantityReceived = quantityReceived;
+    public void setTotalAmount(Float totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public Float getTotalPrice() {
-        return totalPrice;
+    public Float getTotalAmountNDT() {
+        return totalAmountNDT;
     }
 
-    public void setTotalPrice(Float totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public Float getTotalPriceNDT() {
-        return totalPriceNDT;
-    }
-
-    public void setTotalPriceNDT(Float totalPriceNDT) {
-        this.totalPriceNDT = totalPriceNDT;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
+    public void setTotalAmountNDT(Float totalAmountNDT) {
+        this.totalAmountNDT = totalAmountNDT;
     }
 
     public Instant getCreateAt() {
@@ -284,23 +274,22 @@ public class OrderItemDTO implements Serializable {
     public String toString() {
         return "OrderItemDTO{" +
             "id=" + getId() +
-            ", avatar='" + getAvatar() + "'" +
-            ", originLink='" + getOriginLink() + "'" +
-            ", name='" + getName() + "'" +
-            ", note='" + getNote() + "'" +
-            ", price=" + getPrice() +
-            ", priceNDT=" + getPriceNDT() +
+            ", itemId='" + getItemId() + "'" +
+            ", itemImage='" + getItemImage() + "'" +
+            ", itemName='" + getItemName() + "'" +
+            ", itemLink='" + getItemLink() + "'" +
+            ", itemPrice=" + getItemPrice() +
+            ", itemPriceNDT=" + getItemPriceNDT() +
+            ", itemNote='" + getItemNote() + "'" +
             ", propertiesId='" + getPropertiesId() + "'" +
             ", propertiesImage='" + getPropertiesImage() + "'" +
             ", propertiesMD5='" + getPropertiesMD5() + "'" +
             ", propertiesName='" + getPropertiesName() + "'" +
             ", propertiesType='" + getPropertiesType() + "'" +
-            ", quantityOrder=" + getQuantityOrder() +
-            ", quantityPending=" + getQuantityPending() +
-            ", quantityReceived=" + getQuantityReceived() +
-            ", totalPrice=" + getTotalPrice() +
-            ", totalPriceNDT=" + getTotalPriceNDT() +
-            ", website='" + getWebsite() + "'" +
+            ", quantity=" + getQuantity() +
+            ", requireMin=" + getRequireMin() +
+            ", totalAmount=" + getTotalAmount() +
+            ", totalAmountNDT=" + getTotalAmountNDT() +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +
             ", orderCart=" + getOrderCartId() +

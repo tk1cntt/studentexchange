@@ -39,6 +39,9 @@ export class ShoppingCart extends React.Component<IShoppingCartProps> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="studentexchangeApp.shoppingCart.avatar">Avatar</Translate>
+                </th>
+                <th>
                   <Translate contentKey="studentexchangeApp.shoppingCart.aliwangwang">Aliwangwang</Translate>
                 </th>
                 <th>
@@ -72,7 +75,7 @@ export class ShoppingCart extends React.Component<IShoppingCartProps> {
                   <Translate contentKey="studentexchangeApp.shoppingCart.shopNote">Shop Note</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.shoppingCart.sourceData">Source Data</Translate>
+                  <Translate contentKey="studentexchangeApp.shoppingCart.website">Website</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.shoppingCart.tallyFee">Tally Fee</Translate>
@@ -81,16 +84,10 @@ export class ShoppingCart extends React.Component<IShoppingCartProps> {
                   <Translate contentKey="studentexchangeApp.shoppingCart.totalAmount">Total Amount</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.shoppingCart.totalLink">Total Link</Translate>
-                </th>
-                <th>
                   <Translate contentKey="studentexchangeApp.shoppingCart.totalQuantity">Total Quantity</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.shoppingCart.finalAmount">Final Amount</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.shoppingCart.website">Website</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.shoppingCart.createAt">Create At</Translate>
@@ -115,6 +112,7 @@ export class ShoppingCart extends React.Component<IShoppingCartProps> {
                       {shoppingCart.id}
                     </Button>
                   </td>
+                  <td>{shoppingCart.avatar}</td>
                   <td>{shoppingCart.aliwangwang}</td>
                   <td>{shoppingCart.depositAmount}</td>
                   <td>{shoppingCart.depositRatio}</td>
@@ -126,13 +124,11 @@ export class ShoppingCart extends React.Component<IShoppingCartProps> {
                   <td>{shoppingCart.shopLink}</td>
                   <td>{shoppingCart.shopName}</td>
                   <td>{shoppingCart.shopNote}</td>
-                  <td>{shoppingCart.sourceData}</td>
+                  <td>{shoppingCart.website}</td>
                   <td>{shoppingCart.tallyFee}</td>
                   <td>{shoppingCart.totalAmount}</td>
-                  <td>{shoppingCart.totalLink}</td>
                   <td>{shoppingCart.totalQuantity}</td>
                   <td>{shoppingCart.finalAmount}</td>
-                  <td>{shoppingCart.website}</td>
                   <td>
                     <TextFormat type="date" value={shoppingCart.createAt} format={APP_DATE_FORMAT} />
                   </td>

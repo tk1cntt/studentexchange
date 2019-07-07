@@ -24,6 +24,9 @@ public class ShoppingCart implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "avatar")
+    private String avatar;
+
     @Column(name = "aliwangwang")
     private String aliwangwang;
 
@@ -57,8 +60,8 @@ public class ShoppingCart implements Serializable {
     @Column(name = "shop_note")
     private String shopNote;
 
-    @Column(name = "source_data")
-    private String sourceData;
+    @Column(name = "website")
+    private String website;
 
     @Column(name = "tally_fee")
     private Float tallyFee;
@@ -66,17 +69,11 @@ public class ShoppingCart implements Serializable {
     @Column(name = "total_amount")
     private Float totalAmount;
 
-    @Column(name = "total_link")
-    private Integer totalLink;
-
     @Column(name = "total_quantity")
     private Integer totalQuantity;
 
     @Column(name = "final_amount")
     private Float finalAmount;
-
-    @Column(name = "website")
-    private String website;
 
     @Column(name = "create_at")
     private Instant createAt;
@@ -101,6 +98,19 @@ public class ShoppingCart implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public ShoppingCart avatar(String avatar) {
+        this.avatar = avatar;
+        return this;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getAliwangwang() {
@@ -246,17 +256,17 @@ public class ShoppingCart implements Serializable {
         this.shopNote = shopNote;
     }
 
-    public String getSourceData() {
-        return sourceData;
+    public String getWebsite() {
+        return website;
     }
 
-    public ShoppingCart sourceData(String sourceData) {
-        this.sourceData = sourceData;
+    public ShoppingCart website(String website) {
+        this.website = website;
         return this;
     }
 
-    public void setSourceData(String sourceData) {
-        this.sourceData = sourceData;
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     public Float getTallyFee() {
@@ -285,19 +295,6 @@ public class ShoppingCart implements Serializable {
         this.totalAmount = totalAmount;
     }
 
-    public Integer getTotalLink() {
-        return totalLink;
-    }
-
-    public ShoppingCart totalLink(Integer totalLink) {
-        this.totalLink = totalLink;
-        return this;
-    }
-
-    public void setTotalLink(Integer totalLink) {
-        this.totalLink = totalLink;
-    }
-
     public Integer getTotalQuantity() {
         return totalQuantity;
     }
@@ -322,19 +319,6 @@ public class ShoppingCart implements Serializable {
 
     public void setFinalAmount(Float finalAmount) {
         this.finalAmount = finalAmount;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public ShoppingCart website(String website) {
-        this.website = website;
-        return this;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
     }
 
     public Instant getCreateAt() {
@@ -439,6 +423,7 @@ public class ShoppingCart implements Serializable {
     public String toString() {
         return "ShoppingCart{" +
             "id=" + getId() +
+            ", avatar='" + getAvatar() + "'" +
             ", aliwangwang='" + getAliwangwang() + "'" +
             ", depositAmount=" + getDepositAmount() +
             ", depositRatio=" + getDepositRatio() +
@@ -450,13 +435,11 @@ public class ShoppingCart implements Serializable {
             ", shopLink='" + getShopLink() + "'" +
             ", shopName='" + getShopName() + "'" +
             ", shopNote='" + getShopNote() + "'" +
-            ", sourceData='" + getSourceData() + "'" +
+            ", website='" + getWebsite() + "'" +
             ", tallyFee=" + getTallyFee() +
             ", totalAmount=" + getTotalAmount() +
-            ", totalLink=" + getTotalLink() +
             ", totalQuantity=" + getTotalQuantity() +
             ", finalAmount=" + getFinalAmount() +
-            ", website='" + getWebsite() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +
             "}";

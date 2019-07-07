@@ -16,6 +16,8 @@ public class OrderCartDTO implements Serializable {
 
     private String avatar;
 
+    private String aliwangwang;
+
     private Float amountDiscount;
 
     private Float amountPaid;
@@ -38,7 +40,7 @@ public class OrderCartDTO implements Serializable {
 
     private Integer quantityReceived;
 
-    private Integer rate;
+    private Float rate;
 
     private String receiverName;
 
@@ -60,7 +62,13 @@ public class OrderCartDTO implements Serializable {
 
     private Float shippingChinaVietnamFeeDiscount;
 
-    private String shopAliwang;
+    private Float serviceFee;
+
+    private Float serviceFeeDiscount;
+
+    private Boolean itemChecking;
+
+    private Boolean itemWoodCrating;
 
     private String shopId;
 
@@ -68,11 +76,9 @@ public class OrderCartDTO implements Serializable {
 
     private String shopName;
 
+    private String shopNote;
+
     private String website;
-
-    private String websiteCode;
-
-    private String websiteLadingCode;
 
     private OrderStatus status;
 
@@ -80,7 +86,7 @@ public class OrderCartDTO implements Serializable {
 
     private String statusStyle;
 
-    private Integer tallyFee;
+    private Float tallyFee;
 
     private Float totalAmount;
 
@@ -88,11 +94,9 @@ public class OrderCartDTO implements Serializable {
 
     private Float totalPaidByCustomer;
 
-    private Float serviceFee;
-
-    private Float serviceFeeDiscount;
-
     private Float totalServiceFee;
+
+    private Integer totalQuantity;
 
     private Float finalAmount;
 
@@ -154,6 +158,14 @@ public class OrderCartDTO implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getAliwangwang() {
+        return aliwangwang;
+    }
+
+    public void setAliwangwang(String aliwangwang) {
+        this.aliwangwang = aliwangwang;
     }
 
     public Float getAmountDiscount() {
@@ -244,11 +256,11 @@ public class OrderCartDTO implements Serializable {
         this.quantityReceived = quantityReceived;
     }
 
-    public Integer getRate() {
+    public Float getRate() {
         return rate;
     }
 
-    public void setRate(Integer rate) {
+    public void setRate(Float rate) {
         this.rate = rate;
     }
 
@@ -332,12 +344,36 @@ public class OrderCartDTO implements Serializable {
         this.shippingChinaVietnamFeeDiscount = shippingChinaVietnamFeeDiscount;
     }
 
-    public String getShopAliwang() {
-        return shopAliwang;
+    public Float getServiceFee() {
+        return serviceFee;
     }
 
-    public void setShopAliwang(String shopAliwang) {
-        this.shopAliwang = shopAliwang;
+    public void setServiceFee(Float serviceFee) {
+        this.serviceFee = serviceFee;
+    }
+
+    public Float getServiceFeeDiscount() {
+        return serviceFeeDiscount;
+    }
+
+    public void setServiceFeeDiscount(Float serviceFeeDiscount) {
+        this.serviceFeeDiscount = serviceFeeDiscount;
+    }
+
+    public Boolean isItemChecking() {
+        return itemChecking;
+    }
+
+    public void setItemChecking(Boolean itemChecking) {
+        this.itemChecking = itemChecking;
+    }
+
+    public Boolean isItemWoodCrating() {
+        return itemWoodCrating;
+    }
+
+    public void setItemWoodCrating(Boolean itemWoodCrating) {
+        this.itemWoodCrating = itemWoodCrating;
     }
 
     public String getShopId() {
@@ -364,28 +400,20 @@ public class OrderCartDTO implements Serializable {
         this.shopName = shopName;
     }
 
+    public String getShopNote() {
+        return shopNote;
+    }
+
+    public void setShopNote(String shopNote) {
+        this.shopNote = shopNote;
+    }
+
     public String getWebsite() {
         return website;
     }
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public String getWebsiteCode() {
-        return websiteCode;
-    }
-
-    public void setWebsiteCode(String websiteCode) {
-        this.websiteCode = websiteCode;
-    }
-
-    public String getWebsiteLadingCode() {
-        return websiteLadingCode;
-    }
-
-    public void setWebsiteLadingCode(String websiteLadingCode) {
-        this.websiteLadingCode = websiteLadingCode;
     }
 
     public OrderStatus getStatus() {
@@ -412,11 +440,11 @@ public class OrderCartDTO implements Serializable {
         this.statusStyle = statusStyle;
     }
 
-    public Integer getTallyFee() {
+    public Float getTallyFee() {
         return tallyFee;
     }
 
-    public void setTallyFee(Integer tallyFee) {
+    public void setTallyFee(Float tallyFee) {
         this.tallyFee = tallyFee;
     }
 
@@ -444,28 +472,20 @@ public class OrderCartDTO implements Serializable {
         this.totalPaidByCustomer = totalPaidByCustomer;
     }
 
-    public Float getServiceFee() {
-        return serviceFee;
-    }
-
-    public void setServiceFee(Float serviceFee) {
-        this.serviceFee = serviceFee;
-    }
-
-    public Float getServiceFeeDiscount() {
-        return serviceFeeDiscount;
-    }
-
-    public void setServiceFeeDiscount(Float serviceFeeDiscount) {
-        this.serviceFeeDiscount = serviceFeeDiscount;
-    }
-
     public Float getTotalServiceFee() {
         return totalServiceFee;
     }
 
     public void setTotalServiceFee(Float totalServiceFee) {
         this.totalServiceFee = totalServiceFee;
+    }
+
+    public Integer getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(Integer totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 
     public Float getFinalAmount() {
@@ -647,6 +667,7 @@ public class OrderCartDTO implements Serializable {
             "id=" + getId() +
             ", code=" + getCode() +
             ", avatar='" + getAvatar() + "'" +
+            ", aliwangwang='" + getAliwangwang() + "'" +
             ", amountDiscount=" + getAmountDiscount() +
             ", amountPaid=" + getAmountPaid() +
             ", depositAmount=" + getDepositAmount() +
@@ -669,13 +690,15 @@ public class OrderCartDTO implements Serializable {
             ", refundAmountPending=" + getRefundAmountPending() +
             ", shippingChinaVietnamFee=" + getShippingChinaVietnamFee() +
             ", shippingChinaVietnamFeeDiscount=" + getShippingChinaVietnamFeeDiscount() +
-            ", shopAliwang='" + getShopAliwang() + "'" +
+            ", serviceFee=" + getServiceFee() +
+            ", serviceFeeDiscount=" + getServiceFeeDiscount() +
+            ", itemChecking='" + isItemChecking() + "'" +
+            ", itemWoodCrating='" + isItemWoodCrating() + "'" +
             ", shopId='" + getShopId() + "'" +
             ", shopLink='" + getShopLink() + "'" +
             ", shopName='" + getShopName() + "'" +
+            ", shopNote='" + getShopNote() + "'" +
             ", website='" + getWebsite() + "'" +
-            ", websiteCode='" + getWebsiteCode() + "'" +
-            ", websiteLadingCode='" + getWebsiteLadingCode() + "'" +
             ", status='" + getStatus() + "'" +
             ", statusName='" + getStatusName() + "'" +
             ", statusStyle='" + getStatusStyle() + "'" +
@@ -683,9 +706,8 @@ public class OrderCartDTO implements Serializable {
             ", totalAmount=" + getTotalAmount() +
             ", totalAmountNDT=" + getTotalAmountNDT() +
             ", totalPaidByCustomer=" + getTotalPaidByCustomer() +
-            ", serviceFee=" + getServiceFee() +
-            ", serviceFeeDiscount=" + getServiceFeeDiscount() +
             ", totalServiceFee=" + getTotalServiceFee() +
+            ", totalQuantity=" + getTotalQuantity() +
             ", finalAmount=" + getFinalAmount() +
             ", orderName='" + getOrderName() + "'" +
             ", orderAddress='" + getOrderAddress() + "'" +

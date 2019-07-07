@@ -2,28 +2,32 @@
     "name": "OrderItem",
     "fields": [
         {
-            "fieldName": "avatar",
+            "fieldName": "itemId",
             "fieldType": "String"
         },
         {
-            "fieldName": "originLink",
+            "fieldName": "itemImage",
             "fieldType": "String"
         },
         {
-            "fieldName": "name",
+            "fieldName": "itemName",
             "fieldType": "String"
         },
         {
-            "fieldName": "note",
+            "fieldName": "itemLink",
             "fieldType": "String"
         },
         {
-            "fieldName": "price",
+            "fieldName": "itemPrice",
             "fieldType": "Float"
         },
         {
-            "fieldName": "priceNDT",
+            "fieldName": "itemPriceNDT",
             "fieldType": "Float"
+        },
+        {
+            "fieldName": "itemNote",
+            "fieldType": "String"
         },
         {
             "fieldName": "propertiesId",
@@ -46,28 +50,20 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "quantityOrder",
+            "fieldName": "quantity",
             "fieldType": "Integer"
         },
         {
-            "fieldName": "quantityPending",
+            "fieldName": "requireMin",
             "fieldType": "Integer"
         },
         {
-            "fieldName": "quantityReceived",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "totalPrice",
+            "fieldName": "totalAmount",
             "fieldType": "Float"
         },
         {
-            "fieldName": "totalPriceNDT",
+            "fieldName": "totalAmountNDT",
             "fieldType": "Float"
-        },
-        {
-            "fieldName": "website",
-            "fieldType": "String"
         },
         {
             "fieldName": "createAt",

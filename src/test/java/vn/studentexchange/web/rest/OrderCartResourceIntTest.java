@@ -51,6 +51,9 @@ public class OrderCartResourceIntTest {
     private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
     private static final String UPDATED_AVATAR = "BBBBBBBBBB";
 
+    private static final String DEFAULT_ALIWANGWANG = "AAAAAAAAAA";
+    private static final String UPDATED_ALIWANGWANG = "BBBBBBBBBB";
+
     private static final Float DEFAULT_AMOUNT_DISCOUNT = 1F;
     private static final Float UPDATED_AMOUNT_DISCOUNT = 2F;
 
@@ -84,8 +87,8 @@ public class OrderCartResourceIntTest {
     private static final Integer DEFAULT_QUANTITY_RECEIVED = 1;
     private static final Integer UPDATED_QUANTITY_RECEIVED = 2;
 
-    private static final Integer DEFAULT_RATE = 1;
-    private static final Integer UPDATED_RATE = 2;
+    private static final Float DEFAULT_RATE = 1F;
+    private static final Float UPDATED_RATE = 2F;
 
     private static final String DEFAULT_RECEIVER_NAME = "AAAAAAAAAA";
     private static final String UPDATED_RECEIVER_NAME = "BBBBBBBBBB";
@@ -117,8 +120,17 @@ public class OrderCartResourceIntTest {
     private static final Float DEFAULT_SHIPPING_CHINA_VIETNAM_FEE_DISCOUNT = 1F;
     private static final Float UPDATED_SHIPPING_CHINA_VIETNAM_FEE_DISCOUNT = 2F;
 
-    private static final String DEFAULT_SHOP_ALIWANG = "AAAAAAAAAA";
-    private static final String UPDATED_SHOP_ALIWANG = "BBBBBBBBBB";
+    private static final Float DEFAULT_SERVICE_FEE = 1F;
+    private static final Float UPDATED_SERVICE_FEE = 2F;
+
+    private static final Float DEFAULT_SERVICE_FEE_DISCOUNT = 1F;
+    private static final Float UPDATED_SERVICE_FEE_DISCOUNT = 2F;
+
+    private static final Boolean DEFAULT_ITEM_CHECKING = false;
+    private static final Boolean UPDATED_ITEM_CHECKING = true;
+
+    private static final Boolean DEFAULT_ITEM_WOOD_CRATING = false;
+    private static final Boolean UPDATED_ITEM_WOOD_CRATING = true;
 
     private static final String DEFAULT_SHOP_ID = "AAAAAAAAAA";
     private static final String UPDATED_SHOP_ID = "BBBBBBBBBB";
@@ -129,14 +141,11 @@ public class OrderCartResourceIntTest {
     private static final String DEFAULT_SHOP_NAME = "AAAAAAAAAA";
     private static final String UPDATED_SHOP_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_SHOP_NOTE = "AAAAAAAAAA";
+    private static final String UPDATED_SHOP_NOTE = "BBBBBBBBBB";
+
     private static final String DEFAULT_WEBSITE = "AAAAAAAAAA";
     private static final String UPDATED_WEBSITE = "BBBBBBBBBB";
-
-    private static final String DEFAULT_WEBSITE_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_WEBSITE_CODE = "BBBBBBBBBB";
-
-    private static final String DEFAULT_WEBSITE_LADING_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_WEBSITE_LADING_CODE = "BBBBBBBBBB";
 
     private static final OrderStatus DEFAULT_STATUS = OrderStatus.DEPOSITED;
     private static final OrderStatus UPDATED_STATUS = OrderStatus.ARE_BUYING;
@@ -147,8 +156,8 @@ public class OrderCartResourceIntTest {
     private static final String DEFAULT_STATUS_STYLE = "AAAAAAAAAA";
     private static final String UPDATED_STATUS_STYLE = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_TALLY_FEE = 1;
-    private static final Integer UPDATED_TALLY_FEE = 2;
+    private static final Float DEFAULT_TALLY_FEE = 1F;
+    private static final Float UPDATED_TALLY_FEE = 2F;
 
     private static final Float DEFAULT_TOTAL_AMOUNT = 1F;
     private static final Float UPDATED_TOTAL_AMOUNT = 2F;
@@ -159,14 +168,11 @@ public class OrderCartResourceIntTest {
     private static final Float DEFAULT_TOTAL_PAID_BY_CUSTOMER = 1F;
     private static final Float UPDATED_TOTAL_PAID_BY_CUSTOMER = 2F;
 
-    private static final Float DEFAULT_SERVICE_FEE = 1F;
-    private static final Float UPDATED_SERVICE_FEE = 2F;
-
-    private static final Float DEFAULT_SERVICE_FEE_DISCOUNT = 1F;
-    private static final Float UPDATED_SERVICE_FEE_DISCOUNT = 2F;
-
     private static final Float DEFAULT_TOTAL_SERVICE_FEE = 1F;
     private static final Float UPDATED_TOTAL_SERVICE_FEE = 2F;
+
+    private static final Integer DEFAULT_TOTAL_QUANTITY = 1;
+    private static final Integer UPDATED_TOTAL_QUANTITY = 2;
 
     private static final Float DEFAULT_FINAL_AMOUNT = 1F;
     private static final Float UPDATED_FINAL_AMOUNT = 2F;
@@ -235,6 +241,7 @@ public class OrderCartResourceIntTest {
         OrderCart orderCart = new OrderCart()
             .code(DEFAULT_CODE)
             .avatar(DEFAULT_AVATAR)
+            .aliwangwang(DEFAULT_ALIWANGWANG)
             .amountDiscount(DEFAULT_AMOUNT_DISCOUNT)
             .amountPaid(DEFAULT_AMOUNT_PAID)
             .depositAmount(DEFAULT_DEPOSIT_AMOUNT)
@@ -257,13 +264,15 @@ public class OrderCartResourceIntTest {
             .refundAmountPending(DEFAULT_REFUND_AMOUNT_PENDING)
             .shippingChinaVietnamFee(DEFAULT_SHIPPING_CHINA_VIETNAM_FEE)
             .shippingChinaVietnamFeeDiscount(DEFAULT_SHIPPING_CHINA_VIETNAM_FEE_DISCOUNT)
-            .shopAliwang(DEFAULT_SHOP_ALIWANG)
+            .serviceFee(DEFAULT_SERVICE_FEE)
+            .serviceFeeDiscount(DEFAULT_SERVICE_FEE_DISCOUNT)
+            .itemChecking(DEFAULT_ITEM_CHECKING)
+            .itemWoodCrating(DEFAULT_ITEM_WOOD_CRATING)
             .shopId(DEFAULT_SHOP_ID)
             .shopLink(DEFAULT_SHOP_LINK)
             .shopName(DEFAULT_SHOP_NAME)
+            .shopNote(DEFAULT_SHOP_NOTE)
             .website(DEFAULT_WEBSITE)
-            .websiteCode(DEFAULT_WEBSITE_CODE)
-            .websiteLadingCode(DEFAULT_WEBSITE_LADING_CODE)
             .status(DEFAULT_STATUS)
             .statusName(DEFAULT_STATUS_NAME)
             .statusStyle(DEFAULT_STATUS_STYLE)
@@ -271,9 +280,8 @@ public class OrderCartResourceIntTest {
             .totalAmount(DEFAULT_TOTAL_AMOUNT)
             .totalAmountNDT(DEFAULT_TOTAL_AMOUNT_NDT)
             .totalPaidByCustomer(DEFAULT_TOTAL_PAID_BY_CUSTOMER)
-            .serviceFee(DEFAULT_SERVICE_FEE)
-            .serviceFeeDiscount(DEFAULT_SERVICE_FEE_DISCOUNT)
             .totalServiceFee(DEFAULT_TOTAL_SERVICE_FEE)
+            .totalQuantity(DEFAULT_TOTAL_QUANTITY)
             .finalAmount(DEFAULT_FINAL_AMOUNT)
             .orderName(DEFAULT_ORDER_NAME)
             .orderAddress(DEFAULT_ORDER_ADDRESS)
@@ -307,6 +315,7 @@ public class OrderCartResourceIntTest {
         OrderCart testOrderCart = orderCartList.get(orderCartList.size() - 1);
         assertThat(testOrderCart.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testOrderCart.getAvatar()).isEqualTo(DEFAULT_AVATAR);
+        assertThat(testOrderCart.getAliwangwang()).isEqualTo(DEFAULT_ALIWANGWANG);
         assertThat(testOrderCart.getAmountDiscount()).isEqualTo(DEFAULT_AMOUNT_DISCOUNT);
         assertThat(testOrderCart.getAmountPaid()).isEqualTo(DEFAULT_AMOUNT_PAID);
         assertThat(testOrderCart.getDepositAmount()).isEqualTo(DEFAULT_DEPOSIT_AMOUNT);
@@ -329,13 +338,15 @@ public class OrderCartResourceIntTest {
         assertThat(testOrderCart.getRefundAmountPending()).isEqualTo(DEFAULT_REFUND_AMOUNT_PENDING);
         assertThat(testOrderCart.getShippingChinaVietnamFee()).isEqualTo(DEFAULT_SHIPPING_CHINA_VIETNAM_FEE);
         assertThat(testOrderCart.getShippingChinaVietnamFeeDiscount()).isEqualTo(DEFAULT_SHIPPING_CHINA_VIETNAM_FEE_DISCOUNT);
-        assertThat(testOrderCart.getShopAliwang()).isEqualTo(DEFAULT_SHOP_ALIWANG);
+        assertThat(testOrderCart.getServiceFee()).isEqualTo(DEFAULT_SERVICE_FEE);
+        assertThat(testOrderCart.getServiceFeeDiscount()).isEqualTo(DEFAULT_SERVICE_FEE_DISCOUNT);
+        assertThat(testOrderCart.isItemChecking()).isEqualTo(DEFAULT_ITEM_CHECKING);
+        assertThat(testOrderCart.isItemWoodCrating()).isEqualTo(DEFAULT_ITEM_WOOD_CRATING);
         assertThat(testOrderCart.getShopId()).isEqualTo(DEFAULT_SHOP_ID);
         assertThat(testOrderCart.getShopLink()).isEqualTo(DEFAULT_SHOP_LINK);
         assertThat(testOrderCart.getShopName()).isEqualTo(DEFAULT_SHOP_NAME);
+        assertThat(testOrderCart.getShopNote()).isEqualTo(DEFAULT_SHOP_NOTE);
         assertThat(testOrderCart.getWebsite()).isEqualTo(DEFAULT_WEBSITE);
-        assertThat(testOrderCart.getWebsiteCode()).isEqualTo(DEFAULT_WEBSITE_CODE);
-        assertThat(testOrderCart.getWebsiteLadingCode()).isEqualTo(DEFAULT_WEBSITE_LADING_CODE);
         assertThat(testOrderCart.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testOrderCart.getStatusName()).isEqualTo(DEFAULT_STATUS_NAME);
         assertThat(testOrderCart.getStatusStyle()).isEqualTo(DEFAULT_STATUS_STYLE);
@@ -343,9 +354,8 @@ public class OrderCartResourceIntTest {
         assertThat(testOrderCart.getTotalAmount()).isEqualTo(DEFAULT_TOTAL_AMOUNT);
         assertThat(testOrderCart.getTotalAmountNDT()).isEqualTo(DEFAULT_TOTAL_AMOUNT_NDT);
         assertThat(testOrderCart.getTotalPaidByCustomer()).isEqualTo(DEFAULT_TOTAL_PAID_BY_CUSTOMER);
-        assertThat(testOrderCart.getServiceFee()).isEqualTo(DEFAULT_SERVICE_FEE);
-        assertThat(testOrderCart.getServiceFeeDiscount()).isEqualTo(DEFAULT_SERVICE_FEE_DISCOUNT);
         assertThat(testOrderCart.getTotalServiceFee()).isEqualTo(DEFAULT_TOTAL_SERVICE_FEE);
+        assertThat(testOrderCart.getTotalQuantity()).isEqualTo(DEFAULT_TOTAL_QUANTITY);
         assertThat(testOrderCart.getFinalAmount()).isEqualTo(DEFAULT_FINAL_AMOUNT);
         assertThat(testOrderCart.getOrderName()).isEqualTo(DEFAULT_ORDER_NAME);
         assertThat(testOrderCart.getOrderAddress()).isEqualTo(DEFAULT_ORDER_ADDRESS);
@@ -388,6 +398,7 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(orderCart.getId().intValue())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.intValue())))
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
+            .andExpect(jsonPath("$.[*].aliwangwang").value(hasItem(DEFAULT_ALIWANGWANG.toString())))
             .andExpect(jsonPath("$.[*].amountDiscount").value(hasItem(DEFAULT_AMOUNT_DISCOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].amountPaid").value(hasItem(DEFAULT_AMOUNT_PAID.doubleValue())))
             .andExpect(jsonPath("$.[*].depositAmount").value(hasItem(DEFAULT_DEPOSIT_AMOUNT.doubleValue())))
@@ -399,7 +410,7 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.[*].quantityOrder").value(hasItem(DEFAULT_QUANTITY_ORDER)))
             .andExpect(jsonPath("$.[*].quantityPending").value(hasItem(DEFAULT_QUANTITY_PENDING)))
             .andExpect(jsonPath("$.[*].quantityReceived").value(hasItem(DEFAULT_QUANTITY_RECEIVED)))
-            .andExpect(jsonPath("$.[*].rate").value(hasItem(DEFAULT_RATE)))
+            .andExpect(jsonPath("$.[*].rate").value(hasItem(DEFAULT_RATE.doubleValue())))
             .andExpect(jsonPath("$.[*].receiverName").value(hasItem(DEFAULT_RECEIVER_NAME.toString())))
             .andExpect(jsonPath("$.[*].receiverAddress").value(hasItem(DEFAULT_RECEIVER_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].receiverMobile").value(hasItem(DEFAULT_RECEIVER_MOBILE.toString())))
@@ -410,23 +421,24 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.[*].refundAmountPending").value(hasItem(DEFAULT_REFUND_AMOUNT_PENDING.doubleValue())))
             .andExpect(jsonPath("$.[*].shippingChinaVietnamFee").value(hasItem(DEFAULT_SHIPPING_CHINA_VIETNAM_FEE.doubleValue())))
             .andExpect(jsonPath("$.[*].shippingChinaVietnamFeeDiscount").value(hasItem(DEFAULT_SHIPPING_CHINA_VIETNAM_FEE_DISCOUNT.doubleValue())))
-            .andExpect(jsonPath("$.[*].shopAliwang").value(hasItem(DEFAULT_SHOP_ALIWANG.toString())))
+            .andExpect(jsonPath("$.[*].serviceFee").value(hasItem(DEFAULT_SERVICE_FEE.doubleValue())))
+            .andExpect(jsonPath("$.[*].serviceFeeDiscount").value(hasItem(DEFAULT_SERVICE_FEE_DISCOUNT.doubleValue())))
+            .andExpect(jsonPath("$.[*].itemChecking").value(hasItem(DEFAULT_ITEM_CHECKING.booleanValue())))
+            .andExpect(jsonPath("$.[*].itemWoodCrating").value(hasItem(DEFAULT_ITEM_WOOD_CRATING.booleanValue())))
             .andExpect(jsonPath("$.[*].shopId").value(hasItem(DEFAULT_SHOP_ID.toString())))
             .andExpect(jsonPath("$.[*].shopLink").value(hasItem(DEFAULT_SHOP_LINK.toString())))
             .andExpect(jsonPath("$.[*].shopName").value(hasItem(DEFAULT_SHOP_NAME.toString())))
+            .andExpect(jsonPath("$.[*].shopNote").value(hasItem(DEFAULT_SHOP_NOTE.toString())))
             .andExpect(jsonPath("$.[*].website").value(hasItem(DEFAULT_WEBSITE.toString())))
-            .andExpect(jsonPath("$.[*].websiteCode").value(hasItem(DEFAULT_WEBSITE_CODE.toString())))
-            .andExpect(jsonPath("$.[*].websiteLadingCode").value(hasItem(DEFAULT_WEBSITE_LADING_CODE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].statusName").value(hasItem(DEFAULT_STATUS_NAME.toString())))
             .andExpect(jsonPath("$.[*].statusStyle").value(hasItem(DEFAULT_STATUS_STYLE.toString())))
-            .andExpect(jsonPath("$.[*].tallyFee").value(hasItem(DEFAULT_TALLY_FEE)))
+            .andExpect(jsonPath("$.[*].tallyFee").value(hasItem(DEFAULT_TALLY_FEE.doubleValue())))
             .andExpect(jsonPath("$.[*].totalAmount").value(hasItem(DEFAULT_TOTAL_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].totalAmountNDT").value(hasItem(DEFAULT_TOTAL_AMOUNT_NDT.doubleValue())))
             .andExpect(jsonPath("$.[*].totalPaidByCustomer").value(hasItem(DEFAULT_TOTAL_PAID_BY_CUSTOMER.doubleValue())))
-            .andExpect(jsonPath("$.[*].serviceFee").value(hasItem(DEFAULT_SERVICE_FEE.doubleValue())))
-            .andExpect(jsonPath("$.[*].serviceFeeDiscount").value(hasItem(DEFAULT_SERVICE_FEE_DISCOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].totalServiceFee").value(hasItem(DEFAULT_TOTAL_SERVICE_FEE.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalQuantity").value(hasItem(DEFAULT_TOTAL_QUANTITY)))
             .andExpect(jsonPath("$.[*].finalAmount").value(hasItem(DEFAULT_FINAL_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].orderName").value(hasItem(DEFAULT_ORDER_NAME.toString())))
             .andExpect(jsonPath("$.[*].orderAddress").value(hasItem(DEFAULT_ORDER_ADDRESS.toString())))
@@ -449,6 +461,7 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.id").value(orderCart.getId().intValue()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.intValue()))
             .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()))
+            .andExpect(jsonPath("$.aliwangwang").value(DEFAULT_ALIWANGWANG.toString()))
             .andExpect(jsonPath("$.amountDiscount").value(DEFAULT_AMOUNT_DISCOUNT.doubleValue()))
             .andExpect(jsonPath("$.amountPaid").value(DEFAULT_AMOUNT_PAID.doubleValue()))
             .andExpect(jsonPath("$.depositAmount").value(DEFAULT_DEPOSIT_AMOUNT.doubleValue()))
@@ -460,7 +473,7 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.quantityOrder").value(DEFAULT_QUANTITY_ORDER))
             .andExpect(jsonPath("$.quantityPending").value(DEFAULT_QUANTITY_PENDING))
             .andExpect(jsonPath("$.quantityReceived").value(DEFAULT_QUANTITY_RECEIVED))
-            .andExpect(jsonPath("$.rate").value(DEFAULT_RATE))
+            .andExpect(jsonPath("$.rate").value(DEFAULT_RATE.doubleValue()))
             .andExpect(jsonPath("$.receiverName").value(DEFAULT_RECEIVER_NAME.toString()))
             .andExpect(jsonPath("$.receiverAddress").value(DEFAULT_RECEIVER_ADDRESS.toString()))
             .andExpect(jsonPath("$.receiverMobile").value(DEFAULT_RECEIVER_MOBILE.toString()))
@@ -471,23 +484,24 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.refundAmountPending").value(DEFAULT_REFUND_AMOUNT_PENDING.doubleValue()))
             .andExpect(jsonPath("$.shippingChinaVietnamFee").value(DEFAULT_SHIPPING_CHINA_VIETNAM_FEE.doubleValue()))
             .andExpect(jsonPath("$.shippingChinaVietnamFeeDiscount").value(DEFAULT_SHIPPING_CHINA_VIETNAM_FEE_DISCOUNT.doubleValue()))
-            .andExpect(jsonPath("$.shopAliwang").value(DEFAULT_SHOP_ALIWANG.toString()))
+            .andExpect(jsonPath("$.serviceFee").value(DEFAULT_SERVICE_FEE.doubleValue()))
+            .andExpect(jsonPath("$.serviceFeeDiscount").value(DEFAULT_SERVICE_FEE_DISCOUNT.doubleValue()))
+            .andExpect(jsonPath("$.itemChecking").value(DEFAULT_ITEM_CHECKING.booleanValue()))
+            .andExpect(jsonPath("$.itemWoodCrating").value(DEFAULT_ITEM_WOOD_CRATING.booleanValue()))
             .andExpect(jsonPath("$.shopId").value(DEFAULT_SHOP_ID.toString()))
             .andExpect(jsonPath("$.shopLink").value(DEFAULT_SHOP_LINK.toString()))
             .andExpect(jsonPath("$.shopName").value(DEFAULT_SHOP_NAME.toString()))
+            .andExpect(jsonPath("$.shopNote").value(DEFAULT_SHOP_NOTE.toString()))
             .andExpect(jsonPath("$.website").value(DEFAULT_WEBSITE.toString()))
-            .andExpect(jsonPath("$.websiteCode").value(DEFAULT_WEBSITE_CODE.toString()))
-            .andExpect(jsonPath("$.websiteLadingCode").value(DEFAULT_WEBSITE_LADING_CODE.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.statusName").value(DEFAULT_STATUS_NAME.toString()))
             .andExpect(jsonPath("$.statusStyle").value(DEFAULT_STATUS_STYLE.toString()))
-            .andExpect(jsonPath("$.tallyFee").value(DEFAULT_TALLY_FEE))
+            .andExpect(jsonPath("$.tallyFee").value(DEFAULT_TALLY_FEE.doubleValue()))
             .andExpect(jsonPath("$.totalAmount").value(DEFAULT_TOTAL_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.totalAmountNDT").value(DEFAULT_TOTAL_AMOUNT_NDT.doubleValue()))
             .andExpect(jsonPath("$.totalPaidByCustomer").value(DEFAULT_TOTAL_PAID_BY_CUSTOMER.doubleValue()))
-            .andExpect(jsonPath("$.serviceFee").value(DEFAULT_SERVICE_FEE.doubleValue()))
-            .andExpect(jsonPath("$.serviceFeeDiscount").value(DEFAULT_SERVICE_FEE_DISCOUNT.doubleValue()))
             .andExpect(jsonPath("$.totalServiceFee").value(DEFAULT_TOTAL_SERVICE_FEE.doubleValue()))
+            .andExpect(jsonPath("$.totalQuantity").value(DEFAULT_TOTAL_QUANTITY))
             .andExpect(jsonPath("$.finalAmount").value(DEFAULT_FINAL_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.orderName").value(DEFAULT_ORDER_NAME.toString()))
             .andExpect(jsonPath("$.orderAddress").value(DEFAULT_ORDER_ADDRESS.toString()))
@@ -520,6 +534,7 @@ public class OrderCartResourceIntTest {
         updatedOrderCart
             .code(UPDATED_CODE)
             .avatar(UPDATED_AVATAR)
+            .aliwangwang(UPDATED_ALIWANGWANG)
             .amountDiscount(UPDATED_AMOUNT_DISCOUNT)
             .amountPaid(UPDATED_AMOUNT_PAID)
             .depositAmount(UPDATED_DEPOSIT_AMOUNT)
@@ -542,13 +557,15 @@ public class OrderCartResourceIntTest {
             .refundAmountPending(UPDATED_REFUND_AMOUNT_PENDING)
             .shippingChinaVietnamFee(UPDATED_SHIPPING_CHINA_VIETNAM_FEE)
             .shippingChinaVietnamFeeDiscount(UPDATED_SHIPPING_CHINA_VIETNAM_FEE_DISCOUNT)
-            .shopAliwang(UPDATED_SHOP_ALIWANG)
+            .serviceFee(UPDATED_SERVICE_FEE)
+            .serviceFeeDiscount(UPDATED_SERVICE_FEE_DISCOUNT)
+            .itemChecking(UPDATED_ITEM_CHECKING)
+            .itemWoodCrating(UPDATED_ITEM_WOOD_CRATING)
             .shopId(UPDATED_SHOP_ID)
             .shopLink(UPDATED_SHOP_LINK)
             .shopName(UPDATED_SHOP_NAME)
+            .shopNote(UPDATED_SHOP_NOTE)
             .website(UPDATED_WEBSITE)
-            .websiteCode(UPDATED_WEBSITE_CODE)
-            .websiteLadingCode(UPDATED_WEBSITE_LADING_CODE)
             .status(UPDATED_STATUS)
             .statusName(UPDATED_STATUS_NAME)
             .statusStyle(UPDATED_STATUS_STYLE)
@@ -556,9 +573,8 @@ public class OrderCartResourceIntTest {
             .totalAmount(UPDATED_TOTAL_AMOUNT)
             .totalAmountNDT(UPDATED_TOTAL_AMOUNT_NDT)
             .totalPaidByCustomer(UPDATED_TOTAL_PAID_BY_CUSTOMER)
-            .serviceFee(UPDATED_SERVICE_FEE)
-            .serviceFeeDiscount(UPDATED_SERVICE_FEE_DISCOUNT)
             .totalServiceFee(UPDATED_TOTAL_SERVICE_FEE)
+            .totalQuantity(UPDATED_TOTAL_QUANTITY)
             .finalAmount(UPDATED_FINAL_AMOUNT)
             .orderName(UPDATED_ORDER_NAME)
             .orderAddress(UPDATED_ORDER_ADDRESS)
@@ -579,6 +595,7 @@ public class OrderCartResourceIntTest {
         OrderCart testOrderCart = orderCartList.get(orderCartList.size() - 1);
         assertThat(testOrderCart.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testOrderCart.getAvatar()).isEqualTo(UPDATED_AVATAR);
+        assertThat(testOrderCart.getAliwangwang()).isEqualTo(UPDATED_ALIWANGWANG);
         assertThat(testOrderCart.getAmountDiscount()).isEqualTo(UPDATED_AMOUNT_DISCOUNT);
         assertThat(testOrderCart.getAmountPaid()).isEqualTo(UPDATED_AMOUNT_PAID);
         assertThat(testOrderCart.getDepositAmount()).isEqualTo(UPDATED_DEPOSIT_AMOUNT);
@@ -601,13 +618,15 @@ public class OrderCartResourceIntTest {
         assertThat(testOrderCart.getRefundAmountPending()).isEqualTo(UPDATED_REFUND_AMOUNT_PENDING);
         assertThat(testOrderCart.getShippingChinaVietnamFee()).isEqualTo(UPDATED_SHIPPING_CHINA_VIETNAM_FEE);
         assertThat(testOrderCart.getShippingChinaVietnamFeeDiscount()).isEqualTo(UPDATED_SHIPPING_CHINA_VIETNAM_FEE_DISCOUNT);
-        assertThat(testOrderCart.getShopAliwang()).isEqualTo(UPDATED_SHOP_ALIWANG);
+        assertThat(testOrderCart.getServiceFee()).isEqualTo(UPDATED_SERVICE_FEE);
+        assertThat(testOrderCart.getServiceFeeDiscount()).isEqualTo(UPDATED_SERVICE_FEE_DISCOUNT);
+        assertThat(testOrderCart.isItemChecking()).isEqualTo(UPDATED_ITEM_CHECKING);
+        assertThat(testOrderCart.isItemWoodCrating()).isEqualTo(UPDATED_ITEM_WOOD_CRATING);
         assertThat(testOrderCart.getShopId()).isEqualTo(UPDATED_SHOP_ID);
         assertThat(testOrderCart.getShopLink()).isEqualTo(UPDATED_SHOP_LINK);
         assertThat(testOrderCart.getShopName()).isEqualTo(UPDATED_SHOP_NAME);
+        assertThat(testOrderCart.getShopNote()).isEqualTo(UPDATED_SHOP_NOTE);
         assertThat(testOrderCart.getWebsite()).isEqualTo(UPDATED_WEBSITE);
-        assertThat(testOrderCart.getWebsiteCode()).isEqualTo(UPDATED_WEBSITE_CODE);
-        assertThat(testOrderCart.getWebsiteLadingCode()).isEqualTo(UPDATED_WEBSITE_LADING_CODE);
         assertThat(testOrderCart.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testOrderCart.getStatusName()).isEqualTo(UPDATED_STATUS_NAME);
         assertThat(testOrderCart.getStatusStyle()).isEqualTo(UPDATED_STATUS_STYLE);
@@ -615,9 +634,8 @@ public class OrderCartResourceIntTest {
         assertThat(testOrderCart.getTotalAmount()).isEqualTo(UPDATED_TOTAL_AMOUNT);
         assertThat(testOrderCart.getTotalAmountNDT()).isEqualTo(UPDATED_TOTAL_AMOUNT_NDT);
         assertThat(testOrderCart.getTotalPaidByCustomer()).isEqualTo(UPDATED_TOTAL_PAID_BY_CUSTOMER);
-        assertThat(testOrderCart.getServiceFee()).isEqualTo(UPDATED_SERVICE_FEE);
-        assertThat(testOrderCart.getServiceFeeDiscount()).isEqualTo(UPDATED_SERVICE_FEE_DISCOUNT);
         assertThat(testOrderCart.getTotalServiceFee()).isEqualTo(UPDATED_TOTAL_SERVICE_FEE);
+        assertThat(testOrderCart.getTotalQuantity()).isEqualTo(UPDATED_TOTAL_QUANTITY);
         assertThat(testOrderCart.getFinalAmount()).isEqualTo(UPDATED_FINAL_AMOUNT);
         assertThat(testOrderCart.getOrderName()).isEqualTo(UPDATED_ORDER_NAME);
         assertThat(testOrderCart.getOrderAddress()).isEqualTo(UPDATED_ORDER_ADDRESS);

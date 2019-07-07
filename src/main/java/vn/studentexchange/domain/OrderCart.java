@@ -32,6 +32,9 @@ public class OrderCart implements Serializable {
     @Column(name = "avatar")
     private String avatar;
 
+    @Column(name = "aliwangwang")
+    private String aliwangwang;
+
     @Column(name = "amount_discount")
     private Float amountDiscount;
 
@@ -66,7 +69,7 @@ public class OrderCart implements Serializable {
     private Integer quantityReceived;
 
     @Column(name = "rate")
-    private Integer rate;
+    private Float rate;
 
     @Column(name = "receiver_name")
     private String receiverName;
@@ -98,8 +101,17 @@ public class OrderCart implements Serializable {
     @Column(name = "shipping_china_vietnam_fee_discount")
     private Float shippingChinaVietnamFeeDiscount;
 
-    @Column(name = "shop_aliwang")
-    private String shopAliwang;
+    @Column(name = "service_fee")
+    private Float serviceFee;
+
+    @Column(name = "service_fee_discount")
+    private Float serviceFeeDiscount;
+
+    @Column(name = "item_checking")
+    private Boolean itemChecking;
+
+    @Column(name = "item_wood_crating")
+    private Boolean itemWoodCrating;
 
     @Column(name = "shop_id")
     private String shopId;
@@ -110,14 +122,11 @@ public class OrderCart implements Serializable {
     @Column(name = "shop_name")
     private String shopName;
 
+    @Column(name = "shop_note")
+    private String shopNote;
+
     @Column(name = "website")
     private String website;
-
-    @Column(name = "website_code")
-    private String websiteCode;
-
-    @Column(name = "website_lading_code")
-    private String websiteLadingCode;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -130,7 +139,7 @@ public class OrderCart implements Serializable {
     private String statusStyle;
 
     @Column(name = "tally_fee")
-    private Integer tallyFee;
+    private Float tallyFee;
 
     @Column(name = "total_amount")
     private Float totalAmount;
@@ -141,14 +150,11 @@ public class OrderCart implements Serializable {
     @Column(name = "total_paid_by_customer")
     private Float totalPaidByCustomer;
 
-    @Column(name = "service_fee")
-    private Float serviceFee;
-
-    @Column(name = "service_fee_discount")
-    private Float serviceFeeDiscount;
-
     @Column(name = "total_service_fee")
     private Float totalServiceFee;
+
+    @Column(name = "total_quantity")
+    private Integer totalQuantity;
 
     @Column(name = "final_amount")
     private Float finalAmount;
@@ -238,6 +244,19 @@ public class OrderCart implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getAliwangwang() {
+        return aliwangwang;
+    }
+
+    public OrderCart aliwangwang(String aliwangwang) {
+        this.aliwangwang = aliwangwang;
+        return this;
+    }
+
+    public void setAliwangwang(String aliwangwang) {
+        this.aliwangwang = aliwangwang;
     }
 
     public Float getAmountDiscount() {
@@ -383,16 +402,16 @@ public class OrderCart implements Serializable {
         this.quantityReceived = quantityReceived;
     }
 
-    public Integer getRate() {
+    public Float getRate() {
         return rate;
     }
 
-    public OrderCart rate(Integer rate) {
+    public OrderCart rate(Float rate) {
         this.rate = rate;
         return this;
     }
 
-    public void setRate(Integer rate) {
+    public void setRate(Float rate) {
         this.rate = rate;
     }
 
@@ -526,17 +545,56 @@ public class OrderCart implements Serializable {
         this.shippingChinaVietnamFeeDiscount = shippingChinaVietnamFeeDiscount;
     }
 
-    public String getShopAliwang() {
-        return shopAliwang;
+    public Float getServiceFee() {
+        return serviceFee;
     }
 
-    public OrderCart shopAliwang(String shopAliwang) {
-        this.shopAliwang = shopAliwang;
+    public OrderCart serviceFee(Float serviceFee) {
+        this.serviceFee = serviceFee;
         return this;
     }
 
-    public void setShopAliwang(String shopAliwang) {
-        this.shopAliwang = shopAliwang;
+    public void setServiceFee(Float serviceFee) {
+        this.serviceFee = serviceFee;
+    }
+
+    public Float getServiceFeeDiscount() {
+        return serviceFeeDiscount;
+    }
+
+    public OrderCart serviceFeeDiscount(Float serviceFeeDiscount) {
+        this.serviceFeeDiscount = serviceFeeDiscount;
+        return this;
+    }
+
+    public void setServiceFeeDiscount(Float serviceFeeDiscount) {
+        this.serviceFeeDiscount = serviceFeeDiscount;
+    }
+
+    public Boolean isItemChecking() {
+        return itemChecking;
+    }
+
+    public OrderCart itemChecking(Boolean itemChecking) {
+        this.itemChecking = itemChecking;
+        return this;
+    }
+
+    public void setItemChecking(Boolean itemChecking) {
+        this.itemChecking = itemChecking;
+    }
+
+    public Boolean isItemWoodCrating() {
+        return itemWoodCrating;
+    }
+
+    public OrderCart itemWoodCrating(Boolean itemWoodCrating) {
+        this.itemWoodCrating = itemWoodCrating;
+        return this;
+    }
+
+    public void setItemWoodCrating(Boolean itemWoodCrating) {
+        this.itemWoodCrating = itemWoodCrating;
     }
 
     public String getShopId() {
@@ -578,6 +636,19 @@ public class OrderCart implements Serializable {
         this.shopName = shopName;
     }
 
+    public String getShopNote() {
+        return shopNote;
+    }
+
+    public OrderCart shopNote(String shopNote) {
+        this.shopNote = shopNote;
+        return this;
+    }
+
+    public void setShopNote(String shopNote) {
+        this.shopNote = shopNote;
+    }
+
     public String getWebsite() {
         return website;
     }
@@ -589,32 +660,6 @@ public class OrderCart implements Serializable {
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public String getWebsiteCode() {
-        return websiteCode;
-    }
-
-    public OrderCart websiteCode(String websiteCode) {
-        this.websiteCode = websiteCode;
-        return this;
-    }
-
-    public void setWebsiteCode(String websiteCode) {
-        this.websiteCode = websiteCode;
-    }
-
-    public String getWebsiteLadingCode() {
-        return websiteLadingCode;
-    }
-
-    public OrderCart websiteLadingCode(String websiteLadingCode) {
-        this.websiteLadingCode = websiteLadingCode;
-        return this;
-    }
-
-    public void setWebsiteLadingCode(String websiteLadingCode) {
-        this.websiteLadingCode = websiteLadingCode;
     }
 
     public OrderStatus getStatus() {
@@ -656,16 +701,16 @@ public class OrderCart implements Serializable {
         this.statusStyle = statusStyle;
     }
 
-    public Integer getTallyFee() {
+    public Float getTallyFee() {
         return tallyFee;
     }
 
-    public OrderCart tallyFee(Integer tallyFee) {
+    public OrderCart tallyFee(Float tallyFee) {
         this.tallyFee = tallyFee;
         return this;
     }
 
-    public void setTallyFee(Integer tallyFee) {
+    public void setTallyFee(Float tallyFee) {
         this.tallyFee = tallyFee;
     }
 
@@ -708,32 +753,6 @@ public class OrderCart implements Serializable {
         this.totalPaidByCustomer = totalPaidByCustomer;
     }
 
-    public Float getServiceFee() {
-        return serviceFee;
-    }
-
-    public OrderCart serviceFee(Float serviceFee) {
-        this.serviceFee = serviceFee;
-        return this;
-    }
-
-    public void setServiceFee(Float serviceFee) {
-        this.serviceFee = serviceFee;
-    }
-
-    public Float getServiceFeeDiscount() {
-        return serviceFeeDiscount;
-    }
-
-    public OrderCart serviceFeeDiscount(Float serviceFeeDiscount) {
-        this.serviceFeeDiscount = serviceFeeDiscount;
-        return this;
-    }
-
-    public void setServiceFeeDiscount(Float serviceFeeDiscount) {
-        this.serviceFeeDiscount = serviceFeeDiscount;
-    }
-
     public Float getTotalServiceFee() {
         return totalServiceFee;
     }
@@ -745,6 +764,19 @@ public class OrderCart implements Serializable {
 
     public void setTotalServiceFee(Float totalServiceFee) {
         this.totalServiceFee = totalServiceFee;
+    }
+
+    public Integer getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public OrderCart totalQuantity(Integer totalQuantity) {
+        this.totalQuantity = totalQuantity;
+        return this;
+    }
+
+    public void setTotalQuantity(Integer totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 
     public Float getFinalAmount() {
@@ -1068,6 +1100,7 @@ public class OrderCart implements Serializable {
             "id=" + getId() +
             ", code=" + getCode() +
             ", avatar='" + getAvatar() + "'" +
+            ", aliwangwang='" + getAliwangwang() + "'" +
             ", amountDiscount=" + getAmountDiscount() +
             ", amountPaid=" + getAmountPaid() +
             ", depositAmount=" + getDepositAmount() +
@@ -1090,13 +1123,15 @@ public class OrderCart implements Serializable {
             ", refundAmountPending=" + getRefundAmountPending() +
             ", shippingChinaVietnamFee=" + getShippingChinaVietnamFee() +
             ", shippingChinaVietnamFeeDiscount=" + getShippingChinaVietnamFeeDiscount() +
-            ", shopAliwang='" + getShopAliwang() + "'" +
+            ", serviceFee=" + getServiceFee() +
+            ", serviceFeeDiscount=" + getServiceFeeDiscount() +
+            ", itemChecking='" + isItemChecking() + "'" +
+            ", itemWoodCrating='" + isItemWoodCrating() + "'" +
             ", shopId='" + getShopId() + "'" +
             ", shopLink='" + getShopLink() + "'" +
             ", shopName='" + getShopName() + "'" +
+            ", shopNote='" + getShopNote() + "'" +
             ", website='" + getWebsite() + "'" +
-            ", websiteCode='" + getWebsiteCode() + "'" +
-            ", websiteLadingCode='" + getWebsiteLadingCode() + "'" +
             ", status='" + getStatus() + "'" +
             ", statusName='" + getStatusName() + "'" +
             ", statusStyle='" + getStatusStyle() + "'" +
@@ -1104,9 +1139,8 @@ public class OrderCart implements Serializable {
             ", totalAmount=" + getTotalAmount() +
             ", totalAmountNDT=" + getTotalAmountNDT() +
             ", totalPaidByCustomer=" + getTotalPaidByCustomer() +
-            ", serviceFee=" + getServiceFee() +
-            ", serviceFeeDiscount=" + getServiceFeeDiscount() +
             ", totalServiceFee=" + getTotalServiceFee() +
+            ", totalQuantity=" + getTotalQuantity() +
             ", finalAmount=" + getFinalAmount() +
             ", orderName='" + getOrderName() + "'" +
             ", orderAddress='" + getOrderAddress() + "'" +

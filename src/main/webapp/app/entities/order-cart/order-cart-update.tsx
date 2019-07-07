@@ -122,6 +122,12 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
                   <AvField id="order-cart-avatar" type="text" name="avatar" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="aliwangwangLabel" for="aliwangwang">
+                    <Translate contentKey="studentexchangeApp.orderCart.aliwangwang">Aliwangwang</Translate>
+                  </Label>
+                  <AvField id="order-cart-aliwangwang" type="text" name="aliwangwang" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="amountDiscountLabel" for="amountDiscount">
                     <Translate contentKey="studentexchangeApp.orderCart.amountDiscount">Amount Discount</Translate>
                   </Label>
@@ -286,10 +292,28 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="shopAliwangLabel" for="shopAliwang">
-                    <Translate contentKey="studentexchangeApp.orderCart.shopAliwang">Shop Aliwang</Translate>
+                  <Label id="serviceFeeLabel" for="serviceFee">
+                    <Translate contentKey="studentexchangeApp.orderCart.serviceFee">Service Fee</Translate>
                   </Label>
-                  <AvField id="order-cart-shopAliwang" type="text" name="shopAliwang" />
+                  <AvField id="order-cart-serviceFee" type="string" className="form-control" name="serviceFee" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="serviceFeeDiscountLabel" for="serviceFeeDiscount">
+                    <Translate contentKey="studentexchangeApp.orderCart.serviceFeeDiscount">Service Fee Discount</Translate>
+                  </Label>
+                  <AvField id="order-cart-serviceFeeDiscount" type="string" className="form-control" name="serviceFeeDiscount" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="itemCheckingLabel" check>
+                    <AvInput id="order-cart-itemChecking" type="checkbox" className="form-control" name="itemChecking" />
+                    <Translate contentKey="studentexchangeApp.orderCart.itemChecking">Item Checking</Translate>
+                  </Label>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="itemWoodCratingLabel" check>
+                    <AvInput id="order-cart-itemWoodCrating" type="checkbox" className="form-control" name="itemWoodCrating" />
+                    <Translate contentKey="studentexchangeApp.orderCart.itemWoodCrating">Item Wood Crating</Translate>
+                  </Label>
                 </AvGroup>
                 <AvGroup>
                   <Label id="shopIdLabel" for="shopId">
@@ -310,22 +334,16 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
                   <AvField id="order-cart-shopName" type="text" name="shopName" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="shopNoteLabel" for="shopNote">
+                    <Translate contentKey="studentexchangeApp.orderCart.shopNote">Shop Note</Translate>
+                  </Label>
+                  <AvField id="order-cart-shopNote" type="text" name="shopNote" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="websiteLabel" for="website">
                     <Translate contentKey="studentexchangeApp.orderCart.website">Website</Translate>
                   </Label>
                   <AvField id="order-cart-website" type="text" name="website" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="websiteCodeLabel" for="websiteCode">
-                    <Translate contentKey="studentexchangeApp.orderCart.websiteCode">Website Code</Translate>
-                  </Label>
-                  <AvField id="order-cart-websiteCode" type="text" name="websiteCode" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="websiteLadingCodeLabel" for="websiteLadingCode">
-                    <Translate contentKey="studentexchangeApp.orderCart.websiteLadingCode">Website Lading Code</Translate>
-                  </Label>
-                  <AvField id="order-cart-websiteLadingCode" type="text" name="websiteLadingCode" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="statusLabel">
@@ -416,22 +434,16 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
                   <AvField id="order-cart-totalPaidByCustomer" type="string" className="form-control" name="totalPaidByCustomer" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="serviceFeeLabel" for="serviceFee">
-                    <Translate contentKey="studentexchangeApp.orderCart.serviceFee">Service Fee</Translate>
-                  </Label>
-                  <AvField id="order-cart-serviceFee" type="string" className="form-control" name="serviceFee" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="serviceFeeDiscountLabel" for="serviceFeeDiscount">
-                    <Translate contentKey="studentexchangeApp.orderCart.serviceFeeDiscount">Service Fee Discount</Translate>
-                  </Label>
-                  <AvField id="order-cart-serviceFeeDiscount" type="string" className="form-control" name="serviceFeeDiscount" />
-                </AvGroup>
-                <AvGroup>
                   <Label id="totalServiceFeeLabel" for="totalServiceFee">
                     <Translate contentKey="studentexchangeApp.orderCart.totalServiceFee">Total Service Fee</Translate>
                   </Label>
                   <AvField id="order-cart-totalServiceFee" type="string" className="form-control" name="totalServiceFee" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="totalQuantityLabel" for="totalQuantity">
+                    <Translate contentKey="studentexchangeApp.orderCart.totalQuantity">Total Quantity</Translate>
+                  </Label>
+                  <AvField id="order-cart-totalQuantity" type="string" className="form-control" name="totalQuantity" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="finalAmountLabel" for="finalAmount">

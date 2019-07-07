@@ -25,6 +25,7 @@ export interface IOrderCart {
   id?: number;
   code?: number;
   avatar?: string;
+  aliwangwang?: string;
   amountDiscount?: number;
   amountPaid?: number;
   depositAmount?: number;
@@ -47,13 +48,15 @@ export interface IOrderCart {
   refundAmountPending?: number;
   shippingChinaVietnamFee?: number;
   shippingChinaVietnamFeeDiscount?: number;
-  shopAliwang?: string;
+  serviceFee?: number;
+  serviceFeeDiscount?: number;
+  itemChecking?: boolean;
+  itemWoodCrating?: boolean;
   shopId?: string;
   shopLink?: string;
   shopName?: string;
+  shopNote?: string;
   website?: string;
-  websiteCode?: string;
-  websiteLadingCode?: string;
   status?: OrderStatus;
   statusName?: string;
   statusStyle?: string;
@@ -61,9 +64,8 @@ export interface IOrderCart {
   totalAmount?: number;
   totalAmountNDT?: number;
   totalPaidByCustomer?: number;
-  serviceFee?: number;
-  serviceFeeDiscount?: number;
   totalServiceFee?: number;
+  totalQuantity?: number;
   finalAmount?: number;
   orderName?: string;
   orderAddress?: string;
@@ -90,4 +92,7 @@ export interface IOrderCart {
   updateById?: number;
 }
 
-export const defaultValue: Readonly<IOrderCart> = {};
+export const defaultValue: Readonly<IOrderCart> = {
+  itemChecking: false,
+  itemWoodCrating: false
+};

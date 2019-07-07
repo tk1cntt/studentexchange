@@ -13,6 +13,8 @@ public class ShoppingCartDTO implements Serializable {
 
     private Long id;
 
+    private String avatar;
+
     private String aliwangwang;
 
     private Float depositAmount;
@@ -35,19 +37,15 @@ public class ShoppingCartDTO implements Serializable {
 
     private String shopNote;
 
-    private String sourceData;
+    private String website;
 
     private Float tallyFee;
 
     private Float totalAmount;
 
-    private Integer totalLink;
-
     private Integer totalQuantity;
 
     private Float finalAmount;
-
-    private String website;
 
     private Instant createAt;
 
@@ -69,6 +67,14 @@ public class ShoppingCartDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getAliwangwang() {
@@ -159,12 +165,12 @@ public class ShoppingCartDTO implements Serializable {
         this.shopNote = shopNote;
     }
 
-    public String getSourceData() {
-        return sourceData;
+    public String getWebsite() {
+        return website;
     }
 
-    public void setSourceData(String sourceData) {
-        this.sourceData = sourceData;
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     public Float getTallyFee() {
@@ -183,14 +189,6 @@ public class ShoppingCartDTO implements Serializable {
         this.totalAmount = totalAmount;
     }
 
-    public Integer getTotalLink() {
-        return totalLink;
-    }
-
-    public void setTotalLink(Integer totalLink) {
-        this.totalLink = totalLink;
-    }
-
     public Integer getTotalQuantity() {
         return totalQuantity;
     }
@@ -205,14 +203,6 @@ public class ShoppingCartDTO implements Serializable {
 
     public void setFinalAmount(Float finalAmount) {
         this.finalAmount = finalAmount;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
     }
 
     public Instant getCreateAt() {
@@ -288,6 +278,7 @@ public class ShoppingCartDTO implements Serializable {
     public String toString() {
         return "ShoppingCartDTO{" +
             "id=" + getId() +
+            ", avatar='" + getAvatar() + "'" +
             ", aliwangwang='" + getAliwangwang() + "'" +
             ", depositAmount=" + getDepositAmount() +
             ", depositRatio=" + getDepositRatio() +
@@ -299,13 +290,11 @@ public class ShoppingCartDTO implements Serializable {
             ", shopLink='" + getShopLink() + "'" +
             ", shopName='" + getShopName() + "'" +
             ", shopNote='" + getShopNote() + "'" +
-            ", sourceData='" + getSourceData() + "'" +
+            ", website='" + getWebsite() + "'" +
             ", tallyFee=" + getTallyFee() +
             ", totalAmount=" + getTotalAmount() +
-            ", totalLink=" + getTotalLink() +
             ", totalQuantity=" + getTotalQuantity() +
             ", finalAmount=" + getFinalAmount() +
-            ", website='" + getWebsite() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +
             ", createBy=" + getCreateById() +

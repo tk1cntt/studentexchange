@@ -106,40 +106,46 @@ export class OrderItemUpdate extends React.Component<IOrderItemUpdateProps, IOrd
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="avatarLabel" for="avatar">
-                    <Translate contentKey="studentexchangeApp.orderItem.avatar">Avatar</Translate>
+                  <Label id="itemIdLabel" for="itemId">
+                    <Translate contentKey="studentexchangeApp.orderItem.itemId">Item Id</Translate>
                   </Label>
-                  <AvField id="order-item-avatar" type="text" name="avatar" />
+                  <AvField id="order-item-itemId" type="text" name="itemId" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="originLinkLabel" for="originLink">
-                    <Translate contentKey="studentexchangeApp.orderItem.originLink">Origin Link</Translate>
+                  <Label id="itemImageLabel" for="itemImage">
+                    <Translate contentKey="studentexchangeApp.orderItem.itemImage">Item Image</Translate>
                   </Label>
-                  <AvField id="order-item-originLink" type="text" name="originLink" />
+                  <AvField id="order-item-itemImage" type="text" name="itemImage" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="nameLabel" for="name">
-                    <Translate contentKey="studentexchangeApp.orderItem.name">Name</Translate>
+                  <Label id="itemNameLabel" for="itemName">
+                    <Translate contentKey="studentexchangeApp.orderItem.itemName">Item Name</Translate>
                   </Label>
-                  <AvField id="order-item-name" type="text" name="name" />
+                  <AvField id="order-item-itemName" type="text" name="itemName" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="noteLabel" for="note">
-                    <Translate contentKey="studentexchangeApp.orderItem.note">Note</Translate>
+                  <Label id="itemLinkLabel" for="itemLink">
+                    <Translate contentKey="studentexchangeApp.orderItem.itemLink">Item Link</Translate>
                   </Label>
-                  <AvField id="order-item-note" type="text" name="note" />
+                  <AvField id="order-item-itemLink" type="text" name="itemLink" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="priceLabel" for="price">
-                    <Translate contentKey="studentexchangeApp.orderItem.price">Price</Translate>
+                  <Label id="itemPriceLabel" for="itemPrice">
+                    <Translate contentKey="studentexchangeApp.orderItem.itemPrice">Item Price</Translate>
                   </Label>
-                  <AvField id="order-item-price" type="string" className="form-control" name="price" />
+                  <AvField id="order-item-itemPrice" type="string" className="form-control" name="itemPrice" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="priceNDTLabel" for="priceNDT">
-                    <Translate contentKey="studentexchangeApp.orderItem.priceNDT">Price NDT</Translate>
+                  <Label id="itemPriceNDTLabel" for="itemPriceNDT">
+                    <Translate contentKey="studentexchangeApp.orderItem.itemPriceNDT">Item Price NDT</Translate>
                   </Label>
-                  <AvField id="order-item-priceNDT" type="string" className="form-control" name="priceNDT" />
+                  <AvField id="order-item-itemPriceNDT" type="string" className="form-control" name="itemPriceNDT" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="itemNoteLabel" for="itemNote">
+                    <Translate contentKey="studentexchangeApp.orderItem.itemNote">Item Note</Translate>
+                  </Label>
+                  <AvField id="order-item-itemNote" type="text" name="itemNote" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="propertiesIdLabel" for="propertiesId">
@@ -172,40 +178,28 @@ export class OrderItemUpdate extends React.Component<IOrderItemUpdateProps, IOrd
                   <AvField id="order-item-propertiesType" type="text" name="propertiesType" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="quantityOrderLabel" for="quantityOrder">
-                    <Translate contentKey="studentexchangeApp.orderItem.quantityOrder">Quantity Order</Translate>
+                  <Label id="quantityLabel" for="quantity">
+                    <Translate contentKey="studentexchangeApp.orderItem.quantity">Quantity</Translate>
                   </Label>
-                  <AvField id="order-item-quantityOrder" type="string" className="form-control" name="quantityOrder" />
+                  <AvField id="order-item-quantity" type="string" className="form-control" name="quantity" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="quantityPendingLabel" for="quantityPending">
-                    <Translate contentKey="studentexchangeApp.orderItem.quantityPending">Quantity Pending</Translate>
+                  <Label id="requireMinLabel" for="requireMin">
+                    <Translate contentKey="studentexchangeApp.orderItem.requireMin">Require Min</Translate>
                   </Label>
-                  <AvField id="order-item-quantityPending" type="string" className="form-control" name="quantityPending" />
+                  <AvField id="order-item-requireMin" type="string" className="form-control" name="requireMin" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="quantityReceivedLabel" for="quantityReceived">
-                    <Translate contentKey="studentexchangeApp.orderItem.quantityReceived">Quantity Received</Translate>
+                  <Label id="totalAmountLabel" for="totalAmount">
+                    <Translate contentKey="studentexchangeApp.orderItem.totalAmount">Total Amount</Translate>
                   </Label>
-                  <AvField id="order-item-quantityReceived" type="string" className="form-control" name="quantityReceived" />
+                  <AvField id="order-item-totalAmount" type="string" className="form-control" name="totalAmount" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="totalPriceLabel" for="totalPrice">
-                    <Translate contentKey="studentexchangeApp.orderItem.totalPrice">Total Price</Translate>
+                  <Label id="totalAmountNDTLabel" for="totalAmountNDT">
+                    <Translate contentKey="studentexchangeApp.orderItem.totalAmountNDT">Total Amount NDT</Translate>
                   </Label>
-                  <AvField id="order-item-totalPrice" type="string" className="form-control" name="totalPrice" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="totalPriceNDTLabel" for="totalPriceNDT">
-                    <Translate contentKey="studentexchangeApp.orderItem.totalPriceNDT">Total Price NDT</Translate>
-                  </Label>
-                  <AvField id="order-item-totalPriceNDT" type="string" className="form-control" name="totalPriceNDT" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="websiteLabel" for="website">
-                    <Translate contentKey="studentexchangeApp.orderItem.website">Website</Translate>
-                  </Label>
-                  <AvField id="order-item-website" type="text" name="website" />
+                  <AvField id="order-item-totalAmountNDT" type="string" className="form-control" name="totalAmountNDT" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="createAtLabel" for="createAt">

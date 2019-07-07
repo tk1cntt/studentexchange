@@ -45,6 +45,9 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <Translate contentKey="studentexchangeApp.orderCart.avatar">Avatar</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.aliwangwang">Aliwangwang</Translate>
+                </th>
+                <th>
                   <Translate contentKey="studentexchangeApp.orderCart.amountDiscount">Amount Discount</Translate>
                 </th>
                 <th>
@@ -115,7 +118,16 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   </Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.shopAliwang">Shop Aliwang</Translate>
+                  <Translate contentKey="studentexchangeApp.orderCart.serviceFee">Service Fee</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.serviceFeeDiscount">Service Fee Discount</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.itemChecking">Item Checking</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.itemWoodCrating">Item Wood Crating</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.orderCart.shopId">Shop Id</Translate>
@@ -127,13 +139,10 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <Translate contentKey="studentexchangeApp.orderCart.shopName">Shop Name</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.shopNote">Shop Note</Translate>
+                </th>
+                <th>
                   <Translate contentKey="studentexchangeApp.orderCart.website">Website</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.websiteCode">Website Code</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.websiteLadingCode">Website Lading Code</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.orderCart.status">Status</Translate>
@@ -157,13 +166,10 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <Translate contentKey="studentexchangeApp.orderCart.totalPaidByCustomer">Total Paid By Customer</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.serviceFee">Service Fee</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.serviceFeeDiscount">Service Fee Discount</Translate>
-                </th>
-                <th>
                   <Translate contentKey="studentexchangeApp.orderCart.totalServiceFee">Total Service Fee</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.totalQuantity">Total Quantity</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.orderCart.finalAmount">Final Amount</Translate>
@@ -217,6 +223,7 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   </td>
                   <td>{orderCart.code}</td>
                   <td>{orderCart.avatar}</td>
+                  <td>{orderCart.aliwangwang}</td>
                   <td>{orderCart.amountDiscount}</td>
                   <td>{orderCart.amountPaid}</td>
                   <td>{orderCart.depositAmount}</td>
@@ -241,13 +248,15 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <td>{orderCart.refundAmountPending}</td>
                   <td>{orderCart.shippingChinaVietnamFee}</td>
                   <td>{orderCart.shippingChinaVietnamFeeDiscount}</td>
-                  <td>{orderCart.shopAliwang}</td>
+                  <td>{orderCart.serviceFee}</td>
+                  <td>{orderCart.serviceFeeDiscount}</td>
+                  <td>{orderCart.itemChecking ? 'true' : 'false'}</td>
+                  <td>{orderCart.itemWoodCrating ? 'true' : 'false'}</td>
                   <td>{orderCart.shopId}</td>
                   <td>{orderCart.shopLink}</td>
                   <td>{orderCart.shopName}</td>
+                  <td>{orderCart.shopNote}</td>
                   <td>{orderCart.website}</td>
-                  <td>{orderCart.websiteCode}</td>
-                  <td>{orderCart.websiteLadingCode}</td>
                   <td>
                     <Translate contentKey={`studentexchangeApp.OrderStatus.${orderCart.status}`} />
                   </td>
@@ -257,9 +266,8 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <td>{orderCart.totalAmount}</td>
                   <td>{orderCart.totalAmountNDT}</td>
                   <td>{orderCart.totalPaidByCustomer}</td>
-                  <td>{orderCart.serviceFee}</td>
-                  <td>{orderCart.serviceFeeDiscount}</td>
                   <td>{orderCart.totalServiceFee}</td>
+                  <td>{orderCart.totalQuantity}</td>
                   <td>{orderCart.finalAmount}</td>
                   <td>{orderCart.orderName}</td>
                   <td>{orderCart.orderAddress}</td>

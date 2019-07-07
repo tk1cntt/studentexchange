@@ -45,6 +45,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = StudentexchangeApp.class)
 public class ShoppingCartResourceIntTest {
 
+    private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
+    private static final String UPDATED_AVATAR = "BBBBBBBBBB";
+
     private static final String DEFAULT_ALIWANGWANG = "AAAAAAAAAA";
     private static final String UPDATED_ALIWANGWANG = "BBBBBBBBBB";
 
@@ -78,8 +81,8 @@ public class ShoppingCartResourceIntTest {
     private static final String DEFAULT_SHOP_NOTE = "AAAAAAAAAA";
     private static final String UPDATED_SHOP_NOTE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_SOURCE_DATA = "AAAAAAAAAA";
-    private static final String UPDATED_SOURCE_DATA = "BBBBBBBBBB";
+    private static final String DEFAULT_WEBSITE = "AAAAAAAAAA";
+    private static final String UPDATED_WEBSITE = "BBBBBBBBBB";
 
     private static final Float DEFAULT_TALLY_FEE = 1F;
     private static final Float UPDATED_TALLY_FEE = 2F;
@@ -87,17 +90,11 @@ public class ShoppingCartResourceIntTest {
     private static final Float DEFAULT_TOTAL_AMOUNT = 1F;
     private static final Float UPDATED_TOTAL_AMOUNT = 2F;
 
-    private static final Integer DEFAULT_TOTAL_LINK = 1;
-    private static final Integer UPDATED_TOTAL_LINK = 2;
-
     private static final Integer DEFAULT_TOTAL_QUANTITY = 1;
     private static final Integer UPDATED_TOTAL_QUANTITY = 2;
 
     private static final Float DEFAULT_FINAL_AMOUNT = 1F;
     private static final Float UPDATED_FINAL_AMOUNT = 2F;
-
-    private static final String DEFAULT_WEBSITE = "AAAAAAAAAA";
-    private static final String UPDATED_WEBSITE = "BBBBBBBBBB";
 
     private static final Instant DEFAULT_CREATE_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_CREATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
@@ -152,6 +149,7 @@ public class ShoppingCartResourceIntTest {
      */
     public static ShoppingCart createEntity(EntityManager em) {
         ShoppingCart shoppingCart = new ShoppingCart()
+            .avatar(DEFAULT_AVATAR)
             .aliwangwang(DEFAULT_ALIWANGWANG)
             .depositAmount(DEFAULT_DEPOSIT_AMOUNT)
             .depositRatio(DEFAULT_DEPOSIT_RATIO)
@@ -163,13 +161,11 @@ public class ShoppingCartResourceIntTest {
             .shopLink(DEFAULT_SHOP_LINK)
             .shopName(DEFAULT_SHOP_NAME)
             .shopNote(DEFAULT_SHOP_NOTE)
-            .sourceData(DEFAULT_SOURCE_DATA)
+            .website(DEFAULT_WEBSITE)
             .tallyFee(DEFAULT_TALLY_FEE)
             .totalAmount(DEFAULT_TOTAL_AMOUNT)
-            .totalLink(DEFAULT_TOTAL_LINK)
             .totalQuantity(DEFAULT_TOTAL_QUANTITY)
             .finalAmount(DEFAULT_FINAL_AMOUNT)
-            .website(DEFAULT_WEBSITE)
             .createAt(DEFAULT_CREATE_AT)
             .updateAt(DEFAULT_UPDATE_AT);
         return shoppingCart;
@@ -196,6 +192,7 @@ public class ShoppingCartResourceIntTest {
         List<ShoppingCart> shoppingCartList = shoppingCartRepository.findAll();
         assertThat(shoppingCartList).hasSize(databaseSizeBeforeCreate + 1);
         ShoppingCart testShoppingCart = shoppingCartList.get(shoppingCartList.size() - 1);
+        assertThat(testShoppingCart.getAvatar()).isEqualTo(DEFAULT_AVATAR);
         assertThat(testShoppingCart.getAliwangwang()).isEqualTo(DEFAULT_ALIWANGWANG);
         assertThat(testShoppingCart.getDepositAmount()).isEqualTo(DEFAULT_DEPOSIT_AMOUNT);
         assertThat(testShoppingCart.getDepositRatio()).isEqualTo(DEFAULT_DEPOSIT_RATIO);
@@ -207,13 +204,11 @@ public class ShoppingCartResourceIntTest {
         assertThat(testShoppingCart.getShopLink()).isEqualTo(DEFAULT_SHOP_LINK);
         assertThat(testShoppingCart.getShopName()).isEqualTo(DEFAULT_SHOP_NAME);
         assertThat(testShoppingCart.getShopNote()).isEqualTo(DEFAULT_SHOP_NOTE);
-        assertThat(testShoppingCart.getSourceData()).isEqualTo(DEFAULT_SOURCE_DATA);
+        assertThat(testShoppingCart.getWebsite()).isEqualTo(DEFAULT_WEBSITE);
         assertThat(testShoppingCart.getTallyFee()).isEqualTo(DEFAULT_TALLY_FEE);
         assertThat(testShoppingCart.getTotalAmount()).isEqualTo(DEFAULT_TOTAL_AMOUNT);
-        assertThat(testShoppingCart.getTotalLink()).isEqualTo(DEFAULT_TOTAL_LINK);
         assertThat(testShoppingCart.getTotalQuantity()).isEqualTo(DEFAULT_TOTAL_QUANTITY);
         assertThat(testShoppingCart.getFinalAmount()).isEqualTo(DEFAULT_FINAL_AMOUNT);
-        assertThat(testShoppingCart.getWebsite()).isEqualTo(DEFAULT_WEBSITE);
         assertThat(testShoppingCart.getCreateAt()).isEqualTo(DEFAULT_CREATE_AT);
         assertThat(testShoppingCart.getUpdateAt()).isEqualTo(DEFAULT_UPDATE_AT);
     }
@@ -249,6 +244,7 @@ public class ShoppingCartResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(shoppingCart.getId().intValue())))
+            .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
             .andExpect(jsonPath("$.[*].aliwangwang").value(hasItem(DEFAULT_ALIWANGWANG.toString())))
             .andExpect(jsonPath("$.[*].depositAmount").value(hasItem(DEFAULT_DEPOSIT_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].depositRatio").value(hasItem(DEFAULT_DEPOSIT_RATIO.doubleValue())))
@@ -260,13 +256,11 @@ public class ShoppingCartResourceIntTest {
             .andExpect(jsonPath("$.[*].shopLink").value(hasItem(DEFAULT_SHOP_LINK.toString())))
             .andExpect(jsonPath("$.[*].shopName").value(hasItem(DEFAULT_SHOP_NAME.toString())))
             .andExpect(jsonPath("$.[*].shopNote").value(hasItem(DEFAULT_SHOP_NOTE.toString())))
-            .andExpect(jsonPath("$.[*].sourceData").value(hasItem(DEFAULT_SOURCE_DATA.toString())))
+            .andExpect(jsonPath("$.[*].website").value(hasItem(DEFAULT_WEBSITE.toString())))
             .andExpect(jsonPath("$.[*].tallyFee").value(hasItem(DEFAULT_TALLY_FEE.doubleValue())))
             .andExpect(jsonPath("$.[*].totalAmount").value(hasItem(DEFAULT_TOTAL_AMOUNT.doubleValue())))
-            .andExpect(jsonPath("$.[*].totalLink").value(hasItem(DEFAULT_TOTAL_LINK)))
             .andExpect(jsonPath("$.[*].totalQuantity").value(hasItem(DEFAULT_TOTAL_QUANTITY)))
             .andExpect(jsonPath("$.[*].finalAmount").value(hasItem(DEFAULT_FINAL_AMOUNT.doubleValue())))
-            .andExpect(jsonPath("$.[*].website").value(hasItem(DEFAULT_WEBSITE.toString())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
     }
@@ -282,6 +276,7 @@ public class ShoppingCartResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(shoppingCart.getId().intValue()))
+            .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()))
             .andExpect(jsonPath("$.aliwangwang").value(DEFAULT_ALIWANGWANG.toString()))
             .andExpect(jsonPath("$.depositAmount").value(DEFAULT_DEPOSIT_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.depositRatio").value(DEFAULT_DEPOSIT_RATIO.doubleValue()))
@@ -293,13 +288,11 @@ public class ShoppingCartResourceIntTest {
             .andExpect(jsonPath("$.shopLink").value(DEFAULT_SHOP_LINK.toString()))
             .andExpect(jsonPath("$.shopName").value(DEFAULT_SHOP_NAME.toString()))
             .andExpect(jsonPath("$.shopNote").value(DEFAULT_SHOP_NOTE.toString()))
-            .andExpect(jsonPath("$.sourceData").value(DEFAULT_SOURCE_DATA.toString()))
+            .andExpect(jsonPath("$.website").value(DEFAULT_WEBSITE.toString()))
             .andExpect(jsonPath("$.tallyFee").value(DEFAULT_TALLY_FEE.doubleValue()))
             .andExpect(jsonPath("$.totalAmount").value(DEFAULT_TOTAL_AMOUNT.doubleValue()))
-            .andExpect(jsonPath("$.totalLink").value(DEFAULT_TOTAL_LINK))
             .andExpect(jsonPath("$.totalQuantity").value(DEFAULT_TOTAL_QUANTITY))
             .andExpect(jsonPath("$.finalAmount").value(DEFAULT_FINAL_AMOUNT.doubleValue()))
-            .andExpect(jsonPath("$.website").value(DEFAULT_WEBSITE.toString()))
             .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
             .andExpect(jsonPath("$.updateAt").value(DEFAULT_UPDATE_AT.toString()));
     }
@@ -325,6 +318,7 @@ public class ShoppingCartResourceIntTest {
         // Disconnect from session so that the updates on updatedShoppingCart are not directly saved in db
         em.detach(updatedShoppingCart);
         updatedShoppingCart
+            .avatar(UPDATED_AVATAR)
             .aliwangwang(UPDATED_ALIWANGWANG)
             .depositAmount(UPDATED_DEPOSIT_AMOUNT)
             .depositRatio(UPDATED_DEPOSIT_RATIO)
@@ -336,13 +330,11 @@ public class ShoppingCartResourceIntTest {
             .shopLink(UPDATED_SHOP_LINK)
             .shopName(UPDATED_SHOP_NAME)
             .shopNote(UPDATED_SHOP_NOTE)
-            .sourceData(UPDATED_SOURCE_DATA)
+            .website(UPDATED_WEBSITE)
             .tallyFee(UPDATED_TALLY_FEE)
             .totalAmount(UPDATED_TOTAL_AMOUNT)
-            .totalLink(UPDATED_TOTAL_LINK)
             .totalQuantity(UPDATED_TOTAL_QUANTITY)
             .finalAmount(UPDATED_FINAL_AMOUNT)
-            .website(UPDATED_WEBSITE)
             .createAt(UPDATED_CREATE_AT)
             .updateAt(UPDATED_UPDATE_AT);
         ShoppingCartDTO shoppingCartDTO = shoppingCartMapper.toDto(updatedShoppingCart);
@@ -356,6 +348,7 @@ public class ShoppingCartResourceIntTest {
         List<ShoppingCart> shoppingCartList = shoppingCartRepository.findAll();
         assertThat(shoppingCartList).hasSize(databaseSizeBeforeUpdate);
         ShoppingCart testShoppingCart = shoppingCartList.get(shoppingCartList.size() - 1);
+        assertThat(testShoppingCart.getAvatar()).isEqualTo(UPDATED_AVATAR);
         assertThat(testShoppingCart.getAliwangwang()).isEqualTo(UPDATED_ALIWANGWANG);
         assertThat(testShoppingCart.getDepositAmount()).isEqualTo(UPDATED_DEPOSIT_AMOUNT);
         assertThat(testShoppingCart.getDepositRatio()).isEqualTo(UPDATED_DEPOSIT_RATIO);
@@ -367,13 +360,11 @@ public class ShoppingCartResourceIntTest {
         assertThat(testShoppingCart.getShopLink()).isEqualTo(UPDATED_SHOP_LINK);
         assertThat(testShoppingCart.getShopName()).isEqualTo(UPDATED_SHOP_NAME);
         assertThat(testShoppingCart.getShopNote()).isEqualTo(UPDATED_SHOP_NOTE);
-        assertThat(testShoppingCart.getSourceData()).isEqualTo(UPDATED_SOURCE_DATA);
+        assertThat(testShoppingCart.getWebsite()).isEqualTo(UPDATED_WEBSITE);
         assertThat(testShoppingCart.getTallyFee()).isEqualTo(UPDATED_TALLY_FEE);
         assertThat(testShoppingCart.getTotalAmount()).isEqualTo(UPDATED_TOTAL_AMOUNT);
-        assertThat(testShoppingCart.getTotalLink()).isEqualTo(UPDATED_TOTAL_LINK);
         assertThat(testShoppingCart.getTotalQuantity()).isEqualTo(UPDATED_TOTAL_QUANTITY);
         assertThat(testShoppingCart.getFinalAmount()).isEqualTo(UPDATED_FINAL_AMOUNT);
-        assertThat(testShoppingCart.getWebsite()).isEqualTo(UPDATED_WEBSITE);
         assertThat(testShoppingCart.getCreateAt()).isEqualTo(UPDATED_CREATE_AT);
         assertThat(testShoppingCart.getUpdateAt()).isEqualTo(UPDATED_UPDATE_AT);
     }

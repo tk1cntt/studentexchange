@@ -15,6 +15,7 @@
       "detail": {
         "title": "Shopping Cart"
       },
+      "avatar": "Avatar",
       "aliwangwang": "Aliwangwang",
       "depositAmount": "Deposit Amount",
       "depositRatio": "Deposit Ratio",
@@ -26,13 +27,11 @@
       "shopLink": "Shop Link",
       "shopName": "Shop Name",
       "shopNote": "Shop Note",
-      "sourceData": "Source Data",
+      "website": "Website",
       "tallyFee": "Tally Fee",
       "totalAmount": "Total Amount",
-      "totalLink": "Total Link",
       "totalQuantity": "Total Quantity",
       "finalAmount": "Final Amount",
-      "website": "Website",
       "createAt": "Create At",
       "updateAt": "Update At",
       "items": "Items",

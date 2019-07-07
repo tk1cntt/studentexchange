@@ -3,6 +3,7 @@ import { IShoppingCartItem } from 'app/shared/model//shopping-cart-item.model';
 
 export interface IShoppingCart {
   id?: number;
+  avatar?: string;
   aliwangwang?: string;
   depositAmount?: number;
   depositRatio?: number;
@@ -14,13 +15,11 @@ export interface IShoppingCart {
   shopLink?: string;
   shopName?: string;
   shopNote?: string;
-  sourceData?: string;
+  website?: string;
   tallyFee?: number;
   totalAmount?: number;
-  totalLink?: number;
   totalQuantity?: number;
   finalAmount?: number;
-  website?: string;
   createAt?: Moment;
   updateAt?: Moment;
   items?: IShoppingCartItem[];

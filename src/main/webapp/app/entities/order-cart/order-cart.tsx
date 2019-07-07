@@ -42,6 +42,9 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <Translate contentKey="studentexchangeApp.orderCart.code">Code</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="studentexchangeApp.orderCart.shippingChinaCode">Shipping China Code</Translate>
+                </th>
+                <th>
                   <Translate contentKey="studentexchangeApp.orderCart.avatar">Avatar</Translate>
                 </th>
                 <th>
@@ -175,18 +178,6 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <Translate contentKey="studentexchangeApp.orderCart.finalAmount">Final Amount</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.orderName">Order Name</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.orderAddress">Order Address</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.orderMobile">Order Mobile</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderCart.orderNote">Order Note</Translate>
-                </th>
-                <th>
                   <Translate contentKey="studentexchangeApp.orderCart.createAt">Create At</Translate>
                 </th>
                 <th>
@@ -222,6 +213,7 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                     </Button>
                   </td>
                   <td>{orderCart.code}</td>
+                  <td>{orderCart.shippingChinaCode}</td>
                   <td>{orderCart.avatar}</td>
                   <td>{orderCart.aliwangwang}</td>
                   <td>{orderCart.amountDiscount}</td>
@@ -269,10 +261,6 @@ export class OrderCart extends React.Component<IOrderCartProps> {
                   <td>{orderCart.totalServiceFee}</td>
                   <td>{orderCart.totalQuantity}</td>
                   <td>{orderCart.finalAmount}</td>
-                  <td>{orderCart.orderName}</td>
-                  <td>{orderCart.orderAddress}</td>
-                  <td>{orderCart.orderMobile}</td>
-                  <td>{orderCart.orderNote}</td>
                   <td>
                     <TextFormat type="date" value={orderCart.createAt} format={APP_DATE_FORMAT} />
                   </td>

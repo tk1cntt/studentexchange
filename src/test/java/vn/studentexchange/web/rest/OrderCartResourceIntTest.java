@@ -50,6 +50,9 @@ public class OrderCartResourceIntTest {
     private static final Long DEFAULT_CODE = 1L;
     private static final Long UPDATED_CODE = 2L;
 
+    private static final String DEFAULT_SHIPPING_CHINA_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_SHIPPING_CHINA_CODE = "BBBBBBBBBB";
+
     private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
     private static final String UPDATED_AVATAR = "BBBBBBBBBB";
 
@@ -179,18 +182,6 @@ public class OrderCartResourceIntTest {
     private static final Float DEFAULT_FINAL_AMOUNT = 1F;
     private static final Float UPDATED_FINAL_AMOUNT = 2F;
 
-    private static final String DEFAULT_ORDER_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_ORDER_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_ORDER_ADDRESS = "AAAAAAAAAA";
-    private static final String UPDATED_ORDER_ADDRESS = "BBBBBBBBBB";
-
-    private static final String DEFAULT_ORDER_MOBILE = "AAAAAAAAAA";
-    private static final String UPDATED_ORDER_MOBILE = "BBBBBBBBBB";
-
-    private static final String DEFAULT_ORDER_NOTE = "AAAAAAAAAA";
-    private static final String UPDATED_ORDER_NOTE = "BBBBBBBBBB";
-
     private static final Instant DEFAULT_CREATE_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_CREATE_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
@@ -249,6 +240,7 @@ public class OrderCartResourceIntTest {
     public static OrderCart createEntity(EntityManager em) {
         OrderCart orderCart = new OrderCart()
             .code(DEFAULT_CODE)
+            .shippingChinaCode(DEFAULT_SHIPPING_CHINA_CODE)
             .avatar(DEFAULT_AVATAR)
             .aliwangwang(DEFAULT_ALIWANGWANG)
             .amountDiscount(DEFAULT_AMOUNT_DISCOUNT)
@@ -292,10 +284,6 @@ public class OrderCartResourceIntTest {
             .totalServiceFee(DEFAULT_TOTAL_SERVICE_FEE)
             .totalQuantity(DEFAULT_TOTAL_QUANTITY)
             .finalAmount(DEFAULT_FINAL_AMOUNT)
-            .orderName(DEFAULT_ORDER_NAME)
-            .orderAddress(DEFAULT_ORDER_ADDRESS)
-            .orderMobile(DEFAULT_ORDER_MOBILE)
-            .orderNote(DEFAULT_ORDER_NOTE)
             .createAt(DEFAULT_CREATE_AT)
             .updateAt(DEFAULT_UPDATE_AT);
         return orderCart;
@@ -323,6 +311,7 @@ public class OrderCartResourceIntTest {
         assertThat(orderCartList).hasSize(databaseSizeBeforeCreate + 1);
         OrderCart testOrderCart = orderCartList.get(orderCartList.size() - 1);
         assertThat(testOrderCart.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testOrderCart.getShippingChinaCode()).isEqualTo(DEFAULT_SHIPPING_CHINA_CODE);
         assertThat(testOrderCart.getAvatar()).isEqualTo(DEFAULT_AVATAR);
         assertThat(testOrderCart.getAliwangwang()).isEqualTo(DEFAULT_ALIWANGWANG);
         assertThat(testOrderCart.getAmountDiscount()).isEqualTo(DEFAULT_AMOUNT_DISCOUNT);
@@ -366,10 +355,6 @@ public class OrderCartResourceIntTest {
         assertThat(testOrderCart.getTotalServiceFee()).isEqualTo(DEFAULT_TOTAL_SERVICE_FEE);
         assertThat(testOrderCart.getTotalQuantity()).isEqualTo(DEFAULT_TOTAL_QUANTITY);
         assertThat(testOrderCart.getFinalAmount()).isEqualTo(DEFAULT_FINAL_AMOUNT);
-        assertThat(testOrderCart.getOrderName()).isEqualTo(DEFAULT_ORDER_NAME);
-        assertThat(testOrderCart.getOrderAddress()).isEqualTo(DEFAULT_ORDER_ADDRESS);
-        assertThat(testOrderCart.getOrderMobile()).isEqualTo(DEFAULT_ORDER_MOBILE);
-        assertThat(testOrderCart.getOrderNote()).isEqualTo(DEFAULT_ORDER_NOTE);
         assertThat(testOrderCart.getCreateAt()).isEqualTo(DEFAULT_CREATE_AT);
         assertThat(testOrderCart.getUpdateAt()).isEqualTo(DEFAULT_UPDATE_AT);
     }
@@ -406,6 +391,7 @@ public class OrderCartResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(orderCart.getId().intValue())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.intValue())))
+            .andExpect(jsonPath("$.[*].shippingChinaCode").value(hasItem(DEFAULT_SHIPPING_CHINA_CODE.toString())))
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
             .andExpect(jsonPath("$.[*].aliwangwang").value(hasItem(DEFAULT_ALIWANGWANG.toString())))
             .andExpect(jsonPath("$.[*].amountDiscount").value(hasItem(DEFAULT_AMOUNT_DISCOUNT.doubleValue())))
@@ -449,14 +435,10 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.[*].totalServiceFee").value(hasItem(DEFAULT_TOTAL_SERVICE_FEE.doubleValue())))
             .andExpect(jsonPath("$.[*].totalQuantity").value(hasItem(DEFAULT_TOTAL_QUANTITY)))
             .andExpect(jsonPath("$.[*].finalAmount").value(hasItem(DEFAULT_FINAL_AMOUNT.doubleValue())))
-            .andExpect(jsonPath("$.[*].orderName").value(hasItem(DEFAULT_ORDER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].orderAddress").value(hasItem(DEFAULT_ORDER_ADDRESS.toString())))
-            .andExpect(jsonPath("$.[*].orderMobile").value(hasItem(DEFAULT_ORDER_MOBILE.toString())))
-            .andExpect(jsonPath("$.[*].orderNote").value(hasItem(DEFAULT_ORDER_NOTE.toString())))
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
     }
-
+    
     @Test
     @Transactional
     public void getOrderCart() throws Exception {
@@ -469,6 +451,7 @@ public class OrderCartResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(orderCart.getId().intValue()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.intValue()))
+            .andExpect(jsonPath("$.shippingChinaCode").value(DEFAULT_SHIPPING_CHINA_CODE.toString()))
             .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()))
             .andExpect(jsonPath("$.aliwangwang").value(DEFAULT_ALIWANGWANG.toString()))
             .andExpect(jsonPath("$.amountDiscount").value(DEFAULT_AMOUNT_DISCOUNT.doubleValue()))
@@ -512,10 +495,6 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.totalServiceFee").value(DEFAULT_TOTAL_SERVICE_FEE.doubleValue()))
             .andExpect(jsonPath("$.totalQuantity").value(DEFAULT_TOTAL_QUANTITY))
             .andExpect(jsonPath("$.finalAmount").value(DEFAULT_FINAL_AMOUNT.doubleValue()))
-            .andExpect(jsonPath("$.orderName").value(DEFAULT_ORDER_NAME.toString()))
-            .andExpect(jsonPath("$.orderAddress").value(DEFAULT_ORDER_ADDRESS.toString()))
-            .andExpect(jsonPath("$.orderMobile").value(DEFAULT_ORDER_MOBILE.toString()))
-            .andExpect(jsonPath("$.orderNote").value(DEFAULT_ORDER_NOTE.toString()))
             .andExpect(jsonPath("$.createAt").value(DEFAULT_CREATE_AT.toString()))
             .andExpect(jsonPath("$.updateAt").value(DEFAULT_UPDATE_AT.toString()));
     }
@@ -542,6 +521,7 @@ public class OrderCartResourceIntTest {
         em.detach(updatedOrderCart);
         updatedOrderCart
             .code(UPDATED_CODE)
+            .shippingChinaCode(UPDATED_SHIPPING_CHINA_CODE)
             .avatar(UPDATED_AVATAR)
             .aliwangwang(UPDATED_ALIWANGWANG)
             .amountDiscount(UPDATED_AMOUNT_DISCOUNT)
@@ -585,10 +565,6 @@ public class OrderCartResourceIntTest {
             .totalServiceFee(UPDATED_TOTAL_SERVICE_FEE)
             .totalQuantity(UPDATED_TOTAL_QUANTITY)
             .finalAmount(UPDATED_FINAL_AMOUNT)
-            .orderName(UPDATED_ORDER_NAME)
-            .orderAddress(UPDATED_ORDER_ADDRESS)
-            .orderMobile(UPDATED_ORDER_MOBILE)
-            .orderNote(UPDATED_ORDER_NOTE)
             .createAt(UPDATED_CREATE_AT)
             .updateAt(UPDATED_UPDATE_AT);
         OrderCartDTO orderCartDTO = orderCartMapper.toDto(updatedOrderCart);
@@ -603,6 +579,7 @@ public class OrderCartResourceIntTest {
         assertThat(orderCartList).hasSize(databaseSizeBeforeUpdate);
         OrderCart testOrderCart = orderCartList.get(orderCartList.size() - 1);
         assertThat(testOrderCart.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testOrderCart.getShippingChinaCode()).isEqualTo(UPDATED_SHIPPING_CHINA_CODE);
         assertThat(testOrderCart.getAvatar()).isEqualTo(UPDATED_AVATAR);
         assertThat(testOrderCart.getAliwangwang()).isEqualTo(UPDATED_ALIWANGWANG);
         assertThat(testOrderCart.getAmountDiscount()).isEqualTo(UPDATED_AMOUNT_DISCOUNT);
@@ -646,10 +623,6 @@ public class OrderCartResourceIntTest {
         assertThat(testOrderCart.getTotalServiceFee()).isEqualTo(UPDATED_TOTAL_SERVICE_FEE);
         assertThat(testOrderCart.getTotalQuantity()).isEqualTo(UPDATED_TOTAL_QUANTITY);
         assertThat(testOrderCart.getFinalAmount()).isEqualTo(UPDATED_FINAL_AMOUNT);
-        assertThat(testOrderCart.getOrderName()).isEqualTo(UPDATED_ORDER_NAME);
-        assertThat(testOrderCart.getOrderAddress()).isEqualTo(UPDATED_ORDER_ADDRESS);
-        assertThat(testOrderCart.getOrderMobile()).isEqualTo(UPDATED_ORDER_MOBILE);
-        assertThat(testOrderCart.getOrderNote()).isEqualTo(UPDATED_ORDER_NOTE);
         assertThat(testOrderCart.getCreateAt()).isEqualTo(UPDATED_CREATE_AT);
         assertThat(testOrderCart.getUpdateAt()).isEqualTo(UPDATED_UPDATE_AT);
     }

@@ -16,6 +16,7 @@
         "title": "Order Cart"
       },
       "code": "Code",
+      "shippingChinaCode": "Shipping China Code",
       "avatar": "Avatar",
       "aliwangwang": "Aliwangwang",
       "amountDiscount": "Amount Discount",
@@ -59,10 +60,6 @@
       "totalServiceFee": "Total Service Fee",
       "totalQuantity": "Total Quantity",
       "finalAmount": "Final Amount",
-      "orderName": "Order Name",
-      "orderAddress": "Order Address",
-      "orderMobile": "Order Mobile",
-      "orderNote": "Order Note",
       "createAt": "Create At",
       "updateAt": "Update At",
       "items": "Items",

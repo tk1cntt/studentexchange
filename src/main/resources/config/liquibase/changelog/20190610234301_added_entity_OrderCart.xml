@@ -26,6 +26,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="shipping_china_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="avatar" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -195,22 +199,6 @@
             </column>
 
             <column name="final_amount" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="order_name" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="order_address" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="order_mobile" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="order_note" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 

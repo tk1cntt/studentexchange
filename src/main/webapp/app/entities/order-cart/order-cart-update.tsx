@@ -116,6 +116,12 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
                   <AvField id="order-cart-code" type="string" className="form-control" name="code" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="shippingChinaCodeLabel" for="shippingChinaCode">
+                    <Translate contentKey="studentexchangeApp.orderCart.shippingChinaCode">Shipping China Code</Translate>
+                  </Label>
+                  <AvField id="order-cart-shippingChinaCode" type="text" name="shippingChinaCode" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="avatarLabel" for="avatar">
                     <Translate contentKey="studentexchangeApp.orderCart.avatar">Avatar</Translate>
                   </Label>
@@ -450,30 +456,6 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
                     <Translate contentKey="studentexchangeApp.orderCart.finalAmount">Final Amount</Translate>
                   </Label>
                   <AvField id="order-cart-finalAmount" type="string" className="form-control" name="finalAmount" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="orderNameLabel" for="orderName">
-                    <Translate contentKey="studentexchangeApp.orderCart.orderName">Order Name</Translate>
-                  </Label>
-                  <AvField id="order-cart-orderName" type="text" name="orderName" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="orderAddressLabel" for="orderAddress">
-                    <Translate contentKey="studentexchangeApp.orderCart.orderAddress">Order Address</Translate>
-                  </Label>
-                  <AvField id="order-cart-orderAddress" type="text" name="orderAddress" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="orderMobileLabel" for="orderMobile">
-                    <Translate contentKey="studentexchangeApp.orderCart.orderMobile">Order Mobile</Translate>
-                  </Label>
-                  <AvField id="order-cart-orderMobile" type="text" name="orderMobile" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="orderNoteLabel" for="orderNote">
-                    <Translate contentKey="studentexchangeApp.orderCart.orderNote">Order Note</Translate>
-                  </Label>
-                  <AvField id="order-cart-orderNote" type="text" name="orderNote" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="createAtLabel" for="createAt">

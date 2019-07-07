@@ -35,6 +35,12 @@ export class OrderCartDetail extends React.Component<IOrderCartDetailProps> {
             </dt>
             <dd>{orderCartEntity.code}</dd>
             <dt>
+              <span id="shippingChinaCode">
+                <Translate contentKey="studentexchangeApp.orderCart.shippingChinaCode">Shipping China Code</Translate>
+              </span>
+            </dt>
+            <dd>{orderCartEntity.shippingChinaCode}</dd>
+            <dt>
               <span id="avatar">
                 <Translate contentKey="studentexchangeApp.orderCart.avatar">Avatar</Translate>
               </span>
@@ -296,30 +302,6 @@ export class OrderCartDetail extends React.Component<IOrderCartDetailProps> {
               </span>
             </dt>
             <dd>{orderCartEntity.finalAmount}</dd>
-            <dt>
-              <span id="orderName">
-                <Translate contentKey="studentexchangeApp.orderCart.orderName">Order Name</Translate>
-              </span>
-            </dt>
-            <dd>{orderCartEntity.orderName}</dd>
-            <dt>
-              <span id="orderAddress">
-                <Translate contentKey="studentexchangeApp.orderCart.orderAddress">Order Address</Translate>
-              </span>
-            </dt>
-            <dd>{orderCartEntity.orderAddress}</dd>
-            <dt>
-              <span id="orderMobile">
-                <Translate contentKey="studentexchangeApp.orderCart.orderMobile">Order Mobile</Translate>
-              </span>
-            </dt>
-            <dd>{orderCartEntity.orderMobile}</dd>
-            <dt>
-              <span id="orderNote">
-                <Translate contentKey="studentexchangeApp.orderCart.orderNote">Order Note</Translate>
-              </span>
-            </dt>
-            <dd>{orderCartEntity.orderNote}</dd>
             <dt>
               <span id="createAt">
                 <Translate contentKey="studentexchangeApp.orderCart.createAt">Create At</Translate>

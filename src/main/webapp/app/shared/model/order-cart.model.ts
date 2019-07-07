@@ -24,6 +24,7 @@ export const enum OrderStatus {
 export interface IOrderCart {
   id?: number;
   code?: number;
+  shippingChinaCode?: string;
   avatar?: string;
   aliwangwang?: string;
   amountDiscount?: number;
@@ -68,10 +69,6 @@ export interface IOrderCart {
   totalServiceFee?: number;
   totalQuantity?: number;
   finalAmount?: number;
-  orderName?: string;
-  orderAddress?: string;
-  orderMobile?: string;
-  orderNote?: string;
   createAt?: Moment;
   updateAt?: Moment;
   items?: IOrderItem[];

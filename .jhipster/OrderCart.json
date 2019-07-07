@@ -6,6 +6,10 @@
             "fieldType": "Long"
         },
         {
+            "fieldName": "shippingChinaCode",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "avatar",
             "fieldType": "String"
         },
@@ -177,22 +181,6 @@
         {
             "fieldName": "finalAmount",
             "fieldType": "Float"
-        },
-        {
-            "fieldName": "orderName",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "orderAddress",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "orderMobile",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "orderNote",
-            "fieldType": "String"
         },
         {
             "fieldName": "createAt",

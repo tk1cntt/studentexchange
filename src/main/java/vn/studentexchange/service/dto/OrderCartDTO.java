@@ -1,10 +1,9 @@
 package vn.studentexchange.service.dto;
 
-import vn.studentexchange.domain.enumeration.OrderStatus;
-
-import java.io.Serializable;
 import java.time.Instant;
+import java.io.Serializable;
 import java.util.Objects;
+import vn.studentexchange.domain.enumeration.OrderStatus;
 
 /**
  * A DTO for the OrderCart entity.
@@ -14,6 +13,8 @@ public class OrderCartDTO implements Serializable {
     private Long id;
 
     private Long code;
+
+    private String shippingChinaCode;
 
     private String avatar;
 
@@ -101,14 +102,6 @@ public class OrderCartDTO implements Serializable {
 
     private Float finalAmount;
 
-    private String orderName;
-
-    private String orderAddress;
-
-    private String orderMobile;
-
-    private String orderNote;
-
     private Instant createAt;
 
     private Instant updateAt;
@@ -151,6 +144,14 @@ public class OrderCartDTO implements Serializable {
 
     public void setCode(Long code) {
         this.code = code;
+    }
+
+    public String getShippingChinaCode() {
+        return shippingChinaCode;
+    }
+
+    public void setShippingChinaCode(String shippingChinaCode) {
+        this.shippingChinaCode = shippingChinaCode;
     }
 
     public String getAvatar() {
@@ -497,38 +498,6 @@ public class OrderCartDTO implements Serializable {
         this.finalAmount = finalAmount;
     }
 
-    public String getOrderName() {
-        return orderName;
-    }
-
-    public void setOrderName(String orderName) {
-        this.orderName = orderName;
-    }
-
-    public String getOrderAddress() {
-        return orderAddress;
-    }
-
-    public void setOrderAddress(String orderAddress) {
-        this.orderAddress = orderAddress;
-    }
-
-    public String getOrderMobile() {
-        return orderMobile;
-    }
-
-    public void setOrderMobile(String orderMobile) {
-        this.orderMobile = orderMobile;
-    }
-
-    public String getOrderNote() {
-        return orderNote;
-    }
-
-    public void setOrderNote(String orderNote) {
-        this.orderNote = orderNote;
-    }
-
     public Instant getCreateAt() {
         return createAt;
     }
@@ -667,6 +636,7 @@ public class OrderCartDTO implements Serializable {
         return "OrderCartDTO{" +
             "id=" + getId() +
             ", code=" + getCode() +
+            ", shippingChinaCode='" + getShippingChinaCode() + "'" +
             ", avatar='" + getAvatar() + "'" +
             ", aliwangwang='" + getAliwangwang() + "'" +
             ", amountDiscount=" + getAmountDiscount() +
@@ -710,10 +680,6 @@ public class OrderCartDTO implements Serializable {
             ", totalServiceFee=" + getTotalServiceFee() +
             ", totalQuantity=" + getTotalQuantity() +
             ", finalAmount=" + getFinalAmount() +
-            ", orderName='" + getOrderName() + "'" +
-            ", orderAddress='" + getOrderAddress() + "'" +
-            ", orderMobile='" + getOrderMobile() + "'" +
-            ", orderNote='" + getOrderNote() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", updateAt='" + getUpdateAt() + "'" +
             ", buyer=" + getBuyerId() +

@@ -1,8 +1,9 @@
 // import './home.scss';
-
+import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
+import { Spin } from 'antd';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getOwnerEntities as getShoppingItem } from 'app/entities/shopping-cart-item/shopping-cart-item.reducer';
@@ -11,17 +12,63 @@ import { PaymentType } from 'app/shared/model/payment.model';
 import { formatCurency, getLabelFromNumber } from 'app/shared/util/utils';
 import { TextFormat } from 'react-jhipster';
 import { APP_DATE_FORMAT } from 'app/config/constants';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import { AUTHORITIES } from 'app/config/constants';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
+export interface IHomeState {
+  temporaryPassword: any;
+}
 export class Home extends React.Component<IHomeProp> {
+  state: IHomeState = {
+    temporaryPassword: null
+  };
+
   componentDidMount() {
     this.props.getShoppingItem();
     this.props.getOwnerPayment(0, 5, 'createAt');
+    if (this.props.isUser) {
+      const temporaryPassword = (
+        <div onClick={this.getTemporaryPassword}>
+          <span className="label label-primary">
+            <i className="fa fa-refresh" /> Lấy mật khẩu tạm thời
+          </span>
+        </div>
+      );
+      this.setState({
+        temporaryPassword
+      });
+    }
   }
+
+  getTemporaryPassword = () => {
+    let temporaryPassword = <Spin />;
+    this.setState({
+      temporaryPassword
+    });
+    axios.post('api/account/temporary-password').then(response => {
+      temporaryPassword = (
+        <>
+          <span className="pull-right">
+            <span className="label label-danger" style={{ marginRight: 0 }}>
+              {response.data}
+            </span>
+          </span>
+
+          <div onClick={this.getTemporaryPassword}>
+            <i className="fa fa-star" /> Mật khẩu tạm thời là
+          </div>
+        </>
+      );
+      this.setState({
+        temporaryPassword
+      });
+    });
+  };
 
   render() {
     const { account } = this.props;
@@ -64,6 +111,7 @@ export class Home extends React.Component<IHomeProp> {
                   <span className="pull-right">{formatCurency(this.props.userBalanceEntity.balanceAvailable)}đ</span>
                   <i className="fa fa-money" /> Số dư tài khoản
                 </li>
+                <li className="list-group-item fist-item">{this.state.temporaryPassword}</li>
               </ul>
             </div>
           </div>
@@ -485,9 +533,10 @@ export class Home extends React.Component<IHomeProp> {
 
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
+  isAuthenticated: storeState.authentication.isAuthenticated,
+  isUser: hasAnyAuthority(storeState.authentication.account.authorities, [AUTHORITIES.USER]),
   userBalanceEntity: storeState.userBalance.entity,
-  paymentList: storeState.payment.entities,
-  isAuthenticated: storeState.authentication.isAuthenticated
+  paymentList: storeState.payment.entities
 });
 
 const mapDispatchToProps = { getSession, getShoppingItem, getOwnerPayment };

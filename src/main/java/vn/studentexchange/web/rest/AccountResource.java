@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +21,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import vn.studentexchange.domain.User;
 import vn.studentexchange.repository.UserRepository;
+import vn.studentexchange.security.AuthoritiesConstants;
 import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.security.jwt.JWTFilter;
 import vn.studentexchange.security.jwt.TokenProvider;
@@ -241,11 +243,12 @@ public class AccountResource {
 
     @PostMapping(path = "/account/temporary-password")
     @Timed
-    public ResponseEntity<String> temporaryPassword(@RequestBody PasswordChangeDTO passwordChangeDto) {
-        if (!checkPasswordLength(passwordChangeDto.getNewPassword())) {
-            throw new InvalidPasswordException();
+    public ResponseEntity<String> temporaryPassword() {
+        if (SecurityUtils.isCurrentUserInRole("ROLE_USER")) {
+            return ResponseEntity.ok().body(userService.temporaryPassword());
+        } else {
+            return ResponseEntity.badRequest().body(null);
         }
-        return ResponseEntity.ok().body(userService.temporaryPassword());
     }
 
     /**

@@ -140,10 +140,6 @@ entity OrderCart {
    totalServiceFee Float,
    totalQuantity Integer,
    finalAmount Float,
-   orderName String,
-   orderAddress String,
-   orderMobile String,
-   orderNote String,
    createAt Instant,
    updateAt Instant
 }

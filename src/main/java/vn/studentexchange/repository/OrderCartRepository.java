@@ -14,7 +14,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface OrderCartRepository extends JpaRepository<OrderCart, Long> {
+public interface OrderCartRepository extends JpaRepository<OrderCart, Long>, JpaSpecificationExecutor<OrderCart> {
 
     @Query("select order_cart from OrderCart order_cart where order_cart.buyer.login = ?#{principal.username}")
     List<OrderCart> findByBuyerIsCurrentUser();

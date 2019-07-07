@@ -1,7 +1,6 @@
 package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import liquibase.util.StringUtils;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.studentexchange.domain.OrderItem;
 import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.*;
 import vn.studentexchange.service.dto.*;
@@ -42,6 +40,8 @@ public class OrderCartResource {
 
     private final OrderCartService orderCartService;
 
+    private final OrderCartQueryService orderCartQueryService;
+
     private final UserShippingAddressService userShippingAddressService;
 
     private final ShoppingCartService shoppingCartService;
@@ -58,8 +58,9 @@ public class OrderCartResource {
     @Autowired
     private CurrencyRateService currencyRateService;
 
-    public OrderCartResource(OrderCartService orderCartService, UserShippingAddressService userShippingAddressService, ShoppingCartService shoppingCartService) {
+    public OrderCartResource(OrderCartService orderCartService, OrderCartQueryService orderCartQueryService, UserShippingAddressService userShippingAddressService, ShoppingCartService shoppingCartService) {
         this.orderCartService = orderCartService;
+        this.orderCartQueryService = orderCartQueryService;
         this.userShippingAddressService = userShippingAddressService;
         this.shoppingCartService = shoppingCartService;
     }
@@ -107,7 +108,6 @@ public class OrderCartResource {
         address.append(shippingAddressDTO.get().getDistrictType()).append(" ").append(shippingAddressDTO.get().getDistrictName());
         address.append(" - ");
         address.append(shippingAddressDTO.get().getCityName());
-        ObjectMapper mapper = new ObjectMapper();
         List<OrderCartDTO> orderCarts = new ArrayList<>();
         for (ShoppingCartDTO shoppingCartDTO : shoppingCarts) {
             shoppingCartDTO = Utils.calculate(shoppingCartDTO, currencyRateService);
@@ -123,7 +123,6 @@ public class OrderCartResource {
             orderCartDTO.setReceiverName(shippingAddressDTO.get().getName());
             orderCartDTO.setReceiverNote(shippingAddressDTO.get().getNote());
             orderCartDTO = orderCartService.save(orderCartDTO);
-            List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
             for (ShoppingCartItemDTO item : shoppingCartDTO.getItems()) {
                 OrderItemDTO orderItemDTO = orderItemMapper.toOrderItemDto(item);
                 orderItemDTO.setCreateAt(Instant.now());
@@ -162,13 +161,28 @@ public class OrderCartResource {
     /**
      * GET  /order-carts : get all the orderCarts.
      *
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of orderCarts in body
      */
     @GetMapping("/order-carts")
     @Timed
-    public List<OrderCartDTO> getAllOrderCarts() {
-        log.debug("REST request to get all OrderCarts");
-        return orderCartService.findAll();
+    public ResponseEntity<List<OrderCartDTO>> getAllOrderCarts(OrderCartCriteria criteria) {
+        log.debug("REST request to get OrderCarts by criteria: {}", criteria);
+        List<OrderCartDTO> entityList = orderCartQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * GET  /order-carts/count : count all the orderCarts.
+     *
+     * @param criteria the criterias which the requested entities should match
+     * @return the ResponseEntity with status 200 (OK) and the count in body
+     */
+    @GetMapping("/order-carts/count")
+    @Timed
+    public ResponseEntity<Long> countOrderCarts(OrderCartCriteria criteria) {
+        log.debug("REST request to count OrderCarts by criteria: {}", criteria);
+        return ResponseEntity.ok().body(orderCartQueryService.countByCriteria(criteria));
     }
 
     @GetMapping("/order-carts/owner")

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities } from 'app/entities/shopping-cart/shopping-cart.reducer';
 import { encodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
@@ -12,10 +11,6 @@ import Sidebar from 'app/shared/layout/sidebar/sidebar';
 export interface IHomeProp extends StateProps, DispatchProps {}
 
 export class Order extends React.Component<IHomeProp> {
-  componentDidMount() {
-    this.props.getOwnerEntities();
-  }
-
   render() {
     const { shoppingCartList, account } = this.props;
     return (
@@ -426,7 +421,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOwnerEntities };
+const mapDispatchToProps = { getSession };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

@@ -9,7 +9,7 @@ import { getSession } from 'app/shared/reducers/authentication';
 import { getOwnerEntities as getShoppingItem } from 'app/entities/shopping-cart-item/shopping-cart-item.reducer';
 import { getOwnerEntities as getOwnerPayment } from 'app/entities/payment/payment.reducer';
 import { PaymentType } from 'app/shared/model/payment.model';
-import { formatCurency, getLabelFromNumber } from 'app/shared/util/utils';
+import { formatCurency, getLabelFromNumber, decodeId } from 'app/shared/util/utils';
 import { TextFormat } from 'react-jhipster';
 import { APP_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
@@ -54,7 +54,7 @@ export class Home extends React.Component<IHomeProp> {
         <>
           <span className="pull-right">
             <span className="label label-danger" style={{ marginRight: 0 }}>
-              {response.data}
+              {decodeId(response.data)}
             </span>
           </span>
 

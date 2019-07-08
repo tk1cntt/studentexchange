@@ -2,6 +2,7 @@ package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
@@ -10,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +22,17 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import vn.studentexchange.domain.User;
+import vn.studentexchange.domain.enumeration.CurrencyType;
 import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.security.AuthoritiesConstants;
 import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.security.jwt.JWTFilter;
 import vn.studentexchange.security.jwt.TokenProvider;
+import vn.studentexchange.service.CurrencyRateService;
 import vn.studentexchange.service.MailService;
 import vn.studentexchange.service.UserProfileService;
 import vn.studentexchange.service.UserService;
-import vn.studentexchange.service.dto.FBAccountDTO;
-import vn.studentexchange.service.dto.PasswordChangeDTO;
-import vn.studentexchange.service.dto.UserDTO;
-import vn.studentexchange.service.dto.UserProfileDTO;
+import vn.studentexchange.service.dto.*;
 import vn.studentexchange.web.rest.errors.*;
 import vn.studentexchange.web.rest.util.Utils;
 import vn.studentexchange.web.rest.vm.KeyAndPasswordVM;
@@ -66,6 +67,9 @@ public class AccountResource {
     private final MailService mailService;
 
     private final TokenProvider tokenProvider;
+
+    @Autowired
+    private CurrencyRateService currencyRateService;
 
     public AccountResource(UserRepository userRepository, UserService userService, UserProfileService userProfileService, MailService mailService, TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
@@ -120,6 +124,14 @@ public class AccountResource {
     public String isAuthenticated(HttpServletRequest request) {
         log.debug("REST request to check if the current user is authenticated");
         return request.getRemoteUser();
+    }
+
+    @GetMapping("/exchange-rate")
+    @Timed
+    public ResponseEntity<CurrencyRateDTO> getExchangeRate() {
+        log.debug("REST request to check if the current user is authenticated");
+        Optional<CurrencyRateDTO> currencyRate = currencyRateService.findByCurrency(CurrencyType.CNY);
+        return ResponseUtil.wrapOrNotFound(currencyRate);
     }
 
     @GetMapping("/token-exchange")
@@ -245,7 +257,7 @@ public class AccountResource {
     @Timed
     public ResponseEntity<String> temporaryPassword() {
         if (SecurityUtils.isCurrentUserInRole("ROLE_USER")) {
-            return ResponseEntity.ok().body(userService.temporaryPassword());
+            return ResponseEntity.ok().body(Utils.encodeId(userService.temporaryPassword()));
         } else {
             return ResponseEntity.badRequest().body(null);
         }

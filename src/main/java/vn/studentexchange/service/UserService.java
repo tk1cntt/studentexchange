@@ -229,12 +229,12 @@ public class UserService {
             });
     }
 
-    public String temporaryPassword() {
-        String temporaryPassword = String.valueOf(Utils.generateNumber());
+    public long temporaryPassword() {
+        long temporaryPassword = Utils.generateNumber();
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {
-                String encryptedPassword = passwordEncoder.encode(temporaryPassword);
+                String encryptedPassword = passwordEncoder.encode(String.valueOf(temporaryPassword));
                 user.setPassword(encryptedPassword);
                 log.debug("Changed password for User: {}", user);
             });

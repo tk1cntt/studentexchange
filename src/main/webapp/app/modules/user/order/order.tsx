@@ -49,7 +49,7 @@ export class Order extends React.Component<IHomeProp> {
                 </div>
                 <div className="col-sm-4">
                   <div className="form-group">
-                    <label className="control-label" htmlFor="status"></label>
+                    <label className="control-label" htmlFor="status" />
                     <button className="btn btn-primary btn-block">
                       <i className="fa fa-search" /> Tìm kiếm
                     </button>

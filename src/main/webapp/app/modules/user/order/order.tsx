@@ -4,7 +4,6 @@ import { NavLink as Link } from 'react-router-dom';
 import { TextFormat } from 'react-jhipster';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { encodeId } from 'app/shared/util/utils';
 import { getOwnerEntities } from 'app/entities/order-cart/order-cart.reducer';
 import { APP_DATE_FORMAT } from 'app/config/constants';
 
@@ -20,8 +19,7 @@ export class Order extends React.Component<IHomeProp> {
   }
 
   render() {
-    const { shoppingCartList, orderCartList } = this.props;
-    console.log('orderCartList', orderCartList);
+    const { orderCartList } = this.props;
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-cart" activeSubMenu="" />
@@ -151,9 +149,7 @@ export class Order extends React.Component<IHomeProp> {
 }
 
 const mapStateToProps = storeState => ({
-  account: storeState.authentication.account,
   orderCartList: storeState.orderCart.entities,
-  shoppingCartList: storeState.shoppingCart.entities,
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 

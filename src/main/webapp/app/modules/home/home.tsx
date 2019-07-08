@@ -11,9 +11,8 @@ import { getOwnerEntities as getOwnerPayment } from 'app/entities/payment/paymen
 import { PaymentType } from 'app/shared/model/payment.model';
 import { formatCurency, getLabelFromNumber } from 'app/shared/util/utils';
 import { TextFormat } from 'react-jhipster';
-import { APP_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
-import { AUTHORITIES } from 'app/config/constants';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';

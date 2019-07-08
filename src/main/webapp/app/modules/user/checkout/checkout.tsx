@@ -350,11 +350,6 @@ export class Checkout extends React.Component<ICheckoutProp> {
         content: 'Hãy lựa chọn địa chỉ giao hàng'
       });
     } else {
-      if (this.state.shopid) {
-        console.log('Order shopid ' + this.state.shopid);
-      } else {
-        console.log('Order all');
-      }
       this.props.createOrder({ userShippingAddressId: encodeId(this.state.userShippingAddressChoose) });
       this.props.history.push('/order-cart');
     }

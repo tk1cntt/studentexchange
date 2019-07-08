@@ -4,10 +4,10 @@ import { Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
 import Login from 'app/modules/login/main';
-import Cart from 'app/modules/cart/cart';
-import Order from 'app/modules/order/order';
-import Checkout from 'app/modules/checkout/checkout';
-import Payment from 'app/modules/payment/payment';
+import Cart from 'app/modules/user/cart/cart';
+import Order from 'app/modules/user/order/order';
+import Checkout from 'app/modules/user/checkout/checkout';
+import Payment from 'app/modules/user/payment/payment';
 import Management from 'app/modules/management';
 import Staff from 'app/modules/staff';
 import Register from 'app/modules/account/register/register';

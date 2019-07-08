@@ -5,7 +5,7 @@ import { TextFormat } from 'react-jhipster';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { encodeId } from 'app/shared/util/utils';
-import { getOwnerEntities } from 'app/entities/order-cart/order-cart.reducer';
+import { getOwnerEntities, reset } from 'app/entities/order-cart/order-cart.reducer';
 import { APP_DATE_FORMAT } from 'app/config/constants';
 
 import Header from 'app/shared/layout/header/header';
@@ -17,6 +17,10 @@ export interface IHomeProp extends StateProps, DispatchProps {}
 export class Order extends React.Component<IHomeProp> {
   componentDidMount() {
     this.props.getOwnerEntities();
+  }
+
+  componentWillUnmount() {
+    this.props.reset();
   }
 
   render() {
@@ -156,7 +160,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOwnerEntities };
+const mapDispatchToProps = { getSession, getOwnerEntities, reset };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

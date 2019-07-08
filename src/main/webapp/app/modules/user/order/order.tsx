@@ -4,8 +4,9 @@ import { NavLink as Link } from 'react-router-dom';
 import { TextFormat } from 'react-jhipster';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities } from 'app/entities/order-cart/order-cart.reducer';
+import { getOwnerEntities, reset } from 'app/entities/order-cart/order-cart.reducer';
 import { APP_DATE_FORMAT } from 'app/config/constants';
+import { formatCurency } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
 import Footer from 'app/shared/layout/footer/footer';
@@ -16,6 +17,10 @@ export interface IHomeProp extends StateProps, DispatchProps {}
 export class Order extends React.Component<IHomeProp> {
   componentDidMount() {
     this.props.getOwnerEntities();
+  }
+
+  componentWillUnmount() {
+    this.props.reset();
   }
 
   render() {
@@ -76,7 +81,7 @@ export class Order extends React.Component<IHomeProp> {
                           <tr key={`id-${i}`}>
                             <td>{orderCart.code}</td>
                             <td>{orderCart.shopName}</td>
-                            <td>{orderCart.finalAmount}</td>
+                            <td>{formatCurency(orderCart.finalAmount)}đ</td>
                             <td>
                               <small>
                                 <TextFormat type="date" value={orderCart.depositTime} format={APP_DATE_FORMAT} />
@@ -153,7 +158,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOwnerEntities };
+const mapDispatchToProps = { getSession, getOwnerEntities, reset };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

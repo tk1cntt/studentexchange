@@ -6,6 +6,7 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 
 import OrderPending from '../staff/order/order-pending';
 import OrderDeposit from '../staff/order/order-deposit';
+import Buying from '../staff/buying/buying';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -14,6 +15,7 @@ const Routes = ({ match }) => (
       {/* prettier-ignore */}
       <ErrorBoundaryRoute path={`${match.url}/order-pending`} component={OrderPending} />
       <ErrorBoundaryRoute path={`${match.url}/order-deposit`} component={OrderDeposit} />
+      <ErrorBoundaryRoute path={`${match.url}/buying`} component={Buying} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

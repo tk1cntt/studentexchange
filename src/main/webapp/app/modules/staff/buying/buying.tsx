@@ -5,7 +5,7 @@ import { NavLink as Link } from 'react-router-dom';
 import { Checkbox } from 'antd';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities, reset } from 'app/entities/shopping-cart/shopping-cart.reducer';
+import { getOwnerEntities } from 'app/entities/shopping-cart/shopping-cart.reducer';
 import { formatCurency, encodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
@@ -13,13 +13,9 @@ import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
-export class Cart extends React.Component<IHomeProp> {
+export class Buying extends React.Component<IHomeProp> {
   componentDidMount() {
     this.props.getOwnerEntities();
-  }
-
-  componentWillUnmount() {
-    this.props.reset();
   }
 
   decreaseQuantity = (item: any) => {
@@ -195,7 +191,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOwnerEntities, reset };
+const mapDispatchToProps = { getSession, getOwnerEntities };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -203,4 +199,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Cart);
+)(Buying);

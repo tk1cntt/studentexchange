@@ -10,7 +10,8 @@ import { getSession } from 'app/shared/reducers/authentication';
 import { getAllEntities as getCities } from 'app/entities/city/city.reducer';
 import {
   getOwnerEntities as getOwnerShippingCart,
-  getOwnerEntity as getShippingCart
+  getOwnerEntity as getShippingCart,
+  reset
 } from 'app/entities/shopping-cart/shopping-cart.reducer';
 import {
   createEntity as createShippingAddress,
@@ -99,6 +100,10 @@ export class Checkout extends React.Component<ICheckoutProp> {
     if (this.props.shoppingCartList !== prevProps.shoppingCartList) {
       this.checkoutAmountData();
     }
+  }
+
+  componentWillUnmount() {
+    this.props.reset();
   }
 
   mappingCity() {
@@ -469,7 +474,8 @@ const mapDispatchToProps = {
   getOwnerShippingAddress,
   getOwnerShippingCart,
   getShippingCart,
-  createOrder
+  createOrder,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

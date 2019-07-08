@@ -5,7 +5,7 @@ import { NavLink as Link } from 'react-router-dom';
 import { TextFormat } from 'react-jhipster';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities as getOwnerPayment } from 'app/entities/payment/payment.reducer';
+import { getOwnerEntities as getOwnerPayment, reset } from 'app/entities/payment/payment.reducer';
 import { formatCurency } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
@@ -24,6 +24,10 @@ export interface ICheckoutProp extends StateProps, DispatchProps {
 export class Payment extends React.Component<ICheckoutProp> {
   componentDidMount() {
     this.props.getOwnerPayment();
+  }
+
+  componentWillUnmount() {
+    this.props.reset();
   }
 
   render() {
@@ -83,7 +87,7 @@ export class Payment extends React.Component<ICheckoutProp> {
                         {this.props.paymentList.map((payment, i) => (
                           <tr key={`id-${i}`} className="footable-even" style={{}}>
                             <td className="footable-visible footable-first-column">
-                              <b className="text-primary">{payment.code}</b>
+                              {payment.code}
                               <br />
                               <small>
                                 <TextFormat type="date" value={payment.createAt} format={APP_DATE_FORMAT} />
@@ -126,7 +130,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOwnerPayment };
+const mapDispatchToProps = { getSession, getOwnerPayment, reset };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

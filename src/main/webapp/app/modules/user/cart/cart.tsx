@@ -111,6 +111,10 @@ export class Cart extends React.Component<IHomeProp> {
                                         Số lượng: {`${item.quantity}`}
                                         <br />
                                         Đơn giá: ¥{`${item.itemPriceNDT}`}
+                                        <br />
+                                        <span className="label label-danger">
+                                          <i className="fa fa-trash" /> Xoá
+                                        </span>
                                       </small>
                                     </div>
                                   </div>

@@ -86,10 +86,10 @@ public final class Utils {
         return hashids.decode(hash)[0];
     }
 
-    public static ShoppingCartDTO calculate(ShoppingCartDTO currentCart, CurrencyRateService currencyRateService) {
-        Optional<CurrencyRateDTO> rate =  currencyRateService.findByCurrency(CurrencyType.CNY);
+    public static ShoppingCartDTO calculate(ShoppingCartDTO currentCart, CurrencyRateDTO rate) {
         List<ShoppingCartItemDTO> items = currentCart.getItems();
         int totalQuantity = 0;
+        float totalAmountNDT = 0f;
         float totalAmount = 0f;
         float tallyFee = 0f;
         float serviceFee = 0f;
@@ -101,7 +101,8 @@ public final class Utils {
         if (currentCart.isItemChecking() != null && currentCart.isItemChecking()) {
             tallyFee = (float) totalQuantity * Utils.getTallyFee(totalQuantity);
         }
-        totalAmount = (float) Math.ceil(totalAmount * rate.get().getRate());
+        totalAmountNDT = totalAmount;
+        totalAmount = (float) Math.ceil(totalAmount * rate.getRate());
         serviceFee = (float) Math.ceil(totalAmount * Utils.getServiceFee(totalAmount));
         finalAmount = totalAmount + serviceFee + tallyFee;
         currentCart.setTallyFee(tallyFee);

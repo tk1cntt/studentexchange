@@ -2,6 +2,8 @@ package vn.studentexchange.service.dto;
 
 import java.time.Instant;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import vn.studentexchange.domain.enumeration.OrderStatus;
 
@@ -129,6 +131,8 @@ public class OrderCartDTO implements Serializable {
     private Long updateById;
 
     private String updateByLogin;
+
+    private List<OrderItemDTO> items = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -695,5 +699,13 @@ public class OrderCartDTO implements Serializable {
             ", updateBy=" + getUpdateById() +
             ", updateBy='" + getUpdateByLogin() + "'" +
             "}";
+    }
+
+    public List<OrderItemDTO> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItemDTO> items) {
+        this.items = items;
     }
 }

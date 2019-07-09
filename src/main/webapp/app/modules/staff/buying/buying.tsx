@@ -3,63 +3,70 @@ import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 
 import { Checkbox } from 'antd';
+import qs from 'query-string';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities } from 'app/entities/shopping-cart/shopping-cart.reducer';
-import { formatCurency, encodeId } from 'app/shared/util/utils';
+import { getEntity as getOrder } from 'app/entities/order-cart/order-cart.reducer';
+import { formatCurency, encodeId, decodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
-export interface IHomeProp extends StateProps, DispatchProps {}
+export interface IBuyingProp extends StateProps, DispatchProps {
+  location: any;
+  history: any;
+}
 
-export class Buying extends React.Component<IHomeProp> {
+export class Buying extends React.Component<IBuyingProp> {
   componentDidMount() {
-    this.props.getOwnerEntities();
+    if (this.props.location) {
+      const parsed = qs.parse(this.props.location.search);
+      this.props.getOrder(decodeId(parsed.orderid));
+    }
   }
 
-  decreaseQuantity = (item: any) => {
-    // console.log(item);
-  };
-
   render() {
-    const { shoppingCartList, account } = this.props;
+    const { orderCartEntity } = this.props;
     return (
       <>
         <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row border-bottom white-bg dashboard-header">
-            <h4>Chi tiết đơn hàng</h4>
+            <h4>
+              Chi tiết đơn hàng <b>{orderCartEntity.code}</b>
+            </h4>
           </div>
           <div className="row">
             <div className="col-xs-12">
               <div className="row wrapper wrapper-content animated fadeInRight">
-                {this.props.shoppingCartList.length === 0 ? (
+                {orderCartEntity && !orderCartEntity.id ? (
                   <div className="ibox">
                     <div className="ibox-content">
-                      <div className="no-content">Không có hàng trong giỏ</div>
+                      <div className="no-content">Không có hàng</div>
                     </div>
                   </div>
                 ) : (
-                  shoppingCartList.map((shoppingCart, ii) => (
-                    <div key={`entity-${ii}`}>
-                      <div className="col-xs-12 col-md-8">
-                        <div className="ibox float-e-margins">
-                          <div className="ibox-title">
-                            <h5>{`${shoppingCart.aliwangwang}`}</h5>
-                            <div className="ibox-tools">
-                              <span className="label label-warning-light pull-right">
-                                {`${shoppingCart.items.length}`} mặt hàng trong giỏ
-                              </span>
-                            </div>
+                  <div key={`entity`}>
+                    <div className="col-xs-12 col-md-8">
+                      <div className="ibox float-e-margins">
+                        <div className="ibox-title">
+                          <h5>
+                            <a href={orderCartEntity.shopLink}>{`${orderCartEntity.aliwangwang}`}</a>
+                          </h5>
+                          <div className="ibox-tools">
+                            <span className="label label-warning-light pull-right">
+                              {`${orderCartEntity.items && orderCartEntity.items.length}`} mặt hàng trong giỏ
+                            </span>
                           </div>
-                          <div className="ibox-content">
-                            <div>
-                              <div className="feed-activity-list">
-                                {shoppingCart.items.map((item, iy) => (
+                        </div>
+                        <div className="ibox-content">
+                          <div>
+                            <div className="feed-activity-list">
+                              {orderCartEntity.items &&
+                                orderCartEntity.items.map((item, iy) => (
                                   <div className="feed-element" key={`entity-${iy}`}>
-                                    <a href="profile.html" className="pull-left">
+                                    <a href={item.itemLink} className="pull-left">
                                       <img
                                         alt="image"
                                         className="img-circle"
@@ -69,26 +76,18 @@ export class Buying extends React.Component<IHomeProp> {
                                     <div className="media-body ">
                                       <small className="pull-right">
                                         <div className="input-group bootstrap-touchspin">
-                                          <span className="input-group-btn">
-                                            <button className="btn btn-default bootstrap-touchspin-down" type="button">
-                                              -
-                                            </button>
-                                          </span>
                                           <input
                                             type="tel"
                                             className="form-control quantity"
                                             disabled
-                                            min="0"
+                                            min="1"
                                             defaultValue={`${item.quantity}`}
                                           />
-                                          <span className="input-group-btn">
-                                            <button className="btn btn-default bootstrap-touchspin-up" type="button">
-                                              +
-                                            </button>
-                                          </span>
                                         </div>
                                       </small>
-                                      <strong>{`${item.itemName}`}</strong>
+                                      <a href={item.itemLink}>
+                                        <strong>{`${item.itemName}`}</strong>
+                                      </a>
                                       <br />
                                       <small className="text-muted">
                                         Thuộc tính: {`${item.propertiesName}`}({`${item.propertiesType}`})<br />
@@ -99,76 +98,52 @@ export class Buying extends React.Component<IHomeProp> {
                                     </div>
                                   </div>
                                 ))}
-                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="col-xs-12 col-md-4">
-                        <div className="row checkout-cart-detail">
-                          <span className="checkout-cart">
-                            <Link to={`/checkout?shopid=${encodeId(shoppingCart.id)}`}>
-                              <button className="btn btn-primary btn-block">
-                                <i className="fa fa-shopping-cart" /> Đặt hàng
-                              </button>
-                            </Link>
-                          </span>
-                          <ul className="list-group clear-list m-t">
-                            <li className="list-group-item">
-                              <span className="pull-right">
-                                <b>{formatCurency(shoppingCart.totalAmount)}đ</b>
-                              </span>
-                              Tiền hàng:
-                            </li>
-                            <li className="list-group-item">
-                              <span className="pull-right">
-                                <b>{formatCurency(shoppingCart.serviceFee)}đ</b>
-                              </span>
-                              Phí mua hàng:
-                            </li>
-                            <li className="list-group-item">
-                              <span className="pull-right">
-                                <b>{formatCurency(shoppingCart.tallyFee)}đ</b>
-                              </span>
-                              Phí kiểm đếm:
-                            </li>
-                            <li className="list-group-item">
-                              <span className="pull-right">
-                                <b>0đ</b>
-                              </span>
-                              Phí vận chuyển nội địa TQ:
-                            </li>
-                            <li className="list-group-item">
-                              <span className="pull-right">
-                                <b>0đ</b>
-                              </span>
-                              Phí đóng kiện gỗ:
-                            </li>
-                            <li className="list-group-item">
-                              <span className="pull-right">
-                                <b>0đ</b>
-                              </span>
-                              Phí vận chuyển TQ - VN:
-                            </li>
-                            <li className="list-group-item">
-                              <span className="pull-right">
-                                <b>0đ</b>
-                              </span>
-                              Phí vận chuyển nội địa VN:
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="row checkout-cart-detail checkout-cart-total">
-                          <div className="col-xs-8 item">
-                            <h4>Tổng tiền:</h4>
-                          </div>
-                          <div className="col-xs-4 item">
-                            <b>{formatCurency(shoppingCart.finalAmount)}đ</b>
-                          </div>
-                        </div>
+                    </div>
+                    <div className="col-xs-12 col-md-4">
+                      <div className="row checkout-cart-detail">
+                        <span className="checkout-cart">
+                          <button className="btn btn-primary btn-block">
+                            <i className="fa fa-shopping-cart" /> Hoàn tất mua hàng
+                          </button>
+                        </span>
+                        <ul className="list-group clear-list m-t">
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>¥{formatCurency(orderCartEntity.totalAmountNDT)}</b>
+                            </span>
+                            Tiền hàng NDT:
+                          </li>
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>{formatCurency(orderCartEntity.totalAmount)}đ</b>
+                            </span>
+                            Tiền hàng VNĐ:
+                          </li>
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>0đ</b>
+                            </span>
+                            Phí vận chuyển nội địa TQ:
+                          </li>
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>0đ</b>
+                            </span>
+                            Mã đơn hàng trên trang <b className="text-warning">{orderCartEntity.website}</b>:
+                          </li>
+                        </ul>
+                        <span className="checkout-cart">
+                          <button className="btn btn-danger btn-block">
+                            <i className="fa fa-shopping-cart" /> Huỷ đơn hàng
+                          </button>
+                        </span>
                       </div>
                     </div>
-                  ))
+                  </div>
                 )}
               </div>
               <div className="footer">
@@ -189,11 +164,11 @@ export class Buying extends React.Component<IHomeProp> {
 
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
-  shoppingCartList: storeState.shoppingCart.entities,
+  orderCartEntity: storeState.orderCart.entity,
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOwnerEntities };
+const mapDispatchToProps = { getSession, getOrder };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

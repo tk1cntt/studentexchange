@@ -6,9 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.studentexchange.domain.enumeration.CurrencyType;
 import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.CurrencyRateService;
 import vn.studentexchange.service.ShoppingCartService;
+import vn.studentexchange.service.dto.CurrencyRateDTO;
 import vn.studentexchange.service.dto.ShoppingCartDTO;
 import vn.studentexchange.web.rest.errors.BadRequestAlertException;
 import vn.studentexchange.web.rest.util.HeaderUtil;
@@ -102,8 +104,9 @@ public class ShoppingCartResource {
         log.debug("REST request to get owner ShoppingCarts");
         String username = SecurityUtils.getCurrentUserLogin().get();
         List<ShoppingCartDTO> carts = shoppingCartService.findByOwner(username);
+        Optional<CurrencyRateDTO> rate =  currencyRateService.findByCurrency(CurrencyType.CNY);
         for (ShoppingCartDTO dto: carts) {
-            Utils.calculate(dto, currencyRateService);
+            Utils.calculate(dto, rate.get());
         }
         return carts;
     }
@@ -116,7 +119,8 @@ public class ShoppingCartResource {
         if (!dto.isPresent()) {
             return new ArrayList<>();
         }
-        ShoppingCartDTO currentCart = Utils.calculate(dto.get(), currencyRateService);
+        Optional<CurrencyRateDTO> rate =  currencyRateService.findByCurrency(CurrencyType.CNY);
+        ShoppingCartDTO currentCart = Utils.calculate(dto.get(), rate.get());
         List<ShoppingCartDTO> carts = new ArrayList<>();
         carts.add(currentCart);
         return carts;

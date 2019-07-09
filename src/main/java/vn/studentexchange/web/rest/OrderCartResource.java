@@ -3,6 +3,7 @@ package vn.studentexchange.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import vn.studentexchange.domain.enumeration.CurrencyType;
 import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.*;
 import vn.studentexchange.service.dto.*;
@@ -112,12 +113,14 @@ public class OrderCartResource {
         address.append(" - ");
         address.append(shippingAddressDTO.get().getCityName());
         List<OrderCartDTO> orderCarts = new ArrayList<>();
+        Optional<CurrencyRateDTO> rate =  currencyRateService.findByCurrency(CurrencyType.CNY);
         for (ShoppingCartDTO shoppingCartDTO : shoppingCarts) {
-            shoppingCartDTO = Utils.calculate(shoppingCartDTO, currencyRateService);
+            shoppingCartDTO = Utils.calculate(shoppingCartDTO, rate.get());
             OrderCartDTO orderCartDTO = orderCartMapper.toOrderCartDto(shoppingCartDTO);
             orderCartDTO.setId(null); // clear shopping id
             orderCartDTO.setCode(Utils.generateNumber());
             float finalAmount = orderCartDTO.getTotalAmount() + orderCartDTO.getServiceFee() + orderCartDTO.getTallyFee();
+            orderCartDTO.setRate(rate.get().getRate());
             orderCartDTO.setDepositRatio(0.7f);
             orderCartDTO.setDepositAmount((float) Math.ceil(finalAmount * 0.7));
             orderCartDTO.setDepositTime(Instant.now());

@@ -20,7 +20,7 @@ import Footer from 'app/shared/layout/footer/footer';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntities, reset } from 'app/entities/order-cart/order-cart.reducer';
+import { getEntities, searchOrder, updateBuying, reset } from 'app/entities/order-cart/order-cart.reducer';
 import { IOrderCart } from 'app/shared/model/order-cart.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -62,7 +62,13 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
 
   getEntities = () => {
     const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.getEntities(activePage - 1, itemsPerPage, `createAt,asc`);
+    this.props.searchOrder('status.equals=DEPOSITED', activePage - 1, itemsPerPage, `createAt,asc`);
+    // this.props.getEntities(activePage - 1, itemsPerPage, `createAt,asc`);
+  };
+
+  receiveOrderClick = id => {
+    this.props.updateBuying({ id });
+    this.props.history.push(`/staff/buying?orderid=${encodeId(id)}`);
   };
 
   render() {
@@ -73,7 +79,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
-            <h3>Danh sách đơn hàng</h3>
+            <h3>Danh sách đơn hàng chưa được xử lý</h3>
           </div>
           <div className="wrapper wrapper-content animated fadeInRight ecommerce">
             <div className="ibox-content m-b-sm border-bottom">
@@ -130,11 +136,9 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                               </small>
                             </td>
                             <td>
-                              <Link to={`/staff/buying?orderid=${encodeId(orderCart.id)}`}>
-                                <span className="label label-info">
-                                  <i className="fa fa-shopping-cart" /> Mua hàng
-                                </span>
-                              </Link>
+                              <span className="label label-info" onClick={this.receiveOrderClick.bind(this, orderCart.id)}>
+                                <i className="fa fa-angle-double-right" /> Nhận xử lý đơn hàng
+                              </span>
                             </td>
                           </tr>
                         ))}
@@ -179,6 +183,8 @@ const mapStateToProps = ({ orderCart, authentication }: IRootState) => ({
 
 const mapDispatchToProps = {
   getEntities,
+  searchOrder,
+  updateBuying,
   reset
 };
 

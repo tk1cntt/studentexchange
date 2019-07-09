@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction, ICrudSearchAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -109,6 +109,11 @@ export const getEntities: ICrudGetAllAction<IOrderCart> = (page, size, sort) => 
   };
 };
 
+export const searchOrder: ICrudSearchAction<IOrderCart> = (query, page, size, sort) => ({
+  type: ACTION_TYPES.FETCH_ORDERCART_LIST,
+  payload: axios.get<IOrderCart>(`${apiUrl}?${query}&page=${page}&size=${size}&sort=createAt,asc`)
+});
+
 export const getEntity: ICrudGetAction<IOrderCart> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {
@@ -141,9 +146,39 @@ export const getOwnerEntities: ICrudGetAllAction<IOrderCart> = (page, size, sort
 export const updateEntity: ICrudPutAction<IOrderCart> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_ORDERCART,
-    payload: axios.put(apiUrl, cleanEntity(entity))
+    payload: axios.put(apiUrl, cleanEntity(entity)),
+    meta: {
+      successMessage: 'Cập nhật thông tin đơn hàng thành công',
+      errorMessage: 'Cập nhật thông tin đơn hàng thất bại. Xin hãy kiểm tra lại'
+    }
   });
   dispatch(getEntities());
+  return result;
+};
+
+export const updateBuying: ICrudPutAction<IOrderCart> = entity => async dispatch => {
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_ORDERCART,
+    payload: axios.put(`${apiUrl}/buying`, cleanEntity(entity)),
+    meta: {
+      successMessage: 'Cập nhật thông tin người mua thành công',
+      errorMessage: 'Cập nhật thông tin người mua thất bại. Xin hãy kiểm tra lại'
+    }
+  });
+  // dispatch(getEntities());
+  return result;
+};
+
+export const updatePurchased: ICrudPutAction<IOrderCart> = entity => async dispatch => {
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_ORDERCART,
+    payload: axios.put(`${apiUrl}/purchased`, cleanEntity(entity)),
+    meta: {
+      successMessage: 'Mua hàng thành công',
+      errorMessage: 'Mua hàng thất bại. Xin hãy kiểm tra lại'
+    }
+  });
+  // dispatch(getEntities());
   return result;
 };
 

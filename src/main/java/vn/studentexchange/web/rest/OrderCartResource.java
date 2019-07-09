@@ -1,9 +1,13 @@
 package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import vn.studentexchange.domain.User;
 import vn.studentexchange.domain.enumeration.CurrencyType;
+import vn.studentexchange.domain.enumeration.OrderStatus;
+import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.*;
 import vn.studentexchange.service.dto.*;
@@ -61,6 +65,9 @@ public class OrderCartResource {
 
     @Autowired
     private CurrencyRateService currencyRateService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public OrderCartResource(OrderCartService orderCartService, OrderCartQueryService orderCartQueryService, UserShippingAddressService userShippingAddressService, ShoppingCartService shoppingCartService) {
         this.orderCartService = orderCartService;
@@ -124,6 +131,7 @@ public class OrderCartResource {
             orderCartDTO.setDepositRatio(0.7f);
             orderCartDTO.setDepositAmount((float) Math.ceil(finalAmount * 0.7));
             orderCartDTO.setDepositTime(Instant.now());
+            orderCartDTO.setStatus(OrderStatus.DEPOSITED);
             orderCartDTO.setReceiverAddress(address.toString());
             orderCartDTO.setReceiverMobile(shippingAddressDTO.get().getMobile());
             orderCartDTO.setReceiverName(shippingAddressDTO.get().getName());
@@ -135,7 +143,11 @@ public class OrderCartResource {
                 orderItemDTO.setOrderCartId(orderCartDTO.getId());
                 orderItemService.save(SecurityUtils.getCurrentUserLogin().get(), orderItemDTO);
             }
+            // Delete item at shopping cart
             shoppingCartService.delete(shoppingCartDTO.getId());
+            // TODO: Thanh toan hoa don ...
+            // TODO: Update status, log ...
+            // TODO: Huy don hang, hoan tien ...
             orderCarts.add(orderCartDTO);
         }
         return ResponseEntity.ok().body(orderCarts);
@@ -162,6 +174,52 @@ public class OrderCartResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderCartDTO.getId().toString()))
             .body(result);
+    }
+
+    @PutMapping("/order-carts/buying")
+    @Timed
+    public ResponseEntity<OrderCartDTO> updateOrderCartBuying(@RequestBody OrderCartDTO orderCartDTO) throws URISyntaxException {
+        log.debug("REST request to update OrderCart : {}", orderCartDTO);
+        if (orderCartDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        Optional<OrderCartDTO> result = orderCartService.findOne(orderCartDTO.getId());
+        result.ifPresent(order -> {
+            order.setUpdateAt(Instant.now());
+            order.setStatus(OrderStatus.ARE_BUYING);
+            order.setBuyerId(user.get().getId());
+            order.setBuyerLogin(user.get().getLogin());
+            order = orderCartService.save(order);
+        });
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderCartDTO.getId().toString()))
+            .body(result.get());
+    }
+
+    @PutMapping("/order-carts/purchased")
+    @Timed
+    public ResponseEntity<OrderCartDTO> updateOrderCartPurchased(@RequestBody OrderCartDTO orderCartDTO) throws URISyntaxException {
+        log.debug("REST request to update OrderCart : {}", orderCartDTO);
+        if (orderCartDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        Optional<CurrencyRateDTO> rate =  currencyRateService.findByCurrency(CurrencyType.CNY);
+        Optional<OrderCartDTO> result = orderCartService.findOne(orderCartDTO.getId());
+        result.ifPresent(order -> {
+            order.setShippingChinaCode(orderCartDTO.getShippingChinaCode());
+            order.setDomesticShippingChinaFeeNDT(orderCartDTO.getDomesticShippingChinaFeeNDT());
+            order.setDomesticShippingChinaFee(orderCartDTO.getDomesticShippingChinaFeeNDT() * rate.get().getRate());
+            order.setUpdateAt(Instant.now());
+            order.setStatus(OrderStatus.PURCHASED);
+            order.setBuyerId(user.get().getId());
+            order.setBuyerLogin(user.get().getLogin());
+            order = orderCartService.save(order);
+        });
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderCartDTO.getId().toString()))
+            .body(result.get());
     }
 
     /**

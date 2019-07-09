@@ -98,21 +98,25 @@ public class UserBalanceResource {
         UserBalanceDTO result = userBalanceService.save(currentBalance);
         // Add to payment history
         Optional<User> manager = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        createPayment(userBalanceDTO.getCash(), paymentUser.get().getId(),paymentUser.get().getLogin(), currentBalance.getCash(), manager.get().getId(), manager.get().getLogin());
+        return ResponseEntity.ok().body(result);
+    }
+
+    private void createPayment(float cash, long customerId, String customerLogin, float currentBalance, long managerId, String managerLogin) {
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setCode(Utils.generateNumber());
-        paymentDTO.setAmount(userBalanceDTO.getCash());
+        paymentDTO.setAmount(cash);
         paymentDTO.setNote("Nạp tiền vào tài khoản");
         paymentDTO.setMethod(PaymentMethod.BANK_TRANSFER);
         paymentDTO.setType(PaymentType.DEPOSIT);
-        paymentDTO.setNewBalance(currentBalance.getCash());
+        paymentDTO.setNewBalance(currentBalance);
         paymentDTO.setCreateAt(Instant.now());
-        paymentDTO.setCreateById(manager.get().getId());
-        paymentDTO.setCreateByLogin(manager.get().getLogin());
-        paymentDTO.setCustomerId(paymentUser.get().getId());
-        paymentDTO.setCustomerLogin(paymentUser.get().getLogin());
+        paymentDTO.setCreateById(managerId);
+        paymentDTO.setCreateByLogin(managerLogin);
+        paymentDTO.setCustomerId(customerId);
+        paymentDTO.setCustomerLogin(customerLogin);
         paymentDTO.setStatus(PaymentStatusType.PAID);
         paymentService.save(paymentDTO);
-        return ResponseEntity.ok().body(result);
     }
 
     /**

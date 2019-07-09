@@ -52,7 +52,7 @@ export class Buying extends React.Component<IBuyingProp> {
                       <div className="ibox float-e-margins">
                         <div className="ibox-title">
                           <h5>
-                            <a href={orderCartEntity.shopLink}>{`${orderCartEntity.aliwangwang}`}</a>
+                            <a href={orderCartEntity.shopLink} target="_blank">{`${orderCartEntity.aliwangwang}`}</a>
                           </h5>
                           <div className="ibox-tools">
                             <span className="label label-warning-light pull-right">
@@ -66,7 +66,7 @@ export class Buying extends React.Component<IBuyingProp> {
                               {orderCartEntity.items &&
                                 orderCartEntity.items.map((item, iy) => (
                                   <div className="feed-element" key={`entity-${iy}`}>
-                                    <a href={item.itemLink} className="pull-left">
+                                    <a href={item.itemLink} className="pull-left" target="_blank">
                                       <img
                                         alt="image"
                                         className="img-circle"
@@ -85,7 +85,7 @@ export class Buying extends React.Component<IBuyingProp> {
                                           />
                                         </div>
                                       </small>
-                                      <a href={item.itemLink}>
+                                      <a href={item.itemLink} target="_blank">
                                         <strong>{`${item.itemName}`}</strong>
                                       </a>
                                       <br />
@@ -107,10 +107,16 @@ export class Buying extends React.Component<IBuyingProp> {
                       <div className="row checkout-cart-detail">
                         <span className="checkout-cart">
                           <button className="btn btn-primary btn-block">
-                            <i className="fa fa-shopping-cart" /> Hoàn tất mua hàng
+                            <i className="fa fa-check" /> Hoàn tất mua hàng
                           </button>
                         </span>
                         <ul className="list-group clear-list m-t">
+                          <li className="list-group-item">
+                            <span className="pull-right">
+                              <b>¥{formatCurency(orderCartEntity.rate)}</b>
+                            </span>
+                            Tỷ giá của đơn hàng:
+                          </li>
                           <li className="list-group-item">
                             <span className="pull-right">
                               <b>¥{formatCurency(orderCartEntity.totalAmountNDT)}</b>
@@ -118,27 +124,23 @@ export class Buying extends React.Component<IBuyingProp> {
                             Tiền hàng NDT:
                           </li>
                           <li className="list-group-item">
-                            <span className="pull-right">
-                              <b>{formatCurency(orderCartEntity.totalAmount)}đ</b>
-                            </span>
-                            Tiền hàng VNĐ:
+                            <div className="form-group">
+                              <label>Phí vận chuyển nội địa TQ</label>
+                              <input type="text" placeholder="Nhập phí vận chuyển" className="form-control" />
+                            </div>
                           </li>
                           <li className="list-group-item">
-                            <span className="pull-right">
-                              <b>0đ</b>
-                            </span>
-                            Phí vận chuyển nội địa TQ:
-                          </li>
-                          <li className="list-group-item">
-                            <span className="pull-right">
-                              <b>0đ</b>
-                            </span>
-                            Mã đơn hàng trên trang <b className="text-warning">{orderCartEntity.website}</b>:
+                            <div className="form-group">
+                              <label>
+                                Mã đơn hàng trên trang <b className="text-warning">{orderCartEntity.website}</b>
+                              </label>
+                              <input type="text" placeholder="Nhập mã đơn hàng" className="form-control" />
+                            </div>
                           </li>
                         </ul>
                         <span className="checkout-cart">
                           <button className="btn btn-danger btn-block">
-                            <i className="fa fa-shopping-cart" /> Huỷ đơn hàng
+                            <i className="fa fa-window-close" /> Huỷ đơn hàng
                           </button>
                         </span>
                       </div>

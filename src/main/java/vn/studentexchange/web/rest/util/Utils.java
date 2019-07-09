@@ -108,6 +108,7 @@ public final class Utils {
         currentCart.setTallyFee(tallyFee);
         currentCart.setServiceFee(serviceFee);
         currentCart.setTotalAmount(totalAmount);
+        currentCart.setTotalAmountNDT(totalAmountNDT);
         currentCart.setTotalQuantity(totalQuantity);
         currentCart.setFinalAmount(finalAmount);
         return currentCart;

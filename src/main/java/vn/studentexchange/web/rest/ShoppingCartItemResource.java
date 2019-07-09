@@ -59,6 +59,32 @@ public class ShoppingCartItemResource {
             .body(result);
     }
 
+    @PutMapping("/shopping-cart-items/decrease")
+    @Timed
+    public ResponseEntity<ShoppingCartItemDTO> decreaseQuantity(@RequestBody ShoppingCartItemDTO shoppingCartItemDTO) throws URISyntaxException {
+        log.debug("REST request to save ShoppingCartItem : {}", shoppingCartItemDTO);
+        if (shoppingCartItemDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        ShoppingCartItemDTO result = shoppingCartItemService.saveUpdate(shoppingCartItemDTO.getId(), -1);
+        return ResponseEntity.created(new URI("/api/shopping-cart-items/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    @PutMapping("/shopping-cart-items/increase")
+    @Timed
+    public ResponseEntity<ShoppingCartItemDTO> increaseQuantity(@RequestBody ShoppingCartItemDTO shoppingCartItemDTO) throws URISyntaxException {
+        log.debug("REST request to save ShoppingCartItem : {}", shoppingCartItemDTO);
+        if (shoppingCartItemDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        ShoppingCartItemDTO result = shoppingCartItemService.saveUpdate(shoppingCartItemDTO.getId(), 1);
+        return ResponseEntity.created(new URI("/api/shopping-cart-items/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
     /**
      * PUT  /shopping-cart-items : Updates an existing shoppingCartItem.
      *

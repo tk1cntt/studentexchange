@@ -6,6 +6,7 @@ import { Checkbox } from 'antd';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getOwnerEntities, reset } from 'app/entities/shopping-cart/shopping-cart.reducer';
+import { decreaseQuantity, increaseQuantity } from 'app/entities/shopping-cart-item/shopping-cart-item.reducer';
 import { formatCurency, encodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
@@ -22,8 +23,12 @@ export class Cart extends React.Component<IHomeProp> {
     this.props.reset();
   }
 
-  decreaseQuantity = (item: any) => {
-    // console.log(item);
+  decreaseQuantityClick = (id: number) => {
+    this.props.decreaseQuantity({ id });
+  };
+
+  increaseQuantityClick = (id: number) => {
+    this.props.increaseQuantity({ id });
   };
 
   render() {
@@ -78,13 +83,22 @@ export class Cart extends React.Component<IHomeProp> {
                                       <small className="pull-right">
                                         <div className="input-group bootstrap-touchspin">
                                           <span className="input-group-btn">
-                                            <button className="btn btn-default bootstrap-touchspin-down" type="button">
+                                            <button
+                                              className="btn btn-default bootstrap-touchspin-down"
+                                              disabled={item.quantity > 1 ? false : true}
+                                              onClick={this.decreaseQuantityClick.bind(this, item.id)}
+                                              type="button"
+                                            >
                                               -
                                             </button>
                                           </span>
-                                          <input type="tel" className="form-control quantity" min="0" defaultValue={`${item.quantity}`} />
+                                          <input type="tel" className="form-control quantity" disabled min="1" value={`${item.quantity}`} />
                                           <span className="input-group-btn">
-                                            <button className="btn btn-default bootstrap-touchspin-up" type="button">
+                                            <button
+                                              className="btn btn-default bootstrap-touchspin-up"
+                                              onClick={this.increaseQuantityClick.bind(this, item.id)}
+                                              type="button"
+                                            >
                                               +
                                             </button>
                                           </span>
@@ -195,7 +209,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOwnerEntities, reset };
+const mapDispatchToProps = { getSession, getOwnerEntities, reset, decreaseQuantity, increaseQuantity };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

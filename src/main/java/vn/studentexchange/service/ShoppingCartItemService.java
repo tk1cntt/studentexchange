@@ -48,6 +48,12 @@ public class ShoppingCartItemService {
         return shoppingCartItemMapper.toDto(shoppingCartItem);
     }
 
+    public ShoppingCartItemDTO saveUpdate(long id, int quantity) {
+        Optional<ShoppingCartItem> item = shoppingCartItemRepository.findById(id);
+        item.get().setQuantity(item.get().getQuantity() + quantity);
+        return shoppingCartItemMapper.toDto(item.get());
+    }
+
     /**
      * Get all the shoppingCartItems.
      *

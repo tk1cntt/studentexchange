@@ -30,11 +30,7 @@ export class Buying extends React.Component<IHomeProp> {
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row border-bottom white-bg dashboard-header">
-            <Link to={'/checkout'}>
-              <button className="btn btn-primary btn-block m-t checkout-cart">
-                <i className="fa fa-shopping-cart" /> Đặt tất cả hàng
-              </button>
-            </Link>
+            <h4>Chi tiết đơn hàng</h4>
           </div>
           <div className="row">
             <div className="col-xs-12">
@@ -78,7 +74,13 @@ export class Buying extends React.Component<IHomeProp> {
                                               -
                                             </button>
                                           </span>
-                                          <input type="tel" className="form-control quantity" min="0" defaultValue={`${item.quantity}`} />
+                                          <input
+                                            type="tel"
+                                            className="form-control quantity"
+                                            disabled
+                                            min="0"
+                                            defaultValue={`${item.quantity}`}
+                                          />
                                           <span className="input-group-btn">
                                             <button className="btn btn-default bootstrap-touchspin-up" type="button">
                                               +

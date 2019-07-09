@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IShoppingCartItem, defaultValue } from 'app/shared/model/shopping-cart-item.model';
+import { getOwnerEntities as getOwnerShoppingCart } from 'app/entities/shopping-cart/shopping-cart.reducer';
 
 export const ACTION_TYPES = {
   FETCH_SHOPPINGCARTITEM_LIST: 'shoppingCartItem/FETCH_SHOPPINGCARTITEM_LIST',
@@ -135,6 +136,24 @@ export const updateEntity: ICrudPutAction<IShoppingCartItem> = entity => async d
     payload: axios.put(apiUrl, cleanEntity(entity))
   });
   dispatch(getEntities());
+  return result;
+};
+
+export const decreaseQuantity: ICrudPutAction<IShoppingCartItem> = entity => async dispatch => {
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_SHOPPINGCARTITEM,
+    payload: axios.put(`${apiUrl}/decrease`, cleanEntity(entity))
+  });
+  dispatch(getOwnerShoppingCart());
+  return result;
+};
+
+export const increaseQuantity: ICrudPutAction<IShoppingCartItem> = entity => async dispatch => {
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_SHOPPINGCARTITEM,
+    payload: axios.put(`${apiUrl}/increase`, cleanEntity(entity))
+  });
+  dispatch(getOwnerShoppingCart());
   return result;
 };
 

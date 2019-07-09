@@ -7,8 +7,9 @@ import { Modal, Select } from 'antd';
 import qs from 'query-string';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getEntity as getOrder, updateEntity as updateOrder } from 'app/entities/order-cart/order-cart.reducer';
+import { getEntity as getOrder, updatePurchased } from 'app/entities/order-cart/order-cart.reducer';
 import { formatCurency, encodeId, decodeId } from 'app/shared/util/utils';
+import { OrderStatus } from 'app/shared/model/order-cart.model';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
@@ -55,12 +56,20 @@ export class Buying extends React.Component<IBuyingProp> {
   };
 
   doFinishOrder = () => {
-    const entity = {
-      id: this.props.orderCartEntity.id,
-      domesticShippingChinaFeeNDT: this.state.domesticShippingChinaFeeNDT,
-      shippingChinaCode: this.state.shippingChinaCode
-    };
-    this.props.updateOrder(entity);
+    if (!this.state.shippingChinaCode) {
+      Modal.error({
+        title: 'Cảnh báo',
+        content: `Hãy  nhập mã đơn hàng trên trang ${this.props.orderCartEntity.website}`
+      });
+    } else {
+      const entity = {
+        id: this.props.orderCartEntity.id,
+        domesticShippingChinaFeeNDT: this.state.domesticShippingChinaFeeNDT,
+        shippingChinaCode: this.state.shippingChinaCode
+      };
+      this.props.updatePurchased(entity);
+      this.props.history.push('/staff/order-purchased');
+    }
   };
 
   showCancelOrder = () => {
@@ -100,6 +109,12 @@ export class Buying extends React.Component<IBuyingProp> {
                   <div className="ibox">
                     <div className="ibox-content">
                       <div className="no-content">Không có hàng</div>
+                    </div>
+                  </div>
+                ) : orderCartEntity.status !== OrderStatus.ARE_BUYING ? (
+                  <div className="ibox">
+                    <div className="ibox-content">
+                      <div className="no-content">Đơn hàng đã được xử lý</div>
                     </div>
                   </div>
                 ) : (
@@ -258,7 +273,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOrder, updateOrder };
+const mapDispatchToProps = { getSession, getOrder, updatePurchased };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

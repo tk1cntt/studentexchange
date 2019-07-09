@@ -20,7 +20,7 @@ import Footer from 'app/shared/layout/footer/footer';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntities, searchOrder, updateBuying, reset } from 'app/entities/order-cart/order-cart.reducer';
+import { getEntities, searchOrder, reset } from 'app/entities/order-cart/order-cart.reducer';
 import { IOrderCart } from 'app/shared/model/order-cart.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -62,24 +62,24 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
 
   getEntities = () => {
     const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.searchOrder('status.equals=DEPOSITED', activePage - 1, itemsPerPage, `createAt,asc`);
+    this.props.searchOrder(
+      `status.equals=PURCHASED&buyerLogin.equals=${this.props.account.login}`,
+      activePage - 1,
+      itemsPerPage,
+      `createAt,asc`
+    );
     // this.props.getEntities(activePage - 1, itemsPerPage, `createAt,asc`);
-  };
-
-  receiveOrderClick = id => {
-    this.props.updateBuying({ id });
-    this.props.history.push(`/staff/buying?orderid=${encodeId(id)}`);
   };
 
   render() {
     const { orderCartList, match, totalItems } = this.props;
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-management" activeSubMenu="order-pending" />
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-management" activeSubMenu="order-purchased" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
-            <h3>Danh sách đơn hàng chưa được xử lý</h3>
+            <h3>Danh sách đơn hàng</h3>
           </div>
           <div className="wrapper wrapper-content animated fadeInRight ecommerce">
             <div className="ibox-content m-b-sm border-bottom">
@@ -121,7 +121,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                           <th>Khách hàng</th>
                           <th>Tổng tiền</th>
                           <th>Ngày đặt</th>
-                          <th />
+                          <th>Trạng thái</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -136,9 +136,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                               </small>
                             </td>
                             <td>
-                              <span className="label label-info" onClick={this.receiveOrderClick.bind(this, orderCart.id)}>
-                                <i className="fa fa-angle-double-right" /> Nhận xử lý đơn hàng
-                              </span>
+                              <span className="label label-info">Đã mua hàng</span>
                             </td>
                           </tr>
                         ))}
@@ -176,6 +174,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
 }
 
 const mapStateToProps = ({ orderCart, authentication }: IRootState) => ({
+  account: authentication.account,
   orderCartList: orderCart.entities,
   totalItems: orderCart.totalItems,
   isAuthenticated: authentication.isAuthenticated
@@ -184,7 +183,6 @@ const mapStateToProps = ({ orderCart, authentication }: IRootState) => ({
 const mapDispatchToProps = {
   getEntities,
   searchOrder,
-  updateBuying,
   reset
 };
 

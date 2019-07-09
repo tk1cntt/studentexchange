@@ -77,18 +77,23 @@ export class Sidebar extends React.Component<ISidebarProps> {
     if (!isStaff) return '';
     return (
       <li className={`${activeMenu === 'order-management' ? 'active' : ''}`}>
-        <Link to={'/staff/order-pending'}>
+        <Link to={'/staff/order-deposited'}>
           <i className="fa fa-gift" /> <span className="nav-label">Quản lý đơn hàng</span> <span className="fa arrow" />
         </Link>
         <ul className={`${activeMenu === 'order-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
-          <li className={`${activeSubMenu === 'order-pending' ? 'active' : ''}`}>
-            <Link to={'/staff/order-pending'}>
+          <li className={`${activeSubMenu === 'order-deposited' ? 'active' : ''}`}>
+            <Link to={'/staff/order-deposited'}>
               <i className="fa fa-sign-in" /> Đơn hàng chưa xử lý
             </Link>
           </li>
-          <li className={`${activeSubMenu === 'order-deposit' ? 'active' : ''}`}>
-            <Link to={'/staff/order-deposit'}>
+          <li className={`${activeSubMenu === 'order-buying' ? 'active' : ''}`}>
+            <Link to={'/staff/order-buying'}>
               <i className="fa fa-exchange" /> Đơn hàng bạn đã nhận
+            </Link>
+          </li>
+          <li className={`${activeSubMenu === 'order-purchased' ? 'active' : ''}`}>
+            <Link to={'/staff/order-purchased'}>
+              <i className="fa fa-check-circle" /> Đơn hàng đã xử lý
             </Link>
           </li>
         </ul>

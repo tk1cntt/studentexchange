@@ -75,7 +75,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
     const { orderCartList, match, totalItems } = this.props;
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-management" activeSubMenu="order-deposit" />
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-management" activeSubMenu="order-buying" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
@@ -121,7 +121,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                           <th>Khách hàng</th>
                           <th>Tổng tiền</th>
                           <th>Ngày đặt</th>
-                          <th>Trạng thái</th>
+                          <th />
                         </tr>
                       </thead>
                       <tbody>

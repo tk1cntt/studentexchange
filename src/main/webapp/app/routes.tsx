@@ -9,6 +9,7 @@ import Order from 'app/modules/user/order/order';
 import Checkout from 'app/modules/user/checkout/checkout';
 import Payment from 'app/modules/user/payment/payment';
 import Management from 'app/modules/management';
+import Checking from 'app/modules/checking';
 import Staff from 'app/modules/staff';
 import Register from 'app/modules/account/register/register';
 import Activate from 'app/modules/account/activate/activate';
@@ -46,6 +47,7 @@ const Routes = () => (
       <PrivateRoute path="/checkout" component={Checkout} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/payment" component={Payment} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/management" component={Management} hasAnyAuthorities={[AUTHORITIES.MANAGER]} />
+      <PrivateRoute path="/checking" component={Checking} hasAnyAuthorities={[AUTHORITIES.STAFF]} />
       <PrivateRoute path="/staff" component={Staff} hasAnyAuthorities={[AUTHORITIES.STAFF]} />
 
       <ErrorBoundaryRoute path="/" component={Home} />

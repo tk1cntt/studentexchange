@@ -148,7 +148,6 @@ public class AccountResource {
             meURL.append(fbAccountDTO.getAccessToken());
             meURL.append("&appsecret_proof=");
             meURL.append(Utils.encode("a81ddcb2220085e41f9ec7b38bb6fd16", fbAccountDTO.getAccessToken()));
-            System.out.println(meURL);
             fbAccountDTO = getHttpGetResponse(meURL);
             // 2. Create account if ok
             if (fbAccountDTO.getCode() == 200) {
@@ -193,8 +192,6 @@ public class AccountResource {
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(tokenExchangeURL.toString());
         HttpResponse response = client.execute(request);
-        System.out.println("Response Code : "
-            + response.getStatusLine().getStatusCode());
         String result = IOUtils.toString(response.getEntity().getContent(), "utf-8");
         FBAccountDTO fbAccountDTO = mapper.readValue(result, FBAccountDTO.class);
         fbAccountDTO.setCode(response.getStatusLine().getStatusCode());

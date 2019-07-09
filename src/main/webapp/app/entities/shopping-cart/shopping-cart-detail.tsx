@@ -119,6 +119,12 @@ export class ShoppingCartDetail extends React.Component<IShoppingCartDetailProps
             </dt>
             <dd>{shoppingCartEntity.totalAmount}</dd>
             <dt>
+              <span id="totalAmountNDT">
+                <Translate contentKey="studentexchangeApp.shoppingCart.totalAmountNDT">Total Amount NDT</Translate>
+              </span>
+            </dt>
+            <dd>{shoppingCartEntity.totalAmountNDT}</dd>
+            <dt>
               <span id="totalQuantity">
                 <Translate contentKey="studentexchangeApp.shoppingCart.totalQuantity">Total Quantity</Translate>
               </span>

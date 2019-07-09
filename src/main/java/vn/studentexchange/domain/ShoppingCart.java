@@ -69,6 +69,9 @@ public class ShoppingCart implements Serializable {
     @Column(name = "total_amount")
     private Float totalAmount;
 
+    @Column(name = "total_amount_ndt")
+    private Float totalAmountNDT;
+
     @Column(name = "total_quantity")
     private Integer totalQuantity;
 
@@ -295,6 +298,19 @@ public class ShoppingCart implements Serializable {
         this.totalAmount = totalAmount;
     }
 
+    public Float getTotalAmountNDT() {
+        return totalAmountNDT;
+    }
+
+    public ShoppingCart totalAmountNDT(Float totalAmountNDT) {
+        this.totalAmountNDT = totalAmountNDT;
+        return this;
+    }
+
+    public void setTotalAmountNDT(Float totalAmountNDT) {
+        this.totalAmountNDT = totalAmountNDT;
+    }
+
     public Integer getTotalQuantity() {
         return totalQuantity;
     }
@@ -438,6 +454,7 @@ public class ShoppingCart implements Serializable {
             ", website='" + getWebsite() + "'" +
             ", tallyFee=" + getTallyFee() +
             ", totalAmount=" + getTotalAmount() +
+            ", totalAmountNDT=" + getTotalAmountNDT() +
             ", totalQuantity=" + getTotalQuantity() +
             ", finalAmount=" + getFinalAmount() +
             ", createAt='" + getCreateAt() + "'" +

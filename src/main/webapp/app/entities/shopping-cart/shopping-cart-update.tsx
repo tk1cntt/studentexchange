@@ -191,6 +191,12 @@ export class ShoppingCartUpdate extends React.Component<IShoppingCartUpdateProps
                   <AvField id="shopping-cart-totalAmount" type="string" className="form-control" name="totalAmount" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="totalAmountNDTLabel" for="totalAmountNDT">
+                    <Translate contentKey="studentexchangeApp.shoppingCart.totalAmountNDT">Total Amount NDT</Translate>
+                  </Label>
+                  <AvField id="shopping-cart-totalAmountNDT" type="string" className="form-control" name="totalAmountNDT" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="totalQuantityLabel" for="totalQuantity">
                     <Translate contentKey="studentexchangeApp.shoppingCart.totalQuantity">Total Quantity</Translate>
                   </Label>

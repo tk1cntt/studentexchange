@@ -84,6 +84,9 @@ export class ShoppingCart extends React.Component<IShoppingCartProps> {
                   <Translate contentKey="studentexchangeApp.shoppingCart.totalAmount">Total Amount</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="studentexchangeApp.shoppingCart.totalAmountNDT">Total Amount NDT</Translate>
+                </th>
+                <th>
                   <Translate contentKey="studentexchangeApp.shoppingCart.totalQuantity">Total Quantity</Translate>
                 </th>
                 <th>
@@ -127,6 +130,7 @@ export class ShoppingCart extends React.Component<IShoppingCartProps> {
                   <td>{shoppingCart.website}</td>
                   <td>{shoppingCart.tallyFee}</td>
                   <td>{shoppingCart.totalAmount}</td>
+                  <td>{shoppingCart.totalAmountNDT}</td>
                   <td>{shoppingCart.totalQuantity}</td>
                   <td>{shoppingCart.finalAmount}</td>
                   <td>

@@ -328,6 +328,7 @@ entity ShoppingCart {
    website String,
    tallyFee Float,
    totalAmount Float,
+   totalAmountNDT Float,
    totalQuantity Integer,
    finalAmount Float,
    createAt Instant,

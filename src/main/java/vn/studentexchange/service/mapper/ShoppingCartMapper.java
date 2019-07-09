@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import vn.studentexchange.domain.ShoppingCart;
+import vn.studentexchange.domain.*;
 import vn.studentexchange.service.dto.ShoppingCartDTO;
+
+import org.mapstruct.*;
 
 /**
  * Mapper for the entity ShoppingCart and its DTO ShoppingCartDTO.

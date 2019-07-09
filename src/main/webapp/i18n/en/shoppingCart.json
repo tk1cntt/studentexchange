@@ -30,6 +30,7 @@
       "website": "Website",
       "tallyFee": "Tally Fee",
       "totalAmount": "Total Amount",
+      "totalAmountNDT": "Total Amount NDT",
       "totalQuantity": "Total Quantity",
       "finalAmount": "Final Amount",
       "createAt": "Create At",

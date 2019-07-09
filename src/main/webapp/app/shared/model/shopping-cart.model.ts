@@ -18,6 +18,7 @@ export interface IShoppingCart {
   website?: string;
   tallyFee?: number;
   totalAmount?: number;
+  totalAmountNDT?: number;
   totalQuantity?: number;
   finalAmount?: number;
   createAt?: Moment;

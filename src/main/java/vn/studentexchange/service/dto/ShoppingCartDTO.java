@@ -43,6 +43,8 @@ public class ShoppingCartDTO implements Serializable {
 
     private Float totalAmount;
 
+    private Float totalAmountNDT;
+
     private Integer totalQuantity;
 
     private Float finalAmount;
@@ -189,6 +191,14 @@ public class ShoppingCartDTO implements Serializable {
         this.totalAmount = totalAmount;
     }
 
+    public Float getTotalAmountNDT() {
+        return totalAmountNDT;
+    }
+
+    public void setTotalAmountNDT(Float totalAmountNDT) {
+        this.totalAmountNDT = totalAmountNDT;
+    }
+
     public Integer getTotalQuantity() {
         return totalQuantity;
     }
@@ -293,6 +303,7 @@ public class ShoppingCartDTO implements Serializable {
             ", website='" + getWebsite() + "'" +
             ", tallyFee=" + getTallyFee() +
             ", totalAmount=" + getTotalAmount() +
+            ", totalAmountNDT=" + getTotalAmountNDT() +
             ", totalQuantity=" + getTotalQuantity() +
             ", finalAmount=" + getFinalAmount() +
             ", createAt='" + getCreateAt() + "'" +

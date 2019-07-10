@@ -183,6 +183,9 @@ public class OrderCartResourceIntTest {
     private static final Float DEFAULT_TOTAL_AMOUNT_NDT = 1F;
     private static final Float UPDATED_TOTAL_AMOUNT_NDT = 2F;
 
+    private static final Float DEFAULT_TOTAL_AMOUNT_CHINA_NDT = 1F;
+    private static final Float UPDATED_TOTAL_AMOUNT_CHINA_NDT = 2F;
+
     private static final Float DEFAULT_TOTAL_PAID_BY_CUSTOMER = 1F;
     private static final Float UPDATED_TOTAL_PAID_BY_CUSTOMER = 2F;
 
@@ -238,7 +241,7 @@ public class OrderCartResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OrderCartResource orderCartResource = new OrderCartResource(orderCartService, orderCartQueryService, userShippingAddressService, shoppingCartService);
+        final OrderCartResource orderCartResource = new OrderCartResource(orderCartService, orderCartQueryService);
         this.restOrderCartMockMvc = MockMvcBuilders.standaloneSetup(orderCartResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -295,6 +298,7 @@ public class OrderCartResourceIntTest {
             .tallyFee(DEFAULT_TALLY_FEE)
             .totalAmount(DEFAULT_TOTAL_AMOUNT)
             .totalAmountNDT(DEFAULT_TOTAL_AMOUNT_NDT)
+            .totalAmountChinaNDT(DEFAULT_TOTAL_AMOUNT_CHINA_NDT)
             .totalPaidByCustomer(DEFAULT_TOTAL_PAID_BY_CUSTOMER)
             .totalServiceFee(DEFAULT_TOTAL_SERVICE_FEE)
             .totalQuantity(DEFAULT_TOTAL_QUANTITY)
@@ -366,6 +370,7 @@ public class OrderCartResourceIntTest {
         assertThat(testOrderCart.getTallyFee()).isEqualTo(DEFAULT_TALLY_FEE);
         assertThat(testOrderCart.getTotalAmount()).isEqualTo(DEFAULT_TOTAL_AMOUNT);
         assertThat(testOrderCart.getTotalAmountNDT()).isEqualTo(DEFAULT_TOTAL_AMOUNT_NDT);
+        assertThat(testOrderCart.getTotalAmountChinaNDT()).isEqualTo(DEFAULT_TOTAL_AMOUNT_CHINA_NDT);
         assertThat(testOrderCart.getTotalPaidByCustomer()).isEqualTo(DEFAULT_TOTAL_PAID_BY_CUSTOMER);
         assertThat(testOrderCart.getTotalServiceFee()).isEqualTo(DEFAULT_TOTAL_SERVICE_FEE);
         assertThat(testOrderCart.getTotalQuantity()).isEqualTo(DEFAULT_TOTAL_QUANTITY);
@@ -446,6 +451,7 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.[*].tallyFee").value(hasItem(DEFAULT_TALLY_FEE.doubleValue())))
             .andExpect(jsonPath("$.[*].totalAmount").value(hasItem(DEFAULT_TOTAL_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].totalAmountNDT").value(hasItem(DEFAULT_TOTAL_AMOUNT_NDT.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalAmountChinaNDT").value(hasItem(DEFAULT_TOTAL_AMOUNT_CHINA_NDT.doubleValue())))
             .andExpect(jsonPath("$.[*].totalPaidByCustomer").value(hasItem(DEFAULT_TOTAL_PAID_BY_CUSTOMER.doubleValue())))
             .andExpect(jsonPath("$.[*].totalServiceFee").value(hasItem(DEFAULT_TOTAL_SERVICE_FEE.doubleValue())))
             .andExpect(jsonPath("$.[*].totalQuantity").value(hasItem(DEFAULT_TOTAL_QUANTITY)))
@@ -453,7 +459,7 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.[*].createAt").value(hasItem(DEFAULT_CREATE_AT.toString())))
             .andExpect(jsonPath("$.[*].updateAt").value(hasItem(DEFAULT_UPDATE_AT.toString())));
     }
-
+    
     @Test
     @Transactional
     public void getOrderCart() throws Exception {
@@ -506,6 +512,7 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.tallyFee").value(DEFAULT_TALLY_FEE.doubleValue()))
             .andExpect(jsonPath("$.totalAmount").value(DEFAULT_TOTAL_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.totalAmountNDT").value(DEFAULT_TOTAL_AMOUNT_NDT.doubleValue()))
+            .andExpect(jsonPath("$.totalAmountChinaNDT").value(DEFAULT_TOTAL_AMOUNT_CHINA_NDT.doubleValue()))
             .andExpect(jsonPath("$.totalPaidByCustomer").value(DEFAULT_TOTAL_PAID_BY_CUSTOMER.doubleValue()))
             .andExpect(jsonPath("$.totalServiceFee").value(DEFAULT_TOTAL_SERVICE_FEE.doubleValue()))
             .andExpect(jsonPath("$.totalQuantity").value(DEFAULT_TOTAL_QUANTITY))
@@ -2223,6 +2230,45 @@ public class OrderCartResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllOrderCartsByTotalAmountChinaNDTIsEqualToSomething() throws Exception {
+        // Initialize the database
+        orderCartRepository.saveAndFlush(orderCart);
+
+        // Get all the orderCartList where totalAmountChinaNDT equals to DEFAULT_TOTAL_AMOUNT_CHINA_NDT
+        defaultOrderCartShouldBeFound("totalAmountChinaNDT.equals=" + DEFAULT_TOTAL_AMOUNT_CHINA_NDT);
+
+        // Get all the orderCartList where totalAmountChinaNDT equals to UPDATED_TOTAL_AMOUNT_CHINA_NDT
+        defaultOrderCartShouldNotBeFound("totalAmountChinaNDT.equals=" + UPDATED_TOTAL_AMOUNT_CHINA_NDT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOrderCartsByTotalAmountChinaNDTIsInShouldWork() throws Exception {
+        // Initialize the database
+        orderCartRepository.saveAndFlush(orderCart);
+
+        // Get all the orderCartList where totalAmountChinaNDT in DEFAULT_TOTAL_AMOUNT_CHINA_NDT or UPDATED_TOTAL_AMOUNT_CHINA_NDT
+        defaultOrderCartShouldBeFound("totalAmountChinaNDT.in=" + DEFAULT_TOTAL_AMOUNT_CHINA_NDT + "," + UPDATED_TOTAL_AMOUNT_CHINA_NDT);
+
+        // Get all the orderCartList where totalAmountChinaNDT equals to UPDATED_TOTAL_AMOUNT_CHINA_NDT
+        defaultOrderCartShouldNotBeFound("totalAmountChinaNDT.in=" + UPDATED_TOTAL_AMOUNT_CHINA_NDT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOrderCartsByTotalAmountChinaNDTIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        orderCartRepository.saveAndFlush(orderCart);
+
+        // Get all the orderCartList where totalAmountChinaNDT is not null
+        defaultOrderCartShouldBeFound("totalAmountChinaNDT.specified=true");
+
+        // Get all the orderCartList where totalAmountChinaNDT is null
+        defaultOrderCartShouldNotBeFound("totalAmountChinaNDT.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllOrderCartsByTotalPaidByCustomerIsEqualToSomething() throws Exception {
         // Initialize the database
         orderCartRepository.saveAndFlush(orderCart);
@@ -2739,6 +2785,7 @@ public class OrderCartResourceIntTest {
             .andExpect(jsonPath("$.[*].tallyFee").value(hasItem(DEFAULT_TALLY_FEE.doubleValue())))
             .andExpect(jsonPath("$.[*].totalAmount").value(hasItem(DEFAULT_TOTAL_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].totalAmountNDT").value(hasItem(DEFAULT_TOTAL_AMOUNT_NDT.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalAmountChinaNDT").value(hasItem(DEFAULT_TOTAL_AMOUNT_CHINA_NDT.doubleValue())))
             .andExpect(jsonPath("$.[*].totalPaidByCustomer").value(hasItem(DEFAULT_TOTAL_PAID_BY_CUSTOMER.doubleValue())))
             .andExpect(jsonPath("$.[*].totalServiceFee").value(hasItem(DEFAULT_TOTAL_SERVICE_FEE.doubleValue())))
             .andExpect(jsonPath("$.[*].totalQuantity").value(hasItem(DEFAULT_TOTAL_QUANTITY)))
@@ -2833,6 +2880,7 @@ public class OrderCartResourceIntTest {
             .tallyFee(UPDATED_TALLY_FEE)
             .totalAmount(UPDATED_TOTAL_AMOUNT)
             .totalAmountNDT(UPDATED_TOTAL_AMOUNT_NDT)
+            .totalAmountChinaNDT(UPDATED_TOTAL_AMOUNT_CHINA_NDT)
             .totalPaidByCustomer(UPDATED_TOTAL_PAID_BY_CUSTOMER)
             .totalServiceFee(UPDATED_TOTAL_SERVICE_FEE)
             .totalQuantity(UPDATED_TOTAL_QUANTITY)
@@ -2891,6 +2939,7 @@ public class OrderCartResourceIntTest {
         assertThat(testOrderCart.getTallyFee()).isEqualTo(UPDATED_TALLY_FEE);
         assertThat(testOrderCart.getTotalAmount()).isEqualTo(UPDATED_TOTAL_AMOUNT);
         assertThat(testOrderCart.getTotalAmountNDT()).isEqualTo(UPDATED_TOTAL_AMOUNT_NDT);
+        assertThat(testOrderCart.getTotalAmountChinaNDT()).isEqualTo(UPDATED_TOTAL_AMOUNT_CHINA_NDT);
         assertThat(testOrderCart.getTotalPaidByCustomer()).isEqualTo(UPDATED_TOTAL_PAID_BY_CUSTOMER);
         assertThat(testOrderCart.getTotalServiceFee()).isEqualTo(UPDATED_TOTAL_SERVICE_FEE);
         assertThat(testOrderCart.getTotalQuantity()).isEqualTo(UPDATED_TOTAL_QUANTITY);

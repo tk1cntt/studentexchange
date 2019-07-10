@@ -226,6 +226,10 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                   <Translate contentKey="studentexchangeApp.orderCart.totalAmountNDT">Total Amount NDT</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={this.sort('totalAmountChinaNDT')}>
+                  <Translate contentKey="studentexchangeApp.orderCart.totalAmountChinaNDT">Total Amount China NDT</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={this.sort('totalPaidByCustomer')}>
                   <Translate contentKey="studentexchangeApp.orderCart.totalPaidByCustomer">Total Paid By Customer</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
@@ -323,6 +327,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                   <td>{orderCart.tallyFee}</td>
                   <td>{orderCart.totalAmount}</td>
                   <td>{orderCart.totalAmountNDT}</td>
+                  <td>{orderCart.totalAmountChinaNDT}</td>
                   <td>{orderCart.totalPaidByCustomer}</td>
                   <td>{orderCart.totalServiceFee}</td>
                   <td>{orderCart.totalQuantity}</td>

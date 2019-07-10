@@ -65,6 +65,7 @@ export interface IOrderCart {
   tallyFee?: number;
   totalAmount?: number;
   totalAmountNDT?: number;
+  totalAmountChinaNDT?: number;
   totalPaidByCustomer?: number;
   totalServiceFee?: number;
   totalQuantity?: number;

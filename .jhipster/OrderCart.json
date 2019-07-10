@@ -167,6 +167,10 @@
             "fieldType": "Float"
         },
         {
+            "fieldName": "totalAmountChinaNDT",
+            "fieldType": "Float"
+        },
+        {
             "fieldName": "totalPaidByCustomer",
             "fieldType": "Float"
         },

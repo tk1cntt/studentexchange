@@ -96,6 +96,8 @@ public class OrderCartDTO implements Serializable {
 
     private Float totalAmountNDT;
 
+    private Float totalAmountChinaNDT;
+
     private Float totalPaidByCustomer;
 
     private Float totalServiceFee;
@@ -470,6 +472,14 @@ public class OrderCartDTO implements Serializable {
         this.totalAmountNDT = totalAmountNDT;
     }
 
+    public Float getTotalAmountChinaNDT() {
+        return totalAmountChinaNDT;
+    }
+
+    public void setTotalAmountChinaNDT(Float totalAmountChinaNDT) {
+        this.totalAmountChinaNDT = totalAmountChinaNDT;
+    }
+
     public Float getTotalPaidByCustomer() {
         return totalPaidByCustomer;
     }
@@ -680,6 +690,7 @@ public class OrderCartDTO implements Serializable {
             ", tallyFee=" + getTallyFee() +
             ", totalAmount=" + getTotalAmount() +
             ", totalAmountNDT=" + getTotalAmountNDT() +
+            ", totalAmountChinaNDT=" + getTotalAmountChinaNDT() +
             ", totalPaidByCustomer=" + getTotalPaidByCustomer() +
             ", totalServiceFee=" + getTotalServiceFee() +
             ", totalQuantity=" + getTotalQuantity() +

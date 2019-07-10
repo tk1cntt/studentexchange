@@ -279,6 +279,12 @@ export class OrderCartDetail extends React.Component<IOrderCartDetailProps> {
             </dt>
             <dd>{orderCartEntity.totalAmountNDT}</dd>
             <dt>
+              <span id="totalAmountChinaNDT">
+                <Translate contentKey="studentexchangeApp.orderCart.totalAmountChinaNDT">Total Amount China NDT</Translate>
+              </span>
+            </dt>
+            <dd>{orderCartEntity.totalAmountChinaNDT}</dd>
+            <dt>
               <span id="totalPaidByCustomer">
                 <Translate contentKey="studentexchangeApp.orderCart.totalPaidByCustomer">Total Paid By Customer</Translate>
               </span>

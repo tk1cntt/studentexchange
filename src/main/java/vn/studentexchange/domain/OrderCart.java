@@ -150,6 +150,9 @@ public class OrderCart implements Serializable {
     @Column(name = "total_amount_ndt")
     private Float totalAmountNDT;
 
+    @Column(name = "total_amount_china_ndt")
+    private Float totalAmountChinaNDT;
+
     @Column(name = "total_paid_by_customer")
     private Float totalPaidByCustomer;
 
@@ -744,6 +747,19 @@ public class OrderCart implements Serializable {
         this.totalAmountNDT = totalAmountNDT;
     }
 
+    public Float getTotalAmountChinaNDT() {
+        return totalAmountChinaNDT;
+    }
+
+    public OrderCart totalAmountChinaNDT(Float totalAmountChinaNDT) {
+        this.totalAmountChinaNDT = totalAmountChinaNDT;
+        return this;
+    }
+
+    public void setTotalAmountChinaNDT(Float totalAmountChinaNDT) {
+        this.totalAmountChinaNDT = totalAmountChinaNDT;
+    }
+
     public Float getTotalPaidByCustomer() {
         return totalPaidByCustomer;
     }
@@ -1091,6 +1107,7 @@ public class OrderCart implements Serializable {
             ", tallyFee=" + getTallyFee() +
             ", totalAmount=" + getTotalAmount() +
             ", totalAmountNDT=" + getTotalAmountNDT() +
+            ", totalAmountChinaNDT=" + getTotalAmountChinaNDT() +
             ", totalPaidByCustomer=" + getTotalPaidByCustomer() +
             ", totalServiceFee=" + getTotalServiceFee() +
             ", totalQuantity=" + getTotalQuantity() +

@@ -113,6 +113,8 @@ public class OrderCartCriteria implements Serializable {
 
     private FloatFilter totalAmountNDT;
 
+    private FloatFilter totalAmountChinaNDT;
+
     private FloatFilter totalPaidByCustomer;
 
     private FloatFilter totalServiceFee;
@@ -486,6 +488,14 @@ public class OrderCartCriteria implements Serializable {
         this.totalAmountNDT = totalAmountNDT;
     }
 
+    public FloatFilter getTotalAmountChinaNDT() {
+        return totalAmountChinaNDT;
+    }
+
+    public void setTotalAmountChinaNDT(FloatFilter totalAmountChinaNDT) {
+        this.totalAmountChinaNDT = totalAmountChinaNDT;
+    }
+
     public FloatFilter getTotalPaidByCustomer() {
         return totalPaidByCustomer;
     }
@@ -675,6 +685,7 @@ public class OrderCartCriteria implements Serializable {
             Objects.equals(tallyFee, that.tallyFee) &&
             Objects.equals(totalAmount, that.totalAmount) &&
             Objects.equals(totalAmountNDT, that.totalAmountNDT) &&
+            Objects.equals(totalAmountChinaNDT, that.totalAmountChinaNDT) &&
             Objects.equals(totalPaidByCustomer, that.totalPaidByCustomer) &&
             Objects.equals(totalServiceFee, that.totalServiceFee) &&
             Objects.equals(totalQuantity, that.totalQuantity) &&
@@ -739,6 +750,7 @@ public class OrderCartCriteria implements Serializable {
         tallyFee,
         totalAmount,
         totalAmountNDT,
+        totalAmountChinaNDT,
         totalPaidByCustomer,
         totalServiceFee,
         totalQuantity,
@@ -804,6 +816,7 @@ public class OrderCartCriteria implements Serializable {
                 (tallyFee != null ? "tallyFee=" + tallyFee + ", " : "") +
                 (totalAmount != null ? "totalAmount=" + totalAmount + ", " : "") +
                 (totalAmountNDT != null ? "totalAmountNDT=" + totalAmountNDT + ", " : "") +
+                (totalAmountChinaNDT != null ? "totalAmountChinaNDT=" + totalAmountChinaNDT + ", " : "") +
                 (totalPaidByCustomer != null ? "totalPaidByCustomer=" + totalPaidByCustomer + ", " : "") +
                 (totalServiceFee != null ? "totalServiceFee=" + totalServiceFee + ", " : "") +
                 (totalQuantity != null ? "totalQuantity=" + totalQuantity + ", " : "") +

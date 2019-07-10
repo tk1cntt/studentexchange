@@ -212,6 +212,9 @@ public class OrderCartQueryService extends QueryService<OrderCart> {
             if (criteria.getTotalAmountNDT() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getTotalAmountNDT(), OrderCart_.totalAmountNDT));
             }
+            if (criteria.getTotalAmountChinaNDT() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getTotalAmountChinaNDT(), OrderCart_.totalAmountChinaNDT));
+            }
             if (criteria.getTotalPaidByCustomer() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getTotalPaidByCustomer(), OrderCart_.totalPaidByCustomer));
             }

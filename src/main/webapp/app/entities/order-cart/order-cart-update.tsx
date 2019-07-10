@@ -434,6 +434,12 @@ export class OrderCartUpdate extends React.Component<IOrderCartUpdateProps, IOrd
                   <AvField id="order-cart-totalAmountNDT" type="string" className="form-control" name="totalAmountNDT" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="totalAmountChinaNDTLabel" for="totalAmountChinaNDT">
+                    <Translate contentKey="studentexchangeApp.orderCart.totalAmountChinaNDT">Total Amount China NDT</Translate>
+                  </Label>
+                  <AvField id="order-cart-totalAmountChinaNDT" type="string" className="form-control" name="totalAmountChinaNDT" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="totalPaidByCustomerLabel" for="totalPaidByCustomer">
                     <Translate contentKey="studentexchangeApp.orderCart.totalPaidByCustomer">Total Paid By Customer</Translate>
                   </Label>

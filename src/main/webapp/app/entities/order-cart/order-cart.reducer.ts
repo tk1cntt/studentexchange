@@ -111,7 +111,7 @@ export const getEntities: ICrudGetAllAction<IOrderCart> = (page, size, sort) => 
 
 export const searchOrder: ICrudSearchAction<IOrderCart> = (query, page, size, sort) => ({
   type: ACTION_TYPES.FETCH_ORDERCART_LIST,
-  payload: axios.get<IOrderCart>(`${apiUrl}?${query}&page=${page}&size=${size}&sort=createAt,asc`)
+  payload: axios.get<IOrderCart>(`${apiUrl}?${query}&page=${page}&size=${size}&sort=${sort}`)
 });
 
 export const getEntity: ICrudGetAction<IOrderCart> = id => {

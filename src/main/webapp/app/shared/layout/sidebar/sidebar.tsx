@@ -81,6 +81,11 @@ export class Sidebar extends React.Component<ISidebarProps> {
           <i className="fa fa-gift" /> <span className="nav-label">Quản lý đơn hàng</span> <span className="fa arrow" />
         </Link>
         <ul className={`${activeMenu === 'order-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
+          <li className={`${activeSubMenu === 'order-list' ? 'active' : ''}`}>
+            <Link to={'/staff/order-list'}>
+              <i className="fa fa-list" /> Danh sách đơn hàng
+            </Link>
+          </li>
           <li className={`${activeSubMenu === 'order-deposited' ? 'active' : ''}`}>
             <Link to={'/staff/order-deposited'}>
               <i className="fa fa-sign-in" /> Đơn hàng chưa xử lý

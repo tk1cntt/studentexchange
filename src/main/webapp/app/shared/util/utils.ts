@@ -39,6 +39,13 @@ export const paymentQueryStringMapping = parameters => {
   return queryString.slice(0, -1);
 };
 
+export const orderQueryStringMapping = parameters => {
+  let queryString = '';
+  queryString += parameters.code ? 'code.contains=' + parameters.code + '&' : '';
+  queryString += parameters.status ? 'status.equals=' + parameters.status + '&' : '';
+  return queryString.slice(0, -1);
+};
+
 export const queryString = parameters => {
   let queryString = '';
   for (const key in parameters) {

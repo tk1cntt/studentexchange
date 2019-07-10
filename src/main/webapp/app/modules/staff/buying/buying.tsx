@@ -77,8 +77,9 @@ export class Buying extends React.Component<IBuyingProp> {
     } else if (Number(this.state.totalAmountChinaNDT) > Number(this.props.orderCartEntity.totalAmountNDT)) {
       Modal.error({
         title: 'Cảnh báo',
-        content: `Đơn hàng mua hộ giá đang vượt quá số tiền cho phép ¥${Number(this.state.totalAmountChinaNDT) -
-          Number(this.props.orderCartEntity.totalAmountNDT)}`
+        content: `Đơn hàng mua hộ giá đang vượt quá số tiền cho phép ¥${Math.ceil(
+          Number(this.state.totalAmountChinaNDT) - Number(this.props.orderCartEntity.totalAmountNDT)
+        )}`
       });
     } else {
       const entity = {
@@ -226,7 +227,7 @@ export class Buying extends React.Component<IBuyingProp> {
                           </li>
                           <li className="list-group-item">
                             <span className="pull-right">
-                              <b>¥{formatCurency(orderCartEntity.totalAmountNDT)}</b>
+                              <b>¥{formatCurency(Math.ceil(orderCartEntity.totalAmountNDT))}</b>
                             </span>
                             Tiền hàng NDT:
                           </li>

@@ -13,6 +13,8 @@ import { OrderStatus } from 'app/shared/model/order-cart.model';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
+import OrderItemListView from '../order-item-list-view';
+import OrderStatusList from '../order-status-list-view';
 
 const { Option } = Select;
 
@@ -120,133 +122,39 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
                 ) : (
                   <div key={`entity`}>
                     <div className="col-xs-12 col-md-8">
-                      <div className="ibox float-e-margins">
-                        <div className="ibox-title">
-                          <h5>
-                            <a href={orderCartEntity.shopLink} target="_blank">{`${orderCartEntity.aliwangwang}`}</a>
-                          </h5>
-                          <div className="ibox-tools">
-                            <span className="label label-warning-light pull-right">
-                              {`${orderCartEntity.items && orderCartEntity.items.length}`} mặt hàng trong giỏ
-                            </span>
+                      <OrderItemListView isAuthenticated={this.props.isAuthenticated} orderCartEntity={this.props.orderCartEntity} />
+                      <span className="checkout-cart">
+                        <button className="btn btn-danger btn-block" onClick={this.showCancelOrder}>
+                          <i className="fa fa-window-close" /> Huỷ đơn hàng
+                        </button>
+                      </span>
+                      {this.state.showCancelOrder ? (
+                        <Modal
+                          title={`Huỷ đơn hàng ${orderCartEntity.code}`}
+                          visible={this.state.showCancelOrder}
+                          okText="Huỷ đơn hàng"
+                          okType="danger"
+                          cancelText="Bỏ qua"
+                          onOk={this.doCancelOrder}
+                          onCancel={this.closeCancelOrder}
+                        >
+                          <p>Lý do huỷ đơn hàng</p>
+                          <div className="form-group">
+                            <Select className="btn-block" onChange={this.selectCancelReason}>
+                              <Option value="PRICE_HAS_CHANGED">Giá mặt hàng thay đổi</Option>
+                              <Option value="OUT_OF_STOCK">Hết hàng</Option>
+                              <Option value="WRONG_INFO">Thông tin đơn hàng không chính xác</Option>
+                              <Option value="OTHER">Lý do khác</Option>
+                            </Select>
                           </div>
-                        </div>
-                        <div className="ibox-content">
-                          <div>
-                            <div className="feed-activity-list">
-                              {orderCartEntity.items &&
-                                orderCartEntity.items.map((item, iy) => (
-                                  <div className="feed-element" key={`entity-${iy}`}>
-                                    <a href={item.itemLink} className="pull-left" target="_blank">
-                                      <img
-                                        alt="image"
-                                        className="img-circle"
-                                        src={`${item.propertiesImage ? item.propertiesImage : item.itemImage}`}
-                                      />
-                                    </a>
-                                    <div className="media-body ">
-                                      <small className="pull-right">
-                                        <div className="input-group bootstrap-touchspin">
-                                          <input
-                                            type="tel"
-                                            className="form-control quantity"
-                                            disabled
-                                            min="1"
-                                            defaultValue={`${item.quantity}`}
-                                          />
-                                        </div>
-                                      </small>
-                                      <a href={item.itemLink} target="_blank">
-                                        <strong>{`${item.itemName}`}</strong>
-                                      </a>
-                                      <br />
-                                      <small className="text-muted">
-                                        Thuộc tính: {`${item.propertiesName}`}({`${item.propertiesType}`})<br />
-                                        Số lượng: {`${item.quantity}`}
-                                        <br />
-                                        Đơn giá: ¥{`${item.itemPriceNDT}`}
-                                      </small>
-                                    </div>
-                                  </div>
-                                ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                        </Modal>
+                      ) : (
+                        ''
+                      )}
                     </div>
                     <div className="col-xs-12 col-md-4">
                       <div className="row checkout-cart-detail">
-                        <span className="checkout-cart">
-                          <button className="btn btn-primary btn-block" onClick={this.doFinishOrder}>
-                            <i className="fa fa-check" /> Hoàn tất mua hàng
-                          </button>
-                        </span>
-                        <ul className="list-group clear-list m-t">
-                          <li className="list-group-item">
-                            <span className="pull-right">
-                              <b>{formatCurency(orderCartEntity.rate)}đ</b>
-                            </span>
-                            Tỷ giá của đơn hàng:
-                          </li>
-                          <li className="list-group-item">
-                            <span className="pull-right">
-                              <b>¥{formatCurency(orderCartEntity.totalAmountNDT)}</b>
-                            </span>
-                            Tiền hàng NDT:
-                          </li>
-                          <li className="list-group-item">
-                            <div className="form-group">
-                              <label>Phí vận chuyển nội địa TQ</label>
-                              <input
-                                type="number"
-                                placeholder="Nhập phí vận chuyển nếu có"
-                                className="form-control"
-                                onChange={this.onChangeDomesticShippingChinaFeeNDT}
-                              />
-                            </div>
-                          </li>
-                          <li className="list-group-item">
-                            <div className="form-group">
-                              <label>
-                                Mã vận đơn trên trang <b className="text-warning">{orderCartEntity.website}</b>
-                              </label>
-                              <input
-                                type="text"
-                                placeholder="Nhập mã vận đơn"
-                                className="form-control"
-                                onChange={this.onChangeShippingChinaCode}
-                              />
-                            </div>
-                          </li>
-                        </ul>
-                        <span className="checkout-cart">
-                          <button className="btn btn-danger btn-block" onClick={this.showCancelOrder}>
-                            <i className="fa fa-window-close" /> Huỷ đơn hàng
-                          </button>
-                        </span>
-                        {this.state.showCancelOrder ? (
-                          <Modal
-                            title={`Huỷ đơn hàng ${orderCartEntity.code}`}
-                            visible={this.state.showCancelOrder}
-                            okText="Huỷ đơn hàng"
-                            okType="danger"
-                            cancelText="Bỏ qua"
-                            onOk={this.doCancelOrder}
-                            onCancel={this.closeCancelOrder}
-                          >
-                            <p>Lý do huỷ đơn hàng</p>
-                            <div className="form-group">
-                              <Select className="btn-block" onChange={this.selectCancelReason}>
-                                <Option value="PRICE_HAS_CHANGED">Giá mặt hàng thay đổi</Option>
-                                <Option value="OUT_OF_STOCK">Hết hàng</Option>
-                                <Option value="WRONG_INFO">Thông tin đơn hàng không chính xác</Option>
-                                <Option value="OTHER">Lý do khác</Option>
-                              </Select>
-                            </div>
-                          </Modal>
-                        ) : (
-                          ''
-                        )}
+                        <OrderStatusList orderCartEntity={this.props.orderCartEntity} />
                       </div>
                     </div>
                   </div>

@@ -41,7 +41,9 @@ export const paymentQueryStringMapping = parameters => {
 
 export const orderQueryStringMapping = parameters => {
   let queryString = '';
-  queryString += parameters.code ? 'code.contains=' + parameters.code + '&' : '';
+  queryString += parameters.code ? 'code.equals=' + parameters.code + '&' : '';
+  queryString += parameters.shippingChineCode ? 'shippingChineCode.contains=' + parameters.shippingChineCode + '&' : '';
+  queryString += parameters.createByLogin ? 'createByLogin.contains=' + parameters.createByLogin + '&' : '';
   queryString += parameters.status ? 'status.equals=' + parameters.status + '&' : '';
   return queryString.slice(0, -1);
 };
@@ -89,5 +91,32 @@ export const getLabelFromNumber = num => {
       return 'label-warning';
     default:
       return 'label-default';
+  }
+};
+
+export const currentOrderStep = status => {
+  switch (status) {
+    case 'DEPOSITED':
+      return 0;
+    case 'ARE_BUYING':
+      return 1;
+    case 'PURCHASED':
+      return 2;
+    case 'SELLER_DELIVERY':
+      return 3;
+    case 'WAREHOUSE_CHINA':
+      return 4;
+    case 'DELIVERING_CHINA_VIETNAM':
+      return 5;
+    case 'WAREHOUSE_VIETNAM':
+      return 6;
+    case 'DELIVERY_REQUIREMENTS':
+      return 7;
+    case 'DELIVERING_VIETNAM':
+      return 8;
+    case 'DELIVERED':
+      return 9;
+    default:
+      return 0;
   }
 };

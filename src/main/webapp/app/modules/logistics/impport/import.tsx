@@ -90,6 +90,10 @@ export class Buying extends React.Component<IBuyingProp> {
     // console.log(e);
   };
 
+  onChangeShippingChineCode = () => {};
+
+  searchClick = () => {};
+
   render() {
     const { orderCartEntity } = this.props;
     return (
@@ -98,9 +102,23 @@ export class Buying extends React.Component<IBuyingProp> {
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row border-bottom white-bg dashboard-header">
-            <h4>
-              Chi tiết đơn hàng <b>{orderCartEntity.code}</b>
-            </h4>
+            <div className="ibox-content m-b-sm border-bottom">
+              <label>Mã vận đơn bên Trung Quốc</label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  placeholder="Nhập mã đơn hàng cần tìm"
+                  name="code"
+                  className="form-control form-control-lg"
+                  onChange={this.onChangeShippingChineCode}
+                />
+                <div className="input-group-btn">
+                  <button className="btn btn-primary" type="button" onClick={this.searchClick}>
+                    <i className="fa fa-search" /> Tìm kiếm
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="row">
             <div className="col-xs-12">

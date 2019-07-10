@@ -77,7 +77,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
     if (!isStaff) return '';
     return (
       <li className={`${activeMenu === 'order-management' ? 'active' : ''}`}>
-        <Link to={'/staff/order-deposited'}>
+        <Link to={'/staff/order-list'}>
           <i className="fa fa-gift" /> <span className="nav-label">Quản lý đơn hàng</span> <span className="fa arrow" />
         </Link>
         <ul className={`${activeMenu === 'order-management' ? 'nav nav-second-level collapse in' : 'nav nav-second-level collapse'}`}>
@@ -127,7 +127,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
           </li>
           <li className={`${activeSubMenu === 'order-buying' ? 'active' : ''}`}>
             <Link to={'/staff/order-buying'}>
-              <i className="fa fa-exchange" /> Kiểm tra hàng
+              <i className="fa fa-exchange" /> Đóng bao
             </Link>
           </li>
           <li className={`${activeSubMenu === 'order-purchased' ? 'active' : ''}`}>
@@ -147,7 +147,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
           </li>
           <li className={`${activeSubMenu === 'order-purchased' ? 'active' : ''}`}>
             <Link to={'/staff/order-purchased'}>
-              <i className="fa fa-check-circle" /> Nhập hàng kho Việt Nam
+              <i className="fa fa-check-circle" /> Giao hàng
             </Link>
           </li>
         </ul>

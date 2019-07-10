@@ -13,6 +13,7 @@ import { OrderStatus } from 'app/shared/model/order-cart.model';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
+import OrderItemListView from '../order-item-list-view';
 
 const { Option } = Select;
 
@@ -157,59 +158,7 @@ export class Buying extends React.Component<IBuyingProp> {
                 ) : (
                   <div key={`entity`}>
                     <div className="col-xs-12 col-md-8">
-                      <div className="ibox float-e-margins">
-                        <div className="ibox-title">
-                          <h5>
-                            <a href={orderCartEntity.shopLink} target="_blank">{`${orderCartEntity.aliwangwang}`}</a>
-                          </h5>
-                          <div className="ibox-tools">
-                            <span className="label label-warning-light pull-right">
-                              {`${orderCartEntity.items && orderCartEntity.items.length}`} mặt hàng trong giỏ
-                            </span>
-                          </div>
-                        </div>
-                        <div className="ibox-content">
-                          <div>
-                            <div className="feed-activity-list">
-                              {orderCartEntity.items &&
-                                orderCartEntity.items.map((item, iy) => (
-                                  <div className="feed-element" key={`entity-${iy}`}>
-                                    <a href={item.itemLink} className="pull-left" target="_blank">
-                                      <img
-                                        alt="image"
-                                        className="img-circle"
-                                        src={`${item.propertiesImage ? item.propertiesImage : item.itemImage}`}
-                                      />
-                                    </a>
-                                    <div className="media-body ">
-                                      <small className="pull-right">
-                                        <div className="input-group bootstrap-touchspin">
-                                          <input
-                                            type="tel"
-                                            className="form-control quantity"
-                                            disabled
-                                            min="1"
-                                            defaultValue={`${item.quantity}`}
-                                          />
-                                        </div>
-                                      </small>
-                                      <a href={item.itemLink} target="_blank">
-                                        <strong>{`${item.itemName}`}</strong>
-                                      </a>
-                                      <br />
-                                      <small className="text-muted">
-                                        Thuộc tính: {`${item.propertiesName}`}({`${item.propertiesType}`})<br />
-                                        Số lượng: {`${item.quantity}`}
-                                        <br />
-                                        Đơn giá: ¥{`${item.itemPriceNDT}`}
-                                      </small>
-                                    </div>
-                                  </div>
-                                ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <OrderItemListView isAuthenticated={this.props.isAuthenticated} orderCartEntity={this.props.orderCartEntity} />
                     </div>
                     <div className="col-xs-12 col-md-4">
                       <div className="row checkout-cart-detail">

@@ -12,13 +12,15 @@ import {
   getPaginationItemsNumber,
   JhiPagination
 } from 'react-jhipster';
+import qs from 'query-string';
 import { Select } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { formatCurency, encodeId } from 'app/shared/util/utils';
+import { formatCurency, encodeId, orderQueryStringMapping } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
 import Footer from 'app/shared/layout/footer/footer';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
+import OrderSearchBox from '../order-search-box';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities, searchOrder, reset } from 'app/entities/order-cart/order-cart.reducer';
@@ -39,13 +41,25 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
   };
 
   componentDidMount() {
-    this.getEntities();
+    if (this.props.location) {
+      const parsed = qs.parse(this.props.location.search);
+      this.getEntities(orderQueryStringMapping(parsed));
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.location !== prevProps.location) {
+      const parsed = qs.parse(this.props.location.search);
+      this.getEntities(orderQueryStringMapping(parsed));
+    }
   }
 
   componentWillUnmount() {
     this.props.reset();
   }
 
+  /*
   sort = prop => () => {
     this.setState(
       {
@@ -60,12 +74,13 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
     this.getEntities();
     this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=createAt,asc`);
   }
+  */
 
-  handlePagination = activePage => this.setState({ activePage }, () => this.sortEntities());
+  handlePagination = activePage => this.setState({ activePage }); //, () => this.sortEntities());
 
-  getEntities = () => {
+  getEntities = query => {
     const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.searchOrder('', activePage - 1, itemsPerPage, `createAt,desc`);
+    this.props.searchOrder(query, activePage - 1, itemsPerPage, `createAt,desc`);
     // this.props.getEntities(activePage - 1, itemsPerPage, `createAt,asc`);
   };
 
@@ -82,57 +97,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
             <h3>Danh sách đơn hàng</h3>
           </div>
           <div className="wrapper wrapper-content animated fadeInRight ecommerce">
-            <div className="ibox-content m-b-sm border-bottom">
-              <div className="row">
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="order_id">
-                      Mã đơn hàng
-                    </label>
-                    <input type="text" id="order_id" name="order_id" placeholder="Mã đơn hàng" className="form-control" />
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="order_id">
-                      Mã vận đơn bên Trung Quốc
-                    </label>
-                    <input type="text" id="order_id" name="order_id" placeholder="Mã vận đơn" className="form-control" />
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="status">
-                      Trạng thái đơn hàng
-                    </label>
-                    <Select className="btn-block" onChange={this.selectOrderStatus}>
-                      <Option value="DEPOSITED">Đã đặt cọc</Option>
-                      <Option value="ARE_BUYING">Đang mua hàng</Option>
-                      <Option value="PURCHASED">Đã mua hàng</Option>
-                      <Option value="SELLER_DELIVERY">Người bán chuyển hàng</Option>
-                    </Select>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="order_id">
-                      Số điện thoại khách hàng
-                    </label>
-                    <input type="text" id="order_id" name="order_id" placeholder="Số điện thoại" className="form-control" />
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="status" />
-                    <button className="btn btn-primary btn-block order-search">
-                      <i className="fa fa-search" /> Tìm kiếm
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <OrderSearchBox to="/staff/order-list" location={this.props.location} history={this.props.history} />
             <div className="row">
               <div className="col-lg-12">
                 <div className="ibox">

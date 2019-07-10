@@ -30,6 +30,7 @@ public final class Utils {
     public static long generateNumber() {
         Date time = new Date();
         StringBuilder tmp = new StringBuilder();
+        tmp.append(String.valueOf(time.getTime()).substring(10));
         tmp.append(time.getSeconds());
         tmp.append(time.getYear());
         tmp.append(time.getHours());

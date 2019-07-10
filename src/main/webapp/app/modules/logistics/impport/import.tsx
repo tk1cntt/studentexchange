@@ -108,13 +108,13 @@ export class Buying extends React.Component<IBuyingProp> {
                 {orderCartEntity && !orderCartEntity.id ? (
                   <div className="ibox">
                     <div className="ibox-content">
-                      <div className="no-content">Đơn hàng không tồn tại</div>
+                      <div className="no-content">Không có hàng</div>
                     </div>
                   </div>
                 ) : orderCartEntity.status !== OrderStatus.ARE_BUYING ? (
                   <div className="ibox">
                     <div className="ibox-content">
-                      <div className="no-content">Đơn hàng đang được xử lý</div>
+                      <div className="no-content">Đơn hàng đã được xử lý</div>
                     </div>
                   </div>
                 ) : (
@@ -184,13 +184,13 @@ export class Buying extends React.Component<IBuyingProp> {
                         <ul className="list-group clear-list m-t">
                           <li className="list-group-item">
                             <span className="pull-right">
-                              <b>{formatCurency(orderCartEntity.rate)}đ</b>
+                              <b>¥{formatCurency(orderCartEntity.rate)}</b>
                             </span>
                             Tỷ giá của đơn hàng:
                           </li>
                           <li className="list-group-item">
                             <span className="pull-right">
-                              <b>{formatCurency(orderCartEntity.totalAmountNDT)}đ</b>
+                              <b>¥{formatCurency(orderCartEntity.totalAmountNDT)}</b>
                             </span>
                             Tiền hàng NDT:
                           </li>
@@ -199,7 +199,7 @@ export class Buying extends React.Component<IBuyingProp> {
                               <label>Phí vận chuyển nội địa TQ</label>
                               <input
                                 type="number"
-                                placeholder="Nhập phí vận chuyển nếu có"
+                                placeholder="Nhập phí vận chuyển"
                                 className="form-control"
                                 onChange={this.onChangeDomesticShippingChinaFeeNDT}
                               />
@@ -208,11 +208,11 @@ export class Buying extends React.Component<IBuyingProp> {
                           <li className="list-group-item">
                             <div className="form-group">
                               <label>
-                                Mã vận đơn trên trang <b className="text-warning">{orderCartEntity.website}</b>
+                                Mã đơn hàng trên trang <b className="text-warning">{orderCartEntity.website}</b>
                               </label>
                               <input
                                 type="text"
-                                placeholder="Nhập mã vận đơn"
+                                placeholder="Nhập mã đơn hàng"
                                 className="form-control"
                                 onChange={this.onChangeShippingChinaCode}
                               />
@@ -239,7 +239,6 @@ export class Buying extends React.Component<IBuyingProp> {
                               <Select className="btn-block" onChange={this.selectCancelReason}>
                                 <Option value="PRICE_HAS_CHANGED">Giá mặt hàng thay đổi</Option>
                                 <Option value="OUT_OF_STOCK">Hết hàng</Option>
-                                <Option value="WRONG_INFO">Thông tin đơn hàng không chính xác</Option>
                                 <Option value="OTHER">Lý do khác</Option>
                               </Select>
                             </div>

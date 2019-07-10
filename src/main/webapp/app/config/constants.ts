@@ -12,7 +12,8 @@ export const AUTHORITIES = {
   ADMIN: 'ROLE_ADMIN',
   USER: 'ROLE_USER',
   MANAGER: 'ROLE_MANAGER',
-  STAFF: 'ROLE_STAFF'
+  STAFF: 'ROLE_STAFF',
+  LOGISTICS: 'ROLE_LOGISTICS'
 };
 
 export const messages = {

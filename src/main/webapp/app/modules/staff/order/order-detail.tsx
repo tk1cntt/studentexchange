@@ -16,20 +16,20 @@ import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
 const { Option } = Select;
 
-export interface IBuyingProp extends StateProps, DispatchProps {
+export interface IOrderDetailProp extends StateProps, DispatchProps {
   location: any;
   history: any;
 }
 
-export interface IBuyingState {
+export interface IOrderDetailState {
   showCancelOrder: boolean;
   cancelReason: string;
   domesticShippingChinaFeeNDT: number;
   shippingChinaCode: string;
 }
 
-export class Buying extends React.Component<IBuyingProp> {
-  state: IBuyingState = {
+export class OrderDetail extends React.Component<IOrderDetailProp> {
+  state: IOrderDetailState = {
     showCancelOrder: false,
     cancelReason: null,
     domesticShippingChinaFeeNDT: 0,
@@ -282,4 +282,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Buying);
+)(OrderDetail);

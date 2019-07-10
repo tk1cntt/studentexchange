@@ -79,7 +79,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
-            <h3>Danh sách đơn hàng</h3>
+            <h3>Danh sách đơn hàng đã xử lý</h3>
           </div>
           <div className="wrapper wrapper-content animated fadeInRight ecommerce">
             <div className="ibox-content m-b-sm border-bottom">
@@ -118,8 +118,10 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                       <thead>
                         <tr>
                           <th>Mã đơn hàng</th>
+                          <th>Mã vận đơn của TQ</th>
                           <th>Khách hàng</th>
                           <th>Tổng tiền</th>
+                          <th>Tiền cọc</th>
                           <th>Ngày đặt</th>
                           <th>Trạng thái</th>
                         </tr>
@@ -128,8 +130,10 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                         {orderCartList.map((orderCart, i) => (
                           <tr key={`id-${i}`}>
                             <td>{orderCart.code}</td>
+                            <td>{orderCart.shippingChinaCode}</td>
                             <td>{orderCart.createByLogin}</td>
                             <td>{formatCurency(orderCart.finalAmount)}đ</td>
+                            <td>{formatCurency(orderCart.depositAmount)}đ</td>
                             <td>
                               <small>
                                 <TextFormat type="date" value={orderCart.depositTime} format={APP_DATE_FORMAT} />

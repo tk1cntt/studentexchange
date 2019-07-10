@@ -3,11 +3,13 @@ package vn.studentexchange.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
 import vn.studentexchange.domain.User;
 import vn.studentexchange.domain.enumeration.CurrencyType;
 import vn.studentexchange.domain.enumeration.OrderStatus;
 import vn.studentexchange.repository.UserRepository;
+import vn.studentexchange.security.AuthoritiesConstants;
 import vn.studentexchange.security.SecurityUtils;
 import vn.studentexchange.service.*;
 import vn.studentexchange.service.dto.*;
@@ -98,6 +100,7 @@ public class OrderCartResource {
     }
     */
     //*
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<List<OrderCartDTO>> createOrderCart(@RequestBody OrderDTO requestOrder) throws URISyntaxException {
         log.debug("REST request to save OrderCart : {}", requestOrder);
         long userShippingAddressId = Utils.decodeId(requestOrder.getUserShippingAddressId());
@@ -178,6 +181,7 @@ public class OrderCartResource {
 
     @PutMapping("/order-carts/buying")
     @Timed
+    @Secured(AuthoritiesConstants.STAFF)
     public ResponseEntity<OrderCartDTO> updateOrderCartBuying(@RequestBody OrderCartDTO orderCartDTO) throws URISyntaxException {
         log.debug("REST request to update OrderCart : {}", orderCartDTO);
         if (orderCartDTO.getId() == null) {
@@ -199,6 +203,7 @@ public class OrderCartResource {
 
     @PutMapping("/order-carts/purchased")
     @Timed
+    @Secured(AuthoritiesConstants.STAFF)
     public ResponseEntity<OrderCartDTO> updateOrderCartPurchased(@RequestBody OrderCartDTO orderCartDTO) throws URISyntaxException {
         log.debug("REST request to update OrderCart : {}", orderCartDTO);
         if (orderCartDTO.getId() == null) {
@@ -253,6 +258,7 @@ public class OrderCartResource {
 
     @GetMapping("/order-carts/owner")
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<List<OrderCartDTO>> getOwnerShoppingCarts(Pageable pageable) {
         log.debug("REST request to get owner ShoppingCarts");
         String username = SecurityUtils.getCurrentUserLogin().get();
@@ -263,6 +269,7 @@ public class OrderCartResource {
 
     @GetMapping("/order-carts/owner/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public List<OrderCartDTO> getOwnerShoppingCartById(@PathVariable Long id) {
         log.debug("REST request to get owner ShoppingCarts");
         Optional<OrderCartDTO> dto = orderCartService.findOne(id);
@@ -283,6 +290,7 @@ public class OrderCartResource {
      */
     @GetMapping("/order-carts/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.STAFF)
     public ResponseEntity<OrderCartDTO> getOrderCart(@PathVariable Long id) {
         log.debug("REST request to get OrderCart : {}", id);
         Optional<OrderCartDTO> orderCartDTO = orderCartService.findOne(id);
@@ -297,6 +305,7 @@ public class OrderCartResource {
      */
     @DeleteMapping("/order-carts/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteOrderCart(@PathVariable Long id) {
         log.debug("REST request to delete OrderCart : {}", id);
         orderCartService.delete(id);

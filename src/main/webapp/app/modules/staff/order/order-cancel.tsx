@@ -62,12 +62,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
 
   getEntities = () => {
     const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.searchOrder(
-      `status.equals=ARE_BUYING&buyerLogin.equals=${this.props.account.login}`,
-      activePage - 1,
-      itemsPerPage,
-      `createAt,asc`
-    );
+    this.props.searchOrder(`status.equals=CANCELED`, activePage - 1, itemsPerPage, `createAt,asc`);
     // this.props.getEntities(activePage - 1, itemsPerPage, `createAt,asc`);
   };
 
@@ -79,7 +74,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
-            <h3>Danh sách đơn hàng đang chờ xử lý</h3>
+            <h3>Danh sách đơn hàng đã bị huỷ</h3>
           </div>
           <div className="wrapper wrapper-content animated fadeInRight ecommerce">
             <div className="ibox-content m-b-sm border-bottom">
@@ -121,6 +116,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                           <th>Khách hàng</th>
                           <th>Tổng tiền</th>
                           <th>Ngày đặt</th>
+                          <th>Lý do huỷ</th>
                           <th />
                         </tr>
                       </thead>
@@ -136,8 +132,8 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                               </small>
                             </td>
                             <td>
-                              <Link to={`/staff/buying?orderid=${encodeId(orderCart.id)}`}>
-                                <span className="label label-info">Mua hàng</span>
+                              <Link to={`/staff/order-detail?orderid=${encodeId(orderCart.id)}`}>
+                                <span className="label label-info">Xem đơn hàng</span>
                               </Link>
                             </td>
                           </tr>

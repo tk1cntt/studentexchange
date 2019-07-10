@@ -26,6 +26,7 @@ export interface IBuyingState {
   cancelReason: string;
   domesticShippingChinaFeeNDT: number;
   shippingChinaCode: string;
+  totalAmountChinaNDT: number;
 }
 
 export class Buying extends React.Component<IBuyingProp> {
@@ -33,7 +34,8 @@ export class Buying extends React.Component<IBuyingProp> {
     showCancelOrder: false,
     cancelReason: null,
     domesticShippingChinaFeeNDT: 0,
-    shippingChinaCode: null
+    shippingChinaCode: null,
+    totalAmountChinaNDT: 0
   };
 
   componentDidMount() {
@@ -55,17 +57,35 @@ export class Buying extends React.Component<IBuyingProp> {
     });
   };
 
+  onChangeTotalAmountChinaNDT = e => {
+    this.setState({
+      totalAmountChinaNDT: e.target.value
+    });
+  };
+
   doFinishOrder = () => {
     if (!this.state.shippingChinaCode) {
       Modal.error({
         title: 'Cảnh báo',
-        content: `Hãy  nhập mã đơn hàng trên trang ${this.props.orderCartEntity.website}`
+        content: `Hãy nhập mã đơn hàng trên trang ${this.props.orderCartEntity.website}`
+      });
+    } else if (!(Number(this.state.totalAmountChinaNDT) > 0)) {
+      Modal.error({
+        title: 'Cảnh báo',
+        content: `Hãy nhập giá trị đơn hàng đã mua hộ`
+      });
+    } else if (Number(this.state.totalAmountChinaNDT) > Number(this.props.orderCartEntity.totalAmountNDT)) {
+      Modal.error({
+        title: 'Cảnh báo',
+        content: `Đơn hàng mua hộ giá đang vượt quá số tiền cho phép ¥${Number(this.state.totalAmountChinaNDT) -
+          Number(this.props.orderCartEntity.totalAmountNDT)}`
       });
     } else {
       const entity = {
         id: this.props.orderCartEntity.id,
         domesticShippingChinaFeeNDT: this.state.domesticShippingChinaFeeNDT,
-        shippingChinaCode: this.state.shippingChinaCode
+        shippingChinaCode: this.state.shippingChinaCode,
+        totalAmountChinaNDT: this.state.totalAmountChinaNDT
       };
       this.props.updatePurchased(entity);
       this.props.history.push('/staff/order-purchased');
@@ -206,7 +226,7 @@ export class Buying extends React.Component<IBuyingProp> {
                           </li>
                           <li className="list-group-item">
                             <span className="pull-right">
-                              <b>{formatCurency(orderCartEntity.totalAmountNDT)}đ</b>
+                              <b>¥{formatCurency(orderCartEntity.totalAmountNDT)}</b>
                             </span>
                             Tiền hàng NDT:
                           </li>
@@ -234,7 +254,25 @@ export class Buying extends React.Component<IBuyingProp> {
                               />
                             </div>
                           </li>
+                          <li className="list-group-item">
+                            <div className="form-group">
+                              <label>
+                                Giá đơn hàng trên <b className="text-warning">{orderCartEntity.website}</b>
+                              </label>
+                              <input
+                                type="number"
+                                placeholder="Nhập giá đơn hàng đã mua hộ"
+                                className="form-control"
+                                onChange={this.onChangeTotalAmountChinaNDT}
+                              />
+                            </div>
+                          </li>
                         </ul>
+                        <span className="checkout-cart">
+                          <button className="btn btn-primary btn-block" onClick={this.doFinishOrder}>
+                            <i className="fa fa-check" /> Hoàn tất mua hàng
+                          </button>
+                        </span>
                         <span className="checkout-cart">
                           <button className="btn btn-danger btn-block" onClick={this.showCancelOrder}>
                             <i className="fa fa-window-close" /> Huỷ đơn hàng

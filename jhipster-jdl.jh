@@ -137,6 +137,7 @@ entity OrderCart {
    tallyFee Float,
    totalAmount Float,
    totalAmountNDT Float,
+   totalAmountChinaNDT Float,
    totalPaidByCustomer Float,
    totalServiceFee Float,
    totalQuantity Integer,

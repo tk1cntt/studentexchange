@@ -190,7 +190,7 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
                           </li>
                           <li className="list-group-item">
                             <span className="pull-right">
-                              <b>{formatCurency(orderCartEntity.totalAmountNDT)}đ</b>
+                              <b>¥{formatCurency(orderCartEntity.totalAmountNDT)}</b>
                             </span>
                             Tiền hàng NDT:
                           </li>

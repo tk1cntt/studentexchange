@@ -5,7 +5,7 @@ const config = {
 export default config;
 
 export const SERVER_API_URL = 'http://localhost:8080';
-// export const SERVER_API_URL = 'http://159.65.6.135:8080';
+// export const SERVER_API_URL = 'http://178.128.125.104:8080';
 // export const SERVER_API_URL = process.env.SERVER_API_URL;
 
 export const AUTHORITIES = {

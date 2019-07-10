@@ -62,7 +62,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
 
   getEntities = () => {
     const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.searchOrder(`status.equals=CANCELED`, activePage - 1, itemsPerPage, `createAt,asc`);
+    this.props.searchOrder(`status.equals=CANCELLED`, activePage - 1, itemsPerPage, `createAt,asc`);
     // this.props.getEntities(activePage - 1, itemsPerPage, `createAt,asc`);
   };
 
@@ -70,7 +70,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
     const { orderCartList, match, totalItems } = this.props;
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-management" activeSubMenu="order-buying" />
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-management" activeSubMenu="order-cancel" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
@@ -117,6 +117,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                           <th>Tổng tiền</th>
                           <th>Ngày đặt</th>
                           <th>Lý do huỷ</th>
+                          <th>Người huỷ</th>
                           <th />
                         </tr>
                       </thead>
@@ -132,8 +133,14 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                               </small>
                             </td>
                             <td>
+                              <small>
+                                <span className="label label-warning">{orderCart.statusName}</span>
+                              </small>
+                            </td>
+                            <td>{orderCart.updateByLogin}</td>
+                            <td>
                               <Link to={`/staff/order-detail?orderid=${encodeId(orderCart.id)}`}>
-                                <span className="label label-info">Xem đơn hàng</span>
+                                <span className="label label-default">Chi tiết đơn hàng</span>
                               </Link>
                             </td>
                           </tr>

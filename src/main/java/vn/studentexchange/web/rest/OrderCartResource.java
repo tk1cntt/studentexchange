@@ -227,6 +227,29 @@ public class OrderCartResource {
             .body(result.get());
     }
 
+    @PutMapping("/order-carts/cancel")
+    @Timed
+    @Secured(AuthoritiesConstants.STAFF)
+    public ResponseEntity<OrderCartDTO> updateOrderCartCancel(@RequestBody OrderCartDTO orderCartDTO) throws URISyntaxException {
+        log.debug("REST request to update OrderCart : {}", orderCartDTO);
+        if (orderCartDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        Optional<OrderCartDTO> result = orderCartService.findOne(orderCartDTO.getId());
+        result.ifPresent(order -> {
+            order.setUpdateAt(Instant.now());
+            order.setStatus(OrderStatus.CANCELLED);
+            order.setStatusName(orderCartDTO.getStatusName());
+            order.setUpdateById(user.get().getId());
+            order.setUpdateByLogin(user.get().getLogin());
+            order = orderCartService.save(order);
+        });
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderCartDTO.getId().toString()))
+            .body(result.get());
+    }
+
     /**
      * GET  /order-carts : get all the orderCarts.
      *

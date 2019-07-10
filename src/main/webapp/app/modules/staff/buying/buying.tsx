@@ -7,7 +7,7 @@ import { Modal, Select } from 'antd';
 import qs from 'query-string';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getEntity as getOrder, updatePurchased } from 'app/entities/order-cart/order-cart.reducer';
+import { getEntity as getOrder, updatePurchased, updateCancel } from 'app/entities/order-cart/order-cart.reducer';
 import { formatCurency, encodeId, decodeId } from 'app/shared/util/utils';
 import { OrderStatus } from 'app/shared/model/order-cart.model';
 
@@ -78,7 +78,21 @@ export class Buying extends React.Component<IBuyingProp> {
     });
   };
 
-  doCancelOrder = () => {};
+  doCancelOrder = () => {
+    if (!this.state.cancelReason) {
+      Modal.error({
+        title: 'Cảnh báo',
+        content: `Hãy chọn lý do huỷ đơn hàng`
+      });
+    } else {
+      const entity = {
+        id: this.props.orderCartEntity.id,
+        statusName: this.state.cancelReason
+      };
+      this.props.updateCancel(entity);
+      this.props.history.push('/staff/order-cancel');
+    }
+  };
 
   closeCancelOrder = () => {
     this.setState({
@@ -86,8 +100,10 @@ export class Buying extends React.Component<IBuyingProp> {
     });
   };
 
-  selectCancelReason = e => {
-    // console.log(e);
+  selectCancelReason = value => {
+    this.setState({
+      cancelReason: value
+    });
   };
 
   render() {
@@ -274,7 +290,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOrder, updatePurchased };
+const mapDispatchToProps = { getSession, getOrder, updatePurchased, updateCancel };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

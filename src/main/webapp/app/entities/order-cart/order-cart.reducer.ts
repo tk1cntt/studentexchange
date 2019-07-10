@@ -182,6 +182,19 @@ export const updatePurchased: ICrudPutAction<IOrderCart> = entity => async dispa
   return result;
 };
 
+export const updateCancel: ICrudPutAction<IOrderCart> = entity => async dispatch => {
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_ORDERCART,
+    payload: axios.put(`${apiUrl}/cancel`, cleanEntity(entity)),
+    meta: {
+      successMessage: 'Huỷ đơn hàng thành công',
+      errorMessage: 'Huỷ đơn hàng thất bại. Xin hãy kiểm tra lại'
+    }
+  });
+  // dispatch(getEntities());
+  return result;
+};
+
 export const deleteEntity: ICrudDeleteAction<IOrderCart> = id => async dispatch => {
   const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({

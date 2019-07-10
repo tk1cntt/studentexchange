@@ -98,7 +98,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
           </li>
           <li className={`${activeSubMenu === 'order-purchased' ? 'active' : ''}`}>
             <Link to={'/staff/order-purchased'}>
-              <i className="fa fa-check-circle" /> Đơn hàng đã xử lý
+              <i className="fa fa-check-circle" /> Đơn hàng đã xử lý của bạn
             </Link>
           </li>
           <li className={`${activeSubMenu === 'order-cancel' ? 'active' : ''}`}>

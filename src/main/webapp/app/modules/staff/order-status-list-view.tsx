@@ -24,10 +24,10 @@ export class OrderStatusList extends React.Component<IOrderStatusListProp> {
             <Step title="PURCHASED" description="Đã mua hàng." />
             <Step title="SELLER_DELIVERY" description="Người bán giao hàng." />
             <Step title="WAREHOUSE_CHINA" description="Hàng về kho Trung Quốc." />
-            <Step title="DELIVERING_CHINA_VIETNAM" description="Chuyển hàng từ Trung Quốc về Việt Nam." />
+            <Step title="DELIVERING_CHINA_VIETNAM" description="Chuyển hàng từ TQ về VN." />
             <Step title="WAREHOUSE_VIETNAM" description="Hàng về kho Việt Nam." />
             <Step title="DELIVERY_REQUIREMENTS" description="Yêu cầu giao hàng." />
-            <Step title="DELIVERING_VIETNAM" description="Đang chuyển hàng." />
+            <Step title="DELIVERING_VIETNAM" description="Đang giao hàng." />
             <Step title="DELIVERED" description="Đã giao hàng." />
           </Steps>
         </div>

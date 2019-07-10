@@ -42,8 +42,8 @@ export const paymentQueryStringMapping = parameters => {
 export const orderQueryStringMapping = parameters => {
   let queryString = '';
   queryString += parameters.code ? 'code.equals=' + parameters.code + '&' : '';
-  queryString += parameters.shippingChineCode ? 'shippingChineCode.contains=' + parameters.shippingChineCode + '&' : '';
-  queryString += parameters.createByLogin ? 'createByLogin.contains=' + parameters.createByLogin + '&' : '';
+  queryString += parameters.shippingChinaCode ? 'shippingChinaCode.contains=' + parameters.shippingChinaCode + '&' : '';
+  queryString += parameters.receiverMobile ? 'receiverMobile.contains=' + parameters.receiverMobile + '&' : '';
   queryString += parameters.status ? 'status.equals=' + parameters.status + '&' : '';
   return queryString.slice(0, -1);
 };

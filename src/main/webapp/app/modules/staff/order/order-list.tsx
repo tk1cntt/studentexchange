@@ -107,7 +107,9 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                         <tr>
                           <th>Mã đơn hàng</th>
                           <th>Mã vận đơn bên Trung Quốc</th>
-                          <th>Khách hàng</th>
+                          <th>
+                            <i className="fa fa-user" /> Khách hàng
+                          </th>
                           <th>Tổng tiền</th>
                           <th>Ngày đặt</th>
                           <th>Trạng thái</th>
@@ -117,9 +119,15 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                       <tbody>
                         {orderCartList.map((orderCart, i) => (
                           <tr key={`id-${i}`}>
-                            <td>{orderCart.code}</td>
+                            <td>
+                              VN: {orderCart.code} <br /> TQ: {orderCart.shippingChinaCode}
+                            </td>
                             <td>{orderCart.shippingChinaCode}</td>
-                            <td>{orderCart.createByLogin}</td>
+                            <td>
+                              {orderCart.receiverName}
+                              <br />
+                              <i className="fa fa-phone" /> {orderCart.receiverMobile}
+                            </td>
                             <td>{formatCurency(orderCart.finalAmount)}đ</td>
                             <td>
                               <small>

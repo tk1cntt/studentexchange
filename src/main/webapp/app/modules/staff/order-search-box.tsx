@@ -44,7 +44,7 @@ export class SearchBox extends React.Component<ISearchBoxProp> {
   };
 
   onChangeShippingChineCode = e => {
-    const parameters = { shippingChineCode: e.target.value };
+    const parameters = { shippingChinaCode: e.target.value };
     const nextParameter = { ...this.state.parameters, ...parameters };
     this.setState({
       parameters: nextParameter
@@ -52,7 +52,7 @@ export class SearchBox extends React.Component<ISearchBoxProp> {
   };
 
   onChangeMobile = e => {
-    const parameters = { createByLogin: e.target.value };
+    const parameters = { receiverMobile: e.target.value };
     const nextParameter = { ...this.state.parameters, ...parameters };
     this.setState({
       parameters: nextParameter

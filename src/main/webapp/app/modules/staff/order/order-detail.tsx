@@ -113,12 +113,6 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
                       <div className="no-content">Đơn hàng không tồn tại</div>
                     </div>
                   </div>
-                ) : orderCartEntity.status !== OrderStatus.ARE_BUYING ? (
-                  <div className="ibox">
-                    <div className="ibox-content">
-                      <div className="no-content">Đơn hàng đang được xử lý</div>
-                    </div>
-                  </div>
                 ) : (
                   <div key={`entity`}>
                     <div className="col-xs-12 col-md-8">
@@ -153,7 +147,7 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
                       )}
                     </div>
                     <div className="col-xs-12 col-md-4">
-                      <div className="row checkout-cart-detail">
+                      <div className="checkout-cart-detail">
                         <OrderStatusList orderCartEntity={this.props.orderCartEntity} />
                       </div>
                     </div>

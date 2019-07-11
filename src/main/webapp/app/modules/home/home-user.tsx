@@ -1,12 +1,9 @@
 // import './home.scss';
-import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
-import { Spin } from 'antd';
 
 import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities as getShoppingItem } from 'app/entities/shopping-cart-item/shopping-cart-item.reducer';
 import { getOwnerEntities as getOwnerPayment } from 'app/entities/payment/payment.reducer';
 import { decodeId } from 'app/shared/util/utils';
 import { AUTHORITIES } from 'app/config/constants';
@@ -21,55 +18,10 @@ import HomeShoppingCartItem from './home-shooping-cart-item-view';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
-export interface IHomeState {
-  temporaryPassword: any;
-}
 export class Home extends React.Component<IHomeProp> {
-  state: IHomeState = {
-    temporaryPassword: null
-  };
-
   componentDidMount() {
-    this.props.getShoppingItem();
     this.props.getOwnerPayment(0, 5, 'createAt');
-    if (this.props.isUser) {
-      const temporaryPassword = (
-        <div onClick={this.getTemporaryPassword}>
-          <span className="label label-primary">
-            <i className="fa fa-refresh" /> Lấy mật khẩu tạm thời
-          </span>
-        </div>
-      );
-      this.setState({
-        temporaryPassword
-      });
-    }
   }
-
-  getTemporaryPassword = () => {
-    let temporaryPassword = <Spin />;
-    this.setState({
-      temporaryPassword
-    });
-    axios.post('api/account/temporary-password').then(response => {
-      temporaryPassword = (
-        <>
-          <span className="pull-right">
-            <span className="label label-danger" style={{ marginRight: 0 }}>
-              {decodeId(response.data)}
-            </span>
-          </span>
-
-          <div>
-            <i className="fa fa-star" /> Mật khẩu tạm thời là
-          </div>
-        </>
-      );
-      this.setState({
-        temporaryPassword
-      });
-    });
-  };
 
   render() {
     return (
@@ -79,10 +31,10 @@ export class Home extends React.Component<IHomeProp> {
           <Header />
           <div className="row border-bottom white-bg dashboard-header">
             <div className="col-md-8">
-              <HomePaymentHistory paymentList={this.props.paymentList} />
+              <HomePaymentHistory />
             </div>
             <div className="col-md-4">
-              <HomeUserInfo temporaryPassword={this.state.temporaryPassword} userBalanceEntity={this.props.userBalanceEntity} />
+              <HomeUserInfo isUser={this.props.isUser} userBalanceEntity={this.props.userBalanceEntity} />
             </div>
           </div>
           <div className="row">
@@ -263,11 +215,10 @@ const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
   isAuthenticated: storeState.authentication.isAuthenticated,
   isUser: hasAnyAuthority(storeState.authentication.account.authorities, [AUTHORITIES.USER]),
-  userBalanceEntity: storeState.userBalance.entity,
-  paymentList: storeState.payment.entities
+  userBalanceEntity: storeState.userBalance.entity
 });
 
-const mapDispatchToProps = { getSession, getShoppingItem, getOwnerPayment };
+const mapDispatchToProps = { getSession, getOwnerPayment };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

@@ -1,13 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import { getOwnerEntities as getShoppingItem } from 'app/entities/shopping-cart-item/shopping-cart-item.reducer';
 import { PaymentType } from 'app/shared/model/payment.model';
 import { formatCurency, getLabelFromNumber } from 'app/shared/util/utils';
 import { TextFormat } from 'react-jhipster';
 import { APP_DATE_FORMAT } from 'app/config/constants';
 
-export interface IPaymentHistoryProp {
-  paymentList: any;
-}
+export interface IPaymentHistoryProp extends StateProps, DispatchProps {}
 
 export class PaymentHistory extends React.Component<IPaymentHistoryProp> {
   render() {
@@ -42,4 +42,16 @@ export class PaymentHistory extends React.Component<IPaymentHistoryProp> {
   }
 }
 
-export default PaymentHistory;
+const mapStateToProps = storeState => ({
+  paymentList: storeState.payment.entities
+});
+
+const mapDispatchToProps = { getShoppingItem };
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaymentHistory);

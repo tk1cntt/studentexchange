@@ -166,8 +166,7 @@ entity OrderHistory {
 }
 
 relationship ManyToOne {
-   OrderHistory{createBy(login)} to User,
-   OrderHistory{updateBy(login)} to User
+   OrderHistory{createBy(login)} to User
 }
 
 enum CustomerLevel {
@@ -246,7 +245,7 @@ entity OrderTransaction {
 }
 
 relationship ManyToOne {
-   OrderTransaction{orderCode(code)} to OrderCart,
+   OrderTransaction{order(code)} to OrderCart,
    OrderTransaction{createBy(login)} to User
 }
 

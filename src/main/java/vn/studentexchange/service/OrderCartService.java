@@ -1,8 +1,10 @@
 package vn.studentexchange.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import vn.studentexchange.domain.OrderCart;
 import vn.studentexchange.repository.OrderCartRepository;
 import vn.studentexchange.service.dto.OrderCartDTO;
+import vn.studentexchange.service.dto.OrderHistoryDTO;
 import vn.studentexchange.service.mapper.OrderCartMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.Optional;
 
 /**
@@ -26,6 +29,9 @@ public class OrderCartService {
     private final OrderCartRepository orderCartRepository;
 
     private final OrderCartMapper orderCartMapper;
+
+    @Autowired
+    private OrderHistoryService orderHistoryService;
 
     public OrderCartService(OrderCartRepository orderCartRepository, OrderCartMapper orderCartMapper) {
         this.orderCartRepository = orderCartRepository;
@@ -43,6 +49,10 @@ public class OrderCartService {
 
         OrderCart orderCart = orderCartMapper.toEntity(orderCartDTO);
         orderCart = orderCartRepository.save(orderCart);
+        OrderHistoryDTO historyDTO = orderCartMapper.toOrderHistoryDTO(orderCartDTO);
+        historyDTO.setOrderCartId(orderCartDTO.getId());
+        historyDTO.setCreateAt(Instant.now());
+        orderHistoryService.save(historyDTO);
         return orderCartMapper.toDto(orderCart);
     }
 

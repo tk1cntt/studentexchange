@@ -24,7 +24,7 @@ import OrderSearchBox from '../order-search-box';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities, searchOrder, reset } from 'app/entities/order-cart/order-cart.reducer';
-import { IOrderCart } from 'app/shared/model/order-cart.model';
+import { OrderStatus } from 'app/shared/model/order-cart.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
@@ -59,24 +59,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
     this.props.reset();
   }
 
-  /*
-  sort = prop => () => {
-    this.setState(
-      {
-        order: this.state.order === 'asc' ? 'desc' : 'asc',
-        sort: prop
-      },
-      () => this.sortEntities()
-    );
-  };
-
-  sortEntities() {
-    this.getEntities();
-    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=createAt,asc`);
-  }
-  */
-
-  handlePagination = activePage => this.setState({ activePage }); //, () => this.sortEntities());
+  handlePagination = activePage => this.setState({ activePage });
 
   getEntities = query => {
     const { activePage, itemsPerPage, sort, order } = this.state;
@@ -106,39 +89,45 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                       <thead>
                         <tr>
                           <th>Mã đơn hàng</th>
-                          <th>Mã vận đơn bên Trung Quốc</th>
+                          <th>Mã vận đơn</th>
                           <th>
                             <i className="fa fa-user" /> Khách hàng
                           </th>
-                          <th>Tổng tiền</th>
                           <th>Ngày đặt</th>
-                          <th>Trạng thái</th>
+                          <th className="pull-right">Tổng tiền</th>
                           <th />
                         </tr>
                       </thead>
                       <tbody>
                         {orderCartList.map((orderCart, i) => (
                           <tr key={`id-${i}`}>
+                            <td>{orderCart.code}</td>
                             <td>
-                              VN: {orderCart.code} <br /> TQ: {orderCart.shippingChinaCode}
+                              {orderCart.status === OrderStatus.DEPOSITED || orderCart.status === OrderStatus.ARE_BUYING ? (
+                                <small className="badge">Chưa mua hàng</small>
+                              ) : orderCart.status === OrderStatus.CANCELLED ? (
+                                <small className="badge badge-danger">Đã huỷ</small>
+                              ) : (
+                                <>
+                                  {orderCart.shippingChinaCode}
+                                  <br />
+                                  <small className="text-warning">
+                                    <b>{orderCart.website}</b>
+                                  </small>
+                                </>
+                              )}
                             </td>
-                            <td>{orderCart.shippingChinaCode}</td>
                             <td>
                               {orderCart.receiverName}
                               <br />
                               <i className="fa fa-phone" /> {orderCart.receiverMobile}
                             </td>
-                            <td>{formatCurency(orderCart.finalAmount)}đ</td>
                             <td>
                               <small>
                                 <TextFormat type="date" value={orderCart.depositTime} format={APP_DATE_FORMAT} />
                               </small>
                             </td>
-                            <td>
-                              <small>
-                                <span className="label label-warning">{orderCart.status}</span>
-                              </small>
-                            </td>
+                            <td className="pull-right">{formatCurency(orderCart.finalAmount)}đ</td>
                             <td>
                               <Link to={`/staff/order-detail?orderid=${encodeId(orderCart.id)}`}>
                                 <span className="label label-default">Chi tiết đơn hàng</span>

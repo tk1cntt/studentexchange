@@ -99,6 +99,7 @@ export const currentOrderStep = status => {
     case 'DEPOSITED':
       return 0;
     case 'ARE_BUYING':
+    case 'CANCELLED':
       return 1;
     case 'PURCHASED':
       return 2;

@@ -1,13 +1,15 @@
 package vn.studentexchange.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import org.checkerframework.checker.units.qual.A;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
+import vn.studentexchange.domain.OrderComment;
+import vn.studentexchange.domain.OrderTransaction;
 import vn.studentexchange.domain.User;
-import vn.studentexchange.domain.enumeration.CurrencyType;
-import vn.studentexchange.domain.enumeration.OrderStatus;
+import vn.studentexchange.domain.enumeration.*;
 import vn.studentexchange.repository.UserRepository;
 import vn.studentexchange.security.AuthoritiesConstants;
 import vn.studentexchange.security.SecurityUtils;
@@ -69,6 +71,15 @@ public class OrderCartResource {
     private CurrencyRateService currencyRateService;
 
     @Autowired
+    private OrderTransactionService orderTransactionService;
+
+    @Autowired
+    private UserBalanceService userBalanceService;
+
+    @Autowired
+    private PaymentService paymentService;
+
+    @Autowired
     private UserRepository userRepository;
 
     public OrderCartResource(OrderCartService orderCartService, OrderCartQueryService orderCartQueryService, UserShippingAddressService userShippingAddressService, ShoppingCartService shoppingCartService) {
@@ -104,7 +115,6 @@ public class OrderCartResource {
     public ResponseEntity<List<OrderCartDTO>> createOrderCart(@RequestBody OrderDTO requestOrder) throws URISyntaxException {
         log.debug("REST request to save OrderCart : {}", requestOrder);
         long userShippingAddressId = Utils.decodeId(requestOrder.getUserShippingAddressId());
-        Optional<UserShippingAddressDTO> shippingAddressDTO = userShippingAddressService.findOne(userShippingAddressId);
         List<ShoppingCartDTO> shoppingCarts = new ArrayList<>();
         if (StringUtils.isEmpty(requestOrder.getShopid())) {
             String username = SecurityUtils.getCurrentUserLogin().get();
@@ -113,47 +123,122 @@ public class OrderCartResource {
             long shopId = Utils.decodeId(requestOrder.getShopid());
             Optional<ShoppingCartDTO> shoppingCartDTO = shoppingCartService.findOne(shopId);
             if (shoppingCartDTO.isPresent()) {
-                shoppingCarts.add(shoppingCartDTO.get());
+                ShoppingCartDTO item = shoppingCartDTO.get();
+                if (item.getCreateByLogin().equals(SecurityUtils.getCurrentUserLogin().get())) {
+                    shoppingCarts.add(shoppingCartDTO.get());
+                } else {
+                    throw new BadRequestAlertException("Wrong cart id", ENTITY_NAME, "idnull");
+                }
+            } else {
+                throw new BadRequestAlertException("Wrong cart id", ENTITY_NAME, "idnull");
             }
         }
+        float depositRatio = 0.7f; // Get from where?
+        Optional<UserShippingAddressDTO> shippingAddressDTO = userShippingAddressService.findOne(userShippingAddressId);
+        List<OrderCartDTO> orderCarts = new ArrayList<>();
+        Optional<CurrencyRateDTO> rate =  currencyRateService.findByCurrency(CurrencyType.CNY);
+        for (ShoppingCartDTO shoppingCartDTO : shoppingCarts) {
+            shoppingCartDTO = Utils.calculate(shoppingCartDTO, rate.get());
+            OrderCartDTO orderCartDTO = orderCartMapper.toOrderCartDto(shoppingCartDTO);
+            long orderCode = Utils.generateNumber();
+            float finalAmount = orderCartDTO.getTotalAmount() + orderCartDTO.getServiceFee() + orderCartDTO.getTallyFee();
+            float depositMount = (float) Math.ceil(finalAmount * depositRatio);
+            orderCartDTO = addOrderCart(depositRatio, shippingAddressDTO, rate, orderCartDTO, orderCode, depositMount);
+            for (ShoppingCartItemDTO item : shoppingCartDTO.getItems()) {
+                addOrderItem(orderCartDTO, item);
+            }
+            // Delete item at shopping cart
+            shoppingCartService.delete(shoppingCartDTO.getId());
+            float currentBalance = updateUserBalance(orderCartDTO, depositMount);
+            addOrderTransaction(orderCartDTO, orderCode, depositMount);
+            addPayment(orderCartDTO, orderCode, depositMount, currentBalance);
+            addComment(orderCartDTO);
+            orderCarts.add(orderCartDTO);
+        }
+        return ResponseEntity.ok().body(orderCarts);
+    }
+
+    private void addComment(OrderCartDTO orderCartDTO) {
+        OrderCommentDTO comment = new OrderCommentDTO();
+        comment.setOrderCartId(orderCartDTO.getId());
+        comment.setCreateAt(Instant.now());
+        comment.setSender("owner");
+        comment.setType(CommentType.SYSTEM_LOG);
+        comment.setMessage("Đã đặt cọc đơn hàng này");
+    }
+
+    private void addPayment(OrderCartDTO orderCartDTO, long orderCode, float depositMount, float currentBalance) {
+        PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setCode(Utils.generateNumber());
+        paymentDTO.setAmount(depositMount);
+        paymentDTO.setOrderCode(orderCode + "");
+        paymentDTO.setNote("Đặt cọc cho đơn hàng " + orderCode);
+        paymentDTO.setMethod(PaymentMethod.CASH);
+        paymentDTO.setType(PaymentType.ORDER_PAYMENT);
+        paymentDTO.setNewBalance(currentBalance);
+        paymentDTO.setCreateAt(Instant.now());
+        paymentDTO.setCreateById(orderCartDTO.getCreateById());
+        paymentDTO.setCreateByLogin(orderCartDTO.getCreateByLogin());
+        paymentDTO.setCustomerId(orderCartDTO.getCreateById());
+        paymentDTO.setCustomerLogin(orderCartDTO.getCreateByLogin());
+        paymentDTO.setStatus(PaymentStatusType.PAID);
+        paymentService.save(paymentDTO);
+    }
+
+    private OrderCartDTO addOrderCart(float depositRatio, Optional<UserShippingAddressDTO> shippingAddressDTO, Optional<CurrencyRateDTO> rate, OrderCartDTO orderCartDTO, long orderCode, float depositMount) {
+        orderCartDTO.setId(null); // clear shopping id
+        orderCartDTO.setCode(orderCode);
+        orderCartDTO.setRate(rate.get().getRate());
+        orderCartDTO.setDepositRatio(depositRatio);
+        orderCartDTO.setDepositAmount(depositMount);
+        orderCartDTO.setDepositTime(Instant.now());
+        orderCartDTO.setStatus(OrderStatus.DEPOSITED);
+        orderCartDTO.setReceiverAddress(getShippingAddress(shippingAddressDTO));
+        orderCartDTO.setReceiverMobile(shippingAddressDTO.get().getMobile());
+        orderCartDTO.setReceiverName(shippingAddressDTO.get().getName());
+        orderCartDTO.setReceiverNote(shippingAddressDTO.get().getNote());
+        orderCartDTO = orderCartService.save(orderCartDTO);
+        return orderCartDTO;
+    }
+
+    private void addOrderItem(OrderCartDTO orderCartDTO, ShoppingCartItemDTO item) {
+        OrderItemDTO orderItemDTO = orderItemMapper.toOrderItemDto(item);
+        orderItemDTO.setCreateAt(Instant.now());
+        orderItemDTO.setOrderCartId(orderCartDTO.getId());
+        orderItemService.save(SecurityUtils.getCurrentUserLogin().get(), orderItemDTO);
+    }
+
+    private float updateUserBalance(OrderCartDTO orderCartDTO, float depositMount) {
+        Optional<UserBalanceDTO> userBalanceDTO = userBalanceService.findOne(orderCartDTO.getCreateById());
+        userBalanceDTO.ifPresent(balance -> {
+            balance.setCash(balance.getCash() - depositMount);
+            balance.setBalanceAvailable(balance.getBalanceAvailable() - depositMount);
+            balance.setUpdateAt(Instant.now());
+        });
+        return userBalanceDTO.get().getCash();
+    }
+
+    private void addOrderTransaction(OrderCartDTO orderCartDTO, long orderCode, float depositMount) {
+        OrderTransactionDTO orderTransactionDTO = new OrderTransactionDTO();
+        orderTransactionDTO.setAmount(depositMount);
+        // orderTransactionDTO.setOrderCodeCode(orderCode);
+        orderTransactionDTO.setOrderCartId(orderCartDTO.getId());
+        orderTransactionDTO.setStatus(OrderTransactionType.DEPOSIT);
+        orderTransactionDTO.setNote("Đặt cọc cho đơn hàng " + orderCode);
+        orderTransactionDTO.setCreateAt(Instant.now());
+        orderTransactionDTO.setCreateById(orderCartDTO.getCreateById());
+        orderTransactionDTO.setCreateByLogin(orderCartDTO.getCreateByLogin());
+        orderTransactionService.save(orderTransactionDTO);
+    }
+
+    private String getShippingAddress(Optional<UserShippingAddressDTO> shippingAddressDTO) {
         StringBuilder address = new StringBuilder();
         address.append(shippingAddressDTO.get().getAddress());
         address.append(" - ");
         address.append(shippingAddressDTO.get().getDistrictType()).append(" ").append(shippingAddressDTO.get().getDistrictName());
         address.append(" - ");
         address.append(shippingAddressDTO.get().getCityName());
-        List<OrderCartDTO> orderCarts = new ArrayList<>();
-        Optional<CurrencyRateDTO> rate =  currencyRateService.findByCurrency(CurrencyType.CNY);
-        for (ShoppingCartDTO shoppingCartDTO : shoppingCarts) {
-            shoppingCartDTO = Utils.calculate(shoppingCartDTO, rate.get());
-            OrderCartDTO orderCartDTO = orderCartMapper.toOrderCartDto(shoppingCartDTO);
-            orderCartDTO.setId(null); // clear shopping id
-            orderCartDTO.setCode(Utils.generateNumber());
-            float finalAmount = orderCartDTO.getTotalAmount() + orderCartDTO.getServiceFee() + orderCartDTO.getTallyFee();
-            orderCartDTO.setRate(rate.get().getRate());
-            orderCartDTO.setDepositRatio(0.7f);
-            orderCartDTO.setDepositAmount((float) Math.ceil(finalAmount * 0.7));
-            orderCartDTO.setDepositTime(Instant.now());
-            orderCartDTO.setStatus(OrderStatus.DEPOSITED);
-            orderCartDTO.setReceiverAddress(address.toString());
-            orderCartDTO.setReceiverMobile(shippingAddressDTO.get().getMobile());
-            orderCartDTO.setReceiverName(shippingAddressDTO.get().getName());
-            orderCartDTO.setReceiverNote(shippingAddressDTO.get().getNote());
-            orderCartDTO = orderCartService.save(orderCartDTO);
-            for (ShoppingCartItemDTO item : shoppingCartDTO.getItems()) {
-                OrderItemDTO orderItemDTO = orderItemMapper.toOrderItemDto(item);
-                orderItemDTO.setCreateAt(Instant.now());
-                orderItemDTO.setOrderCartId(orderCartDTO.getId());
-                orderItemService.save(SecurityUtils.getCurrentUserLogin().get(), orderItemDTO);
-            }
-            // Delete item at shopping cart
-            shoppingCartService.delete(shoppingCartDTO.getId());
-            // TODO: Thanh toan hoa don ...
-            // TODO: Update status, log ...
-            // TODO: Huy don hang, hoan tien ...
-            orderCarts.add(orderCartDTO);
-        }
-        return ResponseEntity.ok().body(orderCarts);
+        return address.toString();
     }
     //*/
 
@@ -245,6 +330,7 @@ public class OrderCartResource {
             order.setUpdateByLogin(user.get().getLogin());
             order = orderCartService.save(order);
         });
+        // TODO: Huy don hang, hoan tien ...
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderCartDTO.getId().toString()))
             .body(result.get());

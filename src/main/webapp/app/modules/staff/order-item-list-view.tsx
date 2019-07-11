@@ -12,7 +12,7 @@ export class OrderListItem extends React.Component<IOrderListItemProp> {
       <div className="ibox float-e-margins">
         <div className="ibox-title">
           <h5>
-            <a href={orderCartEntity.shopLink} target="_blank">{`${orderCartEntity.aliwangwang}`}</a>
+            Người bán <a href={orderCartEntity.shopLink} target="_blank">{`${orderCartEntity.aliwangwang}`}</a>
           </h5>
           <div className="ibox-tools">
             <span className="label label-warning-light pull-right">

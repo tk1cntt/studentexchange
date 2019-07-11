@@ -80,6 +80,12 @@ public class OrderCartResource {
     private PaymentService paymentService;
 
     @Autowired
+    private OrderCommentService orderCommentService;
+
+    @Autowired
+    private OrderHistoryService orderHistoryService;
+
+    @Autowired
     private UserRepository userRepository;
 
     public OrderCartResource(OrderCartService orderCartService, OrderCartQueryService orderCartQueryService, UserShippingAddressService userShippingAddressService, ShoppingCartService shoppingCartService) {
@@ -127,10 +133,10 @@ public class OrderCartResource {
                 if (item.getCreateByLogin().equals(SecurityUtils.getCurrentUserLogin().get())) {
                     shoppingCarts.add(shoppingCartDTO.get());
                 } else {
-                    throw new BadRequestAlertException("Wrong cart id", ENTITY_NAME, "idnull");
+                    throw new BadRequestAlertException("Wrong cart id", ENTITY_NAME, "wrongid");
                 }
             } else {
-                throw new BadRequestAlertException("Wrong cart id", ENTITY_NAME, "idnull");
+                throw new BadRequestAlertException("Wrong cart id", ENTITY_NAME, "wrongid");
             }
         }
         float depositRatio = 0.7f; // Get from where?
@@ -147,10 +153,11 @@ public class OrderCartResource {
             for (ShoppingCartItemDTO item : shoppingCartDTO.getItems()) {
                 addOrderItem(orderCartDTO, item);
             }
-            float currentBalance = updateUserBalance(username, depositMount);
-            addOrderTransaction(orderCartDTO, orderCode, depositMount);
-            addPayment(orderCartDTO, orderCode, depositMount, currentBalance);
-            addComment(orderCartDTO);
+            float currentBalance = paymentUserBalance(username, depositMount);
+            addOrderTransaction(orderCartDTO,"Đặt cọc cho đơn hàng " + orderCode, orderCode, depositMount, OrderTransactionType.DEPOSIT);
+            addHistory(orderCartDTO, "Đã đặt cọc", OrderStatus.DEPOSITED);
+            addComment(orderCartDTO.getId(), "owner", "Đã đặt cọc đơn hàng này");
+            addPayment(orderCartDTO, "Đặt cọc cho đơn hàng " + orderCode, orderCode, depositMount, currentBalance, PaymentType.ORDER_PAYMENT);
             // Delete item at shopping cart
             shoppingCartService.delete(shoppingCartDTO.getId());
             orderCarts.add(orderCartDTO);
@@ -158,23 +165,33 @@ public class OrderCartResource {
         return ResponseEntity.ok().body(orderCarts);
     }
 
-    private void addComment(OrderCartDTO orderCartDTO) {
-        OrderCommentDTO comment = new OrderCommentDTO();
-        comment.setOrderCartId(orderCartDTO.getId());
-        comment.setCreateAt(Instant.now());
-        comment.setSender("owner");
-        comment.setType(CommentType.SYSTEM_LOG);
-        comment.setMessage("Đã đặt cọc đơn hàng này");
+    private void addHistory(OrderCartDTO orderCartDTO, String description, OrderStatus status) {
+        OrderHistoryDTO historyDTO = orderCartMapper.toOrderHistoryDTO(orderCartDTO);
+        historyDTO.setOrderCartId(orderCartDTO.getId());
+        historyDTO.setDescription(description);
+        historyDTO.setStatus(status);
+        historyDTO.setCreateAt(Instant.now());
+        orderHistoryService.save(historyDTO);
     }
 
-    private void addPayment(OrderCartDTO orderCartDTO, long orderCode, float depositMount, float currentBalance) {
+    private void addComment(Long orderId, String sender, String message) {
+        OrderCommentDTO comment = new OrderCommentDTO();
+        comment.setOrderCartId(orderId);
+        comment.setCreateAt(Instant.now());
+        comment.setSender(sender);
+        comment.setType(CommentType.SYSTEM_LOG);
+        comment.setMessage(message);
+        orderCommentService.save(comment);
+    }
+
+    private void addPayment(OrderCartDTO orderCartDTO, String note, long orderCode, float depositMount, float currentBalance, PaymentType paymentType) {
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setCode(Utils.generateNumber());
         paymentDTO.setAmount(depositMount);
         paymentDTO.setOrderCode(orderCode + "");
-        paymentDTO.setNote("Đặt cọc cho đơn hàng " + orderCode);
+        paymentDTO.setNote(note);
         paymentDTO.setMethod(PaymentMethod.CASH);
-        paymentDTO.setType(PaymentType.ORDER_PAYMENT);
+        paymentDTO.setType(paymentType);
         paymentDTO.setNewBalance(currentBalance);
         paymentDTO.setCreateAt(Instant.now());
         paymentDTO.setCreateById(orderCartDTO.getCreateById());
@@ -208,23 +225,46 @@ public class OrderCartResource {
         orderItemService.save(SecurityUtils.getCurrentUserLogin().get(), orderItemDTO);
     }
 
-    private float updateUserBalance(String username, float depositMount) {
+    private float paymentUserBalance(String username, float depositMount) {
         Optional<UserBalanceDTO> userBalanceDTO = userBalanceService.findByOwner(username);
-        userBalanceDTO.ifPresent(balance -> {
+        if (userBalanceDTO.isPresent()) {
+            UserBalanceDTO balance = userBalanceDTO.get();
+            if (depositMount > balance.getBalanceAvailable()) {
+                throw new BadRequestAlertException("Out of money", ENTITY_NAME, "outofmoney");
+            }
             balance.setCash(balance.getCash() - depositMount);
             balance.setBalanceAvailable(balance.getBalanceAvailable() - depositMount);
             balance.setUpdateAt(Instant.now());
-        });
-        return userBalanceDTO.get().getCash();
+            balance = userBalanceService.save(balance);
+            return balance.getBalanceAvailable();
+        } else {
+            throw new BadRequestAlertException("Out of money", ENTITY_NAME, "outofmoney");
+        }
     }
 
-    private void addOrderTransaction(OrderCartDTO orderCartDTO, long orderCode, float depositMount) {
+    private float refundUserBalance(String username, float depositMount) {
+        Optional<UserBalanceDTO> userBalanceDTO = userBalanceService.findByOwner(username);
+        if (userBalanceDTO.isPresent()) {
+            UserBalanceDTO balance = userBalanceDTO.get();
+            if (depositMount < 0) {
+                throw new BadRequestAlertException("Out of money", ENTITY_NAME, "outofmoney");
+            }
+            balance.setCash(balance.getCash() + depositMount);
+            balance.setBalanceAvailable(balance.getBalanceAvailable() + depositMount);
+            balance.setUpdateAt(Instant.now());
+            balance = userBalanceService.save(balance);
+            return balance.getBalanceAvailable();
+        } else {
+            throw new BadRequestAlertException("Out of money", ENTITY_NAME, "outofmoney");
+        }
+    }
+
+    private void addOrderTransaction(OrderCartDTO orderCartDTO, String note, long orderCode, float depositMount, OrderTransactionType type ) {
         OrderTransactionDTO orderTransactionDTO = new OrderTransactionDTO();
         orderTransactionDTO.setAmount(depositMount);
-        orderTransactionDTO.setOrderCode(orderCode + "");
         orderTransactionDTO.setOrderCartId(orderCartDTO.getId());
-        orderTransactionDTO.setStatus(OrderTransactionType.DEPOSIT);
-        orderTransactionDTO.setNote("Đặt cọc cho đơn hàng " + orderCode);
+        orderTransactionDTO.setStatus(type);
+        orderTransactionDTO.setNote(note);
         orderTransactionDTO.setCreateAt(Instant.now());
         orderTransactionDTO.setCreateById(orderCartDTO.getCreateById());
         orderTransactionDTO.setCreateByLogin(orderCartDTO.getCreateByLogin());
@@ -279,7 +319,9 @@ public class OrderCartResource {
             order.setStatus(OrderStatus.ARE_BUYING);
             order.setBuyerId(user.get().getId());
             order.setBuyerLogin(user.get().getLogin());
-            order = orderCartService.save(order);
+            addHistory(orderCartDTO, "Đang mua hàng", OrderStatus.ARE_BUYING);
+            addComment(order.getId(), "staff", "Đơn hàng đang được đặt mua");
+            orderCartService.save(order);
         });
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderCartDTO.getId().toString()))
@@ -305,7 +347,9 @@ public class OrderCartResource {
             order.setStatus(OrderStatus.PURCHASED);
             order.setBuyerId(user.get().getId());
             order.setBuyerLogin(user.get().getLogin());
-            order = orderCartService.save(order);
+            addHistory(orderCartDTO, "Đã mua hàng", OrderStatus.PURCHASED);
+            addComment(order.getId(), "staff", "Đơn hàng đã được đặt mua thành công trên " + order.getWebsite());
+            orderCartService.save(order);
         });
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderCartDTO.getId().toString()))
@@ -328,9 +372,13 @@ public class OrderCartResource {
             order.setStatusName(orderCartDTO.getStatusName());
             order.setUpdateById(user.get().getId());
             order.setUpdateByLogin(user.get().getLogin());
-            order = orderCartService.save(order);
+            float currentBalance = refundUserBalance(order.getCreateByLogin(), order.getDepositAmount());
+            addOrderTransaction(order,"Hoàn tiền cho đơn hàng " + order.getCode(), order.getCode(), order.getDepositAmount(), OrderTransactionType.REFUND);
+            addHistory(order, "Đã huỷ", OrderStatus.CANCELLED);
+            addComment(order.getId(), "staff", "Đã hoàn tiền đặt cọc cho đơn hàng này");
+            addPayment(order, "Hoàn tiền cho đơn hàng " + order.getCode(), order.getCode(), order.getDepositAmount(), currentBalance, PaymentType.REFUND);
+            orderCartService.save(order);
         });
-        // TODO: Huy don hang, hoan tien ...
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderCartDTO.getId().toString()))
             .body(result.get());

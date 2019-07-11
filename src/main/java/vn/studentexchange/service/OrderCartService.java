@@ -30,9 +30,6 @@ public class OrderCartService {
 
     private final OrderCartMapper orderCartMapper;
 
-    @Autowired
-    private OrderHistoryService orderHistoryService;
-
     public OrderCartService(OrderCartRepository orderCartRepository, OrderCartMapper orderCartMapper) {
         this.orderCartRepository = orderCartRepository;
         this.orderCartMapper = orderCartMapper;
@@ -49,10 +46,6 @@ public class OrderCartService {
 
         OrderCart orderCart = orderCartMapper.toEntity(orderCartDTO);
         orderCart = orderCartRepository.save(orderCart);
-        OrderHistoryDTO historyDTO = orderCartMapper.toOrderHistoryDTO(orderCartDTO);
-        historyDTO.setOrderCartId(orderCartDTO.getId());
-        historyDTO.setCreateAt(Instant.now());
-        orderHistoryService.save(historyDTO);
         return orderCartMapper.toDto(orderCart);
     }
 

@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import vn.studentexchange.domain.OrderHistory;
 import vn.studentexchange.domain.enumeration.OrderStatus;
 
 /**
@@ -135,6 +137,14 @@ public class OrderCartDTO implements Serializable {
     private String updateByLogin;
 
     private List<OrderItemDTO> items = new ArrayList<>();
+
+    private List<OrderCommentDTO> comments = new ArrayList<>();
+
+    private List<OrderHistoryDTO> histories = new ArrayList<>();
+
+    private List<OrderTransactionDTO> transactions = new ArrayList<>();
+
+    private List<OrderPackageDTO> packages = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -718,5 +728,37 @@ public class OrderCartDTO implements Serializable {
 
     public void setItems(List<OrderItemDTO> items) {
         this.items = items;
+    }
+
+    public List<OrderCommentDTO> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<OrderCommentDTO> comments) {
+        this.comments = comments;
+    }
+
+    public List<OrderHistoryDTO> getHistories() {
+        return histories;
+    }
+
+    public void setHistories(List<OrderHistoryDTO> histories) {
+        this.histories = histories;
+    }
+
+    public List<OrderTransactionDTO> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<OrderTransactionDTO> transactions) {
+        this.transactions = transactions;
+    }
+
+    public List<OrderPackageDTO> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(List<OrderPackageDTO> packages) {
+        this.packages = packages;
     }
 }

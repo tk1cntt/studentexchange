@@ -23,7 +23,7 @@ export interface ICheckoutProp extends StateProps, DispatchProps {
 
 export class Payment extends React.Component<ICheckoutProp> {
   componentDidMount() {
-    this.props.getAllPayment();
+    this.props.getAllPayment(0, 20, 'createAt,desc');
   }
 
   render() {
@@ -48,13 +48,12 @@ export class Payment extends React.Component<ICheckoutProp> {
                     >
                       <thead>
                         <tr>
-                          <th className="footable-visible footable-sortable">Khách hàng</th>
-                          <th className="footable-visible footable-sortable">Mã giao dịch</th>
-                          <th className="footable-visible footable-sortable">Số tiền</th>
-                          <th className="footable-visible footable-sortable">Số dư sau giao dịch</th>
-                          <th className="footable-visible footable-sortable">Loại giao dịch</th>
-                          <th className="footable-visible footable-sortable">Nội dung</th>
-                          <th className="footable-visible footable-sortable">Trạng thái</th>
+                          <th>Khách hàng</th>
+                          <th>Mã giao dịch</th>
+                          <th>Số tiền</th>
+                          <th>Số dư sau giao dịch</th>
+                          <th>Loại giao dịch</th>
+                          <th>Nội dung</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -68,18 +67,16 @@ export class Payment extends React.Component<ICheckoutProp> {
                                 <TextFormat type="date" value={payment.createAt} format={APP_DATE_FORMAT} />
                               </small>
                             </td>
-                            <td className="footable-visible">
-                              <b className="text-danger">
-                                {payment.type === PaymentType.ORDER_PAYMENT ? '-' : '+'}
-                                {formatCurency(payment.amount)}đ
-                              </b>
+                            <td>
+                              {payment.type === PaymentType.ORDER_PAYMENT ? (
+                                <b className="text-danger">-{formatCurency(payment.amount)}đ</b>
+                              ) : (
+                                <b className="text-info">+{formatCurency(payment.amount)}đ</b>
+                              )}
                             </td>
-                            <td className="footable-visible">{formatCurency(payment.newBalance)}đ</td>
-                            <td className="footable-visible">{payment.type}</td>
-                            <td className="footable-visible">{payment.note}</td>
-                            <td className="footable-visible">
-                              <span className="label label-success">{payment.status}</span>
-                            </td>
+                            <td>{formatCurency(payment.newBalance)}đ</td>
+                            <td>{payment.type}</td>
+                            <td>{payment.note}</td>
                           </tr>
                         ))}
                       </tbody>

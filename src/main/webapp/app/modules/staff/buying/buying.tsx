@@ -1,21 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink as Link } from 'react-router-dom';
 
-import { Modal, Select } from 'antd';
+import { Modal } from 'antd';
 
 import qs from 'query-string';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getEntity as getOrder, updatePurchased, updateCancel } from 'app/entities/order-cart/order-cart.reducer';
-import { formatCurency, encodeId, decodeId } from 'app/shared/util/utils';
+import { formatCurency, decodeId } from 'app/shared/util/utils';
 import { OrderStatus } from 'app/shared/model/order-cart.model';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
+import Footer from 'app/shared/layout/footer/footer';
 import OrderItemListView from 'app/shared/layout/order/order-item-list-view';
-
-const { Option } = Select;
+import OrderCancelReason from 'app/shared/layout/order/order-cancel-reason-view';
 
 export interface IBuyingProp extends StateProps, DispatchProps {
   location: any;
@@ -238,15 +237,7 @@ export class Buying extends React.Component<IBuyingProp> {
                             onOk={this.doCancelOrder}
                             onCancel={this.closeCancelOrder}
                           >
-                            <p>Lý do huỷ đơn hàng</p>
-                            <div className="form-group">
-                              <Select className="btn-block" onChange={this.selectCancelReason}>
-                                <Option value="PRICE_HAS_CHANGED">Giá mặt hàng thay đổi</Option>
-                                <Option value="OUT_OF_STOCK">Hết hàng</Option>
-                                <Option value="WRONG_INFO">Thông tin đơn hàng không chính xác</Option>
-                                <Option value="OTHER">Lý do khác</Option>
-                              </Select>
-                            </div>
+                            <OrderCancelReason onChange={this.selectCancelReason} />
                           </Modal>
                         ) : (
                           ''
@@ -257,11 +248,8 @@ export class Buying extends React.Component<IBuyingProp> {
                 )}
               </div>
               <div className="footer">
-                <div className="pull-right">
-                  10GB of <strong>250GB</strong> Free.
-                </div>
-                <div>
-                  <strong>Copyright</strong> Example Company © 2014-2017
+                <div className="col-xs-12">
+                  <Footer />
                 </div>
               </div>
             </div>

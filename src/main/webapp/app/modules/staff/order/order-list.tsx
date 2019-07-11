@@ -1,20 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import {
-  Translate,
-  ICrudGetAllAction,
-  TextFormat,
-  getSortState,
-  IPaginationBaseState,
-  getPaginationItemsNumber,
-  JhiPagination
-} from 'react-jhipster';
+import { TextFormat, getSortState, IPaginationBaseState, getPaginationItemsNumber, JhiPagination } from 'react-jhipster';
 import qs from 'query-string';
-import { Select } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatCurency, encodeId, orderQueryStringMapping } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
@@ -26,10 +15,8 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities, searchOrder, reset } from 'app/entities/order-cart/order-cart.reducer';
 import { OrderStatus } from 'app/shared/model/order-cart.model';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
-
-const { Option } = Select;
 
 export interface IOrderCartProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 

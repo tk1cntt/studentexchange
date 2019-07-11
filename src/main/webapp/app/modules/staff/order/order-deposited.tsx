@@ -1,19 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
+import { RouteComponentProps } from 'react-router-dom';
 // tslint:disable-next-line:no-unused-variable
-import {
-  Translate,
-  ICrudGetAllAction,
-  TextFormat,
-  getSortState,
-  IPaginationBaseState,
-  getPaginationItemsNumber,
-  JhiPagination
-} from 'react-jhipster';
+import { TextFormat, getSortState, IPaginationBaseState, getPaginationItemsNumber, JhiPagination } from 'react-jhipster';
 import qs from 'query-string';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatCurency, encodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
@@ -22,9 +12,8 @@ import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities, searchOrder, updateBuying, reset } from 'app/entities/order-cart/order-cart.reducer';
-import { IOrderCart } from 'app/shared/model/order-cart.model';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IOrderCartProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -100,23 +89,6 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
             <h3>Danh sách đơn hàng chưa được xử lý</h3>
           </div>
           <div className="wrapper wrapper-content animated fadeInRight ecommerce">
-            <div className="ibox-content m-b-sm border-bottom">
-              <label>Mã đơn hàng</label>
-              <div className="input-group">
-                <input
-                  type="text"
-                  placeholder="Nhập mã đơn hàng cần tìm"
-                  name="code"
-                  className="form-control form-control-lg"
-                  onChange={this.onChangeCode}
-                />
-                <div className="input-group-btn">
-                  <button className="btn btn-primary" type="button" onClick={this.searchClick}>
-                    <i className="fa fa-search" /> Tìm kiếm
-                  </button>
-                </div>
-              </div>
-            </div>
             <div className="row">
               <div className="col-lg-12">
                 <div className="ibox">

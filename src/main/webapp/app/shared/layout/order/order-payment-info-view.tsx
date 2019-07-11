@@ -60,6 +60,26 @@ export class OrderPaymentInfo extends React.Component<IOrderPaymentInfoProp> {
               Phí vận chuyển nội địa VN:
             </li>
           </ul>
+          <ul className="list-group clear-list m-t">
+            <li className="list-group-item">
+              <span className="pull-right">
+                <b className="text-warning">{formatCurency(orderCartEntity.finalAmount)}đ</b>
+              </span>
+              Tổng tiền:
+            </li>
+            <li className="list-group-item">
+              <span className="pull-right">
+                <b>{formatCurency(orderCartEntity.depositAmount)}đ</b>
+              </span>
+              Đặt cọc:
+            </li>
+            <li className="list-group-item">
+              <span className="pull-right">
+                <b className="text-danger">{formatCurency(orderCartEntity.finalAmount - orderCartEntity.depositAmount)}đ</b>
+              </span>
+              Còn thiếu:
+            </li>
+          </ul>
         </div>
       </>
     );

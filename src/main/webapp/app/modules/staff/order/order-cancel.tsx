@@ -1,18 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import {
-  Translate,
-  ICrudGetAllAction,
-  TextFormat,
-  getSortState,
-  IPaginationBaseState,
-  getPaginationItemsNumber,
-  JhiPagination
-} from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { TextFormat, getSortState, IPaginationBaseState, getPaginationItemsNumber, JhiPagination } from 'react-jhipster';
 import { formatCurency, encodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
@@ -21,9 +11,8 @@ import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities, searchOrder, reset } from 'app/entities/order-cart/order-cart.reducer';
-import { IOrderCart } from 'app/shared/model/order-cart.model';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IOrderCartProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -77,34 +66,6 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
             <h3>Danh sách đơn hàng đã bị huỷ</h3>
           </div>
           <div className="wrapper wrapper-content animated fadeInRight ecommerce">
-            <div className="ibox-content m-b-sm border-bottom">
-              <div className="row">
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="order_id">
-                      Mã đơn hàng
-                    </label>
-                    <input type="text" id="order_id" name="order_id" placeholder="Order ID" className="form-control" />
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="status">
-                      Trạng thái đơn hàng
-                    </label>
-                    <input type="text" id="status" name="status" placeholder="Status" className="form-control" />
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="status" />
-                    <button className="btn btn-primary btn-block">
-                      <i className="fa fa-search" /> Tìm kiếm
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="row">
               <div className="col-lg-12">
                 <div className="ibox">

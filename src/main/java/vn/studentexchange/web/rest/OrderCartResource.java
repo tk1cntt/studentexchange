@@ -291,6 +291,7 @@ public class OrderCartResource {
      * or with status 500 (Internal Server Error) if the orderCartDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+    /*
     @PutMapping("/order-carts")
     @Timed
     public ResponseEntity<OrderCartDTO> updateOrderCart(@RequestBody OrderCartDTO orderCartDTO) throws URISyntaxException {
@@ -303,6 +304,7 @@ public class OrderCartResource {
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, orderCartDTO.getId().toString()))
             .body(result);
     }
+    */
 
     @PutMapping("/order-carts/buying")
     @Timed
@@ -358,7 +360,7 @@ public class OrderCartResource {
 
     @PutMapping("/order-carts/cancel")
     @Timed
-    @Secured(AuthoritiesConstants.STAFF)
+    @Secured({ AuthoritiesConstants.STAFF, AuthoritiesConstants.USER })
     public ResponseEntity<OrderCartDTO> updateOrderCartCancel(@RequestBody OrderCartDTO orderCartDTO) throws URISyntaxException {
         log.debug("REST request to update OrderCart : {}", orderCartDTO);
         if (orderCartDTO.getId() == null) {
@@ -367,6 +369,7 @@ public class OrderCartResource {
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
         Optional<OrderCartDTO> result = orderCartService.findOne(orderCartDTO.getId());
         result.ifPresent(order -> {
+            // TODO: Chẹck order owner before cancel
             order.setUpdateAt(Instant.now());
             order.setStatus(OrderStatus.CANCELLED);
             order.setStatusName(orderCartDTO.getStatusName());
@@ -460,6 +463,7 @@ public class OrderCartResource {
      * @param id the id of the orderCartDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
+    /*
     @DeleteMapping("/order-carts/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
@@ -468,4 +472,5 @@ public class OrderCartResource {
         orderCartService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+    */
 }

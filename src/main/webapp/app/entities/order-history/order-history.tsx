@@ -53,9 +53,6 @@ export class OrderHistory extends React.Component<IOrderHistoryProps> {
                 <th>
                   <Translate contentKey="studentexchangeApp.orderHistory.createBy">Create By</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="studentexchangeApp.orderHistory.updateBy">Update By</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -78,7 +75,6 @@ export class OrderHistory extends React.Component<IOrderHistoryProps> {
                     {orderHistory.orderCartId ? <Link to={`order-cart/${orderHistory.orderCartId}`}>{orderHistory.orderCartId}</Link> : ''}
                   </td>
                   <td>{orderHistory.createByLogin ? orderHistory.createByLogin : ''}</td>
-                  <td>{orderHistory.updateByLogin ? orderHistory.updateByLogin : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${orderHistory.id}`} color="info" size="sm">

@@ -19,8 +19,7 @@
       "description": "Description",
       "createAt": "Create At",
       "orderCart": "Order Cart",
-      "createBy": "Create By",
-      "updateBy": "Update By"
+      "createBy": "Create By"
     }
   }
 }

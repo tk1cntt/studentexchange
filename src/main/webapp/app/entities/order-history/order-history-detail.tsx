@@ -56,10 +56,6 @@ export class OrderHistoryDetail extends React.Component<IOrderHistoryDetailProps
               <Translate contentKey="studentexchangeApp.orderHistory.createBy">Create By</Translate>
             </dt>
             <dd>{orderHistoryEntity.createByLogin ? orderHistoryEntity.createByLogin : ''}</dd>
-            <dt>
-              <Translate contentKey="studentexchangeApp.orderHistory.updateBy">Update By</Translate>
-            </dt>
-            <dd>{orderHistoryEntity.updateByLogin ? orderHistoryEntity.updateByLogin : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/order-history" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

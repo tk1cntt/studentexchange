@@ -16,7 +16,4 @@ public interface OrderHistoryRepository extends JpaRepository<OrderHistory, Long
     @Query("select order_history from OrderHistory order_history where order_history.createBy.login = ?#{principal.username}")
     List<OrderHistory> findByCreateByIsCurrentUser();
 
-    @Query("select order_history from OrderHistory order_history where order_history.updateBy.login = ?#{principal.username}")
-    List<OrderHistory> findByUpdateByIsCurrentUser();
-
 }

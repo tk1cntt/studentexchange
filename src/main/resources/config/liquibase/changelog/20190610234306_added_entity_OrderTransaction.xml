@@ -42,7 +42,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="order_code_id" type="bigint">
+            <column name="order_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -52,6 +52,7 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="order_transaction" columnName="create_at" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

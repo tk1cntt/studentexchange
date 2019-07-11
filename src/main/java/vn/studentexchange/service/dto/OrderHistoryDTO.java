@@ -1,10 +1,9 @@
 package vn.studentexchange.service.dto;
 
-import vn.studentexchange.domain.enumeration.OrderStatus;
-
-import java.io.Serializable;
 import java.time.Instant;
+import java.io.Serializable;
 import java.util.Objects;
+import vn.studentexchange.domain.enumeration.OrderStatus;
 
 /**
  * A DTO for the OrderHistory entity.
@@ -24,10 +23,6 @@ public class OrderHistoryDTO implements Serializable {
     private Long createById;
 
     private String createByLogin;
-
-    private Long updateById;
-
-    private String updateByLogin;
 
     public Long getId() {
         return id;
@@ -85,22 +80,6 @@ public class OrderHistoryDTO implements Serializable {
         this.createByLogin = userLogin;
     }
 
-    public Long getUpdateById() {
-        return updateById;
-    }
-
-    public void setUpdateById(Long userId) {
-        this.updateById = userId;
-    }
-
-    public String getUpdateByLogin() {
-        return updateByLogin;
-    }
-
-    public void setUpdateByLogin(String userLogin) {
-        this.updateByLogin = userLogin;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -132,8 +111,6 @@ public class OrderHistoryDTO implements Serializable {
             ", orderCart=" + getOrderCartId() +
             ", createBy=" + getCreateById() +
             ", createBy='" + getCreateByLogin() + "'" +
-            ", updateBy=" + getUpdateById() +
-            ", updateBy='" + getUpdateByLogin() + "'" +
             "}";
     }
 }

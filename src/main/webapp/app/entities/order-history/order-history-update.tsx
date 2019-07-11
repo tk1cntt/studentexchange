@@ -24,7 +24,6 @@ export interface IOrderHistoryUpdateState {
   isNew: boolean;
   orderCartId: string;
   createById: string;
-  updateById: string;
 }
 
 export class OrderHistoryUpdate extends React.Component<IOrderHistoryUpdateProps, IOrderHistoryUpdateState> {
@@ -33,7 +32,6 @@ export class OrderHistoryUpdate extends React.Component<IOrderHistoryUpdateProps
     this.state = {
       orderCartId: '0',
       createById: '0',
-      updateById: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -194,21 +192,6 @@ export class OrderHistoryUpdate extends React.Component<IOrderHistoryUpdateProps
                     <Translate contentKey="studentexchangeApp.orderHistory.createBy">Create By</Translate>
                   </Label>
                   <AvInput id="order-history-createBy" type="select" className="form-control" name="createById">
-                    <option value="" key="0" />
-                    {users
-                      ? users.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.login}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="updateBy.login">
-                    <Translate contentKey="studentexchangeApp.orderHistory.updateBy">Update By</Translate>
-                  </Label>
-                  <AvInput id="order-history-updateBy" type="select" className="form-control" name="updateById">
                     <option value="" key="0" />
                     {users
                       ? users.map(otherEntity => (

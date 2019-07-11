@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import vn.studentexchange.domain.OrderTransaction;
+import vn.studentexchange.domain.*;
 import vn.studentexchange.service.dto.OrderTransactionDTO;
+
+import org.mapstruct.*;
 
 /**
  * Mapper for the entity OrderTransaction and its DTO OrderTransactionDTO.
@@ -12,14 +12,14 @@ import vn.studentexchange.service.dto.OrderTransactionDTO;
 public interface OrderTransactionMapper extends EntityMapper<OrderTransactionDTO, OrderTransaction> {
 
     @Mapping(source = "orderCart.id", target = "orderCartId")
-    @Mapping(source = "orderCode.id", target = "orderCodeId")
-    @Mapping(source = "orderCode.code", target = "orderCodeCode")
+    @Mapping(source = "order.id", target = "orderId")
+    @Mapping(source = "order.code", target = "orderCode")
     @Mapping(source = "createBy.id", target = "createById")
     @Mapping(source = "createBy.login", target = "createByLogin")
     OrderTransactionDTO toDto(OrderTransaction orderTransaction);
 
     @Mapping(source = "orderCartId", target = "orderCart")
-    @Mapping(source = "orderCodeId", target = "orderCode")
+    @Mapping(source = "orderId", target = "order")
     @Mapping(source = "createById", target = "createBy")
     OrderTransaction toEntity(OrderTransactionDTO orderTransactionDTO);
 

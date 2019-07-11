@@ -24,8 +24,6 @@ export interface IOrderHistory {
   orderCartId?: number;
   createByLogin?: string;
   createById?: number;
-  updateByLogin?: string;
-  updateById?: number;
 }
 
 export const defaultValue: Readonly<IOrderHistory> = {};

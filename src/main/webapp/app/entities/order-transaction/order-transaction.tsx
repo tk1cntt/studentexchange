@@ -54,7 +54,7 @@ export class OrderTransaction extends React.Component<IOrderTransactionProps> {
                   <Translate contentKey="studentexchangeApp.orderTransaction.orderCart">Order Cart</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="studentexchangeApp.orderTransaction.orderCode">Order Code</Translate>
+                  <Translate contentKey="studentexchangeApp.orderTransaction.order">Order</Translate>
                 </th>
                 <th>
                   <Translate contentKey="studentexchangeApp.orderTransaction.createBy">Create By</Translate>
@@ -86,8 +86,8 @@ export class OrderTransaction extends React.Component<IOrderTransactionProps> {
                     )}
                   </td>
                   <td>
-                    {orderTransaction.orderCodeCode ? (
-                      <Link to={`order-cart/${orderTransaction.orderCodeId}`}>{orderTransaction.orderCodeCode}</Link>
+                    {orderTransaction.orderCode ? (
+                      <Link to={`order-cart/${orderTransaction.orderId}`}>{orderTransaction.orderCode}</Link>
                     ) : (
                       ''
                     )}

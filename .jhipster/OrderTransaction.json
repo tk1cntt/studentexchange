@@ -28,7 +28,7 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "orderCode",
+            "relationshipName": "order",
             "otherEntityName": "orderCart",
             "otherEntityField": "code"
         },

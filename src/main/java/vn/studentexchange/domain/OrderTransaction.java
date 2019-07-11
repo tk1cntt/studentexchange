@@ -42,7 +42,7 @@ public class OrderTransaction implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private OrderCart orderCode;
+    private OrderCart order;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -122,17 +122,17 @@ public class OrderTransaction implements Serializable {
         this.orderCart = orderCart;
     }
 
-    public OrderCart getOrderCode() {
-        return orderCode;
+    public OrderCart getOrder() {
+        return order;
     }
 
-    public OrderTransaction orderCode(OrderCart orderCart) {
-        this.orderCode = orderCart;
+    public OrderTransaction order(OrderCart orderCart) {
+        this.order = orderCart;
         return this;
     }
 
-    public void setOrderCode(OrderCart orderCart) {
-        this.orderCode = orderCart;
+    public void setOrder(OrderCart orderCart) {
+        this.order = orderCart;
     }
 
     public User getCreateBy() {

@@ -13,8 +13,8 @@ export interface IOrderTransaction {
   status?: OrderTransactionType;
   createAt?: Moment;
   orderCartId?: number;
-  orderCodeCode?: string;
-  orderCodeId?: number;
+  orderCode?: string;
+  orderId?: number;
   createByLogin?: string;
   createById?: number;
 }

@@ -1,10 +1,9 @@
 package vn.studentexchange.service.dto;
 
-import vn.studentexchange.domain.enumeration.OrderTransactionType;
-
-import java.io.Serializable;
 import java.time.Instant;
+import java.io.Serializable;
 import java.util.Objects;
+import vn.studentexchange.domain.enumeration.OrderTransactionType;
 
 /**
  * A DTO for the OrderTransaction entity.
@@ -23,9 +22,9 @@ public class OrderTransactionDTO implements Serializable {
 
     private Long orderCartId;
 
-    private Long orderCodeId;
+    private Long orderId;
 
-    private String orderCodeCode;
+    private String orderCode;
 
     private Long createById;
 
@@ -79,20 +78,20 @@ public class OrderTransactionDTO implements Serializable {
         this.orderCartId = orderCartId;
     }
 
-    public Long getOrderCodeId() {
-        return orderCodeId;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setOrderCodeId(Long orderCartId) {
-        this.orderCodeId = orderCartId;
+    public void setOrderId(Long orderCartId) {
+        this.orderId = orderCartId;
     }
 
-    public String getOrderCodeCode() {
-        return orderCodeCode;
+    public String getOrderCode() {
+        return orderCode;
     }
 
-    public void setOrderCodeCode(String orderCartCode) {
-        this.orderCodeCode = orderCartCode;
+    public void setOrderCode(String orderCartCode) {
+        this.orderCode = orderCartCode;
     }
 
     public Long getCreateById() {
@@ -141,8 +140,8 @@ public class OrderTransactionDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", orderCart=" + getOrderCartId() +
-            ", orderCode=" + getOrderCodeId() +
-            ", orderCode='" + getOrderCodeCode() + "'" +
+            ", order=" + getOrderId() +
+            ", order='" + getOrderCode() + "'" +
             ", createBy=" + getCreateById() +
             ", createBy='" + getCreateByLogin() + "'" +
             "}";

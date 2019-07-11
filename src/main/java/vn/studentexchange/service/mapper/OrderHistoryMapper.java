@@ -1,9 +1,9 @@
 package vn.studentexchange.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import vn.studentexchange.domain.OrderHistory;
+import vn.studentexchange.domain.*;
 import vn.studentexchange.service.dto.OrderHistoryDTO;
+
+import org.mapstruct.*;
 
 /**
  * Mapper for the entity OrderHistory and its DTO OrderHistoryDTO.
@@ -14,13 +14,10 @@ public interface OrderHistoryMapper extends EntityMapper<OrderHistoryDTO, OrderH
     @Mapping(source = "orderCart.id", target = "orderCartId")
     @Mapping(source = "createBy.id", target = "createById")
     @Mapping(source = "createBy.login", target = "createByLogin")
-    @Mapping(source = "updateBy.id", target = "updateById")
-    @Mapping(source = "updateBy.login", target = "updateByLogin")
     OrderHistoryDTO toDto(OrderHistory orderHistory);
 
     @Mapping(source = "orderCartId", target = "orderCart")
     @Mapping(source = "createById", target = "createBy")
-    @Mapping(source = "updateById", target = "updateBy")
     OrderHistory toEntity(OrderHistoryDTO orderHistoryDTO);
 
     default OrderHistory fromId(Long id) {

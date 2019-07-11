@@ -41,10 +41,6 @@ public class OrderHistory implements Serializable {
     @JsonIgnoreProperties("")
     private User createBy;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private User updateBy;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -117,19 +113,6 @@ public class OrderHistory implements Serializable {
 
     public void setCreateBy(User user) {
         this.createBy = user;
-    }
-
-    public User getUpdateBy() {
-        return updateBy;
-    }
-
-    public OrderHistory updateBy(User user) {
-        this.updateBy = user;
-        return this;
-    }
-
-    public void setUpdateBy(User user) {
-        this.updateBy = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

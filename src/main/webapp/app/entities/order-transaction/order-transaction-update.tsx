@@ -23,7 +23,7 @@ export interface IOrderTransactionUpdateProps extends StateProps, DispatchProps,
 export interface IOrderTransactionUpdateState {
   isNew: boolean;
   orderCartId: string;
-  orderCodeId: string;
+  orderId: string;
   createById: string;
 }
 
@@ -32,7 +32,7 @@ export class OrderTransactionUpdate extends React.Component<IOrderTransactionUpd
     super(props);
     this.state = {
       orderCartId: '0',
-      orderCodeId: '0',
+      orderId: '0',
       createById: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -168,10 +168,10 @@ export class OrderTransactionUpdate extends React.Component<IOrderTransactionUpd
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="orderCode.code">
-                    <Translate contentKey="studentexchangeApp.orderTransaction.orderCode">Order Code</Translate>
+                  <Label for="order.code">
+                    <Translate contentKey="studentexchangeApp.orderTransaction.order">Order</Translate>
                   </Label>
-                  <AvInput id="order-transaction-orderCode" type="select" className="form-control" name="orderCodeId">
+                  <AvInput id="order-transaction-order" type="select" className="form-control" name="orderId">
                     <option value="" key="0" />
                     {orderCarts
                       ? orderCarts.map(otherEntity => (

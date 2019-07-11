@@ -178,7 +178,7 @@ export const updatePurchased: ICrudPutAction<IOrderCart> = entity => async dispa
       errorMessage: 'Mua hàng thất bại. Xin hãy kiểm tra lại'
     }
   });
-  // dispatch(getEntities());
+  dispatch(searchOrder(`status.equals=PURCHASED`, 0, 20, `createAt,desc`));
   return result;
 };
 
@@ -191,8 +191,16 @@ export const updateCancel: ICrudPutAction<IOrderCart> = entity => async dispatch
       errorMessage: 'Huỷ đơn hàng thất bại. Xin hãy kiểm tra lại'
     }
   });
-  // dispatch(getEntities());
+  dispatch(searchOrder(`status.equals=CANCELLED`, 0, 20, `createAt,desc`));
   return result;
+};
+
+export const getOwnerPurchasedEntities: ICrudGetAllAction<IOrderCart> = (page, size, sort) => {
+  const requestUrl = `${apiUrl}/owner/purchased${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ORDERCART_LIST,
+    payload: axios.get<IOrderCart>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
 };
 
 export const deleteEntity: ICrudDeleteAction<IOrderCart> = id => async dispatch => {

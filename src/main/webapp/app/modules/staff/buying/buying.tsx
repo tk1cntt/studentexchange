@@ -13,7 +13,7 @@ import { OrderStatus } from 'app/shared/model/order-cart.model';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
-import OrderItemListView from '../order-item-list-view';
+import OrderItemListView from 'app/shared/layout/order/order-item-list-view';
 
 const { Option } = Select;
 

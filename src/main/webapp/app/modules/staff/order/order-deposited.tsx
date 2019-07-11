@@ -125,8 +125,12 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                       <thead>
                         <tr>
                           <th>Mã đơn hàng</th>
-                          <th>Khách hàng</th>
-                          <th>Tổng tiền</th>
+                          <th>
+                            <i className="fa fa-user" /> Khách hàng
+                          </th>
+                          <th>
+                            Tiền cọc <b className="text-danger">(70%)</b>
+                          </th>
                           <th>Ngày đặt</th>
                           <th />
                         </tr>
@@ -135,8 +139,12 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                         {orderCartList.map((orderCart, i) => (
                           <tr key={`id-${i}`}>
                             <td>{orderCart.code}</td>
-                            <td>{orderCart.createByLogin}</td>
-                            <td>{formatCurency(orderCart.finalAmount)}đ</td>
+                            <td>
+                              {orderCart.receiverName}
+                              <br />
+                              <i className="fa fa-phone" /> {orderCart.receiverMobile}
+                            </td>
+                            <td>{formatCurency(orderCart.depositAmount)}đ</td>
                             <td>
                               <small>
                                 <TextFormat type="date" value={orderCart.depositTime} format={APP_DATE_FORMAT} />

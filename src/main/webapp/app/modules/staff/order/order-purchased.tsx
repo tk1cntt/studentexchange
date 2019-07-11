@@ -62,12 +62,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
 
   getEntities = () => {
     const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.searchOrder(
-      `status.equals=PURCHASED&buyerLogin.equals=${this.props.account.login}`,
-      activePage - 1,
-      itemsPerPage,
-      `createAt,asc`
-    );
+    this.props.searchOrder('status.equals=PURCHASED', activePage - 1, itemsPerPage, `createAt,asc`);
     // this.props.getEntities(activePage - 1, itemsPerPage, `createAt,asc`);
   };
 
@@ -118,10 +113,14 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                       <thead>
                         <tr>
                           <th>Mã đơn hàng</th>
-                          <th>Mã vận đơn của TQ</th>
-                          <th>Khách hàng</th>
-                          <th>Tổng tiền</th>
-                          <th>Tiền cọc</th>
+                          <th>Mã vận đơn</th>
+                          <th>
+                            <i className="fa fa-user" /> Khách hàng
+                          </th>
+                          <th>
+                            Tiền cọc <b className="text-danger">(70%)</b>
+                          </th>
+                          <th>Người mua</th>
                           <th>Ngày đặt</th>
                           <th>Trạng thái</th>
                         </tr>
@@ -130,10 +129,20 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                         {orderCartList.map((orderCart, i) => (
                           <tr key={`id-${i}`}>
                             <td>{orderCart.code}</td>
-                            <td>{orderCart.shippingChinaCode}</td>
-                            <td>{orderCart.createByLogin}</td>
-                            <td>{formatCurency(orderCart.finalAmount)}đ</td>
+                            <td>
+                              {orderCart.shippingChinaCode}
+                              <br />
+                              <small className="text-warning">
+                                <b>{orderCart.website}</b>
+                              </small>
+                            </td>
+                            <td>
+                              {orderCart.receiverName}
+                              <br />
+                              <i className="fa fa-phone" /> {orderCart.receiverMobile}
+                            </td>
                             <td>{formatCurency(orderCart.depositAmount)}đ</td>
+                            <td>{orderCart.buyerLogin}</td>
                             <td>
                               <small>
                                 <TextFormat type="date" value={orderCart.depositTime} format={APP_DATE_FORMAT} />

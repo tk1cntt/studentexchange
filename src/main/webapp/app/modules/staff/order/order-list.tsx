@@ -20,7 +20,7 @@ import { formatCurency, encodeId, orderQueryStringMapping } from 'app/shared/uti
 import Header from 'app/shared/layout/header/header';
 import Footer from 'app/shared/layout/footer/footer';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
-import OrderSearchBox from '../order-search-box';
+import OrderSearchBox from 'app/shared/layout/order/order-search-box';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities, searchOrder, reset } from 'app/entities/order-cart/order-cart.reducer';
@@ -93,8 +93,10 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                           <th>
                             <i className="fa fa-user" /> Khách hàng
                           </th>
+                          <th>
+                            Tiền cọc <b className="text-danger">(70%)</b>
+                          </th>
                           <th>Ngày đặt</th>
-                          <th className="pull-right">Tổng tiền</th>
                           <th />
                         </tr>
                       </thead>
@@ -122,12 +124,12 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                               <br />
                               <i className="fa fa-phone" /> {orderCart.receiverMobile}
                             </td>
+                            <td>{formatCurency(orderCart.depositAmount)}đ</td>
                             <td>
                               <small>
                                 <TextFormat type="date" value={orderCart.depositTime} format={APP_DATE_FORMAT} />
                               </small>
                             </td>
-                            <td className="pull-right">{formatCurency(orderCart.finalAmount)}đ</td>
                             <td>
                               <Link to={`/staff/order-detail?orderid=${encodeId(orderCart.id)}`}>
                                 <span className="label label-default">Chi tiết đơn hàng</span>

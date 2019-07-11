@@ -55,14 +55,14 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
 
   sortEntities() {
     this.getEntities();
-    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=createAt,asc`);
+    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=createAt,desc`);
   }
 
   handlePagination = activePage => this.setState({ activePage }, () => this.sortEntities());
 
   getEntities = () => {
     const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.searchOrder(`status.equals=CANCELLED`, activePage - 1, itemsPerPage, `createAt,asc`);
+    this.props.searchOrder(`status.equals=CANCELLED`, activePage - 1, itemsPerPage, `createAt,desc`);
     // this.props.getEntities(activePage - 1, itemsPerPage, `createAt,asc`);
   };
 
@@ -113,8 +113,12 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                       <thead>
                         <tr>
                           <th>Mã đơn hàng</th>
-                          <th>Khách hàng</th>
-                          <th>Tổng tiền</th>
+                          <th>
+                            <i className="fa fa-user" /> Khách hàng
+                          </th>
+                          <th>
+                            Tiền cọc <b className="text-danger">(70%)</b>
+                          </th>
                           <th>Ngày đặt</th>
                           <th>Lý do huỷ</th>
                           <th>Người huỷ</th>
@@ -125,8 +129,12 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                         {orderCartList.map((orderCart, i) => (
                           <tr key={`id-${i}`}>
                             <td>{orderCart.code}</td>
-                            <td>{orderCart.createByLogin}</td>
-                            <td>{formatCurency(orderCart.finalAmount)}đ</td>
+                            <td>
+                              {orderCart.receiverName}
+                              <br />
+                              <i className="fa fa-phone" /> {orderCart.receiverMobile}
+                            </td>
+                            <td>{formatCurency(orderCart.depositAmount)}đ</td>
                             <td>
                               <small>
                                 <TextFormat type="date" value={orderCart.depositTime} format={APP_DATE_FORMAT} />

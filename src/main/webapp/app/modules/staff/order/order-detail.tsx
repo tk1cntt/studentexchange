@@ -13,9 +13,9 @@ import { OrderStatus } from 'app/shared/model/order-cart.model';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
-import OrderItemListView from '../order-item-list-view';
-import OrderStatusList from '../order-status-list-view';
-import OrderPaymentInfo from '../order-payment-info-view';
+import OrderItemListView from 'app/shared/layout/order/order-item-list-view';
+import OrderStatusList from 'app/shared/layout/order/order-status-list-view';
+import OrderPaymentInfo from 'app/shared/layout/order/order-payment-info-view';
 
 const { Option } = Select;
 

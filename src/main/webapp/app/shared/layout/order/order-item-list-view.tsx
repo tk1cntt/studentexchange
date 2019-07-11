@@ -1,11 +1,11 @@
 import React from 'react';
 
-export interface IOrderListItemProp {
+export interface IOrderItemListProp {
   orderCartEntity: any;
   isAuthenticated: boolean;
 }
 
-export class OrderListItem extends React.Component<IOrderListItemProp> {
+export class OrderItemList extends React.Component<IOrderItemListProp> {
   render() {
     const { orderCartEntity } = this.props;
     return (
@@ -56,4 +56,4 @@ export class OrderListItem extends React.Component<IOrderListItemProp> {
   }
 }
 
-export default OrderListItem;
+export default OrderItemList;

@@ -45,6 +45,7 @@ export const orderQueryStringMapping = parameters => {
   queryString += parameters.shippingChinaCode ? 'shippingChinaCode.contains=' + parameters.shippingChinaCode + '&' : '';
   queryString += parameters.receiverMobile ? 'receiverMobile.contains=' + parameters.receiverMobile + '&' : '';
   queryString += parameters.status ? 'status.equals=' + parameters.status + '&' : '';
+  queryString += parameters.website ? 'website.equals=' + parameters.website + '&' : '';
   return queryString.slice(0, -1);
 };
 

@@ -60,7 +60,10 @@ export class Cart extends React.Component<IHomeProp> {
                       <div className="col-xs-12 col-md-8">
                         <div className="ibox float-e-margins">
                           <div className="ibox-title">
-                            <h5>{`${shoppingCart.aliwangwang}`}</h5>
+                            <h5>
+                              <i className="fa fa-home" />
+                              <a href={shoppingCart.shopLink} target="_blank">{`${shoppingCart.aliwangwang}`}</a>
+                            </h5>
                             <div className="ibox-tools">
                               <span className="label label-warning-light pull-right">
                                 {`${shoppingCart.items.length}`} mặt hàng trong giỏ
@@ -72,7 +75,7 @@ export class Cart extends React.Component<IHomeProp> {
                               <div className="feed-activity-list">
                                 {shoppingCart.items.map((item, iy) => (
                                   <div className="feed-element" key={`entity-${iy}`}>
-                                    <a href="profile.html" className="pull-left">
+                                    <a href={item.itemLink} className="pull-left" target="_blank">
                                       <img
                                         alt="image"
                                         className="img-circle"
@@ -104,7 +107,9 @@ export class Cart extends React.Component<IHomeProp> {
                                           </span>
                                         </div>
                                       </small>
-                                      <strong>{`${item.itemName}`}</strong>
+                                      <a href={item.itemLink} target="_blank">
+                                        <strong>{`${item.itemName}`}</strong>
+                                      </a>
                                       <br />
                                       <small className="text-muted">
                                         Thuộc tính: {`${item.propertiesName}`}({`${item.propertiesType}`})<br />

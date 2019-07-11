@@ -67,6 +67,14 @@ export class SearchBox extends React.Component<ISearchBoxProp> {
     });
   };
 
+  selectWebsiteStatus = value => {
+    const parameters = { website: value };
+    const nextParameter = { ...this.state.parameters, ...parameters };
+    this.setState({
+      parameters: nextParameter
+    });
+  };
+
   searchClick = () => {
     this.props.history.push(`${this.props.to}?${queryString(this.state.parameters)}`);
   };
@@ -112,6 +120,18 @@ export class SearchBox extends React.Component<ISearchBoxProp> {
                 Số điện thoại khách hàng
               </label>
               <input type="text" placeholder="Số điện thoại" className="form-control" onChange={this.onChangeMobile} />
+            </div>
+          </div>
+          <div className="col-sm-4">
+            <div className="form-group">
+              <label className="control-label" htmlFor="status">
+                Website
+              </label>
+              <Select className="btn-block" onChange={this.selectWebsiteStatus}>
+                <Option value="TMALL">tmall</Option>
+                <Option value="TAOBAO">taobao</Option>
+                <Option value="1688">1688</Option>
+              </Select>
             </div>
           </div>
           <div className="col-sm-4">

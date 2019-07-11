@@ -15,6 +15,7 @@ import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import OrderItemListView from '../order-item-list-view';
 import OrderStatusList from '../order-status-list-view';
+import OrderPaymentInfo from '../order-payment-info-view';
 
 const { Option } = Select;
 
@@ -115,7 +116,7 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
                   </div>
                 ) : (
                   <div key={`entity`}>
-                    <div className="col-xs-12 col-md-8">
+                    <div className="col-xs-12 col-md-6">
                       <OrderItemListView isAuthenticated={this.props.isAuthenticated} orderCartEntity={this.props.orderCartEntity} />
                       <span className="checkout-cart">
                         <button className="btn btn-danger btn-block" onClick={this.showCancelOrder}>
@@ -146,7 +147,10 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
                         ''
                       )}
                     </div>
-                    <div className="col-xs-12 col-md-4">
+                    <div className="col-xs-12 col-md-3">
+                      <OrderPaymentInfo orderCartEntity={this.props.orderCartEntity} />
+                    </div>
+                    <div className="col-xs-12 col-md-3">
                       <div className="checkout-cart-detail">
                         <OrderStatusList orderCartEntity={this.props.orderCartEntity} />
                       </div>

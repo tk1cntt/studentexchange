@@ -20,7 +20,6 @@
       "status": "Status",
       "createAt": "Create At",
       "orderCart": "Order Cart",
-      "order": "Order",
       "createBy": "Create By"
     }
   }

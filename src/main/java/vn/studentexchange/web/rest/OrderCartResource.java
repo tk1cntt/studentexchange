@@ -116,8 +116,8 @@ public class OrderCartResource {
         log.debug("REST request to save OrderCart : {}", requestOrder);
         long userShippingAddressId = Utils.decodeId(requestOrder.getUserShippingAddressId());
         List<ShoppingCartDTO> shoppingCarts = new ArrayList<>();
+        String username = SecurityUtils.getCurrentUserLogin().get();
         if (StringUtils.isEmpty(requestOrder.getShopid())) {
-            String username = SecurityUtils.getCurrentUserLogin().get();
             shoppingCarts = shoppingCartService.findByOwner(username);
         } else {
             long shopId = Utils.decodeId(requestOrder.getShopid());
@@ -147,12 +147,12 @@ public class OrderCartResource {
             for (ShoppingCartItemDTO item : shoppingCartDTO.getItems()) {
                 addOrderItem(orderCartDTO, item);
             }
-            // Delete item at shopping cart
-            shoppingCartService.delete(shoppingCartDTO.getId());
-            float currentBalance = updateUserBalance(orderCartDTO, depositMount);
+            float currentBalance = updateUserBalance(username, depositMount);
             addOrderTransaction(orderCartDTO, orderCode, depositMount);
             addPayment(orderCartDTO, orderCode, depositMount, currentBalance);
             addComment(orderCartDTO);
+            // Delete item at shopping cart
+            shoppingCartService.delete(shoppingCartDTO.getId());
             orderCarts.add(orderCartDTO);
         }
         return ResponseEntity.ok().body(orderCarts);
@@ -208,8 +208,8 @@ public class OrderCartResource {
         orderItemService.save(SecurityUtils.getCurrentUserLogin().get(), orderItemDTO);
     }
 
-    private float updateUserBalance(OrderCartDTO orderCartDTO, float depositMount) {
-        Optional<UserBalanceDTO> userBalanceDTO = userBalanceService.findOne(orderCartDTO.getCreateById());
+    private float updateUserBalance(String username, float depositMount) {
+        Optional<UserBalanceDTO> userBalanceDTO = userBalanceService.findByOwner(username);
         userBalanceDTO.ifPresent(balance -> {
             balance.setCash(balance.getCash() - depositMount);
             balance.setBalanceAvailable(balance.getBalanceAvailable() - depositMount);
@@ -221,7 +221,7 @@ public class OrderCartResource {
     private void addOrderTransaction(OrderCartDTO orderCartDTO, long orderCode, float depositMount) {
         OrderTransactionDTO orderTransactionDTO = new OrderTransactionDTO();
         orderTransactionDTO.setAmount(depositMount);
-        // orderTransactionDTO.setOrderCodeCode(orderCode);
+        orderTransactionDTO.setOrderCode(orderCode + "");
         orderTransactionDTO.setOrderCartId(orderCartDTO.getId());
         orderTransactionDTO.setStatus(OrderTransactionType.DEPOSIT);
         orderTransactionDTO.setNote("Đặt cọc cho đơn hàng " + orderCode);

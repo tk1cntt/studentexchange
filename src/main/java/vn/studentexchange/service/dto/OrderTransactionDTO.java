@@ -22,10 +22,6 @@ public class OrderTransactionDTO implements Serializable {
 
     private Long orderCartId;
 
-    private Long orderId;
-
-    private String orderCode;
-
     private Long createById;
 
     private String createByLogin;
@@ -78,22 +74,6 @@ public class OrderTransactionDTO implements Serializable {
         this.orderCartId = orderCartId;
     }
 
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderCartId) {
-        this.orderId = orderCartId;
-    }
-
-    public String getOrderCode() {
-        return orderCode;
-    }
-
-    public void setOrderCode(String orderCartCode) {
-        this.orderCode = orderCartCode;
-    }
-
     public Long getCreateById() {
         return createById;
     }
@@ -140,8 +120,6 @@ public class OrderTransactionDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", createAt='" + getCreateAt() + "'" +
             ", orderCart=" + getOrderCartId() +
-            ", order=" + getOrderId() +
-            ", order='" + getOrderCode() + "'" +
             ", createBy=" + getCreateById() +
             ", createBy='" + getCreateByLogin() + "'" +
             "}";

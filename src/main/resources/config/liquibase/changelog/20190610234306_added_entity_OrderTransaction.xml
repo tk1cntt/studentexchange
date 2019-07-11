@@ -42,10 +42,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="order_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="create_by_id" type="bigint">
                 <constraints nullable="true" />
             </column>

@@ -60,10 +60,6 @@ export class OrderTransactionDetail extends React.Component<IOrderTransactionDet
             </dt>
             <dd>{orderTransactionEntity.orderCartId ? orderTransactionEntity.orderCartId : ''}</dd>
             <dt>
-              <Translate contentKey="studentexchangeApp.orderTransaction.order">Order</Translate>
-            </dt>
-            <dd>{orderTransactionEntity.orderCode ? orderTransactionEntity.orderCode : ''}</dd>
-            <dt>
               <Translate contentKey="studentexchangeApp.orderTransaction.createBy">Create By</Translate>
             </dt>
             <dd>{orderTransactionEntity.createByLogin ? orderTransactionEntity.createByLogin : ''}</dd>

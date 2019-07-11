@@ -12,14 +12,11 @@ import org.mapstruct.*;
 public interface OrderTransactionMapper extends EntityMapper<OrderTransactionDTO, OrderTransaction> {
 
     @Mapping(source = "orderCart.id", target = "orderCartId")
-    @Mapping(source = "order.id", target = "orderId")
-    @Mapping(source = "order.code", target = "orderCode")
     @Mapping(source = "createBy.id", target = "createById")
     @Mapping(source = "createBy.login", target = "createByLogin")
     OrderTransactionDTO toDto(OrderTransaction orderTransaction);
 
     @Mapping(source = "orderCartId", target = "orderCart")
-    @Mapping(source = "orderId", target = "order")
     @Mapping(source = "createById", target = "createBy")
     OrderTransaction toEntity(OrderTransactionDTO orderTransactionDTO);
 

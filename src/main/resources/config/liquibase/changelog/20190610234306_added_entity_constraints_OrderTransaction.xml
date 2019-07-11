@@ -14,12 +14,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="order_cart"/>
 
-        <addForeignKeyConstraint baseColumnNames="order_id"
-                                 baseTableName="order_transaction"
-                                 constraintName="fk_order_transaction_order_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="order_cart"/>
-
         <addForeignKeyConstraint baseColumnNames="create_by_id"
                                  baseTableName="order_transaction"
                                  constraintName="fk_order_transaction_create_by_id"

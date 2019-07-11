@@ -42,10 +42,6 @@ public class OrderTransaction implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private OrderCart order;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
     private User createBy;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -120,19 +116,6 @@ public class OrderTransaction implements Serializable {
 
     public void setOrderCart(OrderCart orderCart) {
         this.orderCart = orderCart;
-    }
-
-    public OrderCart getOrder() {
-        return order;
-    }
-
-    public OrderTransaction order(OrderCart orderCart) {
-        this.order = orderCart;
-        return this;
-    }
-
-    public void setOrder(OrderCart orderCart) {
-        this.order = orderCart;
     }
 
     public User getCreateBy() {

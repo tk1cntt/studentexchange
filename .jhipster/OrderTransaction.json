@@ -28,12 +28,6 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "order",
-            "otherEntityName": "orderCart",
-            "otherEntityField": "code"
-        },
-        {
-            "relationshipType": "many-to-one",
             "relationshipName": "createBy",
             "otherEntityName": "user",
             "otherEntityField": "login"

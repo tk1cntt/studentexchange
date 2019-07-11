@@ -245,7 +245,6 @@ entity OrderTransaction {
 }
 
 relationship ManyToOne {
-   OrderTransaction{order(code)} to OrderCart,
    OrderTransaction{createBy(login)} to User
 }
 

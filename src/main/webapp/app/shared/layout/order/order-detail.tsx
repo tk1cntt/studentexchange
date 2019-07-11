@@ -6,7 +6,9 @@ import qs from 'query-string';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getEntity as getOrder, updatePurchased, updateCancel } from 'app/entities/order-cart/order-cart.reducer';
+import { OrderStatus } from 'app/shared/model/order-cart.model';
 import { decodeId } from 'app/shared/util/utils';
+
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import Footer from 'app/shared/layout/footer/footer';
@@ -19,6 +21,8 @@ export interface IOrderDetailProp extends StateProps, DispatchProps {
   location?: any;
   history?: any;
   goto?: string;
+  activeMenu?: string;
+  activeSubMenu?: string;
 }
 
 export interface IOrderDetailState {
@@ -136,7 +140,11 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
     const { orderCartEntity } = this.props;
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-management" activeSubMenu="order-detail" />
+        <Sidebar
+          isAuthenticated={this.props.isAuthenticated}
+          activeMenu={this.props.activeMenu ? this.props.activeMenu : 'order-management'}
+          activeSubMenu={this.props.activeSubMenu ? this.props.activeSubMenu : 'order-detail'}
+        />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row border-bottom white-bg dashboard-header">
@@ -157,25 +165,31 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
                   <div key={`entity`}>
                     <div className="col-xs-12 col-md-6">
                       <OrderItemListView isAuthenticated={this.props.isAuthenticated} orderCartEntity={this.props.orderCartEntity} />
-                      <span className="checkout-cart">
-                        <button className="btn btn-danger btn-block" onClick={this.showCancelOrder}>
-                          <i className="fa fa-window-close" /> Huỷ đơn hàng
-                        </button>
-                      </span>
-                      {this.state.showCancelOrder ? (
-                        <Modal
-                          title={`Huỷ đơn hàng ${orderCartEntity.code}`}
-                          visible={this.state.showCancelOrder}
-                          okText="Huỷ đơn hàng"
-                          okType="danger"
-                          cancelText="Bỏ qua"
-                          onOk={this.doCancelOrder}
-                          onCancel={this.closeCancelOrder}
-                        >
-                          <OrderCancelReason onChange={this.selectCancelReason} />
-                        </Modal>
-                      ) : (
+                      {orderCartEntity.status === OrderStatus.CANCELLED ? (
                         ''
+                      ) : (
+                        <>
+                          <span className="checkout-cart">
+                            <button className="btn btn-danger btn-block" onClick={this.showCancelOrder}>
+                              <i className="fa fa-window-close" /> Huỷ đơn hàng
+                            </button>
+                          </span>
+                          {this.state.showCancelOrder ? (
+                            <Modal
+                              title={`Huỷ đơn hàng ${orderCartEntity.code}`}
+                              visible={this.state.showCancelOrder}
+                              okText="Huỷ đơn hàng"
+                              okType="danger"
+                              cancelText="Bỏ qua"
+                              onOk={this.doCancelOrder}
+                              onCancel={this.closeCancelOrder}
+                            >
+                              <OrderCancelReason onChange={this.selectCancelReason} />
+                            </Modal>
+                          ) : (
+                            ''
+                          )}
+                        </>
                       )}
                     </div>
                     <div className="col-xs-12 col-md-3">
@@ -190,9 +204,7 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
                 )}
               </div>
               <div className="footer">
-                <div className="col-xs-12">
-                  <Footer />
-                </div>
+                <Footer />
               </div>
             </div>
           </div>

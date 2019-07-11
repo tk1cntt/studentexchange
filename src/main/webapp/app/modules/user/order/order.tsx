@@ -11,6 +11,7 @@ import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
 import { IRootState } from 'app/shared/reducers';
 import { getOwnerEntities, searchOrder, updateBuying, reset } from 'app/entities/order-cart/order-cart.reducer';
+import { OrderStatus } from 'app/shared/model/order-cart.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
@@ -56,7 +57,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
     const { orderCartList, match, totalItems } = this.props;
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-management" activeSubMenu="order-deposited" />
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-cart" activeSubMenu="" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
@@ -78,6 +79,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                             Tiền cọc <b className="text-danger">(70%)</b>
                           </th>
                           <th>Ngày đặt</th>
+                          <th>Trạng thái</th>
                           <th />
                         </tr>
                       </thead>
@@ -95,6 +97,21 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
                               <small>
                                 <TextFormat type="date" value={orderCart.depositTime} format={APP_DATE_FORMAT} />
                               </small>
+                            </td>
+                            <td>
+                              {orderCart.status === OrderStatus.DEPOSITED || orderCart.status === OrderStatus.ARE_BUYING ? (
+                                <small className="badge">Chưa mua hàng</small>
+                              ) : orderCart.status === OrderStatus.CANCELLED ? (
+                                <small className="badge badge-danger">Đã huỷ</small>
+                              ) : (
+                                <>
+                                  {orderCart.shippingChinaCode}
+                                  <br />
+                                  <small className="text-warning">
+                                    <b>{orderCart.website}</b>
+                                  </small>
+                                </>
+                              )}
                             </td>
                             <td>
                               <Link to={`/order-detail?orderid=${encodeId(orderCart.id)}`}>

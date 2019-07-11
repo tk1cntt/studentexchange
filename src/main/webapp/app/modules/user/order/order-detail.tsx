@@ -10,15 +10,19 @@ export interface IOrderDetailProp extends StateProps, DispatchProps {
 
 export class Order extends React.Component<IOrderDetailProp> {
   render() {
-    return <OrderDetail location={this.props.location} history={this.props.history} goto={'/order-detail'} />;
+    return (
+      <OrderDetail
+        activeMenu="order-cart"
+        activeSubMenu=""
+        location={this.props.location}
+        history={this.props.history}
+        goto={'/order-cart'}
+      />
+    );
   }
 }
 
-const mapStateToProps = storeState => ({
-  account: storeState.authentication.account,
-  orderCartEntity: storeState.orderCart.entity,
-  isAuthenticated: storeState.authentication.isAuthenticated
-});
+const mapStateToProps = storeState => ({});
 
 const mapDispatchToProps = {};
 

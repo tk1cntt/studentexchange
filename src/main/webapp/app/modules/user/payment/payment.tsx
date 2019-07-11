@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getOwnerEntities as getOwnerPayment, reset } from 'app/entities/payment/payment.reducer';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import { AUTHORITIES } from 'app/config/constants';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
@@ -58,7 +60,7 @@ export class Payment extends React.Component<ICheckoutProp> {
           </div>
           <div className="row">
             <div className="col-lg-12">
-              <PaymentList isUser={true} paymentList={this.props.paymentList} />
+              <PaymentList isUser={this.props.isUser} paymentList={this.props.paymentList} />
             </div>
           </div>
           <Footer />
@@ -73,6 +75,7 @@ const mapStateToProps = storeState => ({
   currencyRateEntity: storeState.currencyRate.entity,
   userBalanceEntity: storeState.userBalance.entity,
   paymentList: storeState.payment.entities,
+  isUser: hasAnyAuthority(storeState.authentication.account.authorities, [AUTHORITIES.USER]),
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 

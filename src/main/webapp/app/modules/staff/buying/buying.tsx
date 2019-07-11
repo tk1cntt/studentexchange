@@ -248,9 +248,7 @@ export class Buying extends React.Component<IBuyingProp> {
                 )}
               </div>
               <div className="footer">
-                <div className="col-xs-12">
-                  <Footer />
-                </div>
+                <Footer />
               </div>
             </div>
           </div>

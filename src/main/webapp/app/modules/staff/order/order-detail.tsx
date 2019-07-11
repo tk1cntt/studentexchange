@@ -16,8 +16,9 @@ import OrderPaymentInfo from 'app/shared/layout/order/order-payment-info-view';
 import OrderCancelReason from 'app/shared/layout/order/order-cancel-reason-view';
 
 export interface IOrderDetailProp extends StateProps, DispatchProps {
-  location: any;
-  history: any;
+  location?: any;
+  history?: any;
+  goto?: string;
 }
 
 export interface IOrderDetailState {
@@ -110,7 +111,11 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
         statusName: this.state.cancelReason
       };
       this.props.updateCancel(entity);
-      this.props.history.push('/staff/order-cancel');
+      if (!this.props.goto) {
+        this.props.history.push('/staff/order-cancel');
+      } else {
+        this.props.history.push(this.props.goto);
+      }
     }
   };
 

@@ -450,7 +450,7 @@ public class OrderCartResource {
      */
     @GetMapping("/order-carts/{id}")
     @Timed
-    @Secured(AuthoritiesConstants.STAFF)
+    @Secured({ AuthoritiesConstants.STAFF, AuthoritiesConstants.USER })
     public ResponseEntity<OrderCartDTO> getOrderCart(@PathVariable Long id) {
         log.debug("REST request to get OrderCart : {}", id);
         Optional<OrderCartDTO> orderCartDTO = orderCartService.findOne(id);

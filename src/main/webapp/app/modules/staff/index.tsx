@@ -8,7 +8,7 @@ import OrderDeposited from './order/order-deposited';
 import OrderBuying from '../staff/order/order-buying';
 import OrderPurchased from './order/order-purchased';
 import OrderCancel from './order/order-cancel';
-import OrderDetail from './order/order-detail';
+import OrderDetail from 'app/shared/layout/order/order-detail';
 import OrderList from './order/order-list';
 import Buying from '../staff/buying/buying';
 /* jhipster-needle-add-route-import - JHipster will add routes here */

@@ -6,6 +6,7 @@ import Loadable from 'react-loadable';
 import Login from 'app/modules/login/main';
 import Cart from 'app/modules/user/cart/cart';
 import Order from 'app/modules/user/order/order';
+import OrderDetail from 'app/modules/user/order/order-detail';
 import Checkout from 'app/modules/user/checkout/checkout';
 import Payment from 'app/modules/user/payment/payment';
 import Management from 'app/modules/management';
@@ -44,6 +45,7 @@ const Routes = () => (
       <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/shopping-cart" component={Cart} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/order-cart" component={Order} hasAnyAuthorities={[AUTHORITIES.USER]} />
+      <PrivateRoute path="/order-detail" component={OrderDetail} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/checkout" component={Checkout} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/payment" component={Payment} hasAnyAuthorities={[AUTHORITIES.USER]} />
       <PrivateRoute path="/management" component={Management} hasAnyAuthorities={[AUTHORITIES.MANAGER]} />

@@ -1,67 +1,68 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink as Link } from 'react-router-dom';
-import { TextFormat } from 'react-jhipster';
-
-import { getSession } from 'app/shared/reducers/authentication';
-import { getOwnerEntities, reset } from 'app/entities/order-cart/order-cart.reducer';
-import { APP_DATE_FORMAT } from 'app/config/constants';
-import { formatCurency } from 'app/shared/util/utils';
+import { Link, RouteComponentProps } from 'react-router-dom';
+// tslint:disable-next-line:no-unused-variable
+import { TextFormat, getSortState, IPaginationBaseState, getPaginationItemsNumber, JhiPagination } from 'react-jhipster';
+import { formatCurency, encodeId } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
 import Footer from 'app/shared/layout/footer/footer';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 
-export interface IHomeProp extends StateProps, DispatchProps {}
+import { IRootState } from 'app/shared/reducers';
+import { getOwnerEntities, searchOrder, updateBuying, reset } from 'app/entities/order-cart/order-cart.reducer';
+// tslint:disable-next-line:no-unused-variable
+import { APP_DATE_FORMAT } from 'app/config/constants';
+import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
-export class Order extends React.Component<IHomeProp> {
+export interface IOrderCartProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+
+export type IOrderCartState = IPaginationBaseState;
+
+export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState> {
+  state: IOrderCartState = {
+    ...getSortState(this.props.location, ITEMS_PER_PAGE)
+  };
+
   componentDidMount() {
-    this.props.getOwnerEntities();
+    this.getEntities();
   }
 
   componentWillUnmount() {
     this.props.reset();
   }
 
+  sortEntities() {
+    this.getEntities();
+    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}`);
+  }
+
+  handlePagination = activePage => this.setState({ activePage }, () => this.sortEntities());
+
+  getEntities = () => {
+    const { activePage, itemsPerPage } = this.state;
+    this.props.getOwnerEntities(activePage - 1, itemsPerPage, `createAt,asc`);
+  };
+
+  receiveOrderClick = id => {
+    this.props.history.push(`/order-detail?orderid=${encodeId(id)}`);
+  };
+
+  onChangeCode = () => {};
+
+  searchClick = () => {};
+
   render() {
-    const { orderCartList } = this.props;
+    const { orderCartList, match, totalItems } = this.props;
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-cart" activeSubMenu="" />
+        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-management" activeSubMenu="order-deposited" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">
             <h3>Danh sách đơn hàng</h3>
           </div>
           <div className="wrapper wrapper-content animated fadeInRight ecommerce">
-            <div className="ibox-content m-b-sm border-bottom">
-              <div className="row">
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="order_id">
-                      Mã đơn hàng
-                    </label>
-                    <input type="text" id="order_id" name="order_id" placeholder="Order ID" className="form-control" />
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="status">
-                      Trạng thái đơn hàng
-                    </label>
-                    <input type="text" id="status" name="status" placeholder="Status" className="form-control" />
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="form-group">
-                    <label className="control-label" htmlFor="status" />
-                    <button className="btn btn-primary btn-block">
-                      <i className="fa fa-search" /> Tìm kiếm
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="row">
               <div className="col-lg-12">
                 <div className="ibox">
@@ -70,25 +71,37 @@ export class Order extends React.Component<IHomeProp> {
                       <thead>
                         <tr>
                           <th>Mã đơn hàng</th>
-                          <th>Shop name</th>
-                          <th>Tổng tiền</th>
-                          <th>Ngày mua</th>
-                          <th>Trạng thái</th>
+                          <th>
+                            <i className="fa fa-user" /> Khách hàng
+                          </th>
+                          <th>
+                            Tiền cọc <b className="text-danger">(70%)</b>
+                          </th>
+                          <th>Ngày đặt</th>
+                          <th />
                         </tr>
                       </thead>
                       <tbody>
                         {orderCartList.map((orderCart, i) => (
                           <tr key={`id-${i}`}>
                             <td>{orderCart.code}</td>
-                            <td>{orderCart.shopName}</td>
-                            <td>{formatCurency(orderCart.finalAmount)}đ</td>
+                            <td>
+                              {orderCart.receiverName}
+                              <br />
+                              <i className="fa fa-phone" /> {orderCart.receiverMobile}
+                            </td>
+                            <td>{formatCurency(orderCart.depositAmount)}đ</td>
                             <td>
                               <small>
                                 <TextFormat type="date" value={orderCart.depositTime} format={APP_DATE_FORMAT} />
                               </small>
                             </td>
                             <td>
-                              <span className="label label-primary">Đã đặt cọc</span>
+                              <Link to={`/order-detail?orderid=${encodeId(orderCart.id)}`}>
+                                <span className="label label-info">
+                                  <i className="fa fa-angle-double-right" /> Chi tiết đơn hàng
+                                </span>
+                              </Link>
                             </td>
                           </tr>
                         ))}
@@ -97,41 +110,12 @@ export class Order extends React.Component<IHomeProp> {
                         <tr>
                           <td colSpan={7}>
                             <ul className="pagination pull-right">
-                              <li className="footable-page-arrow disabled">
-                                <a data-page="first" href="#first">
-                                  «
-                                </a>
-                              </li>
-                              <li className="footable-page-arrow disabled">
-                                <a data-page="prev" href="#prev">
-                                  ‹
-                                </a>
-                              </li>
-                              <li className="footable-page active">
-                                <a data-page={0} href="#">
-                                  1
-                                </a>
-                              </li>
-                              <li className="footable-page">
-                                <a data-page={1} href="#">
-                                  2
-                                </a>
-                              </li>
-                              <li className="footable-page">
-                                <a data-page={2} href="#">
-                                  3
-                                </a>
-                              </li>
-                              <li className="footable-page-arrow">
-                                <a data-page="next" href="#next">
-                                  ›
-                                </a>
-                              </li>
-                              <li className="footable-page-arrow">
-                                <a data-page="last" href="#last">
-                                  »
-                                </a>
-                              </li>
+                              <JhiPagination
+                                items={getPaginationItemsNumber(totalItems, this.state.itemsPerPage)}
+                                activePage={this.state.activePage}
+                                onSelect={this.handlePagination}
+                                maxButtons={5}
+                              />
                             </ul>
                           </td>
                         </tr>
@@ -142,6 +126,7 @@ export class Order extends React.Component<IHomeProp> {
               </div>
             </div>
           </div>
+
           <div className="row">
             <div className="col-xs-12">
               <Footer />
@@ -153,12 +138,18 @@ export class Order extends React.Component<IHomeProp> {
   }
 }
 
-const mapStateToProps = storeState => ({
-  orderCartList: storeState.orderCart.entities,
-  isAuthenticated: storeState.authentication.isAuthenticated
+const mapStateToProps = ({ orderCart, authentication }: IRootState) => ({
+  orderCartList: orderCart.entities,
+  totalItems: orderCart.totalItems,
+  isAuthenticated: authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, getOwnerEntities, reset };
+const mapDispatchToProps = {
+  getOwnerEntities,
+  searchOrder,
+  updateBuying,
+  reset
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
@@ -166,4 +157,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Order);
+)(OrderCart);

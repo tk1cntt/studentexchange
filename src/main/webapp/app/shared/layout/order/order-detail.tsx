@@ -39,6 +39,7 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
   componentDidMount() {
     if (this.props.location) {
       const parsed = qs.parse(this.props.location.search);
+      console.log('OrderDetail', parsed);
       this.props.getOrder(decodeId(parsed.orderid));
     }
   }

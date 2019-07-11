@@ -54,9 +54,11 @@ public class OrderCartResource {
 
     private final OrderCartQueryService orderCartQueryService;
 
-    private final UserShippingAddressService userShippingAddressService;
+    @Autowired
+    private UserShippingAddressService userShippingAddressService;
 
-    private final ShoppingCartService shoppingCartService;
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     @Autowired
     private OrderCartMapper orderCartMapper;
@@ -88,11 +90,9 @@ public class OrderCartResource {
     @Autowired
     private UserRepository userRepository;
 
-    public OrderCartResource(OrderCartService orderCartService, OrderCartQueryService orderCartQueryService, UserShippingAddressService userShippingAddressService, ShoppingCartService shoppingCartService) {
+    public OrderCartResource(OrderCartService orderCartService, OrderCartQueryService orderCartQueryService) {
         this.orderCartService = orderCartService;
         this.orderCartQueryService = orderCartQueryService;
-        this.userShippingAddressService = userShippingAddressService;
-        this.shoppingCartService = shoppingCartService;
     }
 
     /**

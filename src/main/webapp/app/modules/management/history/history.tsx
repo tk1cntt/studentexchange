@@ -13,6 +13,7 @@ import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import Footer from 'app/shared/layout/footer/footer';
 import { PaymentType } from 'app/shared/model/payment.model';
 import { APP_DATE_FORMAT } from 'app/config/constants';
+import PaymentList from 'app/shared/layout/payment/payment-list-view';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
@@ -37,53 +38,7 @@ export class Payment extends React.Component<ICheckoutProp> {
           </div>
           <div className="row">
             <div className="col-lg-12">
-              <div className="ibox">
-                <div className="ibox-content">
-                  {this.props.paymentList.length === 0 ? (
-                    <div className="no-content">Không có dữ liệu</div>
-                  ) : (
-                    <table
-                      className="footable table table-stripped toggle-arrow-tiny tablet breakpoint footable-loaded"
-                      data-page-size={15}
-                    >
-                      <thead>
-                        <tr>
-                          <th>Khách hàng</th>
-                          <th>Mã giao dịch</th>
-                          <th>Số tiền</th>
-                          <th>Số dư sau giao dịch</th>
-                          <th>Loại giao dịch</th>
-                          <th>Nội dung</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.props.paymentList.map((payment, i) => (
-                          <tr key={`id-${i}`} className="footable-even" style={{}}>
-                            <td className="footable-visible footable-first-column">{payment.customerLogin}</td>
-                            <td className="footable-visible footable-first-column">
-                              {payment.code}
-                              <br />
-                              <small>
-                                <TextFormat type="date" value={payment.createAt} format={APP_DATE_FORMAT} />
-                              </small>
-                            </td>
-                            <td>
-                              {payment.type === PaymentType.ORDER_PAYMENT ? (
-                                <b className="text-danger">-{formatCurency(payment.amount)}đ</b>
-                              ) : (
-                                <b className="text-info">+{formatCurency(payment.amount)}đ</b>
-                              )}
-                            </td>
-                            <td>{formatCurency(payment.newBalance)}đ</td>
-                            <td>{payment.type}</td>
-                            <td>{payment.note}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                </div>
-              </div>
+              <PaymentList isUser={false} paymentList={this.props.paymentList} />
             </div>
           </div>
           <Footer />

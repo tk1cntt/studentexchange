@@ -43,7 +43,6 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
   componentDidMount() {
     if (this.props.location) {
       const parsed = qs.parse(this.props.location.search);
-      console.log('OrderDetail', parsed);
       this.props.getOrder(decodeId(parsed.orderid));
     }
   }
@@ -65,38 +64,6 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
       totalAmountChinaNDT: e.target.value
     });
   };
-
-  /*
-  doFinishOrder = () => {
-    if (!this.state.shippingChinaCode) {
-      Modal.error({
-        title: 'Cảnh báo',
-        content: `Hãy nhập mã đơn hàng trên trang ${this.props.orderCartEntity.website}`
-      });
-    } else if (!(Number(this.state.totalAmountChinaNDT) > 0)) {
-      Modal.error({
-        title: 'Cảnh báo',
-        content: `Hãy nhập giá trị đơn hàng đã mua hộ`
-      });
-    } else if (Number(this.state.totalAmountChinaNDT) > Number(this.props.orderCartEntity.totalAmountNDT)) {
-      Modal.error({
-        title: 'Cảnh báo',
-        content: `Đơn hàng mua hộ giá đang vượt quá số tiền cho phép ¥${Math.ceil(
-          Number(this.state.totalAmountChinaNDT) - Number(this.props.orderCartEntity.totalAmountNDT)
-        )}`
-      });
-    } else {
-      const entity = {
-        id: this.props.orderCartEntity.id,
-        domesticShippingChinaFeeNDT: this.state.domesticShippingChinaFeeNDT,
-        shippingChinaCode: this.state.shippingChinaCode,
-        totalAmountChinaNDT: this.state.totalAmountChinaNDT
-      };
-      this.props.updatePurchased(entity);
-      this.props.history.push('/staff/order-purchased');
-    }
-  };
-  */
 
   showCancelOrder = () => {
     this.setState({

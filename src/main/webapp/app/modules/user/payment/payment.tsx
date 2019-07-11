@@ -10,8 +10,6 @@ import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import Footer from 'app/shared/layout/footer/footer';
 import PaymentList from 'app/shared/layout/payment/payment-list-view';
 
-export interface IHomeProp extends StateProps, DispatchProps {}
-
 export interface ICheckoutProp extends StateProps, DispatchProps {
   location: any;
   history: any;

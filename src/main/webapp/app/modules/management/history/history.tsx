@@ -1,21 +1,13 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
-import { NavLink as Link } from 'react-router-dom';
-import { TextFormat } from 'react-jhipster';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { getEntities as getAllPayment } from 'app/entities/payment/payment.reducer';
-import { formatCurency } from 'app/shared/util/utils';
 
 import Header from 'app/shared/layout/header/header';
 import Sidebar from 'app/shared/layout/sidebar/sidebar';
 import Footer from 'app/shared/layout/footer/footer';
-import { PaymentType } from 'app/shared/model/payment.model';
-import { APP_DATE_FORMAT } from 'app/config/constants';
 import PaymentList from 'app/shared/layout/payment/payment-list-view';
-
-export interface IHomeProp extends StateProps, DispatchProps {}
 
 export interface ICheckoutProp extends StateProps, DispatchProps {
   location: any;

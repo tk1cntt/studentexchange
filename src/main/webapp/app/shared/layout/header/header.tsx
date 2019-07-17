@@ -35,7 +35,7 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
   }
 
   updateDimensions = () => {
-    var w = window,
+    const w = window,
       d = document,
       documentElement = d.documentElement,
       body = d.getElementsByTagName('body')[0],
@@ -189,9 +189,9 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
   }
 }
 
-const mapStateToProps = ({ currencyRate, setting }: IRootState) => ({
+const mapStateToProps = ({ currencyRate, setting }) => ({
   currencyRateEntity: currencyRate.entity,
-  setting: setting
+  setting
 });
 
 const mapDispatchToProps = {

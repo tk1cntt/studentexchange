@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink as Link } from 'react-router-dom';
+import { NavLink as Link, RouteComponentProps } from 'react-router-dom';
 import { Drawer, Menu, Icon } from 'antd';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,15 +11,7 @@ import { AUTHORITIES } from 'app/config/constants';
 
 const { SubMenu } = Menu;
 
-export interface ISidebarProps {
-  account: any;
-  setting: any;
-  showDrawer: Function;
-  isAuthenticated: boolean;
-  isManager: boolean;
-  isAdmin: boolean;
-  isStaff: boolean;
-  isUser: boolean;
+export interface ISidebarProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {
   activeMenu: string;
   activeSubMenu: string;
 }
@@ -40,7 +32,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
   }
 
   updateDimensions = () => {
-    var w = window,
+    const w = window,
       d = document,
       documentElement = d.documentElement,
       body = d.getElementsByTagName('body')[0],
@@ -78,6 +70,44 @@ export class Sidebar extends React.Component<ISidebarProps> {
     );
   }
 
+  userMenuEx() {
+    const { activeMenu, activeSubMenu, isUser } = this.props;
+    if (!isUser) return '';
+    const menus = [];
+    menus.push(
+      <Menu.Item key="shopping-cart">
+        <Link to={'/shopping-cart'}>
+          <Icon type="shopping-cart" /> Giỏ hàng
+        </Link>
+      </Menu.Item>
+    );
+    menus.push(
+      <Menu.Item key="order-cart">
+        <Link to={'/order-cart'}>
+          <Icon type="bars" />
+          Danh sách đơn hàng
+        </Link>
+      </Menu.Item>
+    );
+    menus.push(
+      <Menu.Item key="payment">
+        <Link to={'/payment'}>
+          <Icon type="pay-circle" />
+          Ví tiền
+        </Link>
+      </Menu.Item>
+    );
+    menus.push(
+      <Menu.Item key="setting">
+        <Link to={'/account/settings'}>
+          <Icon type="user" />
+          Thông tin cá nhân
+        </Link>
+      </Menu.Item>
+    );
+    return menus;
+  }
+
   managerMenu() {
     const { activeMenu, activeSubMenu, isManager } = this.props;
     if (!isManager) return '';
@@ -104,6 +134,8 @@ export class Sidebar extends React.Component<ISidebarProps> {
 
   staffMenu() {
     const { activeMenu, activeSubMenu, isStaff } = this.props;
+    // const selectedKeys = location.substr(1);
+    // const defaultOpenKeys = selectedKeys.split('/')[1];
     if (!isStaff) return '';
     return (
       <li className={`${activeMenu === 'order-management' ? 'active' : ''}`}>
@@ -244,57 +276,101 @@ export class Sidebar extends React.Component<ISidebarProps> {
 
   showNormalMenu() {
     return (
-      <Menu mode="inline" theme="dark" style={{ width: 220 }}>
-        <SubMenu
-          key="sub1"
-          title={
+      <>
+        <li className="nav-header">
+          <div className="dropdown profile-element">
+            {' '}
             <span>
-              <Icon type="mail" />
-              <span>Navigation One</span>
+              <img alt="image" className="img-circle" src="content/img/profile_small.jpg" />
             </span>
-          }
-        >
-          <Menu.Item key="1">Option 1</Menu.Item>
-          <Menu.Item key="2">Option 2</Menu.Item>
-          <Menu.Item key="3">Option 3</Menu.Item>
-          <Menu.Item key="4">Option 4</Menu.Item>
-        </SubMenu>
-        <SubMenu
-          key="sub2"
-          title={
-            <span>
-              <Icon type="appstore" />
-              <span>Navigation Two</span>
-            </span>
-          }
-        >
-          <Menu.Item key="5">Option 5</Menu.Item>
-          <Menu.Item key="6">Option 6</Menu.Item>
-          <SubMenu key="sub3" title="Submenu">
-            <Menu.Item key="7">Option 7</Menu.Item>
-            <Menu.Item key="8">Option 8</Menu.Item>
+            <a data-toggle="dropdown" className="dropdown-toggle" href="#">
+              <span className="clear">
+                {' '}
+                <span className="block m-t-xs">
+                  {' '}
+                  <strong className="font-bold">{this.props.account.login}</strong>
+                </span>{' '}
+                <span className="text-muted text-xs block">
+                  Manager <b className="caret" />
+                </span>{' '}
+              </span>{' '}
+            </a>
+            <ul className="dropdown-menu animated fadeInRight m-t-xs">
+              <li>
+                <a href="profile.html">Profile</a>
+              </li>
+              <li>
+                <a href="contacts.html">Contacts</a>
+              </li>
+              <li>
+                <a href="mailbox.html">Mailbox</a>
+              </li>
+              <li className="divider" />
+              <li>
+                <Link to={'/logout'}>Logout</Link>
+              </li>
+            </ul>
+          </div>
+          <div className="logo-element">IN+</div>
+        </li>
+        <Menu mode="inline" theme="dark" style={{ width: 220 }} defaultSelectedKeys={['4']}>
+          <Menu.Item key="0">
+            <Icon type="appstore" />
+            Thông tin chung
+          </Menu.Item>
+          {this.userMenuEx()}
+          <SubMenu
+            key="sub1"
+            title={
+              <span>
+                <Icon type="mail" />
+                <span>Navigation One</span>
+              </span>
+            }
+          >
+            <Menu.Item key="1">Option 1</Menu.Item>
+            <Menu.Item key="2">Option 2</Menu.Item>
+            <Menu.Item key="3">Option 3</Menu.Item>
+            <Menu.Item key="4">Option 4</Menu.Item>
           </SubMenu>
-        </SubMenu>
-        <SubMenu
-          key="sub4"
-          title={
-            <span>
-              <Icon type="setting" />
-              <span>Navigation Three</span>
-            </span>
-          }
-        >
-          <Menu.Item key="9">Option 9</Menu.Item>
-          <Menu.Item key="10">Option 10</Menu.Item>
-          <Menu.Item key="11">Option 11</Menu.Item>
-          <Menu.Item key="12">Option 12</Menu.Item>
-        </SubMenu>
-      </Menu>
+          <SubMenu
+            key="sub2"
+            title={
+              <span>
+                <Icon type="appstore" />
+                <span>Navigation Two</span>
+              </span>
+            }
+          >
+            <Menu.Item key="5">Option 5</Menu.Item>
+            <Menu.Item key="6">Option 6</Menu.Item>
+            <SubMenu key="sub3" title="Submenu">
+              <Menu.Item key="7">Option 7</Menu.Item>
+              <Menu.Item key="8">Option 8</Menu.Item>
+            </SubMenu>
+          </SubMenu>
+          <SubMenu
+            key="sub4"
+            title={
+              <span>
+                <Icon type="setting" />
+                <span>Navigation Three</span>
+              </span>
+            }
+          >
+            <Menu.Item key="9">Option 9</Menu.Item>
+            <Menu.Item key="10">Option 10</Menu.Item>
+            <Menu.Item key="11">Option 11</Menu.Item>
+            <Menu.Item key="12">Option 12</Menu.Item>
+          </SubMenu>
+        </Menu>
+      </>
     );
   }
 
   render() {
-    const { isAuthenticated, activeMenu, activeSubMenu } = this.props;
+    const { activeMenu, activeSubMenu, location } = this.props;
+    console.log('>>>>>>>>>>>', location);
     // if (isAuthenticated !== true) return (<div />);
     return (
       <nav className="navbar-default navbar-static-side" role="navigation">
@@ -355,7 +431,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
 
 const mapStateToProps = ({ authentication, setting }) => ({
   account: authentication.account,
-  setting: setting,
+  setting,
   isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
   isManager: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.MANAGER]),
   isStaff: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.STAFF]),

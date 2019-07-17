@@ -1,14 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
+import { Drawer, Menu, Icon } from 'antd';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Translate, translate } from 'react-jhipster';
+import { showDrawer } from 'app/shared/reducers/setting';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import { AUTHORITIES } from 'app/config/constants';
 
+const { SubMenu } = Menu;
+
 export interface ISidebarProps {
   account: any;
+  setting: any;
+  showDrawer: Function;
   isAuthenticated: boolean;
   isManager: boolean;
   isAdmin: boolean;
@@ -19,6 +25,30 @@ export interface ISidebarProps {
 }
 
 export class Sidebar extends React.Component<ISidebarProps> {
+  state = {
+    width: 0,
+    height: 0
+  };
+
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener('resize', this.updateDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    var w = window,
+      d = document,
+      documentElement = d.documentElement,
+      body = d.getElementsByTagName('body')[0],
+      width = w.innerWidth || documentElement.clientWidth || body.clientWidth,
+      height = w.innerHeight || documentElement.clientHeight || body.clientHeight;
+    this.setState({ width, height });
+  };
+
   userMenu() {
     const { activeMenu, activeSubMenu, isUser } = this.props;
     if (!isUser) return '';
@@ -200,6 +230,69 @@ export class Sidebar extends React.Component<ISidebarProps> {
     );
   }
 
+  onClose = () => {
+    this.props.showDrawer(false);
+  };
+
+  showDrawerMenu() {
+    return (
+      <Drawer width={220} placement="left" closable={false} onClose={this.onClose} visible={this.props.setting.showDrawer}>
+        {this.showNormalMenu()}
+      </Drawer>
+    );
+  }
+
+  showNormalMenu() {
+    return (
+      <Menu mode="inline" theme="dark" style={{ width: 220 }}>
+        <SubMenu
+          key="sub1"
+          title={
+            <span>
+              <Icon type="mail" />
+              <span>Navigation One</span>
+            </span>
+          }
+        >
+          <Menu.Item key="1">Option 1</Menu.Item>
+          <Menu.Item key="2">Option 2</Menu.Item>
+          <Menu.Item key="3">Option 3</Menu.Item>
+          <Menu.Item key="4">Option 4</Menu.Item>
+        </SubMenu>
+        <SubMenu
+          key="sub2"
+          title={
+            <span>
+              <Icon type="appstore" />
+              <span>Navigation Two</span>
+            </span>
+          }
+        >
+          <Menu.Item key="5">Option 5</Menu.Item>
+          <Menu.Item key="6">Option 6</Menu.Item>
+          <SubMenu key="sub3" title="Submenu">
+            <Menu.Item key="7">Option 7</Menu.Item>
+            <Menu.Item key="8">Option 8</Menu.Item>
+          </SubMenu>
+        </SubMenu>
+        <SubMenu
+          key="sub4"
+          title={
+            <span>
+              <Icon type="setting" />
+              <span>Navigation Three</span>
+            </span>
+          }
+        >
+          <Menu.Item key="9">Option 9</Menu.Item>
+          <Menu.Item key="10">Option 10</Menu.Item>
+          <Menu.Item key="11">Option 11</Menu.Item>
+          <Menu.Item key="12">Option 12</Menu.Item>
+        </SubMenu>
+      </Menu>
+    );
+  }
+
   render() {
     const { isAuthenticated, activeMenu, activeSubMenu } = this.props;
     // if (isAuthenticated !== true) return (<div />);
@@ -207,6 +300,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
       <nav className="navbar-default navbar-static-side" role="navigation">
         <div className="sidebar-collapse">
           <ul className="nav metismenu" id="side-menu">
+            {this.state.width > 768 ? this.showNormalMenu() : this.showDrawerMenu()}
             <li className="nav-header">
               <div className="dropdown profile-element">
                 {' '}
@@ -259,15 +353,16 @@ export class Sidebar extends React.Component<ISidebarProps> {
   }
 }
 
-const mapStateToProps = ({ authentication }) => ({
+const mapStateToProps = ({ authentication, setting }) => ({
   account: authentication.account,
+  setting: setting,
   isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
   isManager: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.MANAGER]),
   isStaff: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.STAFF]),
   isUser: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.USER])
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { showDrawer };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

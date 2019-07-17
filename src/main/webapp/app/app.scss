@@ -1,3 +1,18 @@
+.ant-drawer-body {
+  padding: 0;
+}
+
+.ant-menu-dark,
+.ant-menu-dark .ant-menu-sub,
+.ant-drawer-wrapper-body {
+  color: hsla(0, 0%, 100%, 0.65);
+  background: #2f4050;
+}
+
+.ant-menu-dark .ant-menu-inline.ant-menu-sub {
+  background: #293846;
+}
+
 .checkout-cart > a {
   color: #fff;
   text-decoration: none;

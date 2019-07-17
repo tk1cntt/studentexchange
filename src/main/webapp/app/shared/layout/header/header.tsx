@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink as Link } from 'react-router-dom';
 
 import { IRootState } from 'app/shared/reducers';
+import { showDrawer } from 'app/shared/reducers/setting';
 import { getOwnerBalance as getUserBalance } from 'app/entities/user-balance/user-balance.reducer';
 import { getByCurrency } from 'app/entities/currency-rate/currency-rate.reducer';
 import { formatCurency } from 'app/shared/util/utils';
@@ -11,25 +12,58 @@ export interface IHeaderProps extends StateProps, DispatchProps {}
 
 export interface IHeaderState {
   showModal: boolean;
+  width: number;
+  height: number;
 }
 
 export class Header extends React.Component<IHeaderProps, IHeaderState> {
   state: IHeaderState = {
-    showModal: true
+    showModal: true,
+    width: 0,
+    height: 0
   };
 
   componentDidMount() {
     this.props.getUserBalance('');
     this.props.getByCurrency('CNY');
+    this.updateDimensions();
+    window.addEventListener('resize', this.updateDimensions);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    var w = window,
+      d = document,
+      documentElement = d.documentElement,
+      body = d.getElementsByTagName('body')[0],
+      width = w.innerWidth || documentElement.clientWidth || body.clientWidth,
+      height = w.innerHeight || documentElement.clientHeight || body.clientHeight;
+    this.setState({ width, height });
+  };
+
   openMiniNavbar = () => () => {
+    /*
     if (this.state.showModal) {
       document.body.classList.add('mini-navbar');
     } else {
       document.body.classList.remove('mini-navbar');
     }
     this.setState({ showModal: !this.state.showModal });
+    */
+    this.props.showDrawer(true);
+  };
+
+  navbarMinimalizeButton = () => {
+    if (this.state.width <= 768) {
+      return (
+        <div className="navbar-minimalize minimalize-styl-2 btn btn-primary" onClick={this.openMiniNavbar()}>
+          <i className="fa fa-bars" />{' '}
+        </div>
+      );
+    }
   };
 
   render() {
@@ -37,11 +71,7 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
       <>
         <div className="row border-bottom">
           <nav className="navbar navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
-            <div className="navbar-header">
-              <div className="navbar-minimalize minimalize-styl-2 btn btn-primary" onClick={this.openMiniNavbar()}>
-                <i className="fa fa-bars" />{' '}
-              </div>
-            </div>
+            <div className="navbar-header">{this.navbarMinimalizeButton()}</div>
             <ul className="nav navbar-top-links navbar-right">
               <li>
                 Tỷ giá: <b className="text-danger">{formatCurency(this.props.currencyRateEntity.rate)}đ</b>
@@ -159,13 +189,15 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
   }
 }
 
-const mapStateToProps = ({ currencyRate }: IRootState) => ({
-  currencyRateEntity: currencyRate.entity
+const mapStateToProps = ({ currencyRate, setting }: IRootState) => ({
+  currencyRateEntity: currencyRate.entity,
+  setting: setting
 });
 
 const mapDispatchToProps = {
   getByCurrency,
-  getUserBalance
+  getUserBalance,
+  showDrawer
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

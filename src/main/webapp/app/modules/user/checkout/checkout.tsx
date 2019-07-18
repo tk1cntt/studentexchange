@@ -404,7 +404,7 @@ export class Checkout extends React.Component<ICheckoutProp> {
   render() {
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />
+        <Sidebar activeMenu="" activeSubMenu="shopping-cart" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row wrapper wrapper-content">

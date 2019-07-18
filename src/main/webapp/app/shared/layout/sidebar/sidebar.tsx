@@ -11,9 +11,16 @@ import { AUTHORITIES } from 'app/config/constants';
 
 const { SubMenu } = Menu;
 
-export interface ISidebarProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {
+export interface ISidebarProps {
+  account?: any;
+  setting?: any;
+  showDrawer?: any;
   activeMenu: string;
   activeSubMenu: string;
+  isUser?: boolean;
+  isManager?: boolean;
+  isStaff?: boolean;
+  isAdmin?: boolean;
 }
 
 export class Sidebar extends React.Component<ISidebarProps> {
@@ -71,7 +78,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
   }
 
   userMenuEx() {
-    const { activeMenu, activeSubMenu, isUser } = this.props;
+    const { isUser } = this.props;
     if (!isUser) return '';
     const menus = [];
     menus.push(
@@ -174,9 +181,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
   }
 
   staffMenuEx() {
-    const { activeMenu, activeSubMenu, isStaff } = this.props;
-    // const selectedKeys = location.substr(1);
-    // const defaultOpenKeys = selectedKeys.split('/')[1];
+    const { isStaff } = this.props;
     if (!isStaff) return '';
     return (
       <SubMenu
@@ -311,7 +316,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
     if (!isAdmin) return '';
     return (
       <SubMenu
-        key="admin"
+        key="administration"
         title={
           <span>
             <Icon type="setting" />
@@ -360,13 +365,16 @@ export class Sidebar extends React.Component<ISidebarProps> {
 
   showDrawerMenu() {
     return (
-      <Drawer width={220} placement="left" closable={false} onClose={this.onClose} visible={this.props.setting.showDrawer}>
+      <Drawer width={235} placement="left" closable={false} onClose={this.onClose} visible={this.props.setting.showDrawer}>
         {this.showNormalMenu()}
       </Drawer>
     );
   }
 
   showNormalMenu() {
+    const { activeMenu, activeSubMenu } = this.props;
+    const selectedKeys = activeSubMenu;
+    const defaultOpenKeys = activeMenu;
     return (
       <>
         <li className="nav-header">
@@ -405,117 +413,34 @@ export class Sidebar extends React.Component<ISidebarProps> {
           </div>
           <div className="logo-element">IN+</div>
         </li>
-        <Menu mode="inline" theme="dark" style={{ width: 220 }} defaultSelectedKeys={['4']}>
-          <Menu.Item key="0">
-            <Icon type="appstore" />
-            Thông tin chung
+        <Menu
+          mode="inline"
+          theme="dark"
+          style={{ width: 220 }}
+          defaultSelectedKeys={['dashboard']}
+          defaultOpenKeys={[defaultOpenKeys]}
+          selectedKeys={[selectedKeys]}
+        >
+          <Menu.Item key="dashboard">
+            <Link to={'/'}>
+              <Icon type="appstore" />
+              Thông tin chung
+            </Link>
           </Menu.Item>
           {this.userMenuEx()}
           {this.staffMenuEx()}
           {this.adminMenuEx()}
-          <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <Icon type="mail" />
-                <span>Navigation One</span>
-              </span>
-            }
-          >
-            <Menu.Item key="1">Option 1</Menu.Item>
-            <Menu.Item key="2">Option 2</Menu.Item>
-            <Menu.Item key="3">Option 3</Menu.Item>
-            <Menu.Item key="4">Option 4</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <Icon type="appstore" />
-                <span>Navigation Two</span>
-              </span>
-            }
-          >
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="7">Option 7</Menu.Item>
-              <Menu.Item key="8">Option 8</Menu.Item>
-            </SubMenu>
-          </SubMenu>
-          <SubMenu
-            key="sub4"
-            title={
-              <span>
-                <Icon type="setting" />
-                <span>Navigation Three</span>
-              </span>
-            }
-          >
-            <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
-            <Menu.Item key="11">Option 11</Menu.Item>
-            <Menu.Item key="12">Option 12</Menu.Item>
-          </SubMenu>
         </Menu>
       </>
     );
   }
 
   render() {
-    const { activeMenu, activeSubMenu, location } = this.props;
-    console.log('>>>>>>>>>>>', location);
-    // if (isAuthenticated !== true) return (<div />);
     return (
       <nav className="navbar-default navbar-static-side" role="navigation">
         <div className="sidebar-collapse">
           <ul className="nav metismenu" id="side-menu">
             {this.state.width > 768 ? this.showNormalMenu() : this.showDrawerMenu()}
-            <li className="nav-header">
-              <div className="dropdown profile-element">
-                {' '}
-                <span>
-                  <img alt="image" className="img-circle" src="content/img/profile_small.jpg" />
-                </span>
-                <a data-toggle="dropdown" className="dropdown-toggle" href="#">
-                  <span className="clear">
-                    {' '}
-                    <span className="block m-t-xs">
-                      {' '}
-                      <strong className="font-bold">{this.props.account.login}</strong>
-                    </span>{' '}
-                    <span className="text-muted text-xs block">
-                      Manager <b className="caret" />
-                    </span>{' '}
-                  </span>{' '}
-                </a>
-                <ul className="dropdown-menu animated fadeInRight m-t-xs">
-                  <li>
-                    <a href="profile.html">Profile</a>
-                  </li>
-                  <li>
-                    <a href="contacts.html">Contacts</a>
-                  </li>
-                  <li>
-                    <a href="mailbox.html">Mailbox</a>
-                  </li>
-                  <li className="divider" />
-                  <li>
-                    <Link to={'/logout'}>Logout</Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="logo-element">IN+</div>
-            </li>
-            <li className={`${activeMenu === 'dashboard' ? 'active' : ''}`}>
-              <Link to={'/'}>
-                <i className="fa fa-th-large" /> <span className="nav-label">Thông tin chung</span>
-              </Link>
-            </li>
-            {this.userMenu()}
-            {this.managerMenu()}
-            {this.staffMenu()}
-            {this.adminMenu()}
           </ul>
         </div>
       </nav>

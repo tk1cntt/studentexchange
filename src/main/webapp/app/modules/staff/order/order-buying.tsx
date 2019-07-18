@@ -64,7 +64,7 @@ export class OrderCart extends React.Component<IOrderCartProps, IOrderCartState>
     const { orderCartList, match, totalItems } = this.props;
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="order-management" activeSubMenu="order-buying" />
+        <Sidebar activeMenu="staff" activeSubMenu="order-buying" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">

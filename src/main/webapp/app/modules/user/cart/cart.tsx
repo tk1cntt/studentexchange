@@ -35,7 +35,7 @@ export class Cart extends React.Component<IHomeProp> {
     const { shoppingCartList, account } = this.props;
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="shopping-cart" activeSubMenu="" />
+        <Sidebar activeMenu="" activeSubMenu="shopping-cart" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row border-bottom white-bg dashboard-header">

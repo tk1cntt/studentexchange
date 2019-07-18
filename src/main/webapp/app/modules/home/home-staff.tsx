@@ -22,7 +22,7 @@ export class Home extends React.Component<IHomeProp> {
   render() {
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="dashboard" activeSubMenu="" />
+        <Sidebar activeMenu="" activeSubMenu="dashboard" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row border-bottom white-bg dashboard-header">

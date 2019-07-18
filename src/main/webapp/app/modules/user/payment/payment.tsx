@@ -29,7 +29,7 @@ export class Payment extends React.Component<ICheckoutProp> {
   render() {
     return (
       <>
-        <Sidebar isAuthenticated={this.props.isAuthenticated} activeMenu="payment" activeSubMenu="" />
+        <Sidebar activeMenu="" activeSubMenu="payment" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">

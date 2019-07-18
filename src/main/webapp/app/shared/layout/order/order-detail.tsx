@@ -108,8 +108,7 @@ export class OrderDetail extends React.Component<IOrderDetailProp> {
     return (
       <>
         <Sidebar
-          isAuthenticated={this.props.isAuthenticated}
-          activeMenu={this.props.activeMenu ? this.props.activeMenu : 'order-management'}
+          activeMenu={this.props.activeMenu ? this.props.activeMenu : 'staff'}
           activeSubMenu={this.props.activeSubMenu ? this.props.activeSubMenu : 'order-detail'}
         />
         <div id="page-wrapper" className="gray-bg dashbard-1">

@@ -139,6 +139,33 @@ export class Sidebar extends React.Component<ISidebarProps> {
     );
   }
 
+  managerMenuEx() {
+    const { activeMenu, activeSubMenu, isManager } = this.props;
+    if (!isManager) return '';
+    return (
+      <SubMenu
+        key="payment-management"
+        title={
+          <span>
+            <Icon type="gift" />
+            <span>Payment</span>
+          </span>
+        }
+      >
+        <Menu.Item key="banktransfer">
+          <Link to={'/management/banktransfer'}>
+            <i className="fa fa-sign-in" /> Nạp tiền
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="history">
+          <Link to={'/management/history'}>
+            <i className="fa fa-exchange" /> Lịch sử thanh toán
+          </Link>
+        </Menu.Item>
+      </SubMenu>
+    );
+  }
+
   staffMenu() {
     const { activeMenu, activeSubMenu, isStaff } = this.props;
     // const selectedKeys = location.substr(1);
@@ -312,7 +339,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
   }
 
   adminMenuEx() {
-    const { activeMenu, activeSubMenu, isAdmin } = this.props;
+    const { isAdmin } = this.props;
     if (!isAdmin) return '';
     return (
       <SubMenu
@@ -429,6 +456,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
           </Menu.Item>
           {this.userMenuEx()}
           {this.staffMenuEx()}
+          {this.managerMenuEx()}
           {this.adminMenuEx()}
         </Menu>
       </>

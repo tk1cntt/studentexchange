@@ -128,7 +128,7 @@ export class SettingsPage extends React.Component<IUserSettingsProps, IUserSetti
 
     return (
       <div>
-        <Sidebar activeMenu="setting" activeSubMenu="" />
+        <Sidebar activeMenu="" activeSubMenu="setting" />
         <div id="page-wrapper" className="gray-bg dashbard-1">
           <Header />
           <div className="row  border-bottom white-bg dashboard-header">

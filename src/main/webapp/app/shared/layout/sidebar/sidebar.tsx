@@ -30,6 +30,7 @@ export class Sidebar extends React.Component<ISidebarProps> {
   };
 
   componentDidMount() {
+    this.props.showDrawer(false);
     this.updateDimensions();
     window.addEventListener('resize', this.updateDimensions);
   }

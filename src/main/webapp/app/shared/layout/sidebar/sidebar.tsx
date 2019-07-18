@@ -173,6 +173,50 @@ export class Sidebar extends React.Component<ISidebarProps> {
     );
   }
 
+  staffMenuEx() {
+    const { activeMenu, activeSubMenu, isStaff } = this.props;
+    // const selectedKeys = location.substr(1);
+    // const defaultOpenKeys = selectedKeys.split('/')[1];
+    if (!isStaff) return '';
+    return (
+      <SubMenu
+        key="staff"
+        title={
+          <span>
+            <Icon type="setting" />
+            <span>Quản lý đơn hàng</span>
+          </span>
+        }
+      >
+        <Menu.Item key="order-list">
+          <Link to={'/staff/order-list'}>
+            <i className="fa fa-list" /> Danh sách đơn hàng
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="order-deposited">
+          <Link to={'/staff/order-deposited'}>
+            <i className="fa fa-sign-in" /> Đơn hàng chưa xử lý
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="order-buying">
+          <Link to={'/staff/order-buying'}>
+            <i className="fa fa-exchange" /> Đơn hàng bạn đã nhận
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="order-purchased">
+          <Link to={'/staff/order-purchased'}>
+            <i className="fa fa-check-circle" /> Đơn hàng đã xử lý
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="order-cancel">
+          <Link to={'/staff/order-cancel'}>
+            <i className="fa fa-window-close" /> Đơn hàng đã huỷ
+          </Link>
+        </Menu.Item>
+      </SubMenu>
+    );
+  }
+
   logisticsMenu() {
     const { activeMenu, activeSubMenu, isStaff } = this.props;
     if (!isStaff) return '';
@@ -262,6 +306,54 @@ export class Sidebar extends React.Component<ISidebarProps> {
     );
   }
 
+  adminMenuEx() {
+    const { activeMenu, activeSubMenu, isAdmin } = this.props;
+    if (!isAdmin) return '';
+    return (
+      <SubMenu
+        key="admin"
+        title={
+          <span>
+            <Icon type="setting" />
+            <span>Administration</span>
+          </span>
+        }
+      >
+        <Menu.Item key="user-management">
+          <Link to={'/admin/user-management'}>
+            <FontAwesomeIcon icon="user" fixedWidth />
+            Users
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="metrics">
+          <Link to={'/admin/metrics'}>
+            <FontAwesomeIcon icon="tachometer-alt" fixedWidth /> Metrics
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="health">
+          <Link to={'/admin/health'}>
+            <FontAwesomeIcon icon="heart" fixedWidth /> Health
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="configuration">
+          <Link to={'/admin/configuration'}>
+            <FontAwesomeIcon icon="list" fixedWidth /> Configuration
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="audits">
+          <Link to={'/admin/audits'}>
+            <FontAwesomeIcon icon="bell" fixedWidth /> Audits
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="logs">
+          <Link to={'/admin/logs'}>
+            <FontAwesomeIcon icon="tasks" fixedWidth /> Logs
+          </Link>
+        </Menu.Item>
+      </SubMenu>
+    );
+  }
+
   onClose = () => {
     this.props.showDrawer(false);
   };
@@ -319,6 +411,8 @@ export class Sidebar extends React.Component<ISidebarProps> {
             Thông tin chung
           </Menu.Item>
           {this.userMenuEx()}
+          {this.staffMenuEx()}
+          {this.adminMenuEx()}
           <SubMenu
             key="sub1"
             title={

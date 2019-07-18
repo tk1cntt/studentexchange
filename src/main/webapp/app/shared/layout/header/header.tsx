@@ -35,12 +35,12 @@ export class Header extends React.Component<IHeaderProps, IHeaderState> {
   }
 
   updateDimensions = () => {
-    const w = window,
-      d = document,
-      documentElement = d.documentElement,
-      body = d.getElementsByTagName('body')[0],
-      width = w.innerWidth || documentElement.clientWidth || body.clientWidth,
-      height = w.innerHeight || documentElement.clientHeight || body.clientHeight;
+    const w = window;
+    const d = document;
+    const documentElement = d.documentElement;
+    const body = d.getElementsByTagName('body')[0];
+    const width = w.innerWidth || documentElement.clientWidth || body.clientWidth;
+    const height = w.innerHeight || documentElement.clientHeight || body.clientHeight;
     this.setState({ width, height });
   };
 
